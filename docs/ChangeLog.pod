@@ -14,6 +14,9 @@ Z<>
 Doing a radical redesign of how Mig is installed.  Please review
 documentation again before upgrading!
 
+Changed language designation for Danish to 'dk' instead of 'da' (I don't
+know what da is, but it's not Denmark).
+
 Added C<MaintAddr> object to mig.cf parser (thanks to Simon Wood for
 supplying this code!).  This permits you to change the value of
 C<$maintAddr> on a per-folder basis if desired.

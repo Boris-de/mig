@@ -1,6 +1,3 @@
-$Revision$
-
-
 =pod
 
 Z<>
@@ -38,16 +35,13 @@ development platform is Apple OSX, so this code tends to assume a Unix-like
 environment.  As such it may or may not work (and has not been tested) on
 non-unix-like platforms.
 
-(Windows users, please see the file F<docs/Windows.txt> for more information.)
-
-(PHP-Nuke users, plase see the file F<docs/phpNuke.txt> for more information.)
+(Windows users, please see the second labeled "FOR WINDOWS USERS" below.)
 
 The F<mkGallery> utility (used to generate thumbnail images) requires Perl
-- http://www.perl.org and ImageMagick - http://www.imagemagick.org/ .
-You can use Mig without Perl or ImageMagick - but in that case you may
-have to create your own thumbnails and not use F<mkGallery>.  See the file
-F<docs/Utilities.txt>.  Since thumbnails are optional, you don't even need to
-generate them if you don't want to or it's not convenient for you.
+( http://www.perl.com ) and, if you want it to general thumbnails, also needs
+ImageMagick ( http://www.imagemagick.org/ ).  Perl and ImageMagick are not
+needed to use Mig itself - only for use with mkGallery.  See
+docs/Utilities.txt.
 
 The F<jhead> utility which is called by F<mkGallery> for EXIF header
 parsing is a C source code file - you will need to compile it before using
@@ -59,28 +53,9 @@ plan to extract EXIF data from your JPEG files.
 
 Installation is fairly straightforward.
 
-NOTE: the following directions presume you have a unix shell on your
-server.  If you have only FTP access, please refer to
-F<docs/FTPinstall.txt>.
-
-1. Unpack this archive and enter the resulting directory.
-
-    gzip -dc mig-VERSION.tar.gz | tar xf -
-    cd mig-VERSION
-
-Where "VERSION" is the version of that archive (i.e. "1.1").
-
-2. Run the install script F<install.sh> and follow the directions.
-
-    ./install.sh
-
-(Windows users will not be able to use this shell script - see
-F<docs/Windows.txt> for more information)
-
-3. Enter the installation directory (which you specified during the
-installation).
-
-    cd /usr/apache/htdocs/mig
+1. If you are installing Mig for the first time, you'll need to create a
+directory for it to live in.  Otherwise, just know where your Mig
+installation lives
 
 4. Review the file F<config.php.default>.  If you want to make any changes,
 make them and then copy the file to F<config.php>.  The reason to do this
