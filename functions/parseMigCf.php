@@ -15,8 +15,9 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
     $ficons         = array ();
 
     // Hide thumbnail subdirectory if one is in use.
-    if ($useThumbSubdir)
+    if ($useThumbSubdir) {
         $hidden[$thumbSubdir] = TRUE;
+    }
 
     if (file_exists("$directory/$cfgfile")) {
         $file = fopen("$directory/$cfgfile", 'r');
@@ -40,10 +41,11 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 while (! eregi('^</sort>', $line)) {
                     $line = trim($line);
 
-                    if (is_file("$directory/$line"))
+                    if (is_file("$directory/$line")) {
                         $presort_img[$line] = TRUE;
-                    elseif (is_dir("$directory/$line"))
+                    } elseif (is_dir("$directory/$line")) {
                         $presort_dir[$line] = TRUE;
+                    }
 
                     $line = fgets($file, 4096);
                 }

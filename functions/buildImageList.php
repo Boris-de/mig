@@ -90,8 +90,9 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
 
             // If this is a new row, start a new <TR>
-            if ($col == 0)
+            if ($col == 0) {
                 $imageList .= '<tr>';
+            }
 
             $fname = getFileName($file);
             $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
@@ -117,11 +118,12 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
     closedir($dir);
 
     // If there aren't any images to work with, just say so.
-    if ($imageList == '')
+    if ($imageList == '') {
         $imageList = 'NULL';
-    elseif (!eregi('</tr>$', $imageList))
+    } elseif (!eregi('</tr>$', $imageList)) {
         // Stick a </tr> on the end if it isn't there already.
         $imageList .= '</tr>';
+    }
 
     return $imageList;
 

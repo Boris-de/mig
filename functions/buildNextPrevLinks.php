@@ -19,8 +19,9 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     while ($file = readdir($dir)) {
 
         // Ignore thumbnails
-        if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file))
+        if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file)) {
             continue;
+        }
 
         if ($markerType == 'suffix'
             and eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file)) {
@@ -28,12 +29,14 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
         }
 
         // Only look at valid image formats
-        if (!eregi('\.(gif|jpg|png|jpeg|jpe)$', $file))
+        if (!eregi('\.(gif|jpg|png|jpeg|jpe)$', $file)) {
             continue; 
+        }
 
         // Ignore the hidden images
-        if ($hidden[$file])
+        if ($hidden[$file]) {
             continue;
+        }
 
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
@@ -90,8 +93,9 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     while (list($file, $junk) = each($presorted)) {
     
         // If "this" is the one we're looking for, mark it as such.
-        if ($file == $image)
+        if ($file == $image) {
             $ThisImagePos = $i;
+        }
 
         $fList[$i] = $file;     // Stash filename in the array
         $i++;                   // increment the counter, of course.
@@ -102,19 +106,21 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
     // Next is one more than $ThisImagePos.  Test if that has a value
     // and if it does, consider it "next".
-    if ($fList[$ThisImagePos+1])
+    if ($fList[$ThisImagePos+1]) {
         $next = migURLencode($fList[$ThisImagePos+1]);
-    else
+    } else {
         $next = 'NA';
+    }
 
     // Previous must always be one less than the current index.  If
     // that has a value, that is.  Unless the current index is "1" in
     // which case we know there is no previous.
     
-    if ($ThisImagePos == 1)
+    if ($ThisImagePos == 1) {
         $prev = 'NA';
-    elseif ($fList[$ThisImagePos-1])
+    } elseif ($fList[$ThisImagePos-1]) {
         $prev = migURLencode($fList[$ThisImagePos-1]); 
+    }
 
     // URL-encode currDir
     $currDir = migURLencode($currDir);
@@ -123,29 +129,31 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     $newCurrDir = getNewCurrDir($currDir);
 
     // If there is no previous image, show a greyed-out link
-    if ($prev == 'NA')
+    if ($prev == 'NA') {
         $pLink = '<font size="-1">[&nbsp;<font color="#999999">'
                . $mig_config['lang']['previmage']
                . '</font>&nbsp;]</font>';
 
     // else show a real link
-    else
+    } else {
         $pLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
                . $prev . '">' . $mig_config['lang']['previmage']
                . '</a>&nbsp;]</font>';
+    }
 
     // If there is no next image, show a greyed-out link
-    if ($next == 'NA')
+    if ($next == 'NA') {
         $nLink = '<font size="-1">[&nbsp;<font color="#999999">'
                . $mig_config['lang']['nextimage']
                . '</font>&nbsp;]</font>';
     // else show a real link
-    else
+    } else {
         $nLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
                . $next . '">' . $mig_config['lang']['nextimage']
                . '</a>&nbsp;]</font>';
+    }
 
     // Current position in the list
     $currPos = '#' . $ThisImagePos . '&nbsp;of&nbsp;' . $i;

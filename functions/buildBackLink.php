@@ -8,10 +8,11 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     global $mig_config;
 
     // $type notes whether we want a "back" link or "up one level" link.
-    if ($type == 'back' or $noThumbs)
+    if ($type == 'back' or $noThumbs) {
         $label = $mig_config['lang']['up_one'];
-    elseif ($type == 'up')
+    } elseif ($type == 'up') {
         $label = $mig_config['lang']['thumbview'];
+    }
 
     // don't send a link back if we're a the root of the tree
     if ($currDir == '.') {

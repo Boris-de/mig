@@ -25,30 +25,32 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 
     if ($useThumbSubdir) {
 
-        if ($thumbExt)
+        if ($thumbExt) {
             $thumbFile = "$albumDir/$oldCurrDir/$thumbSubdir/$fname.$thumbExt";
-        else
+        } else {
             $thumbFile = "$albumDir/$oldCurrDir/$thumbSubdir/$fname.$ext";
+        }
 
     } else {
 
         if ($markerType == 'prefix') {
             $thumbFile  = "$albumDir/$oldCurrDir/$markerLabel";
 
-            if ($thumbExt)
+            if ($thumbExt) {
                 $thumbFile .= "_$fname.$thumbExt";
-            else
+            } else {
                 $thumbFile .= "_$fname.$ext";
+            }
         }
 
         if ($markerType == 'suffix') {
             $thumbFile  = "$albumDir/$oldCurrDir/$fname";
 
-            if ($thumbExt)
+            if ($thumbExt) {
                 $thumbFile .= "_$markerLabel.$thumbExt";
-            else
+            } else {
                 $thumbFile .= "_$markerLabel.$ext";
-
+            }
         }
     }
 
@@ -56,31 +58,32 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
         if ($useThumbSubdir) {
             $thumbImage  = "$albumURLroot/$currDir/$thumbSubdir";
 
-            if ($thumbExt)
+            if ($thumbExt) {
                 $thumbImage .= "/$fname.$thumbExt";
-            else
+            } else {
                 $thumbImage .= "/$fname.$ext";
+            }
 
         } else {
 
             if ($markerType == 'prefix') {
                 $thumbImage  = "$albumURLroot/$currDir/$markerLabel";
 
-                if ($thumbExt)
+                if ($thumbExt) {
                     $thumbImage .= "_$fname.$thumbExt";
-                else
+                } else {
                     $thumbImage .= "_$fname.$ext";
-
+                }
             }
 
             if ($markerType == 'suffix') {
                 $thumbImage  = "$albumURLroot/$currDir/$fname";
 
-                if ($thumbExt)
+                if ($thumbExt) {
                     $thumbImage .= "_$markerLabel.$thumbExt";
-                else
+                } else {
                     $thumbImage .= "_$markerLabel.$ext";
-
+                }
             }
         }
         $thumbImage = migURLencode($thumbImage);
@@ -91,10 +94,11 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // Get description, if any
-    if ($commentFilePerImage)
+    if ($commentFilePerImage) {
         $alt_desc = getImageDescFromFile("$fname.$ext", $albumDir, $currDir);
-    else
+    } else {
         $alt_desc = getImageDescription("$fname.$ext", $description);
+    }
 
     $alt_desc = strip_tags($alt_desc);
 
@@ -109,12 +113,13 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     // Figure out the bytes
     $imageSize = filesize($imageFile);
 
-    if ($imageSize > 1048576)
+    if ($imageSize > 1048576) {
         $imageSize = sprintf('%01.1f', $imageSize / 1024 / 1024) . 'MB';
-    elseif ($imageSize > 1024)
+    } elseif ($imageSize > 1024) {
         $imageSize = sprintf('%01.1f', $imageSize / 1024) . 'KB';
-    else
+    } else {
         $imageSize = $imageSize . $mig_config['lang']['bytes'];
+    }
 
     // Figure out thumbnail geometry
     $thumbHTML = '';
@@ -126,8 +131,9 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     // beginning of the table cell
     $url = '<td class="image"><a';
 
-    if (!$suppressAltTags)
+    if (!$suppressAltTags) {
         $url .= ' title="' . $alt_desc . '"';
+    }
 
     $url .= ' href="';
 
@@ -145,10 +151,11 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     if ($imagePopup) {
         $url .= "','";
 
-        if ($imagePopType == 'reuse')
+        if ($imagePopType == 'reuse') {
             $url .= 'mig_window_11190874';
-        else
+        } else {
             $url .= 'mig_window_' . time() . '_' . $newFname;
+        }
 
         $url .= "','width=$popup_width,height=$popup_height,"
               . "resizable=yes,scrollbars=1');";
@@ -163,8 +170,9 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     } else {
         $url .= '<img src="' . $thumbImage . '"';
             // Only print the ALT tag if it's wanted.
-            if (! $suppressAltTags)
+            if (! $suppressAltTags) {
                 $url .= ' alt="' . $alt_desc . '"';
+            }
 
         $url .= ' border="0" ' . $thumbHTML . '>';
     }
@@ -174,8 +182,9 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     // If $suppressImageInfo is FALSE, show the image info
     if (!$suppressImageInfo) {
         $url .= '<br><font size="-1">';
-        if (!$noThumbs)
+        if (!$noThumbs) {
             $url .= $fname . '.' . $ext . '<br>';
+        }
 
         $url .= '(' . $imageWidth . 'x' . $imageHeight . ', '
              . $imageSize . ')</font>';

@@ -4,7 +4,7 @@ $Id$
 
 =head2 MIG Change Log
 
-=head2 Version 1.3.2 (NOT YET RELEASED)
+=head2 Version 1.3.2 (Tue, 21 May 2002)
 
 Some major changes this release - please pay attention!
 
@@ -16,6 +16,8 @@ procedure is documented in the F<install> document.
 PHP-Nuke mode was no longer working, so I fixed it.  While I was at it,
 I added PostNuke and phpWebThings compatibility.  See the F<phpnuke>
 document.  Tested with PHP-Nuke 5.5, PostNuke 0.714 and phpWebThings 0.41.
+Added config variables C<$phpWebThingsCompatible> and C<$phpWebThingsRoot>
+to F<config.php> for the new phpWebThings mode.
 
 Changed language designation for Danish to E<quot>dkE<quot> instead of
 E<quot>daE<quot> (I don't know what E<quot>daE<quot> is, but it's not
@@ -40,7 +42,7 @@ the task of finding it.
 
 Entirely restructured the CVS tree.  When the smoke cleared, F<funcs.php>
 and F<lang.php> had vanished (merged into F<index.php>).  Mig is just one
-file (well, the PHP code is anyway), plus a config file written in PHP.
+file now (well, the PHP code is anyway), plus a config file written in PHP.
 
 Eliminated C<$useVirtual> - it was not being used by C<printTemplate()>
 anymore.

@@ -7,8 +7,12 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $pageTitle, $prevLink, $nextLink, $currPos,
                          $description, $youAreHere, $distURL, $albumDir )
 {
-    if (! ereg('^/', $templateFile))
+    // Only prepend a path if one isn't there.  For unix-like systems this
+    // checks for a leading slash, for Windows-like system it checks for
+    // a leading drive letter.
+    if (! ereg('^/', $templateFile) && ! eregi("^[a-z]:", $templateFile)) {
         $templateFile = $albumDir . '/' . $newCurrDir . '/' . $templateFile;
+    }
 
     // Panic if the template file doesn't exist.
     if (! file_exists($templateFile)) {
@@ -79,8 +83,9 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
             );
 
             // Do substitution for various variables
-            while (list($key,$val) = each($replacement_list))
+            while (list($key,$val) = each($replacement_list)) {
                 $line = str_replace("%%$val%%", $$val, $line);
+            }
 
             print $line;                // Print resulting line
         }

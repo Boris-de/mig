@@ -27,6 +27,13 @@ if (file_exists($baseDir . '/mig/config.php')) {
 }
 include($configFile);
 
+// Return an error if too many modes are set at once
+if ($phpNukeCompatible && $phpWebThingsCompatible) {
+    print "FATAL ERROR: both \$phpNukeCompatible and"
+        . " \$phpWebThingsCompatible are TRUE!\n";
+    exit;
+}
+
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
     $baseDir .= '/mig';
@@ -213,6 +220,22 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
     exit;
 }
 
+// Fetch mig.cf information
+list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
+     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
+     $folderMaintAddr)
+  = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
+
+// Determine page title to use
+if ($folderPageTitle) {
+    $pageTitle = $folderPageTitle;
+}
+
+// Set per-folder $maintAddr if one was defined
+if ($folderMaintAddr) {
+    $maintAddr = $folderMaintAddr;
+}
+
 // Is this a phpNuke compatible site?
 if ($phpNukeCompatible) {
 
@@ -227,7 +250,7 @@ if ($phpNukeCompatible) {
         . '<table width="100%" border="0" cellspacing="1" cellpadding="7"'
         . ' bgcolor="#FFFFFF"><tr><td>';
 
-// or a PhpWebThings site?
+// Is this a phpWebThings site?
 } elseif ($phpWebThingsCompatible) {
     draw_header();
     theme_draw_center_box_open($pageTitle);
@@ -243,12 +266,6 @@ if (strstr($currDir, '..')) {
 // strip URL encoding here too
 $image = rawurldecode($image);
 
-// Fetch mig.cf information
-list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
-     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
-     $folderMaintAddr)
-  = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
-
 // if pageType is "folder") generate a folder view
 
 if ($pageType == 'folder') {
@@ -260,16 +277,6 @@ if ($pageType == 'folder') {
         $templateFile = $templateDir . '/mig_folder.php';
     } else {
         $templateFile = $templateDir . '/folder.html';
-    }
-
-    // Determine page title to use
-    if ($folderPageTitle) {
-        $pageTitle = $folderPageTitle;
-    }
-
-    // Set per-folder $maintAddr if one was defined
-    if ($folderMaintAddr) {
-        $maintAddr = $folderMaintAddr;
     }
 
     // Determine columns to use
@@ -347,16 +354,6 @@ if ($pageType == 'folder') {
 // If pageType is "image", show an image
 
 } elseif ($pageType == 'image') {
-
-    // Set per-foler page title if one was defined
-    if ($folderPageTitle) {
-        $pageTitle = $folderPageTitle;
-    }
-
-    // Set per-folder maintAddr if one was defined
-    if ($folderMaintAddr) {
-        $maintAddr = $folderMaintAddr;
-    }
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
