@@ -63,12 +63,33 @@ if ($usePortal > 1) {
 }
 
 // Fetch some settings into $mig_config
-$mig_config["homelabel"] = $homeLabel;
-$mig_config["homelink"] = $homeLink;
-$mig_config["largesubdir"] = $largeSubdir;
-$mig_config["thumbsubdir"] = $thumbSubdir;
-$mig_config["uselargeimages"] = $useLargeImages;
-$mig_config["usethumbsubdir"] = $useThumbSubdir;
+$mig_config["commentfileperimage"]		= $commentFilePerImage;
+$mig_config["commentfileshortcomments"]		= $commentFileShortComments;
+$mig_config["foldernamelength"]			= $folderNameLength;
+$mig_config["foldersorttype"]			= $folderSortType;
+$mig_config["homelabel"]			= $homeLabel;
+$mig_config["homelink"]				= $homeLink;
+$mig_config["ignoredotdirectories"]		= $ignoreDotDirectories;
+$mig_config["imagepoplocationbar"]		= $imagePopLocationBar;
+$mig_config["imagepopmaxheight"]		= $imagePopMaxHeight;
+$mig_config["imagepopmaxwidth"]			= $imagePopMaxWidth;
+$mig_config["imagepoptoolbar"]			= $imagePopToolBar;
+$mig_config["imagepopup"]			= $imagePopup;
+$mig_config["largesubdir"]			= $largeSubdir;
+$mig_config["nothumbs"]				= $noThumbs;
+$mig_config["omitimagename"]			= $omitImageName;
+$mig_config["randomfolderthumbs"]		= $randomFolderThumbs;
+$mig_config["pagetitle"]			= $pageTitle;
+$mig_config["showshortonthumbpage"]		= $showShortOnThumbPage;
+$mig_config["sorttype"]				= $sortType;
+$mig_config["suppressalttags"]			= $suppressAltTags;
+$mig_config["suppressimageinfo"]		= $suppressImageInfo;
+$mig_config["thumbext"]				= $thumbExt;
+$mig_config["thumbsubdir"]			= $thumbSubdir;
+$mig_config["uselargeimages"]			= $useLargeImages;
+$mig_config["userealrandthumbs"]		= $useRealRandThumbs;
+$mig_config["usethumbsubdir"]			= $useThumbSubdir;
+$mig_config["viewfoldercount"]			= $viewFolderCount;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
@@ -235,6 +256,7 @@ if (! $image) {
         $image = $HTTP_GET_VARS["image"];
     }
 }
+$mig_config["image"] = $image;
 
 // Get pageType.  If there isn't one, default to "folder"
 if (! $pageType) {
@@ -246,6 +268,7 @@ if (! $pageType) {
         $pageType = "folder";
     }
 }
+$mig_config["pagetype"] = $pageType;
 
 if (! $startFrom) {
     if ($_GET["startFrom"]) {
@@ -254,6 +277,7 @@ if (! $startFrom) {
         $startFrom = $HTTP_GET_VARS["startFrom"];
     }
 }
+$mig_config["startfrom"] = $startFrom;
 
 // use language set specified in URL, if one was.
 if (! $mig_dl) {
@@ -269,6 +293,7 @@ if ($mig_dl && $mig_config["lang_lib"][$mig_dl]) {
 } else {
     unset ($mig_dl);        // destroy it so it isn't used in URLs
 }
+$mig_config["mig_dl"] = $mig_dl;
 
 // Grab appropriate language from library
 $mig_config["lang"] = $mig_config["lang_lib"][$mig_language];
@@ -281,8 +306,8 @@ if ($maxColumns) {
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (get_magic_quotes_gpc() == 1) {
     $currDir = stripslashes($currDir);
-    if ($image) {
-        $image = stripslashes($image);
+    if ($mig_config["image"]) {
+        $mig_config["image"] = stripslashes($mig_config["image"]);
     }
 }
 
@@ -351,7 +376,8 @@ while ($workCopy) {
 $mig_config["albumdir"] = $mig_config["basedir"] . "/albums";   // Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
-$templateDir = $mig_config["basedir"] . "/templates";           // Where templates live
+// Where templates live
+$mig_config["templatedir"] = $mig_config["basedir"] . "/templates";
 
 // baseURL with the scriptname torn off the end
 $baseHref = ereg_replace("/[^/]+$", "", $mig_config["baseurl"]);
@@ -361,38 +387,36 @@ if ($phpNukeCompatible || $phpWebThingsCompatible) {
 }
 
 // Location of image library (for instance, where icons are kept)
-$imageDir = $baseHref . "/images";
+$mig_config["imagedir"] = $baseHref . "/images";
 
 // Root where album images are living
-$albumURLroot = $baseHref . "/albums";
+$mig_config["albumurlroot"] = $baseHref . "/albums";
 // NOTE: Sometimes Windows users have to set this manually, like:
-// $albumURLroot = "/mig/albums";
+// $mig_config["albumurlroot"] = "/mig/albums";
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
+
 if ($markerType != "prefix" && $markerType != "suffix" ) {
     $markerType = "suffix";
 }
+$mig_config["markertype"] = $markerType;
 
 if (! $markerLabel) {
     $markerLabel = "th";
 }
+$mig_config["markerlabel"] = $markerLabel;
 
 // Override folder sort if one's not present
-if (! $folderSortType) {
-    $folderSortType = $sortType;
+if (! $mig_config["foldersorttype"]) {
+    $mig_config["foldersorttype"] = $mig_config["sorttype"];
 }
 
 // Fetch mig.cf information
-list($hidden, $presort_dir, $presort_img, $desc, $short_desc, $bulletin,
-     $ficons, $folderTemplate, $folderPageTitle, $folderFolderCols,
-     $folderThumbCols, $folderThumbRows, $folderMaintAddr, $useThumbFile)
+list($presort_dir, $presort_img, $desc, $short_desc, $bulletin,
+     $ficons, $folderTemplate, $folderFolderCols,
+     $folderThumbCols, $folderThumbRows, $folderMaintAddr)
   = parseMigCf($mig_config["albumdir"]."/$currDir");
-
-// Determine page title to use
-if ($folderPageTitle) {
-    $pageTitle = $folderPageTitle;
-}
 
 // Set per-folder $maintAddr if one was defined
 if ($folderMaintAddr) {
@@ -417,9 +441,9 @@ if ($phpNukeCompatible) {
 } elseif ($phpWebThingsCompatible) {
     draw_header();
     if (function_exists("theme_draw_center_box_open")) {
-        theme_draw_center_box_open($pageTitle);
+        theme_draw_center_box_open($mig_config["pagetitle"]);
     } elseif (function_exists("theme_draw_box_open")) {
-        theme_draw_box_open($pageTitle);
+        theme_draw_box_open($mig_config["pagetitle"]);
     } else {
         print "ERROR: Can't find relevant drawing function";
         exit;
@@ -436,19 +460,19 @@ if ($phpNukeCompatible) {
 }
 
 // strip URL encoding here too
-$image = rawurldecode($image);
+$mig_config["image"] = rawurldecode($mig_config["image"]);
 
 // if pageType is "folder") generate a folder view
 
-if ($pageType == "folder") {
+if ($mig_config["pagetype"] == "folder") {
 
     // Determine which template to use
     if ($folderTemplate) {
         $templateFile = $folderTemplate;
     } elseif ($usePortal) {    // portal is in use
-        $templateFile = $templateDir . "/mig_folder.php";
+        $templateFile = $mig_config["templatedir"] . "/mig_folder.php";
     } else {
-        $templateFile = $templateDir . "/folder.html";
+        $templateFile = $mig_config["templatedir"] . "/folder.html";
     }
 
     // Determine columns and rows to use
@@ -463,33 +487,15 @@ if ($pageType == "folder") {
     // Generate some HTML to pass to the template printer
 
     // list of available folders
-    $folderList = buildDirList($albumURLroot, $currDir,
-                               $imageDir,
-                               $maxFolderColumns, $hidden, $presort_dir,
-                               $viewFolderCount, $markerType,
-                               $markerLabel, $ficons, $randomFolderThumbs,
-                               $folderNameLength, $useThumbFile,
-                               $ignoreDotDirectories, $useRealRandThumbs,
-                               $folderSortType);
+    $folderList = buildDirList($currDir, $maxFolderColumns, $presort_dir, $ficons);
     // list of available images
-    $imageList = buildImageList($currDir,
-                                $albumURLroot, $maxThumbColumns,
-                                $maxThumbRows, $markerType, $markerLabel,
-                                $folderList, $suppressImageInfo,
-                                $noThumbs,
-                                $thumbExt, $suppressAltTags, $sortType,
-                                $hidden, $presort_img, $desc, $short_desc,
-                                $imagePopup, $imagePopType,
-                                $imagePopLocationBar, $imagePopMenuBar,
-                                $imagePopToolBar, $commentFilePerImage,
-                                $startFrom, $commentFileShortComments,
-                                $showShortOnThumbPage, $imagePopMaxWidth,
-                                $imagePopMaxHeight, $pageType);
+    $imageList = buildImageList($currDir, $maxThumbColumns, $maxThumbRows,
+                                $folderList, $presort_img, $desc, $short_desc);
 
     // Only frame the lists in table code when appropriate
     
     // Set style of table, either with text or thumbnails
-    if ($randomFolderThumbs) {
+    if ($mig_config["randomfolderthumbs"]) {
         $folderTableClass = "folderthumbs";
     } else {
         $folderTableClass = "foldertext";
@@ -536,58 +542,49 @@ if ($pageType == "folder") {
     }
 
     // build the "back" link
-    $backLink = buildBackLink($currDir, "back",
-                              $noThumbs, "", $pageType, $image);
+    $backLink = buildBackLink($currDir, "back", "");
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir, "", $omitImageName);
+    $youAreHere = buildYouAreHere($currDir, "", $mig_config["omitimagename"]);
 
     // newcurrdir is currdir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
     // parse the template file and print to stdout
-    printTemplate($templateDir, $templateFile, $version, $maintAddr,
-                  $folderList, $imageList, $backLink, "", "", "",
-                  $newCurrDir, $pageTitle, "", "", "", $bulletin,
+    printTemplate($templateFile, $version, $maintAddr,
+                  $folderList, $imageList, $backLink, "",
+                  $newCurrDir, "", "", "", $bulletin,
                   $youAreHere, $distURL, $pathConvertFlag,
-                  $pathConvertRegex, $pathConvertTarget, $pageType,
-                  "", "", "", "", "");
+                  $pathConvertRegex, $pathConvertTarget, "", "", "", "");
 
 
 // If pageType is "image", show an image
 
-} elseif ($pageType == "image") {
+} elseif ($mig_config["pagetype"] == "image") {
 
     // Trick back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink("$currDir/blah", "up", $noThumbs, $startFrom, $pageType, $image);
+    $backLink = buildBackLink("$currDir/blah", "up");
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
-    $Links = buildNextPrevLinks($currDir, $image,
-                                $markerType, $markerLabel,
-                                $hidden, $presort_img, $sortType, $startFrom,
-                                $pageType);
+    $Links = buildNextPrevLinks($currDir, $presort_img);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    if ($commentFilePerImage) {
-        list($x, $description) = getImageDescFromFile($image,
-                                        $currDir, $commentFileShortComments);
+    if ($mig_config["commentfileperimage"]) {
+        list($x, $description) = getImageDescFromFile($currDir);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
-            list($x, $description) = getImageDescription($image, $desc,
-                                                         $short_desc);
+            list($x, $description) = getImageDescription($desc, $short_desc);
         }
     } else {
-        list($x, $description) = getImageDescription($image, $desc,
-                                                     $short_desc);
+        list($x, $description) = getImageDescription($desc, $short_desc);
     }
 
-    $exifDescription = getExifDescription($currDir, $image,
-                                          $exifFormatString);
+    $exifDescription = getExifDescription($currDir, $exifFormatString);
 
     // If there's a description but no exifDescription, just make the
     // exifDescription the description
@@ -611,13 +608,13 @@ if ($pageType == "folder") {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir, $image, $omitImageName);
+    $youAreHere = buildYouAreHere($currDir, $mig_config["omitimagename"]);
 
     // Which template to use.
     if ($usePortal) {           // portal is in use
-        $templateFile = $templateDir . "/mig_image.php";
+        $templateFile = $mig_config["templatedir"] . "/mig_image.php";
     } else {
-        $templateFile = $templateDir . "/image.html";
+        $templateFile = $mig_config["templatedir"] . "/image.html";
     }
 
     // newcurrdir is currdir without the leading "./"
@@ -626,14 +623,13 @@ if ($pageType == "folder") {
     if ($mig_config["uselargeimages"] &&
             file_exists($mig_config["albumdir"]."/$currDir/"
                       . $mig_config["largesubdir"]
-                      . "/$image"))
+                      . "/".$mig_config["image"]))
     {
-        $largeLink = buildLargeLink($currDir, $image, $startFrom);
+        $largeLink = buildLargeLink($currDir);
 
         // Only build this link if we plan to use it
         if ($largeLinkFromMedium) {
-            $largeHrefStart = buildLargeHrefStart($currDir,
-                                                  $image, $startFrom);
+            $largeHrefStart = buildLargeHrefStart($currDir);
             $largeHrefEnd = "</a>";
         }
 
@@ -644,49 +640,39 @@ if ($pageType == "folder") {
     }
 
     // Send it all to the template printer to dump to stdout
-    printTemplate($templateDir, $templateFile, $version, $maintAddr,
-                  "", "", $backLink, $albumURLroot, $image, $currDir,
-                  $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL,
-                  $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
-                  $pageType, "", $largeLink, $largeHrefStart, $largeHrefEnd,
+    printTemplate($templateFile, $version, $maintAddr, "", "", $backLink,
+                  $currDir, $newCurrDir, $prevLink, $nextLink, $currPos,
+                  $description, $youAreHere, $distURL, $pathConvertFlag, $pathConvertRegex,
+                  $pathConvertTarget, $largeLink, $largeHrefStart, $largeHrefEnd,
                   $largeLinkBorder);
 
 // If the pageType is "large", show a large image
 
-} elseif ($pageType == "large") {
+} elseif ($mig_config["pagetype"] == "large") {
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink("$currDir/blah", "up", "", "",
-                              $noThumbs, $startFrom, $pageType, $image);
+    $backLink = buildBackLink("$currDir/blah", "up", "", "");
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
-    $Links = buildNextPrevLinks($currDir, $image,
-                                $markerType, $markerLabel,
-                                $hidden, $presort_img, $sortType, $startFrom,
-                                $pageType);
+    $Links = buildNextPrevLinks($currDir, $presort_img);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    if ($commentFilePerImage) {
-        list($x, $description) = getImageDescFromFile($image,
-                                        $currDir, $commentFileShortComments);
+    if ($mig_config["commentfileperimage"]) {
+        list($x, $description) = getImageDescFromFile($currDir);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
-            list($x, $description) = getImageDescription($image, $desc,
-                                                         $short_desc);
+            list($x, $description) = getImageDescription($desc,$short_desc);
         }
     } else {
-        list($x, $description) = getImageDescription($image, $desc,
-                                                     $short_desc);
+        list($x, $description) = getImageDescription($desc,$short_desc);
     }
 
-    $exifDescription = getExifDescription($currDir, $image,
-                                          $exifFormatString);
+    $exifDescription = getExifDescription($currDir,$exifFormatString);
 
     // If there's a description but no exifDescription, just make the
     // exifDescription the description
@@ -710,25 +696,23 @@ if ($pageType == "folder") {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir, $image, $omitImageName);
+    $youAreHere = buildYouAreHere($currDir, $mig_config["omitimagename"]);
 
     // Which template to use
     if ($usePortal) {           // portal is in use
-        $templateFile = $templateDir . "/mig_large.php";
+        $templateFile = $mig_config["templatedir"] . "/mig_large.php";
     } else {
-        $templateFile = $templateDir . "/large.html";
+        $templateFile = $mig_config["templatedir"] . "/large.html";
     }
 
     // newcurrdir is currdir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
     // Send it all to the template printer to dump to stdout
-    printTemplate($templateDir, $templateFile, $version, $maintAddr,
-                  "", "", $backLink, $albumURLroot, $image, $currDir,
-                  $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL,
-                  $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
-                  $pageType, "", "", "", "");
+    printTemplate($templateFile, $version, $maintAddr, "", "", $backLink,
+                  $currDir, $newCurrDir, $prevLink, $nextLink, $currPos,
+                  $description, $youAreHere, $distURL, $pathConvertFlag, $pathConvertRegex,
+                  $pathConvertTarget, "", "", "", "");
 }
 
 // Finish up for content management systems
@@ -751,7 +735,7 @@ if ($phpNukeCompatible) {
     draw_footer();
 
 } elseif ($mig_xoopsCompatible) {
-    if ($pageType == "image") {
+    if ($mig_config["pagetype"] == "image") {
         $xoopsOption["show_rblock"] = $mig_xoopsRBlockForImage;
     } else {
         $xoopsOption["show_rblock"] = $mig_xoopsRBlockForFolder;
@@ -759,7 +743,7 @@ if ($phpNukeCompatible) {
     include(XOOPS_ROOT_PATH."/footer.php");
 
 } elseif ($mig_GeeklogCompatible) {
-    if ($pageType == "folder") {
+    if ($mig_config["pagetype"] == "folder") {
         echo COM_siteFooter($mig_GeeklogRBlockForFolder);
     } else {
         echo COM_siteFooter($mig_GeeklogRBlockForImage);

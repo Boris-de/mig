@@ -8,7 +8,6 @@
 // http://mig.sourceforge.net/
 //
 
-// The release number we are running.
 $version = 'VeRsIoN';
 
 

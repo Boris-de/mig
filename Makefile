@@ -53,6 +53,8 @@ dist: index
 	tar cfz $(ARCHIVE) $(SPOOLDIR)
 	rm -rf $(SPOOLDIR)
 	chmod 0644 $(ARCHIVE)
+	@echo " "
+	@echo "=> Mig $(ver) bundle complete <="
 
 index:
 	rm -f index.php
