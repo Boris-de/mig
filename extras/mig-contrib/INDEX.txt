@@ -1,0 +1,42 @@
+This file contains a description of each script in the mig-contrib
+package.  You can get the latest mig-contrib package at http://mig.sf.net/
+
+===========================================================================
+convert-metafiles.sh
+	This file used to be in the main Mig distribution, but it's now
+	deprecated.  It is used to call mf_conv.pl recursively to handle
+	all subfolders.  See description for mf_conv.pl.
+
+===========================================================================
+crypt.pl
+	Turns a plaintext password into a crypt() password
+
+===========================================================================
+featured.php
+	Fetches a random URL from a file and displays it.  Commonly used
+	for a "featured photo" link on one's site.
+
+===========================================================================
+gallery.sh
+	Automates resizing of image files using ImageMagick (mogrify).
+
+===========================================================================
+mf_conv.pl
+	This file used to be in the main Mig distribution, but it's now
+	deprecated.  It converts meta-files from old version of Mig (0.83
+	and earlier) to the new format (used in 0.90 and later).  If you
+	are not using a very old Mig you have no use for this script.
+
+===========================================================================
+migPutCommentInFile.sh
+	Inserts comments into JPEG files.
+
+===========================================================================
+mkGallery.php
+	Lets you run mkGallery via a web browser (useful to folks who
+	don't have shell access to their web server).
+
+===========================================================================
+phpnuke_module.php
+	A mock PHP-Nuke module so you can put Mig into the modules menu.
+
