@@ -1,3 +1,4 @@
+<?php
 
 // getImageDescFromFile() - Fetches an image description from a
 //                          per-image comment file (only used if
@@ -58,3 +59,4 @@ function getImageDescFromFile ( $image, $albumDir, $currDir, $short_flag )
 
 }   // -- End of getImageDescFromFile()
 
+?>

@@ -1,3 +1,4 @@
+<?php
 
 // Dutch - courtesy of Erik@Braindisorder.org
 $mig_config['lang_lib']['nl'] = array (
@@ -29,3 +30,4 @@ $mig_config['lang_lib']['nl'] = array (
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
+?>

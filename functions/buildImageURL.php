@@ -1,3 +1,4 @@
+<?php
 
 // buildImageURL() - spit out HTML for a particular image
 
@@ -299,3 +300,4 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
 
 }   // -- End of buildImageURL()
 
+?>

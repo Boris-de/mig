@@ -1,3 +1,4 @@
+<?php
 
 // buildImageList() - creates a list of images available
 
@@ -266,3 +267,4 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
 }   // -- End of buildImageList()
 
+?>

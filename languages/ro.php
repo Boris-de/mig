@@ -1,3 +1,4 @@
+<?php
 
 // Romanian - courtesy of Eugen Dedu <dedu@ese-metz.fr>
 $mig_config['lang_lib']['ro'] = array (
@@ -30,3 +31,4 @@ $mig_config['lang_lib']['ro'] = array (
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
+?>

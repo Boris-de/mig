@@ -1,3 +1,4 @@
+<?php
 
 // URL to use to call myself again
 if ($_SERVER['PHP_SELF']) {
@@ -136,6 +137,44 @@ if ($phpNukeCompatible) {
     }
 }
 
+// Jump has to come before currDir redirect to work
+
+if (! $jump) {
+    if ($_GET['jump']) {
+        $jump = $_GET['jump'];
+    } elseif ($HTTP_GET_VARS['jump']) {
+        $jump = $HTTP_GET_VARS['jump'];
+    }
+}
+
+if (! $SERVER_NAME) {
+    if ($_SERVER['SERVER_NAME']) {
+        $SERVER_NAME = $_SERVER['SERVER_NAME'];
+    } elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
+        $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
+    }
+}
+
+if (! $PATH_INFO) {
+    if ($_SERVER['PATH_INFO']) {
+        $PATH_INFO = $_SERVER['PATH_INFO'];
+    } elseif ($HTTP_SERVER_VARS['PATH_INFO']) {
+        $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
+    }
+}
+
+// Is this a jump-tag URL?
+if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
+    header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$jump]");
+    exit;
+}
+
+// Jump-tag using PATH_INFO rather than "....?jump=x" URI
+if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
+    header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
+    exit;
+}
+
 
 // Get currDir.  If there isn't one, default to '.'
 if ($_GET['currDir']) {
@@ -192,14 +231,6 @@ if (! $pageType) {
         $pageType = $HTTP_GET_VARS['pageType'];
     } else {
         $pageType = 'folder';
-    }
-}
-
-if (! $jump) {
-    if ($_GET['jump']) {
-        $jump = $_GET['jump'];
-    } elseif ($HTTP_GET_VARS['jump']) {
-        $jump = $HTTP_GET_VARS['jump'];
     }
 }
 
@@ -332,34 +363,6 @@ if ($markerType != 'prefix' && $markerType != 'suffix' ) {
 
 if (! $markerLabel) {
     $markerLabel = 'th';
-}
-
-if (! $SERVER_NAME) {
-    if ($_SERVER['SERVER_NAME']) {
-        $SERVER_NAME = $_SERVER['SERVER_NAME'];
-    } elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
-        $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
-    }
-}
-
-if (! $PATH_INFO) {
-    if ($_SERVER['PATH_INFO']) {
-        $PATH_INFO = $_SERVER['PATH_INFO'];
-    } elseif ($HTTP_SERVER_VARS['PATH_INFO']) {
-        $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
-    }
-}
-
-// Is this a jump-tag URL?
-if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$jump]");
-    exit;
-}
-
-// Jump-tag using PATH_INFO rather than "....?jump=x" URI
-if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
-    exit;
 }
 
 // Override folder sort if one's not present
@@ -751,3 +754,4 @@ if ($phpNukeCompatible) {
 
 }
 
+?>

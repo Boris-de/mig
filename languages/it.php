@@ -1,3 +1,4 @@
+<?php
 
 // Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
 // Updated by Fabio Fioravanti <fioravanti@iasi.rm.cnr.it>
@@ -30,3 +31,4 @@ $mig_config['lang_lib']['it'] = array (
                                '10' => 'Ott', '11' => 'Nov', '12' => 'Dic')
 );
 
+?>

@@ -1,4 +1,5 @@
- <!-- location -->
+
+<!-- location -->
 <center>
  <strong>%%youAreHere%%&nbsp;&nbsp;(%%currPos%%)<br /></strong>
 </center>

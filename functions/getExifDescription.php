@@ -1,3 +1,4 @@
+<?php
 
 // getExifDescription() - Fetches a comment if available from the
 //                        Exif comments file (exif.inf) as well as
@@ -115,3 +116,4 @@ function getExifDescription ( $albumDir, $currDir, $image, $formatString )
 
 }   // -- End of getExifDescription()
 
+?>

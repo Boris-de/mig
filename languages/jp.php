@@ -1,3 +1,4 @@
+<?php
 
 // Japanese - courtesy of Masaru Onozawa <masy@webmasters.gr.jp>
 $mig_config['lang_lib']['jp'] = array (
@@ -37,3 +38,4 @@ $mig_config['lang_lib']['jp'] = array (
                                '12' => '12&nbsp;月' )
 );
 
+?>

@@ -1,3 +1,4 @@
+<?php
 
 // buildDirList() - creates list of directories available
 
@@ -269,3 +270,4 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
 }   // -- End of buildDirList()
 
+?>

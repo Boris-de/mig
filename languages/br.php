@@ -1,3 +1,4 @@
+<?php
 
 // Portugese - courtesy of Fadel <fadel@fee.unicamp.br>
 $mig_config['lang_lib']['br'] = array (
@@ -30,3 +31,4 @@ $mig_config['lang_lib']['br'] = array (
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
+?>

@@ -1,3 +1,4 @@
+<?php
 
 // buildNextPrevLinks() - Build a link to the "next" and "previous"
 //                        images.
@@ -186,3 +187,4 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
 
 }   // -- End of buildNextPrevLinks()
 
+?>

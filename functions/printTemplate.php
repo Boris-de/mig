@@ -1,3 +1,4 @@
+<?php
 
 // printTemplate() - prints HTML page from a template file
 
@@ -127,3 +128,4 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
 
 }    // -- End of printTemplate()
 
+?>

@@ -1,3 +1,4 @@
+<?php
 
 // getNewCurrDir() - replaces the silly old $newCurrDir being all
 //                   over the place.  Especially in the URI string itself.
@@ -12,3 +13,4 @@ function getNewCurrDir ( $currDir )
 
 }   // -- End of getNewCurrDir()
 
+?>

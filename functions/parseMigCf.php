@@ -1,3 +1,4 @@
+<?php
 
 // parseMigCf - Parse a mig.cf file
 
@@ -164,3 +165,4 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir,
 
 }   //  -- End of parseMigCf()
 
+?>

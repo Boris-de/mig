@@ -1,3 +1,4 @@
+<?php
 
 //
 // Mig - A general purpose photo gallery management system.
@@ -54,3 +55,4 @@ $version = 'VeRsIoN';
 // code that others can download if they wish to do so.
 //
 
+?>

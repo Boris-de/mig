@@ -1,3 +1,4 @@
+<?php
 
 // getRandomThumb() - Find a random thumbnail to show instead of the folder
 //                    icon.
@@ -227,3 +228,4 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
 
 }   // -- End of getRandomThumb()
 
+?>

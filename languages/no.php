@@ -1,3 +1,4 @@
+<?php
 
 // Norwegian
 // Translated by Joffer aka Christopher Thorjussen - January 8th, 2000
@@ -30,3 +31,4 @@ $mig_config['lang_lib']['no'] = array (
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
+?>

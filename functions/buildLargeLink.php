@@ -1,3 +1,4 @@
+<?php
 
 // buildLargeLink() - builds the text used for template keyword largeLink
 
@@ -24,3 +25,4 @@ function buildLargeLink( $baseURL, $currDir, $image, $startFrom )
 
 }   // -- End of buildLargeLink()
 
+?>

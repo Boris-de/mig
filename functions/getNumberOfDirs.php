@@ -1,3 +1,4 @@
+<?php
 
 // getNumberOfDirs() - Counts subdirectories in a given folder
 
@@ -29,3 +30,4 @@ function getNumberOfDirs ( $folder, $useThumbSubdir, $thumbSubdir,
 
 }   // -- End of getNumberOfDirs()
 
+?>

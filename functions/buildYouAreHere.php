@@ -1,3 +1,4 @@
+<?php
 
 // buildYouAreHere() - build the "You are here" line for the top
 //                     of each page
@@ -70,3 +71,4 @@ function buildYouAreHere ( $baseURL, $currDir, $image, $omitImageName )
 
 }   // -- End of buildYouAreHere()
 
+?>

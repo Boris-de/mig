@@ -59,7 +59,9 @@ dist: index
 	chmod 0644 $(ARCHIVE)
 
 index:
-	( echo '<?php'; sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
+	rm -f index.php
+	echo "<?php" > index.php
+	( sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
 	  cat main/pathConvert.php; cat main/defaults.php; \
 	  echo '//'; echo '// Function library'; echo '//'; \
 	  cat functions/*.php; \
@@ -67,7 +69,8 @@ index:
 	  cat languages/*.php; \
 	  echo '//'; echo '// Main logic'; echo '//'; \
 	  cat main/body.php; echo '?>' \
-	) > index.php
+	) | egrep -v '^(<\?php|\?>)' >> index.php
+	echo "?>" >> index.php
 
 docpublish:
 	cd docs ; make publish

@@ -1,3 +1,4 @@
+<?php
 
 // French - courtesy of jérôme ROUER <CCFRANCE.bibli@bigpond.com.kh>
 //          Updated July 2002 by Yannick Massé <ymasse@henna-tatoo.net>
@@ -30,3 +31,4 @@ $mig_config['lang_lib']['fr'] = array (
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
+?>

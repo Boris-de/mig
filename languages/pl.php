@@ -1,3 +1,4 @@
+<?php
 
 // Polish - courtesy of martvin@box43.pl
 $mig_config['lang_lib']['pl'] = array (
@@ -29,3 +30,4 @@ $mig_config['lang_lib']['pl'] = array (
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
+?>

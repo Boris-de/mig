@@ -1,3 +1,4 @@
+<?php
 
 // -----------------------------------------------------------------
 //                    MODIFYING THE INCLUDE PATH
@@ -78,3 +79,4 @@ $pathConvertTarget = '';
 // End of "INCLUDE PATH" modification section
 // -----------------------------------------------------------------
 
+?>

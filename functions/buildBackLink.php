@@ -1,3 +1,4 @@
+<?php
 
 // buildBackLink() - spits out a "back one section" link
 
@@ -63,3 +64,4 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
 
 }   // -- End of buildBackLink()
 
+?>

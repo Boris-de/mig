@@ -1,3 +1,4 @@
+<?php
 
 // German - courtesy of "Burckhard Loeh" <lb@loeh.cx>
 // Updated by Ekkehard Dörre <ekke@doerre.net>
@@ -31,3 +32,4 @@ $mig_config['lang_lib']['de'] = array (
                                '10' => 'Okt', '11' => 'Nov', '12' => 'Dez')
 );
 
+?>

@@ -1,3 +1,4 @@
+<?php
 
 // buildLargeHrefStart() - builds the text used for template keyword
 //                         largeHrefStart
@@ -21,3 +22,4 @@ function buildLargeHrefStart ( $baseURL, $currDir, $image, $startFrom )
 
 }   // -- End of buildLargeHrefStart()
 
+?>

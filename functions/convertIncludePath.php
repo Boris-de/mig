@@ -1,3 +1,4 @@
+<?php
 
 // convertIncludePath() - Converts the path used by include() if needed.
 //                        (Not normally needed, but some installs of PHP
@@ -13,3 +14,4 @@ function convertIncludePath ( $flag, $path='', $regex, $new )
 
 }   // -- End of convertIncludePath()
 
+?>
