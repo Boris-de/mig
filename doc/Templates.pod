@@ -133,7 +133,8 @@ are expanded to.
 
     %%baseURL%%         Base URL to call this script (Mig) again.
     %%maintAddr%%       Email address of album maintainer (as defined
-                        in config.php).
+                        in config.php).  This can be customized per-
+			folder as well (see docs/mig_cf.txt).
     %%version%%         Current version number of this Mig installation.
     %%backLink%%        This is the "up one level" link on each page.
     %%currDir%%         Current directory, in URL-encoded format.

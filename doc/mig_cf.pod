@@ -146,6 +146,14 @@ You can define a page title per-folder.  Just add the C<PageTitle>
 tag, followed by a single space, followed by the string you wish
 to use as the page title for this folder.
 
+=head2 PER-FOLDER MAINTAINER ADDRESS
+
+    MaintAddr joe@mama.com
+
+You can define a per-folder maintainer email address.  The global value
+set in config.php will be used normally, but if the current folder's mig.cf
+contains a MaintAddr line, that address will be used instead.
+
 =head2 PER-FOLDER COLUMN SETTINGS
 
     MaxFolderColumns 2

@@ -74,5 +74,7 @@ in a folder list.
 
 Pop-up windows can be enabled if so desired.
 
+Maintainer's email address in each folder can be customized.
+
 =cut
 

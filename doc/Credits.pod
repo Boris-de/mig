@@ -80,6 +80,9 @@ Martin <martvin@box43.pl> for the Polish translation.
 Marco Ermini <markoer@firenze.linux.it> for the improved Italian
 translation.
 
+Simon Wood <simon@mungewell.org> for contributing the patch to create the
+C<MaintAddr> keyword in mig.cf files.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.
 
