@@ -24,6 +24,7 @@
 //  it      Italian
 //  es      Spanish
 //  sk      Slovak
+//  nl      Dutch
 //
 
 // English (default)
@@ -267,6 +268,20 @@ $mig_messages['sk'] = array (
     'thumbview'     => 'sp&#228;?&nbsp;na&nbsp;zmen?eniny&nbsp;obr&#225;zkov'
                      . '(thumbnail)',
     'up_one'        => 'o&nbsp;&#250;rove&#242;&nbsp;vy??ie'
+);
+
+// Dutch - courtesy of Erik@Braindisorder.org
+$mig_messages['nl'] = array (
+    'backhome'      => 'Terug&nbsp;naar',
+    'bytes'         => '&nbsp;bytes',
+    'main'          => 'Hoofdmenu',
+    'must_auth'     => 'Je moet een geldige naam en wachtwoord invoeren'
+                     . 'om hier naar binnen te gaan',
+    'nextimage'     => 'volgende&nbsp;foto',
+    'no_contents'   => 'Geen&nbsp;commentaar.',
+    'previmage'     => 'vorige&nbsp;foto',
+    'thumbview'     => 'terug&nbsp;naar&nbsp;overzicht',
+    'up_one'        => 'een&nbsp;niveau&nbsp;omhoog'
 );
 
 ?>

@@ -68,6 +68,8 @@ Alessandro Poletto (pollok@toth.it) for the Italian translation.
 
 Juro Polak (polak@axon.sk) for the Slovak translation.
 
+Erik@Braindisorder.org for the Dutch translation.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with MiG.
 
