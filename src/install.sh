@@ -420,62 +420,6 @@ fi
 echo " "
 echo "  => templates directory"
 mkdir -m 0755 -p ${installdir}/templates
-
-if [ -d "${installdir}/albums/Examples and Such" ]; then
-    echo "I found ${installdir}/albums/Examples and Such/"
-    answer=x
-    while [ "${answer}" != "n" -a "${answer}" != "y" ]; do
-        ${echo} -n "Should I remove it?  It's old and outdated. (y/n) "
-        read yn
-        if [ "${yn}" = "quit" ]; then
-            exit
-        fi
-        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'`
-    done
-    if [ "${answer}" = "y" ]; then
-        echo "  => removing old example album \"Examples and Such\" ..."
-        /bin/rm -rf ${installdir}/albums/Examples\ and\ Such
-    else
-        echo "OK, leaving it alone."
-    fi
-fi
-
-echo " "
-echo "An example gallery is included with Mig to provide a tactile"
-echo "installation which you can use to learn more about how a gallery"
-echo "might be set up."
-echo " "
-
-answer=x
-while [ "${answer}" != "y" -a "${answer}" != "n" ]; do
-    ${echo} -n "Do you wish to install the example gallery? (y/n) "
-    read yn
-    if [ "${yn}" = "quit" ]; then
-        exit
-    fi
-    answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'`
-done
-
-if [ "${answer}" = "n" ]; then
-    echo " "
-    echo "  => skipping example gallery"
-fi
-
-if [ "${answer}" = "y" ]; then
-    echo " "
-    echo "  => installing example gallery in \"Example_Gallery\"..."
-    cd ${mypwd}
-    if [ -w ${installdir}/albums ]; then
-        tar cf - Example_Gallery | ( cd ${installdir}/albums ; tar xf - )
-    else
-        echo " "
-        echo "Uh oh... can't write to ${installdir}/albums !"
-        echo "Can't install example gallery."
-        echo " "
-    fi
-    cd ${mypwd}
-fi
-
 echo " "
 
 if [ "${phpNuke}" = "ON" ]; then
