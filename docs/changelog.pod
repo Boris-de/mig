@@ -4,6 +4,10 @@
 
 =head2 Version 1.4.1 (NOT YET RELEASED)
 
+[Sourceforge bug report #974964] - Fixed bug in C<buildDirList()>
+and C<buildImageList()> where an array pointer was not reset after
+use. (Dan)
+
 Added Hungarian (hu) translation (Dan)
 
 Added Slovenian (si) translation (Dan)

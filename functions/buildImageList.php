@@ -109,7 +109,8 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     while (list($file,$junk) = each($mig_config['hidden']))
         unset ($presorted[$file]);
 
-    reset($presorted);          // reset array pointer
+    reset($presorted);              // reset array pointers
+    reset($mig_config['hidden']);
 
     // If there are images, start the table
     if ($thumbsInFolder) {

@@ -98,7 +98,8 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     while (list($file,$junk) = each($mig_config['hidden']))
         unset ($presorted[$file]);
 
-    reset($presorted);          // reset array pointer
+    reset($presorted);              // reset array pointers
+    reset($mig_config['hidden']);
 
     // Iterate through all folders now that we have our final list.
     while (list($file,$junk) = each($presorted)) {
