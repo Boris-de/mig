@@ -2,8 +2,9 @@
 //  parseExifDate() - parses an EXIF date string and returns it in a
 //  more human-readable format.
 
-function parseExifDate ($stamp)
+function parseExifDate ( $stamp )
 {
+
     global $mig_config;
 
     // Separate into a date and a time
@@ -11,9 +12,9 @@ function parseExifDate ($stamp)
 
     // Parse date
     list($year, $month, $day) = split(':', $date);
+
     // Turn numeric month into a 3-character month string
     $month = $mig_config['lang']['month'][$month];
-    $date = $month .' '. $day .' '. $year;
 
     // Parse time
     list($hour, $minute, $second) = split(':', $time);
@@ -21,7 +22,7 @@ function parseExifDate ($stamp)
     // Translate into 12-hour time
     switch ($hour) {
         case '00':
-            $time = '12:' .$minute. 'AM';
+            $time = '12:' . $minute . $mig_config['lang']['am'];
             break;
         case '01':
         case '02':
@@ -34,10 +35,10 @@ function parseExifDate ($stamp)
         case '09':
         case '10':
         case '11':
-            $time = $hour .':'. $minute .'AM';
+            $time = $hour . ':' . $minute . $mig_config['lang']['am'];
             break;
         case '12':
-            $time = $hour .':'. $minute . 'PM';
+            $time = $hour . ':' . $minute . $mig_config['lang']['pm'];
             break;
         case '13':
         case '14':
@@ -50,14 +51,13 @@ function parseExifDate ($stamp)
         case '21':
         case '22':
         case '23':
-            $time = ($hour - 12) .':'. $minute . 'PM';
+            $time = ($hour - 12) . ':' . $minute . $mig_config['lang']['pm'];
             break;
     }
 
-    // Re-join before returning so it's one string
-    $stamp = $date .', '. $time;
+    $retval = array ( $year, $month, $day, $time );
 
-    return ($stamp);
+    return ($retval);
 
 }   // -- End of parseExifDate()
 

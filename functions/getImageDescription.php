@@ -4,6 +4,7 @@
 
 function getImageDescription( $image, $description )
 {
+
     $imageDesc = '';
     if ($description[$image]) {
         $imageDesc = $description[$image];

@@ -4,6 +4,7 @@
 
 function getImageDescFromFile( $image, $albumDir, $currDir )
 {
+
     $imageDesc = '';
     $fname = getFileName($image);
 

@@ -2,6 +2,8 @@
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
 // with some adjustments from JMN <umjumasa@terra.es>
 $mig_config['lang_lib']['es'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'     => 'regresar&nbsp;inicio',
     'bytes'        => '&nbsp;bytes',
     'flash_used'   => 'flash usado',

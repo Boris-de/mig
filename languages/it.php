@@ -1,6 +1,8 @@
 
 // Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
 $mig_config['lang_lib']['it'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'     => 'torna&nbsp;a',
     'bytes'        => '&nbsp;bytes',
     'flash_used'   => 'usato flash',

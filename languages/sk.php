@@ -1,6 +1,8 @@
 
 // Slovak - courtesy of Juro Polak <polak@axon.sk>
 $mig_config['lang_lib']['sk'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => 'sp&#228;?&nbsp;na',
     'bytes'         => '&nbsp;bytov',
     'flash_used'    => 'flash used',

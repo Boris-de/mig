@@ -1,6 +1,8 @@
 
 // Portugese - courtesy of Fadel <fadel@fee.unicamp.br>
 $mig_config['lang_lib']['br'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => 'voltar&nbsp;para',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash usado',

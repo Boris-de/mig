@@ -276,6 +276,10 @@ ISO rating, the original shooting date and time, and sometimes comments.
 Mig can read some, but not all, of this data.  Future versions of Mig may
 understand more of the data than it currently does.
 
+By default Mig only shows embedded comments.  To show more, adjust the
+format string C<$exifFormatString> found in F<config.php>.  There are
+examples in that file that explain how the formatting works.
+
 Note that most graphic editors destroy EXIF blocks!  They don't know how to
 write them so when they save images, they are simply not written back into
 the file.

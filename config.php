@@ -209,39 +209,6 @@ $suppressAltTags = FALSE;
 
 
 //
-// $viewCamInfo
-//     Boolean to determine whether to show camera settings in EXIF if
-//     they're available (i.e. camera model, aperture, shutter, etc).
-//     If you want to show camera model, aperture, shutter, focal length,
-//     set to TRUE.
-//
-// Defaults to FALSE.
-//
-// Example:
-//     $viewCamInfo = FALSE;
-//
-
-$viewCamInfo = FALSE;
-
-
-//
-// $viewDateInfo
-//     Boolean to determine whether to show date from EXIF (if available).
-//     If $viewCamInfo is FALSE, then $viewDateInfo is also set to false.
-//
-//     If you want EXIF info to include the date & time the image was
-//     taken, set to TRUE.
-//
-// Defaults to FALSE.
-//
-// Example:
-//     $viewDateInfo = FALSE;
-//
-
-$viewDateInfo = FALSE;
-
-
-//
 // $viewFolderCount
 //     Boolean to determine whether or not to count images in each folder
 //     and display this, in folder views, next to the folder name.
@@ -353,6 +320,70 @@ $commentFilePerImage = FALSE;
 
 
 //
+// $exifFormatString
+//     Defines the display format for EXIF data blocks.  Sections are
+//     separated by | characters.  For example:
+//     
+//         '|%c<hr>|%M %D %Y, %T - |%m<br>|%l |%s |%a|'
+//
+//     Each block is contained between two | characters.  If any one
+//     item inside the block can be expanded, the block will be printed.
+//     If not, it will be ignored.  (This way if you have some images
+//     with comments, some without, it won't always print that <HR>
+//     for example... it will ignore it... same with the hyphen after
+//     the timestamp, or the comma in between the year and the time).
+//
+//     Valid items are:
+//         %a   Aperture
+//         %c   Embedded comment
+//         %f   Flash used
+//         %i   ISO equivalent
+//         %l   Focal length
+//         %m   Camera model
+//         %s   Shutter speed
+//         %Y   Year
+//         %M   Month (alphabetic, i.e. "Mar")
+//         %D   Day
+//         %T   Time (i.e. "12:54PM")
+//
+//     (Dates and times are original shooting date and time, not the
+//     timestamp of the file.)
+//
+//     So in the above example, for instance, if there is an embedded
+//     comment, that comment would be printed followed by "<HR>".  But
+//     if no comment is present for the image, nothing will be printed.
+//     If the month, day, year, or time (or all of them) can be expanded,
+//     that block will print.  Otherwise it will be ignored.  And so on.
+//
+//     The default (shown below) might expand to look something like this
+//     on your screen:
+//
+//                  This is a comment
+//         --------------------------------------
+//          Jan 04 2002, 12:54PM - Canon EOS D30
+//           ISO 100 85mm 1/45 f5.6 (flash used)
+//
+// Defaults to '|%c|' - which is just embedded comments.
+//
+// Examples:
+//
+//  Just the date and time:
+//     $exifFormatString = '|%M %D %Y, %T|';
+//
+//  What used to be called $viewCamInfo would look like this:
+//     $exifFormatString = '|%c<hr>|%m<br>|ISO %i |%l |%s |%a |(%f)|';
+//
+//  What used to be $viewCamInfo and $viewDateInfo together is:
+//     '|%c<hr>|%M %D %Y, %T - |%m<br>|ISO %i |%l |%s |%a |(%f)|';
+//
+//  That last example is also the full range of what Mig currently
+//  understands how to parse from EXIF blocks.
+//
+
+$exifFormatString = '|%c|';
+
+
+//
 // $mig_language
 //     What language to use.
 //
@@ -399,42 +430,6 @@ $mig_language = 'en';
 // Example:
 //     $jumpMap['example'] = 'currDir=./Mig_Example_Gallery';
 //
-
-
-// -----------------------------------------------------------------
-//                     PHP-Nuke related items
-// -----------------------------------------------------------------
-//
-// $phpNukeCompatible
-//     PHP-Nuke compatibility mode (www.phpnuke.org)
-//     For more information, see the "phpnuke" document.
-//
-//     This was last tested with PHPNuke 4.2 - I have no idea if this
-//     works with anything newer than that!
-//
-//    Set this to TRUE only if you're using PHP-Nuke.
-//
-// Defaults to FALSE.
-//
-// Examples:
-//     $phpNukeCompatible = TRUE;
-//     $phpNukeCompatible = FALSE;  (default)
-//
-
-$phpNukeCompatible = FALSE;
-
-//
-// $phpNukeRoot
-//     Set this to the full path to the root of your phpNuke install.
-//     (Ignored if $phpNukeCompatible is set to FALSE).
-//
-// No default.
-//
-// Example:
-//     $phpNukeRoot = '/usr/apache/htdocs';
-//
-
-$phpNukeRoot = '';
 
 
 // -----------------------------------------------------------------

@@ -1,6 +1,8 @@
 
 // English (default)
 $mig_config['lang_lib']['en'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => 'back&nbsp;to',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',

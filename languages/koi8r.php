@@ -1,6 +1,8 @@
 
 // Russian KOI8-R - courtesy of Anatoly Ropotov <lynx@rulez.lv>
 $mig_config['lang_lib']['koi8r'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => '&#215;&#197;&#210;&#206;&#213;&#212;&#216;&#211;'
                      . '&#209;&nbsp;&#203;',
     'bytes'         => '&nbsp;&#194;&#193;&#202;&#212;',

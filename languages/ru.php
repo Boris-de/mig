@@ -1,6 +1,8 @@
 
 // Russian Windows-1251 - courtesy of Anatoly Ropotov <lynx@rulez.lv>
 $mig_config['lang_lib']['ru'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => '&#226;&229;&#240;&#237;&#243;&#242;&#252;&#241;'
                      . '&#255;&nbsp;&#234;',
     'bytes'         => '&nbsp;&#225;&#224;&#233;&#242;',

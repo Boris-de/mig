@@ -43,10 +43,6 @@ if (file_exists($configFile))
 // Grab appropriate language from library
 $mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
 
-// Change baseDir for PHP-Nuke compatibility mode
-if ($phpNukeCompatible)
-    $baseDir .= '/mig';
-
 // Backward compatibility with older config.php/mig.cfg versions
 if ($maxColumns)
     $maxThumbColumns = $maxColumns;
@@ -120,10 +116,6 @@ $templateDir = $baseDir . '/templates'; // Where templates live
 // baseURL with the scriptname torn off the end
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
 
-// Change $baseHref for PHP-Nuke compatibility mode
-if ($phpNukeCompatible)
-    $baseHref .= '/mig';
-
 // Location of image library (for instance, where icons are kept)
 $imageDir = $baseHref . '/images';
 
@@ -158,27 +150,6 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
     exit;
 }
 
-// Is this a PHP-Nuke site?
-if ($phpNukeCompatible) {
-
-    // Bail out if the root directory isn't set.
-    if (! $phpNukeRoot) {
-        print "FATAL ERROR: phpNuke Root Directory is not set.";
-        exit;
-    }
-
-    if (! isset($mainfile))
-        include('mainfile.php');        // PHP-Nuke library
-
-    include('header.php');              // PHP-Nuke library
-
-    // A table to nest Mig in, inside the PHPNuke framework
-    print '<table width="100%" border="0" cellspacing="0" cellpadding="2"'
-        . ' bgcolor="#000000"><tr><td>'
-        . '<table width="100%" border="0" cellspacing="1" cellpadding="7"'
-        . ' bgcolor="#FFFFFF"><tr><td>';
-}
-
 // Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
 if (strstr($currDir, '..')) {
@@ -202,8 +173,6 @@ if ($pageType == 'folder') {
     // Determine which template to use
     if ($folderTemplate)
         $templateFile = $folderTemplate;
-    elseif ($phpNukeCompatible)
-        $templateFile = $templateDir . '/mig_folder.php';
     else
         $templateFile = $templateDir . '/folder.html';
 
@@ -316,7 +285,7 @@ if ($pageType == 'folder') {
         $description  = getImageDescription($image, $desc);
 
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
-                                          $viewCamInfo, $viewDateInfo);
+                                          $exifFormatString);
 
     // If there's a description but no exifDescription, just make the
     // exifDescription the description
@@ -338,11 +307,8 @@ if ($pageType == 'folder') {
     // Build the "you are here" line
     $youAreHere = buildYouAreHere($baseURL, $currDir, $image);
 
-    // Determine what template to use, based on what mode we are in
-    if ($phpNukeCompatible)
-        $templateFile = $templateDir . '/mig_image.php';
-    else
-        $templateFile = $templateDir . '/image.html';
+    // Which template to use.
+    $templateFile = $templateDir . '/image.html';
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -352,11 +318,5 @@ if ($pageType == 'folder') {
                   NULL, NULL, $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
                   $description, $youAreHere, $distURL, $albumDir);
-}
-
-// If in PHPNuke mode, finish up the tables and such needed for PHPNuke
-if ($phpNukeCompatible) {
-    print '</table></center></td></tr></table>';
-    include('footer.php');
 }
 

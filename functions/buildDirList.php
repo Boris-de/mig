@@ -57,9 +57,8 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
 
     // snatch each element from $directories and shove it on the end of
     // $presorted
-    while (list($file,$junk) = each($directories)) {
+    while (list($file,$junk) = each($directories))
         $presorted[$file] = TRUE;
-    }
 
     reset($presorted);          // reset array pointer
 
@@ -72,9 +71,8 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     while (list($file,$junk) = each($presorted)) {
 
         // Start a new row if appropriate
-        if ($col == 0) {
+        if ($col == 0)
             $directoryList .= '<tr>';
-        }
 
         // Surmise the full path to work with
         $newCurrDir = $oldCurrDir . '/' . $file;
@@ -98,17 +96,18 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
         // the end of the list.
         $directoryList .= '<td class="folder">' . $linkURL . '<img src="'
                        . $imageDir . '/';
-        if ($ficons[$file]) {
+        if ($ficons[$file])
             $directoryList .= $ficons[$file];
-        } else {
+        else
             $directoryList .= 'folder.gif';
-        }
+
         $directoryList .= '" border="0"></a>&nbsp;'
                        . $linkURL . '<font size="-1">' . $nbspfile
                        . '</font></a>';
-        if ($viewFolderCount and $counts[$file] > 0) {
+
+        if ($viewFolderCount and $counts[$file] > 0)
             $directoryList .= ' (' . $counts[$file] . ')';
-        }
+
         $directoryList .= '</td>';
 
         // Keep track of what row/column we're on
@@ -124,14 +123,11 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     closedir($dir); 
 
     // If there aren't any subfolders to look at, then just say so.
-    if ($directoryList == '') {
+    if ($directoryList == '')
         return 'NULL';
-
-    } elseif (!eregi('</tr>$', $directoryList)) {
-
+    elseif (!eregi('</tr>$', $directoryList))
         // Stick a </tr> on the end if it isn't there already
         $directoryList .= '</tr>';
-    }
 
     return $directoryList;
 

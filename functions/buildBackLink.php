@@ -2,18 +2,16 @@
 // buildBackLink() - spits out a "back one section" link
 
 function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
-                        $noThumbs)
+                        $noThumbs )
 {
+
     global $mig_config;
 
     // $type notes whether we want a "back" link or "up one level" link.
-    if ($type == 'back' or $noThumbs) {
-        //$label = 'up&nbsp;one&nbsp;level';
+    if ($type == 'back' or $noThumbs)
         $label = $mig_config['lang']['up_one'];
-    } elseif ($type == 'up') {
-        //$label = 'back&nbsp;to&nbsp;thumbnail&nbsp;view';
+    elseif ($type == 'up')
         $label = $mig_config['lang']['thumbview'];
-    }
 
     // don't send a link back if we're a the root of the tree
     if ($currDir == '.') {

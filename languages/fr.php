@@ -1,6 +1,8 @@
 
 // French - courtesy of jérôme ROUER <CCFRANCE.bibli@bigpond.com.kh>
 $mig_config['lang_lib']['fr'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => 'Retour&nbsp;vers',
     'bytes'         => '&nbsp;octets',
     'flash_used'    => 'flash utilis&#233;',

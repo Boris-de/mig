@@ -4,6 +4,7 @@
 
 function buildYouAreHere( $baseURL, $currDir, $image )
 {
+
     global $mig_config;
 
     // Use $workingCopy so we don't trash value of $currDir
@@ -21,12 +22,11 @@ function buildYouAreHere( $baseURL, $currDir, $image )
         // Get a URL-encoded copy of $workingCopy
         $encodedCopy = migURLencode($workingCopy);
 
-        if ($image == '' and $workingCopy == $currDir) {
+        if ($image == '' and $workingCopy == $currDir)
             $url = '&nbsp;:&nbsp;<b>' . $label . '</b>';
-        } else {
+        else
             $url = '&nbsp;:&nbsp;<a href="' . $baseURL . '?currDir='
                  . $encodedCopy . '">' . $label . '</a>';
-        }
 
         // Strip the last piece off of $workingCopy to go to next loop
         $workingCopy = ereg_replace('/[^/]+$', '', $workingCopy);
@@ -51,9 +51,8 @@ function buildYouAreHere( $baseURL, $currDir, $image )
     }
 
     // If there's an image, tack it onto the end of the hereString
-    if ($image != '') {
+    if ($image != '')
         $hereString .= '&nbsp;:&nbsp;<b>' . $image . '</b>';
-    }
 
     $x = $hereString;
     $hereString = '<font size="-1">' . $x . '</font>';

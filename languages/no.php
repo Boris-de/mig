@@ -3,6 +3,8 @@
 // Translated by Joffer aka Christopher Thorjussen - January 8th, 2000
 // http://www.irc-arendal.net
 $mig_config['lang_lib']['no'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => 'tilbake',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',

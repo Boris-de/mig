@@ -1,6 +1,8 @@
 
 // Finnish - courtesy of Jani Mikkonen <jani@mikkonen.org>
 $mig_config['lang_lib']['fi'] = array (
+    'am'            => 'AM',
+    'pm'            => 'PM',
     'backhome'      => 'takaisin',
     'bytes'         => '&nbsp;byte&#228;',
     'flash_used'    => 'flash used',

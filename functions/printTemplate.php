@@ -5,11 +5,10 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $maintAddr, $folderList, $imageList, $backLink,
                          $albumURLroot, $image, $currDir, $newCurrDir,
                          $pageTitle, $prevLink, $nextLink, $currPos,
-                         $description, $youAreHere, $distURL, $albumDir)
+                         $description, $youAreHere, $distURL, $albumDir )
 {
-    if (! ereg('^/', $templateFile)) {
+    if (! ereg('^/', $templateFile))
         $templateFile = $albumDir . '/' . $newCurrDir . '/' . $templateFile;
-    }
 
     // Panic if the template file doesn't exist.
     if (! file_exists($templateFile)) {
@@ -80,9 +79,8 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
             );
 
             // Do substitution for various variables
-            while (list($key,$val) = each($replacement_list)) {
+            while (list($key,$val) = each($replacement_list))
                 $line = str_replace("%%$val%%", $$val, $line);
-            }
 
             print $line;                // Print resulting line
         }

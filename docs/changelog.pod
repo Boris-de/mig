@@ -53,6 +53,14 @@ Modified F<mkGallery.pl> to use thumbnail subdirectories by default.
 Added C<-f> flag to F<mkGallery.pl>, so one can specify the path to the
 F<config.php> file if so desired.
 
+Deprecated the C<$viewCamInfo> and C<$viewDateInfo> options.  Everything
+related to EXIF formatting is now controlled by the C<$exifFormatString>
+variable found in F<config.php>.  Information on how to use it can be found
+in F<config.php.default>.
+
+Deprecated C<$phpNukeRoot>.  Apparently at some point it disappeared from
+the code and I forgot to take it out of config.php.
+
 =head2 Version 1.3.1 (Tue, 07 May 2002)
 
 [Sourceforge bug report #467122] -
