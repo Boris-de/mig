@@ -1,10 +1,10 @@
 //--------------------------------------------------------------------------
 // Include file for jhead program.
 //
-// This include file only defines stuff that goes across modules.  I like
-// to keep the definitions for macros and structures as close to where
-// they get used as possible, so include files only get stuff that gets used
-// in more than one file.
+// This include file only defines stuff that goes across modules.  
+// I like to keep the definitions for macros and structures as close to 
+// where they get used as possible, so include files only get stuff that 
+// gets used in more than one file.
 //--------------------------------------------------------------------------
 
 typedef unsigned char uchar;
@@ -14,21 +14,18 @@ typedef unsigned char uchar;
     #define FALSE 0
 #endif
 
-#define MAX_COMMENT 1000
+#define MAX_COMMENT 2000
 
-#ifndef _WIN32
-    // Don't know what the unix equivalent of _MAX_PATH is.
-    // I hope this is long enough.
-    #define _MAX_PATH 300
+#ifdef _WIN32
+    #define PATH_MAX _MAX_PATH
 #endif
-
 
 //--------------------------------------------------------------------------
 // This structure stores Exif header image elements in a simple manner
 // Used to store camera data as extracted from the various ways that it can be
 // stored in an exif header
 typedef struct {
-    char  FileName     [_MAX_PATH+1];
+    char  FileName     [PATH_MAX+1];
     time_t FileDateTime;
     unsigned FileSize;
     char  CameraMake   [32];
@@ -50,6 +47,12 @@ typedef struct {
     int   ISOequivalent;
     int   CompressionLevel;
     char  Comments[MAX_COMMENT];
+
+    unsigned char * ThumbnailPointer;  // Pointer at the thumbnail
+    unsigned ThumbnailSize;     // Size of thumbnail.
+
+    char * DatePointer;
+
 }ImageInfo_t;
 
 
@@ -63,8 +66,8 @@ extern void ErrExit(char * msg);
 
 // Prototypes for exif.c functions.
 extern int Exif2tm(struct tm * timeptr, char * ExifTime);
-extern void process_EXIF (char * CharBuf, unsigned int length);
-extern int GetExifNonThumbnailSize(void);
+extern void process_EXIF (unsigned char * CharBuf, unsigned int length);
+extern int RemoveThumbnail(unsigned char * ExifSection, unsigned int Length);
 
 // Prototype for myglob.c module
 extern void MyGlob(const char * Pattern , void (*FileFuncParm)(const char * FileName));

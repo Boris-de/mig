@@ -1,10 +1,10 @@
 //--------------------------------------------------------------------------
-// Program to pull the information out of various types of EFIF digital 
+// Program to pull the information out of various types of EXIF digital 
 // camera files and show it in a reasonably consistent way
 //
 // This module parses the very complicated exif structures.
 //
-// Matthias Wandel,  Dec 1999 - August 2000
+// Matthias Wandel,  Dec 1999 - January 2002
 //--------------------------------------------------------------------------
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <ctype.h>
 
+
 #ifdef _WIN32
     #include <sys/utime.h>
 #else
@@ -21,12 +22,13 @@
     #include <sys/types.h>
     #include <unistd.h>
     #include <errno.h>
+    #include <limits.h>
 #endif
 
 #include "jhead.h"
 
-static char * LastExifRefd;
-static int ExifNonThumbnailLength;
+static unsigned char * LastExifRefd;
+static unsigned char * DirWithThumbnailPtrs;
 static double FocalplaneXRes;
 static double FocalplaneUnits;
 static int ExifImageWidth;
@@ -112,6 +114,8 @@ static int BytesPerFormat[] = {0,1,1,2,4,8,1,1,2,4,8,4,8};
 #define TAG_ISO_EQUIVALENT    0x8827
 #define TAG_COMPRESSION_LEVEL 0x9102
 
+#define TAG_THUMBNAIL_OFFSET  0x0201
+#define TAG_THUMBNAIL_LENGTH  0x0202
 
 static TagTable_t TagTable[] = {
   {   0x100,   "ImageWidth"},
@@ -141,8 +145,8 @@ static TagTable_t TagTable[] = {
   {   0x13F,   "PrimaryChromaticities"},
   {   0x156,   "TransferRange"},
   {   0x200,   "JPEGProc"},
-  {   0x201,   "JPEGInterchangeFormat"},
-  {   0x202,   "JPEGInterchangeFormatLength"},
+  {   0x201,   "ThumbnailOffset"},
+  {   0x202,   "ThumbnailLength"},
   {   0x211,   "YCbCrCoefficients"},
   {   0x212,   "YCbCrSubSampling"},
   {   0x213,   "YCbCrPositioning"},
@@ -200,6 +204,20 @@ static TagTable_t TagTable[] = {
 } ;
 
 
+//--------------------------------------------------------------------------
+// Convert a 16 bit unsigned value from file's native byte order
+//--------------------------------------------------------------------------
+static void Put16u(void * Short, unsigned short PutValue)
+{
+    if (MotorolaOrder){
+        ((uchar *)Short)[0] = (uchar)(PutValue>>8);
+        ((uchar *)Short)[1] = (uchar)PutValue;
+    }else{
+        ((uchar *)Short)[0] = (uchar)PutValue;
+        ((uchar *)Short)[1] = (uchar)(PutValue>>8);
+    }
+}
+
 
 //--------------------------------------------------------------------------
 // Convert a 16 bit unsigned value from file's native byte order
@@ -238,7 +256,7 @@ static unsigned Get32u(void * Long)
 //--------------------------------------------------------------------------
 // Display a number as one of its many formats
 //--------------------------------------------------------------------------
-static void PrintFormatNumber(void * ValuePtr, int Format)
+static void PrintFormatNumber(void * ValuePtr, int Format, int ByteCount)
 {
     switch(Format){
         case FMT_SBYTE:
@@ -253,6 +271,9 @@ static void PrintFormatNumber(void * ValuePtr, int Format)
 
         case FMT_SINGLE:    printf("%f\n",(double)*(float *)ValuePtr);   break;
         case FMT_DOUBLE:    printf("%f\n",*(double *)ValuePtr);          break;
+        default: 
+            printf("Unknown format %d:", Format);
+            
     }
 }
 
@@ -299,16 +320,31 @@ static double ConvertAnyFormat(void * ValuePtr, int Format)
 //--------------------------------------------------------------------------
 // Process one of the nested EXIF directories.
 //--------------------------------------------------------------------------
-static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLength)
+static void ProcessExifDir(unsigned char * DirStart, unsigned char * OffsetBase, unsigned ExifLength)
 {
     int de;
     int a;
     int NumDirEntries;
+    unsigned ThumbnailOffset = 0;
+    unsigned ThumbnailSize = 0;
 
     NumDirEntries = Get16u(DirStart);
+    #define DIR_ENTRY_ADDR(Start, Entry) (Start+2+12*(Entry))
 
-    if ((DirStart+2+NumDirEntries*12) > (OffsetBase+ExifLength)){
-        ErrExit("Illegally sized directory");
+    {
+        unsigned char * DirEnd;
+        DirEnd = DIR_ENTRY_ADDR(DirStart, NumDirEntries);
+        if (DirEnd+4 > (OffsetBase+ExifLength)){
+            if (DirEnd+2 == OffsetBase+ExifLength || DirEnd == OffsetBase+ExifLength){
+                // Version 1.3 of jhead would truncate a bit too much.
+                // This also caught later on as well.
+            }else{
+                // Note: Files that had thumbnails trimmed with jhead 1.3 or earlier
+                // might trigger this.
+                ErrExit("Illegally sized directory");
+            }
+        }
+        if (DirEnd < LastExifRefd) LastExifRefd = DirEnd;
     }
 
     if (ShowTags){
@@ -317,10 +353,10 @@ static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLeng
 
     for (de=0;de<NumDirEntries;de++){
         int Tag, Format, Components;
-        char * ValuePtr;
+        unsigned char * ValuePtr;
         int ByteCount;
         char * DirEntry;
-        DirEntry = DirStart+2+12*de;
+        DirEntry = DIR_ENTRY_ADDR(DirStart, de);
 
         Tag = Get16u(DirEntry);
         Format = Get16u(DirEntry+2);
@@ -376,18 +412,29 @@ static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLeng
 
                 case FMT_STRING:
                     // String arrays printed without function call (different from int arrays)
-                    printf("\"");
-                    for (a=0;a<ByteCount;a++){
-                        if (isprint((ValuePtr)[a])){
-                            putchar((ValuePtr)[a]);
+                    {
+                        int NoPrint = 0;
+                        printf("\"");
+                        for (a=0;a<ByteCount;a++){
+                            if (isprint((ValuePtr)[a])){
+                                putchar((ValuePtr)[a]);
+                                NoPrint = 0;
+                            }else{
+                                // Avoiding indicating too many unprintable characters of proprietary
+                                // bits of binary information this program may know how to parse.
+                                if (!NoPrint){
+                                    putchar('?');
+                                    NoPrint = 1;
+                                }
+                            }
                         }
+                        printf("\"\n");
                     }
-                    printf("\"\n");
                     break;
 
                 default:
                     // Handle arrays of numbers later (will there ever be?)
-                    PrintFormatNumber(ValuePtr, Format);
+                    PrintFormatNumber(ValuePtr, Format, ByteCount);
             }
         }
 
@@ -404,6 +451,7 @@ static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLeng
 
             case TAG_DATETIME_ORIGINAL:
                 strncpy(ImageInfo.DateTime, ValuePtr, 19);
+                ImageInfo.DatePointer = ValuePtr;
                 break;
 
             case TAG_USERCOMMENT:
@@ -531,22 +579,79 @@ static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLeng
 
             case TAG_ISO_EQUIVALENT:
                 ImageInfo.ISOequivalent = (int)ConvertAnyFormat(ValuePtr, Format);
-                if ( ImageInfo.ISOequivalent < 80 ) ImageInfo.ISOequivalent *= 200;
+                if ( ImageInfo.ISOequivalent < 50 ) ImageInfo.ISOequivalent *= 200;
                 break;
 
             case TAG_COMPRESSION_LEVEL:
                 ImageInfo.CompressionLevel = (int)ConvertAnyFormat(ValuePtr, Format);
                 break;
-        }
 
-        if (Tag == TAG_EXIF_OFFSET || Tag == TAG_INTEROP_OFFSET){
-            char * SubdirStart;
-            SubdirStart = OffsetBase + Get32u(ValuePtr);
-            if (SubdirStart < OffsetBase || SubdirStart > OffsetBase+ExifLength){
-                ErrExit("Illegal subdirectory link");
+            case TAG_THUMBNAIL_OFFSET:
+                ThumbnailOffset = (unsigned)ConvertAnyFormat(ValuePtr, Format);
+                DirWithThumbnailPtrs = DirStart;
+                break;
+
+            case TAG_THUMBNAIL_LENGTH:
+                ThumbnailSize = (unsigned)ConvertAnyFormat(ValuePtr, Format);
+                break;
+
+            case TAG_EXIF_OFFSET:
+            case TAG_INTEROP_OFFSET:
+                {
+                    unsigned char * SubdirStart;
+                    SubdirStart = OffsetBase + Get32u(ValuePtr);
+                    if (SubdirStart < OffsetBase || SubdirStart > OffsetBase+ExifLength){
+                        ErrExit("Illegal subdirectory link 1");
+                    }else{
+                        ProcessExifDir(SubdirStart, OffsetBase, ExifLength);
+                    }
+                    continue;
+                }
+        }
+    }
+
+
+    {
+        // In addition to linking to subdirectories via exif tags, 
+        // there's also a potential link to another directory at the end of each
+        // directory.  this has got to be the result of a comitee!
+        unsigned char * SubdirStart;
+        unsigned Offset;
+
+        if (DIR_ENTRY_ADDR(DirStart, NumDirEntries) + 4 <= OffsetBase+ExifLength){
+            Offset = Get32u(DirStart+2+12*NumDirEntries);
+            if (Offset){
+                SubdirStart = OffsetBase + Offset;
+                if (SubdirStart > OffsetBase+ExifLength){
+                    if (SubdirStart < OffsetBase+ExifLength+20){
+                        // Jhead 1.3 or earlier would crop the whole directory!
+                        // As Jhead produces this form of format incorrectness, 
+                        // I'll just let it pass silently
+                        if (ShowTags) printf("Thumbnail removed with Jhead 1.3 or earlier\n");
+                    }else{
+                        ErrExit("Illegal subdirectory link 2");
+                    }
+                }else{
+                    if (SubdirStart <= OffsetBase+ExifLength){
+                        ProcessExifDir(SubdirStart, OffsetBase, ExifLength);
+                    }
+                }
             }
-            ProcessExifDir(SubdirStart, OffsetBase, ExifLength);
-            continue;
+        }else{
+            // The exif header ends before the last next directory pointer.
+        }
+    }
+
+
+    if (ThumbnailSize && ThumbnailOffset){
+        if (ThumbnailSize + ThumbnailOffset <= ExifLength){
+            // The thumbnail pointer appears to be valid.  Store it.
+            ImageInfo.ThumbnailPointer = OffsetBase + ThumbnailOffset;
+            ImageInfo.ThumbnailSize = ThumbnailSize;
+
+            if (ShowTags){
+                printf("Thumbnail size: %d bytes\n",ThumbnailSize);
+            }
         }
     }
 }
@@ -555,7 +660,7 @@ static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLeng
 // Process a EXIF marker
 // Describes all the drivel that most digital cameras include...
 //--------------------------------------------------------------------------
-void process_EXIF (char * CharBuf, unsigned int length)
+void process_EXIF (unsigned char * ExifSection, unsigned int length)
 {
     ImageInfo.FlashUsed = 0; // If it s from a digicam, and it used flash, it says so.
 
@@ -568,17 +673,17 @@ void process_EXIF (char * CharBuf, unsigned int length)
     }
 
     {   // Check the EXIF header component
-        static const uchar ExifHeader[] = {0x45, 0x78, 0x69, 0x66, 0x00, 0x00};
-        if (memcmp(CharBuf+2, ExifHeader,6)){
+        static uchar ExifHeader[] = "Exif\0\0";
+        if (memcmp(ExifSection+2, ExifHeader,6)){
             ErrExit("Incorrect Exif header");
         }
     }
 
-    if (memcmp(CharBuf+8,"II",2) == 0){
+    if (memcmp(ExifSection+8,"II",2) == 0){
         if (ShowTags) printf("Exif section in Intel order\n");
         MotorolaOrder = 0;
     }else{
-        if (memcmp(CharBuf+8,"MM",2) == 0){
+        if (memcmp(ExifSection+8,"MM",2) == 0){
             if (ShowTags) printf("Exif section in Motorola order\n");
             MotorolaOrder = 1;
         }else{
@@ -587,18 +692,16 @@ void process_EXIF (char * CharBuf, unsigned int length)
     }
 
     // Check the next two values for correctness.
-    if (Get16u(CharBuf+10) != 0x2a
-      || Get32u(CharBuf+12) != 0x08){
+    if (Get16u(ExifSection+10) != 0x2a
+      || Get32u(ExifSection+12) != 0x08){
         ErrExit("Invalid Exif start (1)");
     }
 
-    LastExifRefd = CharBuf;
+    LastExifRefd = ExifSection;
+    DirWithThumbnailPtrs = NULL;
 
-    // First directory starts 16 bytes in.  Offsets start at 8 bytes in.
-    ProcessExifDir(CharBuf+16, CharBuf+8, length-6);
-
-    // This is how far the interesting (non thumbnail) part of the exif went.
-    ExifNonThumbnailLength = LastExifRefd - CharBuf;
+    // First directory starts 16 bytes in.  All offset are relative to 8 bytes in.
+    ProcessExifDir(ExifSection+16, ExifSection+8, length-6);
 
     // Compute the CCD width, in milimeters.
     if (FocalplaneXRes != 0){
@@ -606,17 +709,54 @@ void process_EXIF (char * CharBuf, unsigned int length)
     }
 
     if (ShowTags){
-        printf("Thunbnail size of Exif header: %d\n",length-ExifNonThumbnailLength);
+        printf("Non settings part of Exif header: %d bytes\n",ExifSection+length-LastExifRefd);
     }
 }
 
+
+
 //--------------------------------------------------------------------------
-// Figure out how much of the exif to keep
+// Remove thumbnail out of the exif image.
 //--------------------------------------------------------------------------
-int GetExifNonThumbnailSize(void)
+int RemoveThumbnail(unsigned char * ExifSection, unsigned int Length)
 {
-    // This function must be called after ProcessExif has been called!
-    return ExifNonThumbnailLength;
+
+    // Ensure pointers are up to date.
+    {
+        int ShowTagsTemp = ShowTags;
+        ShowTags = FALSE;
+        process_EXIF(ExifSection, Length);
+        ShowTags = ShowTagsTemp;
+    }
+
+    if (DirWithThumbnailPtrs){
+        int de;
+        int NumDirEntries;
+        NumDirEntries = Get16u(DirWithThumbnailPtrs);
+
+        for (de=0;de<NumDirEntries;de++){
+            int Tag;
+            char * DirEntry;
+            DirEntry = DIR_ENTRY_ADDR(DirWithThumbnailPtrs, de);
+            Tag = Get16u(DirEntry);
+            if (Tag == TAG_THUMBNAIL_OFFSET || Tag == TAG_THUMBNAIL_LENGTH){
+                // We remove data out of the exif directory by doing a memmove on the rest
+                // of the directory to close the gap.
+                // It would of course be far better to have a general purpose read/write
+                // implementation of the filesystem in the exif header, but that would
+                // be quite complicated and therefore very error prone.
+                memmove(DirEntry, 
+                        DIR_ENTRY_ADDR(DirWithThumbnailPtrs, de+1),
+                        (NumDirEntries-de-1)*12+4);
+                NumDirEntries -= 1;
+                de -= 1;
+            }                    
+        }
+        Put16u(DirWithThumbnailPtrs, (unsigned short)NumDirEntries);
+    }
+
+    // This is how far the non thumbnail data went.
+    return LastExifRefd - ExifSection;
 }
 
 
@@ -633,11 +773,10 @@ int Exif2tm(struct tm * timeptr, char * ExifTime)
     a = sscanf(ExifTime, "%d:%d:%d %d:%d:%d",
             &timeptr->tm_year, &timeptr->tm_mon, &timeptr->tm_mday,
             &timeptr->tm_hour, &timeptr->tm_min, &timeptr->tm_sec);
-        
-    if (a == 6){
-        timeptr->tm_isdst = 0;     // Should ideally be set to what it was when the 
-                                   // image was taken, I think? 
 
+
+    if (a == 6){
+        timeptr->tm_isdst = -1;  
         timeptr->tm_mon -= 1;      // Adjust for unix zero-based months 
         timeptr->tm_year -= 1900;  // Adjust for year starting at 1900 
         return TRUE; // worked. 
@@ -705,12 +844,9 @@ void ShowImageInfo(void)
         if (ImageInfo.Distance < 0){
             printf("Focus Dist.  : Infinite\n");
         }else{
-            printf("Focus Dist.  :%5.2fm\n",(double)ImageInfo.Distance);
+            printf("Focus Dist.  : %4.2fm\n",(double)ImageInfo.Distance);
         }
     }
-
-
-
 
 
     if (ImageInfo.ISOequivalent){ // 05-jan-2001 vcs
@@ -790,16 +926,20 @@ void ShowImageInfo(void)
     if (ImageInfo.Comments[0]){
         int a,c;
         printf("Comment      : ");
-        for (a=0;a<200;a++){
+        for (a=0;a<MAX_COMMENT;a++){
             c = ImageInfo.Comments[a];
             if (c == '\0') break;
             if (c == '\n'){
-                printf("\nComment      : ");
+                // Do not start a new line if the string ends with a carriage return.
+                if (ImageInfo.Comments[a+1] != '\0'){
+                    printf("\nComment      : ");
+                }else{
+                    printf("\n");
+                }
             }else{
                 putchar(c);
             }
         }
-        printf("\n");
     }
 
     printf("\n");

@@ -1,32 +1,88 @@
 <html>
 <font size = 2 face="helvetica">
 
-<b>Jhead is a command line driven program for manipulating the non image parts of Exif flavour
-Jpeg files that most digital cameras produce.</b><p>
-<b>Jhead has no Graphical User Interface</b>.  Clicking on it with the mouse from Windows won't
+<h3>Jhead is a command line driven program for manipulating the non image parts of Exif flavour
+Jpeg files that most digital cameras produce.</h3><p>
+
+Windows users:  Jhead has <b>no Graphical User Interface</b>.  Clicking on it with the mouse from Windows won't
 do anything for you - you have to <b>use it from the Command prompt</b> (or Dos prompt under Win95/98)
 
-<h3>Jhead program Features</h3>
+<h3>Jhead v1.6 program Features</h3>
 <ul>
 <li>Extracting camera settings from exif image files
-<li>Removing of integral exif thumbnails for compacting Jpegs without loss of image info
+<li>Removing of integral exif thumbnails for compacting Jpegs without loss of other jpeg header info
 <li>Able to manage running programs on large batches of Jpegs and restoring exif header
     information afterwards.
+<li>Transplant Exif image header from one Jpeg to another
+<li>Save integral Exif thumbnails as separated images
+<li>Able to set and/or adjust the exif time field
+<li>Edit Jpeg comment fields
 </ul>
 
 <h3>Command line options</h3>
 <table cellpadding=5><tr valign=top>
     <td><font size = 2 face="helvetica"><b>-dt
     <td><font size = 2 face="helvetica">
-        Delete thumbnails.  Exif headers have a built-in thumbnail, which typically
+        Delete thumbnails and other extraneous information in the Exif header, but leave the
+        interesting parts intact.  This option deletes everything in the exif header after the
+        normally referenced data in the exif header.  Exif headers have a built-in thumbnail, which typically
         occupies around 10k of space.  As far as I can tell, this thumbnail is only used
         by the digital cameras to display several really small thumbnails at a time.  The
         thumbnails are too small to use even full screen on the digicam's LCD.
         I have not encountered any adverse side effects of deleting the thumbnails, even from the
-        software provided with the digicams.<p>
-        This command line option simply shortens the exif segment of the jpeg file so that
-        the interesting settings are still in the camera.<p>
-         
+        software provided with my old olympus digicam.  Use with caution.
+
+<tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-ce
+    <td><font size = 2 face="helvetica">
+        Edit the jpeg hader comment field (note, this comment field is outside the exif structure
+        and can be part of exif and non exif style Jpeg images).
+        <br>
+        A temporary file containing the comment is created and Notepad launched to edit it under Windows.  
+        Under Unix, vi is used to edit the temprary file.  After the file is edited, the comments
+        are put back into the file, and the temporary file is deleted.
+
+<tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-st &lt;name&gt;
+    <td><font size = 2 face="helvetica">
+        Save the built in thumbnail from jpegs that came from a digital camera.  The thumbnail lives
+        inside the Exif header, and is a very low-res Jpeg image.  Note that making
+        any changes to a photo, except for with some programs, generally wipes out the exif header
+        and with it the thumbnail.
+        <br>
+        I implemented this option because I kept getting asked about having such an option.
+        I don't consider the
+        built in thumbnails to be all that useful - too low res.  However, now you can see for
+        yourself.  I always generate my thumbnails using ImageMagic (see end of this page).
+        <br>
+        This feature has an interesting 'relative path' option for specifying the thumbnail name.
+        Whenever the &lt;name&gt; contains the characters '&i', jhead will substitute the original
+        filename for this name.  This allows creating a 'relative name' when doing a whole
+        batch of files.  For example, the incantation:
+        <ul>jhead -st "thumbnails\&i" *.jpg</ul>
+        would create a thumbnail for each .jpg file in the thumbnails directory by the same name,
+        (provided that the thumbnails directory exists, of course).
+        Both Win32 and most Unix shells treat the '&' character in a special way, so you have to
+        put quotes around that command line option for the '&' to even be passed to the program.
+        <p>
+        If a '-' is specified for the output file, the thumbnail is sent to stdout. (Unix build only)
+
+<tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-te &lt;name&gt;
+    <td><font size = 2 face="helvetica">
+        Transplant exif header from image &lt;name&gt; into specified image.  This option is
+        useful if you like to edit the photos but still want the exif header on your photos.
+        As most photo editing programs will wipe out the exif header, this option can be used
+        to re-transmplant them back in after editing the photos.
+        <br>
+        Like the '-st' option, this option uses a 'relative path', which is useful for doing
+        a batch of photos at a time.  For example, if you have a directory full of digital camera
+        photos, before editing them, you could copy them into the subdirectory 'originals'.
+        Then edit them (or batch convert them using mogrify).  After editing, you can put the
+        original exif headers back in to the whole directory of images at a time using the
+        incantation:
+        <ul> jhead -te "originals\&i" *jpg</ul>
+
 <tr valign=top>
     <td><font size = 2 face="helvetica"><b>-h
     <td><font size = 2 face="helvetica">
@@ -41,10 +97,15 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         its crashed.
 
 <tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-V
+    <td><font size = 2 face="helvetica">
+        Print version info and compilation date.
+
+<tr valign=top>
     <td><font size = 2 face="helvetica"><b>-c
     <td><font size = 2 face="helvetica">
         Concise output.  This causes picture info to be summarized on one line instead of several.
-        Useful for grep-ing through images, as well as importing into spread sheets (data is space
+        Useful for grepping through images, as well as importing into spread sheets (data is space
         delimited with quotes as text qualifier).
 
 <tr valign=top>
@@ -56,33 +117,88 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         <p>
         jhead -model S100 *.jpg<p>
         <p>
-        I use this option to restrict my JPEG re-compressing to those images that came from my digicam,
-        see the -cmd option.
+        I use this option to restrict my JPEG re-compressing to those images that came from my 
+        Cannon S100 digicam, (see the -cmd option).
         <p>
 
 <tr valign=top>
-    <td><font size = 2 face="helvetica"><b>-n
+    <td><font size = 2 face="helvetica"><b>-exonly
     <td><font size = 2 face="helvetica">
-        This option causes files with dates stored in the exif header to be renamed to the
-        file date.  Renaming is restricted to files whose names consist largely of digits.
-        This effectively restricts renaming to files that have not already been manually renamed.
-        Use the -nf option to force renaming.<p>
-        The file will be renamed to MMDD-HHMMSS.  The year is not used for the
-        file name (if you have images from that many different years together, you probably
-        don't care enough about organizing your images to use this program.  If you don't like
-        it, you can always change the program.<p>
-        If the destination name is already in use (if another photo was taken at the exact same
-        time by another camera), the times for next subsequent seconds are tried.<p>
-        This option is useful for naming jpegs of the same event taken from two cameras in
-        such a way that they will appear in order in file managers and programs like Compupic
-        or ACDSee.
+        Skip all files that don't have an exif header.  This skips all files that did not
+        come directly from the digital camera, as most photo editing software does not 
+        preserve the exif header when saving pictures.
+        <p>
+
+<tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-n[fmt-string]
+    <td><font size = 2 face="helvetica">
+        This option causes files to be renamed according to the exif header "DateTimeOriginal" field.
+        Renaming is restricted to files whose names consist largely of digits.
+        This effectively restricts renaming to files that have not already been manually renamed, as
+        the default sequential names from digital cameras consist largely of digits.
+        Use the -nf option to force renaming of all files.<p>
+        If the [fmt-string] is omitted, the file will be renamed to MMDD-HHMMSS.  Note that 
+        this scheme doesn't include the year (I never have photos from different years together anyways).
+        <br>
+        If a [fmt-string] is provided, the fmt-will be passed directly to the 
+        strftime function for formatting.  Lookup the strftime function to see what format parameters
+        can be used.  No checking is done on the format string before passing it to strftime..
+        <br>
+        If the target name already exists, the name will be appended with "a", "b", "c", etc,
+        unless the name ends with a letter, in which case it will be appended with "0", "1", "2", etc.
+        <br>
+        This feature is especially useful if more than one digital camera was used to take pictures
+        of an event.  By renaming them to a schem according to date, they will automatically
+        appear in order of taking when viewed with some sort of viewer like Compupic or AcdSee, and
+        sorted by name.
+        <p>
+        <b>Some of the more useful arguments for strftime are:</b>
+
+        <table>
+        <tr><td>%d &nbsp </td><td>Day of month as decimal number (01 – 31)
+        <tr><td>%H</td><td>Hour in 24-hour format (00 – 23)
+        <tr><td>%j</td><td>Day of year as decimal number (001 – 366)
+        <tr><td>%m</td><td>Month as decimal number (01 – 12)
+        <tr><td>%M</td><td>Minute as decimal number (00 – 59)
+        <tr><td>%S</td><td>Second as decimal number (00 – 59)
+        <tr><td>%U</td><td>Week of year as decimal number, with Sunday as first day of week (00 – 53)
+        <tr><td>%w</td><td>Weekday as decimal number (0 – 6; Sunday is 0)
+        <tr><td>%y</td><td>Year without century, as decimal number (00 – 99)
+        <tr><td>%Y</td><td>Year with century, as decimal number
+        </table>
+        <p>
+        Example:<br>
+        &nbsp &nbsp jhead -n%Y%m%d-%H%M%S *.jpg<p>
+        This will rename files matched by *.jpg according to YYYYMMDD-HHMMSS
+        <p>
+        For a full listing of strftime arguments, look up the strftime function.  Note that some arguments
+        to the strftime function (not listed here) produce strings with charactrers such as '/' and ':' that
+        may not be valid as part of a filename on various systems.
+
 
 <tr valign=top>
     <td><font size = 2 face="helvetica"><b>-nf
     <td><font size = 2 face="helvetica">
         Same as '-n' but renames files regardless of original file name.
         <p>
- 
+
+<tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-ta
+    <td><font size = 2 face="helvetica">
+        Adjust time stored in the exif header by h:mm backwards of forwards.  Useful when having
+        taken picutres with the wrong time set on the camera, such as afte travelling across
+        time zones, or when daylight savings time has changed.
+        This option only changes the "DateTimeOriginal" (tar 0x9003) field, but leaves the 
+        "DateTimeDigitized" (tag 0x9004) field alone.
+
+<tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-ts
+    <td><font size = 2 face="helvetica">
+        Sets the time stored in the exif header to what is specified on the command line.
+        This option only changes the "DateTimeOriginal" (tar 0x9003) field, but leaves the 
+        "DateTimeDigitized" (tag 0x9004) field alone.  Time must be specified as:<br>
+        <font face=courier> &nbsp &nbsp yyyy:mm:dd-hh:mm:ss</font>
+            
 
 <tr valign=top>
     <td><font size = 2 face="helvetica"><b>-cmd
@@ -98,7 +214,7 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         JPEGTRAN is useful for lossless rotation, as well as for converting Jpegs to
         progressive Jpegs (also a lossless process, but results in typically 5% smaller files)
         I use mogrify for re-compressing the images I get from my Canon PowerShot S100 to
-        80% quality.  The cannon Jpegs are either way too 'high quality' for the resolution, or
+        80% quality.  The Canon Jpegs are either way too 'high quality' for the resolution, or
         are suboptimally encoded.  Using mogrify to 80% produces no detectable loss in quality,
         with files about half the size.<p>
         Example use:<br>
@@ -111,11 +227,19 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         Cannon S100 in their exif header to 80% quality at the same resolution.  This is a 'lossy'
         process, so I only run it on files that are from the Canon, and only run it once.
         The next command then takes all jpegs and converts them to progressive Jpegs.  The result
-        is the same images, with no discernible differences, stored in half the space.
+        is the same images, with no discernible differences, stored in half the space.  This only
+        produces substantial savings on some cameras, such as the Canon S100.  The newer S110 and S300
+        cameras are smarter about how they compress Jpeg images, so re-mogrifying them may not give
+        you any savings unless you crank the quality way down.  However, turning them into progressive
+        jpeg images is a lossless process that typically makes image files 5% smaller.
         <p>
         Keeping the Exif header information is important to me, as I like to check things like the
-        shutter speed for some of my photos, and my HTML index generting program uses the exif tags
+        shutter speed for some of my photos, and my HTML index generating program uses the exif tags
         to display the Jpeg images in order of taking.
+        <p>
+        Newer version of "mogrify" already preserve exif informationm, so with some clever 
+        shell scripting, you could do these two steps without using jhead and still keep the 
+        exif headers.
         <p>
 
 <tr valign=top>
@@ -131,7 +255,7 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
     Name globbing means matching wildcard patterns to actual file names.  If you know what this
     term means, you are probably annoyed at how programs on Windows typically handle this.
     The Win32 version of this program goes beyond the pattern matching that Windows provides,
-    and allows you to specify fancy patterns such as:
+    and allows you to specify fancy unix-like patterns such as:
     <p>
     <font size = 2 face="courier">&nbsp jhead c:\pix\199*\*\*.jpg<font size = 2 face="helvetica">
     <p>
@@ -140,12 +264,13 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
     <p>
     <font size = 2 face="courier">&nbsp jhead c:\**\*.jpg<font size = 2 face="helvetica">
     <p>
-    will find ALL Jpegs files on the c: drive, including those in the root directory.  The <font size = 2 face="courier">**<font size = 2 face="helvetica"> 
-    is only valid if it is the only path
-    component.  For The path <font size = 2 face="courier">'c:\a**\*.jpg'<font size = 2 face="helvetica"> 
+    will find ALL Jpegs files on the c: drive, including those in the root directory.
+    The <font size = 2 face="courier">**<font size = 2 face="helvetica">
+    only works if it is the only part of that path component.  For example, the path
+    <font size = 2 face="courier">'c:\a**\*.jpg'<font size = 2 face="helvetica">
     will not recurse.
     The <font size = 2 face="courier">'**'<font size = 2 face="helvetica"> 
-    recursive expansion is ONLY supportedd on the Windos version.   The code is in the module 'myglob.c',
+    recursive expansion is ONLY supportedd on the Windows version.   The code is in the module 'myglob.c',
     if you want to reuse it (I certainly intend to reuse that code for other applications).
     Under Unix, the shell's wildcard expansion is
     pretty decent already, and dealing with the convoluted nature of some Unix file layouts,
@@ -155,10 +280,12 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
 <h3>Programs I use with Jhead</h3>
 <b>ImageMagic</b><br>
 <ul>
-I use the MOGIRIFY command from image magic to do batch conversions and re-compresses of images.
+I use the MOGIRIFY command from ImageMagick to do batch conversions and re-compresses of images.
 If you use Linux, you probably already have ImageMagic on your system (just type 'mogrify' at the
 command prompt to see if you have it).  For Windows users, you have to download it from:
 <a href="http://www.imagemagick.org"> http://www.imagemagick.org</a><p>
+Image Magick is one of the few programs that preserves comment and exif headers, although older
+versions do not.
 </ul>
 <b>JPEGTRAN</b><br>
 <ul>
@@ -174,9 +301,21 @@ Visual C 5.0.
 </ul>
 <b>CompuPic</b><br>
 <ul>
-I also use <a href="http://www.photodex.com"> CompuPic </a> to organize my photos.  This unfortunately
+I also use <a href="http://www.photodex.com"> CompuPic </a> to organize my photos.  I especially like
+the built in lossless Jpeg rotation feature (which also preserves the Exif header).  This unfortunately
 is payware, but its a pretty good program.  It has a free two week evaluation period.  After
 this period, it is still semi-usable but annoying.  I ended up paying for it.  Or you can then use ACDsee,
-which has a longer free evaluation period, but costs much more.  I don't know of a good free program for Windows 
+which has a longer free evaluation period, but costs more.  I don't know of a good free program for Windows
 to do the same thing.
+There's also a free version of <a href="http://www.photodex.com/downloads/platforms/linux.html">Compupic 5.1 for Linux</a>
+and other platforms.  Version 5.1 is a bit out of date, but still works.  Lacks lossles rotation though.
 </ul>
+
+<b>wrjpgcom / rdjpgcom</b><br>
+<ul>
+You can use these program to write and extract COM markers from jpeg images respectively.  Although I always
+use my jhead program for this feature, the wrjpgcom and rdjpgcom programs are extremely simple and very
+suitable for use with perl or shell scripts to process lots of images.  Thes programs are part of most 
+linux distributions as part of the libjpg package (along with jpegtran)
+</ul>
+
