@@ -139,6 +139,12 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 $pagetitle = eregi_replace('^pagetitle ', '', $x);
             }
 
+            // Parse MaintAddr lines
+            if (eregi('^maintaddr ', $line)) {
+                $x = trim($line);
+                $maintaddr = eregi_replace('^maintaddr ', '', $x);
+            }
+
             // Parse MaxFolderColumns lines
             if (eregi('^maxfoldercolumns ', $line)) {
                 $x = trim($line);
@@ -161,7 +167,7 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
 
     $retval = array ($hidden, $presort_dir, $presort_img, $desc,
                      $bulletin, $ficons, $template, $pagetitle,
-                     $fcols, $tcols);
+                     $fcols, $tcols, $maintaddr);
     return $retval;
 
 }   //  -- End of parseMigCf()
@@ -1150,8 +1156,10 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
                     $x = chop($x);
                     $model[$fname] = $x;
 
-                } elseif (ereg('^Exposure time: ', $line)) {
-                    $x = ereg_replace('^Exposure time: ', '', $line);
+                // This one apparently sometimes has a space after
+                // the colon, sometimes not.  Try to work either way.
+                } elseif (ereg('^Exposure time: ?', $line)) {
+                    $x = ereg_replace('^Exposure time: ?', '', $line);
                     if (ereg('\(', $x)) {
                         $x = ereg_replace('^.*\(', '', $x);
                         $x = ereg_replace('\).*$', '', $x);

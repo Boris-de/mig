@@ -300,7 +300,8 @@ $image = rawurldecode($image);
 
 // Fetch mig.cf information
 list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
-     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols)
+     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
+     $folderMaintAddr)
     = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
 // if $pageType is null, or "folder") generate a folder view
@@ -319,6 +320,11 @@ if ($pageType == 'folder' or $pageType == '') {
     // Determine page title to use
     if ($folderPageTitle) {
         $pageTitle = $folderPageTitle;
+    }
+
+    // Set per-folder $maintAddr if one was defined
+    if ($folderMaintAddr) {
+        $maintAddr = $folderMaintAddr;
     }
 
     // Determine columns to use
@@ -399,8 +405,14 @@ if ($pageType == 'folder' or $pageType == '') {
 
 } elseif ($pageType == 'image') {
 
+    // Set per-foler page title if one was defined
     if ($folderPageTitle) {
         $pageTitle = $folderPageTitle;
+    }
+
+    // Set per-folder maintAddr if one was defined
+    if ($folderMaintAddr) {
+        $maintAddr = $folderMaintAddr;
     }
 
     // Trick the back link into going to the right place by adding
