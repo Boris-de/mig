@@ -14,9 +14,8 @@ mig:
 	@make docs
 	@rm -f mig-$(version).tar.gz
 	@mv src mig-$(version)
-	@/usr/local/bin/tar --exclude CVS -c -f mig-$(version).tar \
-	  mig-$(version)
-	@/usr/local/bin/gzip mig-$(version).tar
+	@/bin/tar --exclude CVS -cf mig-$(version).tar mig-$(version)
+	@/bin/gzip mig-$(version).tar
 	@mv mig-$(version) src
 	@ls -l mig-$(version).tar.gz
 
