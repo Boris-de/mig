@@ -620,12 +620,12 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 
     // Get description, if any
     $alt_desc = getImageDescription("$fname.$ext", $description);
-    $alt_exif = getExifDescription($albumDir, $currDir, "$fname.$ext");
+    //$alt_exif = getExifDescription($albumDir, $currDir, "$fname.$ext", '');
 
     // if both are present, separate with "--"
-    if ($alt_desc and $alt_exif) {
-        $alt_desc .= " -- $alt_exif";
-    }
+    //if ($alt_desc and $alt_exif) {
+    //    $alt_desc .= " -- $alt_exif";
+    //}
 
     // Figure out the image's size (in bytes and pixels) for display
     $imageFile = "$albumDir/$oldCurrDir/$fname.$ext";
@@ -934,29 +934,98 @@ function getImageDescription( $image, $description )
 // getExifDescription() - Fetches a comment if available from the
 // Exif comments file (exif.inf)
 
-function getExifDescription( $albumDir, $currDir, $image )
+function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo )
 {
+
+    $desc = array ();
+    $model = array ();
+    $shutter = array ();
+    $aperture = array ();
+    $foclen = array ();
+    $flash = array ();
 
     if (file_exists("$albumDir/$currDir/exif.inf")) {
 
         $file = fopen("$albumDir/$currDir/exif.inf", 'r');
         $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
-            if (ereg('^BEGIN ', $line)) {
-                $fname = ereg_replace('^BEGIN ', '', $line);
+
+            if (ereg('^File name    : ', $line)) {
+                $fname = ereg_replace('^File name    : ', '', $line);
                 $fname = chop($fname);
-            } elseif (ereg('^Comment      :', $line)) {
-                list($x, $comment) = explode(': ', $line);
+
+            } elseif (ereg('^Comment      : ', $line)) {
+                $comment = ereg_replace('^Comment      : ', '', $line);
                 $comment = chop($comment);
                 $desc[$fname] = $comment;
+
             }
+
+            if ($viewCamInfo) {
+            
+                if (ereg('^Camera model : ', $line)) {
+                    $x = ereg_replace('^Camera model : ', '', $line);
+                    $x = chop($x);
+                    $model[$fname] = $x;
+
+                } elseif (ereg('^Exposure time: ', $line)) {
+                    $x = ereg_replace('^Exposure time: ', '', $line);
+                    if (ereg('\(', $x)) {
+                        $x = ereg_replace('^.*\(', '', $x);
+                        $x = ereg_replace('\).*$', '', $x);
+                    }
+                    $x = chop($x);
+                    $shutter[$fname] = $x;
+
+                } elseif (ereg('^Aperture     : ', $line)) {
+                    $x = ereg_replace('^Aperture     : ', '', $line);
+                    $x = chop($x);
+                    $aperture[$fname] = $x;
+
+                } elseif (ereg('^Focal length : ', $line)) {
+                    $x = ereg_replace('^Focal length : ', '', $line);
+                    if (ereg('35mm equiv', $x)) {
+                        $x = ereg_replace('^.*alent: ', '', $x);
+                        $x = chop($x);
+                        $x = ereg_replace('\)$', '', $x);
+                    }
+                    $foclen[$fname] = $x;
+
+                } elseif (ereg('^Flash used   : Yes', $line)) {
+                    $flash[$fname] = TRUE;
+                }
+            }
+
             $line = fgets($file, 4096);
         }
 
-        return $desc[$image];
+        // return $desc[$image];
+
+        $return = '';
+        if ($desc[$image]) {
+            $return .= $desc[$image];
+        }
+
+        if ($viewCamInfo and $model[$image]) {
+
+            $return .= '<font size="-1">(';
+            $return .= $model[$image];
+            $return .= ', ';
+            $return .= $foclen[$image];
+            $return .= ' ';
+            $return .= $shutter[$image];
+            $return .= ' ';
+            $return .= $aperture[$image];
+            if ($flash[$image]) {
+                $return .= ', flash used';
+            }
+            $return .= ')</font>';
+        }
+
+        return $return;
 
     } else {
-        return "";
+        return '';
     }
 
 }   // -- End of getExifDescription()

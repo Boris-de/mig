@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.7p1';
+$version = '1.2.8';
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
@@ -89,6 +89,7 @@ $noThumbs               = FALSE;
 $suppressAltTags        = FALSE;
 $mig_language           = 'en';
 $sortType               = 'default';
+$viewCamInfo            = FALSE;
 
 // Fetch variables from the URI
 //
@@ -384,7 +385,15 @@ if ($pageType == 'folder' or $pageType == '') {
 
     // Get image description
     $description  = getImageDescription($image, $desc);
-    $exifDescription = getExifDescription($albumDir, $currDir, $image);
+    $exifDescription = getExifDescription($albumDir, $currDir, $image,
+                                          $viewCamInfo);
+
+    // If there's a description but no exifDescription, just make the
+    // exifDescription the description
+    if ($exifDescription and ! $description) {
+        $description = $exifDescription;
+        unset($exifDescription);
+    }
 
     // If both descriptions are non-NULL, separate them with an <HR>
     if ($description and $exifDescription) {

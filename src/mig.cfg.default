@@ -93,6 +93,16 @@ $suppressImageInfo = FALSE;
 $suppressAltTags = FALSE;
 
 
+// Boolean to determine whether to show camera settings in EXIF if
+// they're available (i.e. camera model, aperture, shutter, etc).
+// Defaults to FALSE.
+//
+// If you want to show camera model, aperture, shutter, focal length,
+// set to TRUE.
+//
+$viewCamInfo = FALSE;
+
+
 // Boolean to define whether to suppress thumbnails altogether or not.
 // Defaults to FALSE.
 //
