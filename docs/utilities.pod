@@ -151,7 +151,7 @@ go to every folder from the point you are currently at, and do all of the
 subfolders too.  New users can simply go to the F<albums> directory and let
 loose a C<mkGallery -art> and it will generate thumbnails for everything it
 finds.  Personally I find C<mkGallery -rant> the most useful combination
-for general purposes, as well as C<rant> being easy to remember :-)
+for general purposes, as well as C<rant> being easy to remember.
 
 Recursive mode works with all of the action modes (C<-c>, C<-e>, C<-t>).
 
@@ -167,19 +167,18 @@ drop Matthias a line and let him know his code is appreciated.  His email
 address is available at the URL listed above.
 
 You will need to build F<jhead> in order to use it.  To build on most systems
-just type C<make> in the F<util/jhead> subdirectory.  If you don't have gcc
+just type C<make> in the F<jhead> subdirectory.  If you don't have gcc
 you'll need to edit F<Makefile> to point to your compiler.
 
 This should work as-is on most Unix or Unix-like platforms.  I can attest
-to its working with Linux, FreeBSD, Solaris and Apple OSX.
+to its working with Linux, FreeBSD, Solaris and Apple OSX.  If you are
+running Windows, you should grab the pre-built jhead program available at
+the URL above.
 
-If you are running Windows, you should grab the pre-built jhead program
-available at the URL above.
+F<jhead> should be placed in the same directory as F<mkGallery>.
 
-F<jhead> should go into the same directory as F<mkGallery>.
-
-F<jhead> is not something you need to run directly - it is used by
-F<mkGallery> if you invoke F<mkGallery> with the C<-e> flag. 
+(F<jhead> is not something you need to run directly - it is used by
+F<mkGallery> if you invoke F<mkGallery> with the C<-e> flag.)
 
 =cut
 
