@@ -81,6 +81,7 @@ my $interactFlag        = 0;        # -i: Interactive mode
 my $recurseFlag         = 0;        # -r: Recursion mode
 my $newOnlyFlag         = 0;        # -n: Process only new items
 my $thumbDirFlag        = 0;        # -d: Use thumbnail subdirectories
+my $largeDirFlag        = 0;        # -l: Use large subdirectories
 my $keepProfilesFlag    = 0;        # -K: Keep profiles intact
 
 # Defaults for command-line flags which take arguments
@@ -90,6 +91,7 @@ my $defaultMarker   = '';           # -m: Thumbnail label
 my $markerType      = '';           # -M: Thumbnail label position
 my $defaultThumbDir = 'thumbs';     # -D: Name of thumbnail subdirectory
 my $defaultThumbExt = '';           # -E: File extension for thumbnails
+my $defaultLargeDir = 'large';      # -L: Name of large subdirectory
 
 # Mode to use for thumbnail subdirectories
 my $thumbDirMode    = 0755;
@@ -124,21 +126,23 @@ if ( -e $localConfig ) {
     
 # Fetch command line options
 my %opt = ();
-getopts('acdD:eE:f:hiKM:m:nq:rs:tw', \%opt);
+getopts('acdD:eE:f:hiKlLM:m:nq:rs:tw', \%opt);
 
 # Set new config file if one was specified.
 $globalConfig = $opt{'f'} if $opt{'f'};
 
 # Parse global config file, if it exists.
 if (-r $globalConfig) {
-    ($markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir, $defaultThumbExt)
-    = &parseMyConfig($globalConfig, $markerType, $defaultMarker,
-                     $thumbDirFlag, $defaultThumbDir, $defaultThumbExt);
+    ($markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir, $defaultThumbExt,
+     $largeDirFlag, $defaultLargeDir)
+            = &parseMyConfig($globalConfig, $markerType, $defaultMarker,
+                             $thumbDirFlag, $defaultThumbDir, $defaultThumbExt,
+                             $largeDirFlag, $defaultLargeDir);
 }
 
 # Prototypes
 my ($item, $file, $ext, $size, $quality, $markerLabel, $marktestpat, $cmd);
-my ($thumbDir, $thumbExt);
+my ($thumbDir, $thumbExt, $largeDir);
 my @contents        = ();
 my @processDirs     = ();
 my @processFiles    = ();
@@ -159,6 +163,7 @@ $interactFlag       = 1 if $opt{'i'};   # set "interactive" flag
 $recurseFlag        = 1 if $opt{'r'};   # set "recursion" flag
 $newOnlyFlag        = 1 if $opt{'n'};   # set "new only" flag
 $thumbDirFlag       = 1 if $opt{'d'};   # set "use thumb subdir" flag
+$largeDirFlag       = 1 if $opt{'l'};   # set "use large subdir" flag
 $keepProfilesFlag   = 1 if $opt{'K'};   # set "keep profiles" flag
 
 # For "convert"
@@ -173,6 +178,8 @@ $thumbDir = $defaultThumbDir;
 $thumbDir = $opt{'D'} if $opt{'D'};
 $thumbExt = $defaultThumbExt;
 $thumbExt = $opt{'E'} if $opt{'E'};
+$largeDir = $defaultLargeDir;
+$largeDir = $opt{'L'} if $opt{'L'};
 
 # Print help, if asked to.
 if ($opt{'h'}) {
@@ -264,16 +271,34 @@ if ($recurseFlag) {
     sub dirfind {
         my $thumbDirFlag = $File::Find::mkGalleryThumbDirFlag;
         my $thumbDir = $File::Find::mkGalleryThumbDir;
+        my $largeDirFlag = $File::Find::mkGalleryLargeDirFlag;
+        my $largeDir = $File::Find::mkGalleryLargeDir;
         if ($thumbDirFlag) {
             unless (/^$thumbDir$/) {
-                push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+                #push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+                if (not $largeDirFlag) {
+                    unless (/^$largeDir$/) {
+                        push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+                    }
+                } else {
+                    push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+                }
             }
         } else {
-            push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+            #push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+            if (not $largeDirFlag) {
+                unless (/^$largeDir$/) {
+                    push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+                }
+            } else {
+                push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
+            }
         }
     }
     $File::Find::mkGalleryThumbDirFlag = $thumbDirFlag;
     $File::Find::mkGalleryThumbDir = $thumbDir;
+    $File::Find::mkGalleryLargeDirFlag = $largeDirFlag;
+    $File::Find::mkGalleryLargeDir = $largeDir;
     find(\&dirfind, $myRoot);                       # do the find itself
     @processDirs = @File::Find::mkGalleryDirs;      # stash in @processDirs
     
@@ -551,7 +576,7 @@ Usage:
     $myself [ -h ] [ -a ] [ -w ] [ -t ] [ -e ] [ -c ] [ -i ]
         [ -s <size> ] [ -q <quality> ] [ -M <type> ] [ -m <label> ]
         [ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ] [ -f <file> ]
-        [ <file1> <file2> <...> ]
+        [ -l ] [ -L <dir> ] [ <file1> <file2> <...> ]
 
       -h : Prints this help message.
       -f : Use alternate configuration file (config.php)
@@ -578,6 +603,9 @@ Usage:
            folders and subfolders beneath it.
       -d : Use thumbnail subdirectories (instead of using _th, etc)
       -D : Name of thumbnail subdirectory to use (default is 'thumbs' or
+           whatever is in your config.php file).
+      -l : Use large subdirectories (do not generate thumbs inside them.)
+      -L : Name of large subdirectory to use (default is 'large' or
            whatever is in your config.php file).
       -E : File extension to use for thumbnails.
       -K : Keep profiles in thumbnails.  Normally this should
@@ -610,13 +638,16 @@ sub parseMyConfig {
     my $thumbDirFlag = shift;
     my $defaultThumbDir = shift;
     my $defaultThumbExt = shift;
+    my $largeDirFlag = shift;
+    my $defaultLargeDir = shift;
 
     my $type = undef;
 
     unless (open(CF, $configFile)) {
         print "Can't open $configFile for reading, skipping it.\n";
         return $markerType, $defaultMarker, $thumbDirFlag,
-               $defaultThumbDir, $defaultThumbExt;
+               $defaultThumbDir, $defaultThumbExt,
+               $largeDirFlag, $defaultLargeDir;
     }
 
     while (<CF>) {
@@ -645,11 +676,20 @@ sub parseMyConfig {
             s/^.*\$thumbExt[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;       #"
             $defaultThumbExt = $1 if $1;
         }
+        if (/^[\s]*\$useLargeImages/) {
+            s/^.*\$useLargeImages[\s]*=[\s]*([A-Z]+)[\s]*;.*$/$1/i;
+            $largeDirFlag = 1 if /^TRUE$/;
+            $largeDirFlag = 0 if /^FALSE$/;
+        }
+        if (/^[\s]*\$largeSubdir/) {
+            s/^.*\$largeSubdir[\s]*=[\s]*["']([^"']*)["'][\s]*;.*$/$1/i;
+            $defaultLargeDir = $1 if $1;
+        }
     }
     close CF;
 
     return $markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir,
-           $defaultThumbExt;
+           $defaultThumbExt, $largeDirFlag, $defaultLargeDir;
 
 }   # -- End of parseMyConfig()
 
