@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.3.1';
+$version = '1.3.2';
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
@@ -348,9 +348,8 @@ if ($pageType == 'folder' or $pageType == '') {
                                 $albumURLroot, $maxThumbColumns, $folderList,
                                 $markerType, $markerLabel, $suppressImageInfo,
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
-                                $thumbExt, $suppressAltTags, $mig_language,
-                                $mig_messages, $sortType, $hidden,
-                                $presort_img, $desc, $imagePopup,
+                                $thumbExt, $suppressAltTags, $sortType,
+                                $hidden, $presort_img, $desc, $imagePopup,
                                 $imagePopType, $commentFilePerImage);
 
     // Only frame the lists in table code when appropriate
@@ -384,12 +383,10 @@ if ($pageType == 'folder' or $pageType == '') {
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
-                              $homeLabel, $noThumbs, $mig_language,
-                              $mig_messages);
+                              $homeLabel, $noThumbs);
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, '', $mig_language,
-                                  $mig_messages);
+    $youAreHere = buildYouAreHere($baseURL, $currDir, '');
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -418,15 +415,14 @@ if ($pageType == 'folder' or $pageType == '') {
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
     $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
-                              $noThumbs, $mig_language, $mig_messages);
+                              $noThumbs);
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
-                                $markerType, $markerLabel, $mig_language,
-                                $mig_messages, $hidden, $presort_img,
-                                $sortType);
+                                $markerType, $markerLabel, $hidden,
+                                $presort_img, $sortType);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
@@ -457,8 +453,7 @@ if ($pageType == 'folder' or $pageType == '') {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $mig_language,
-                                  $mig_messages);
+    $youAreHere = buildYouAreHere($baseURL, $currDir, $image);
 
     // Determine what template to use, based on what mode we are in
     if ($phpNukeCompatible) {
