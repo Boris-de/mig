@@ -13,7 +13,12 @@ $mig_config['lang_lib']['br'] = array (
     'no_contents'   => 'Sem&nbsp;conte&#250;do.',
     'previmage'     => 'imagem&nbsp;anterior',
     'thumbview'     => 'Voltar&nbsp;para&nbsp;os&nbsp;thumbnails',
-    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
+    // total_images is special.  It has three elements you can use:
+    //     %t :    Total images in folder
+    //     %s :    First image shown this page
+    //     %e :    Last image shown this page
+    'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
+                     . '&nbsp;total<br>',
     'up_one'        => 'subir&nbsp;um&nbsp;n&#237;vel',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

@@ -13,7 +13,12 @@ $mig_config['lang_lib']['dk'] = array (
     'no_contents'   => 'intet&nbsp;inhold.',
     'previmage'     => 'forrige&nbsp;billed',
     'thumbview'     => 'tilbage&nbsp;til&nbsp;oversigten',
-    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
+    // total_images is special.  It has three elements you can use:
+    //     %t :    Total images in folder
+    //     %s :    First image shown this page
+    //     %e :    Last image shown this page
+    'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
+                     . '&nbsp;total<br>',
     'up_one'        => 'tilbage',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'Maj', '06' => 'Jun',

@@ -22,7 +22,7 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
         // Get a URL-encoded copy of $workingCopy
         $encodedCopy = migURLencode($workingCopy);
 
-        if ($image == '' and $workingCopy == $currDir) {
+        if ($image == '' && $workingCopy == $currDir) {
             $url = '&nbsp;:&nbsp;<b>' . $label . '</b>';
         } else {
             $url = '&nbsp;:&nbsp;<a href="' . $baseURL . '?currDir='

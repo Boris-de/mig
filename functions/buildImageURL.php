@@ -2,13 +2,16 @@
 // buildImageURL() - spit out HTML for a particular image
 
 function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
-                         $albumURLroot, $fname, $ext, $suppressImageInfo,
+                         $albumURLroot, $filename, $suppressImageInfo,
                          $markerType, $markerLabel,
                          $useThumbSubdir, $thumbSubdir, $noThumbs, $thumbExt,
                          $suppressAltTags, $description, $imagePopup,
                          $imagePopType, $commentFilePerImage, $startFrom )
 {
     global $mig_config;
+
+    $fname = getFileName($filename);
+    $ext = getFileExtension($filename);
 
     // newCurrDir is currDir without leading './'
     $newCurrDir = getNewCurrDir($currDir);

@@ -1,10 +1,11 @@
 
 // buildDirList() - creates list of directories available
 
-function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
-                        $useThumbSubdir, $thumbSubdir, $maxColumns,
-                        $hidden, $presorted, $viewFolderCount,
-                        $ficons )
+function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
+                        $imageDir, $useThumbSubdir, $thumbSubdir,
+                        $maxColumns, $hidden, $presorted, $viewFolderCount,
+                        $markerType, $markerLabel, $ficons,
+                        $randomFolderThumbs, $folderNameLength )
 {
     global $mig_config;
 
@@ -14,44 +15,27 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     $enc_currdir = $currDir;
     $currDir = rawurldecode($enc_currdir);
 
-    $dir = opendir("$albumDir/$currDir");       // Open directory handle
-
     $directories = array ();                    // prototypes
     $counts = array ();
+    $samples = array ();
 
-    if ($viewFolderCount) {
-        while(list($file,$x) = each($presorted)) {
-            $folder = "$albumDir/$currDir/$file";
-            $counts[$file] = getNumberOfImages($folder, $useThumbSubdir,
-                                               $markerType, $markerLabel);
-        }
-        reset($presorted);
-    }
+    $dir = opendir("$albumDir/$currDir");       // Open directory handle
 
     while ($file = readdir($dir)) {
 
         // Ignore . and .. and make sure it's a directory
-        if ($file != '.' and $file != '..'
-            and is_dir("$albumDir/$currDir/$file")) {
+        if ($file != '.' && $file != '..'
+            && is_dir("$albumDir/$currDir/$file")) {
 
             // Ignore anything that's hidden or was already sorted.
-            if (!$hidden[$file] and !$presorted[$file]) {
-
+            if (! $hidden[$file] && ! $presorted[$file]) {
                 // Stash file in an array
-                $directories[$file] = TRUE;
-
-                // Get a count of the images it contains, if
-                // desired.
-                if ($viewFolderCount) {
-                    $folder = "$albumDir/$currDir/$file";
-                    $counts[$file] = getNumberOfImages($folder,
-                                                       $useThumbSubdir,
-                                                       $markerType,
-                                                       $markerLabel);
-                }
+                    $directories[$file] = TRUE;
             }
         }
     }
+
+    closedir($dir);
 
     ksort($directories);    // sort so we can yank them in sorted order
     reset($directories);    // reset array pointer to beginning
@@ -63,6 +47,28 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     }
 
     reset($presorted);          // reset array pointer
+
+    // Iterate through all folders now that we have our final list.
+    while (list($file,$junk) = each($presorted)) {
+
+        $folder = "$albumDir/$currDir/$file";
+
+        // Calculate how many images in the folder if desired
+        if ($viewFolderCount) {
+            $counts[$file] = getNumberOfImages($folder, $useThumbSubdir,
+                                               $markerType, $markerLabel);
+        }
+
+        // Handle random folder thumbnails if desired
+        if ($randomFolderThumbs) {
+            $samples[$file] = getRandomThumb($file, $folder, $useThumbSubdir,
+                                             $thumbSubdir, $albumURLroot,
+                                             $currDir, $markerType,
+                                             $markerLabel);
+        }
+    }
+
+    reset($presorted);
 
     // Track columns
     $row = 0;
@@ -91,25 +97,39 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
         // Reword $file so it doesn't allow wrapping of the label
         // (fixes odd formatting bug in MSIE).
         // Also, render _ as a space.
+        // Also, shorten filename length if using random thumbs,
+        // to make the table cleaner
         $nbspfile = $file;
+        if ($randomFolderThumbs && strlen($nbspfile) > $folderNameLength) {
+            $nbspfile = substr($nbspfile,0,$folderNameLength-1) . '(..)';
+        }
         $nbspfile = str_replace(' ', '&nbsp;', $nbspfile);
         $nbspfile = str_replace('_', '&nbsp;', $nbspfile);
 
         // Build the full link (icon plus folder name) and tack it on
         // the end of the list.
-        $directoryList .= '<td class="folder">' . $linkURL . '<img src="'
-                       . $imageDir . '/';
+        $directoryList .= '<td valign="bottom" class="folder">'
+                        . $linkURL . '<img src="';
         if ($ficons[$file]) {
             $directoryList .= $ficons[$file];
+        } elseif ($samples[$file]) {
+            $directoryList .= $samples[$file];
         } else {
-            $directoryList .= 'folder.gif';
+            $directoryList .= $imageDir . '/folder.gif';
         }
 
-        $directoryList .= '" border="0"></a>&nbsp;'
-                       . $linkURL . '<font size="-1">' . $nbspfile
+        if (! $samples[$file]) {
+            $sep = '&nbsp;';
+        } else {
+            $sep = '<br>';
+        }
+
+        $altlabel = str_replace('_', ' ', $file);
+        $directoryList .= '" border="0" alt="' . $altlabel . '"></a>' . $sep
+                       . $linkURL . '<font size="-2">' . $nbspfile
                        . '</font></a>';
 
-        if ($viewFolderCount and $counts[$file] > 0) {
+        if ($viewFolderCount && $counts[$file] > 0) {
             $directoryList .= ' (' . $counts[$file] . ')';
         }
 
@@ -124,8 +144,6 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
             $col++;
         }
     }
-
-    closedir($dir); 
 
     // If there aren't any subfolders to look at, then just say so.
     if ($directoryList == '') {

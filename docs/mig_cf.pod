@@ -100,6 +100,9 @@ defined in F<Trips/mig.cf>:
 The F<colloseum.gif> file should be placed in Mig's F<images> folder,
 located in the root directory of your Mig installation.
 
+If you are using C<$randomFolderThumbs>, note that C<FolderIcon> overrides
+that setting.
+
 =head2 Per-folder Template
 
     FolderTemplate /path/to/file.tmpl

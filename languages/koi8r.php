@@ -25,7 +25,12 @@ $mig_config['lang_lib']['koi8r'] = array (
                      . '&#209;&nbsp;&#203;&nbsp;&#213;&#205;&#197;&#206;'
                      . '&#216;&#219;&#197;&#206;&#206;&#207;&#205;&#213;'
                      . '&nbsp;&#215;&#201;&#196;&#213;',
-    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
+    // total_images is special.  It has three elements you can use:
+    //     %t :    Total images in folder
+    //     %s :    First image shown this page
+    //     %e :    Last image shown this page
+    'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
+                     . '&nbsp;total<br>',
     'up_one'        => '&#208;&#210;&#197;&#196;&#217;&#196;&#213;&#221;'
                      . '&#193;&#209;&nbsp;&#208;&#193;&#208;&#203;&#193;',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',

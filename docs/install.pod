@@ -322,6 +322,20 @@ desired (how many thumbnails across from left to right in one row).  Set
 C<$maxThumbRows> to the maximum number of rows per page/screen.  The
 defaults are 4 columns and 5 rows (for 20 images per page).
 
+=item 8. Using random thumbnails instead of folder icons
+
+Instead of using the generic folder icon for folder views, Mig can use a
+randomly selected thumbnail from the folder as the icon.  To turn this
+behavior on, set C<$randomFolderThumbs> to C<TRUE> in F<config.php>.
+(See also C<$folderNameLength>.)
+
+If the folder itself contains only other folders, and no images, Mig will
+traverse subdirectories until it finds a usable thumbnail to use as an
+icon.  So the only time the generic icon will be used is in a situation
+where there is a folder that contains no thumbnails, whose subfolders and
+their subfolders, etc, contain no thumbnails.  In other words, only a
+useless folder branch would result in the generic folder icon being shown.
+
 =back
 
 =head2 Bug Reporting

@@ -33,12 +33,12 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         if (!$useThumbSubdir) {  // unless $useThumbSubdir is set,
                                  // then don't waste time on this check
 
-            if ($markerType == 'suffix'
-                and eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file)) {
+            if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
+                && validFileType($file)) {
                     continue;
             }
 
-            if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file)) {
+            if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
                 continue;
             }
 
@@ -46,10 +46,8 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
         // We'll look at this one only if it's a file, it's not hidden,
         // and it matches our list of approved extensions
-        $ext = getFileExtension($file);
-        if (is_file("$albumDir/$currDir/$file") and !$hidden[$file]
-                        and !$presorted[$file]
-                        and eregi('^(jpg|gif|png|jpeg|jpe)$', $ext))
+        if (is_file("$albumDir/$currDir/$file") && ! $hidden[$file]
+                        && ! $presorted[$file] && validFileType($file))
         {
             // Increase thumb counter
             ++$thumbsInFolder;
@@ -103,8 +101,35 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
     // Handle pagination
     if ($thumbsInFolder > ($max_col * $max_row)) {
 
+        if ($startFrom) {
+            $start_img = ($startFrom * $max_col * $max_row) + 1;
+
+            if (($start_img+($max_col*$max_row)-1) >= $thumbsInFolder) {
+                // This must be the last page.
+                $end_img = $thumbsInFolder;
+            } else {
+                // Not the first, not last - some middle page.
+                $end_img = ($startFrom+1) * $max_col * $max_row;
+            }
+
+        } else {
+            // Absence of $startFrom means we're on page 1 (startFrom=0).
+            // Therefore, we can easily calculate what we need.
+            $start_img = 1;
+            $end_img = $max_col * $max_row;
+        }
+
+        // Fetch template phrase to work with.
+        $phrase = $mig_config['lang']['total_images'];
+        // %t is total images in folder
+        $phrase = str_replace('%t', $thumbsInFolder, $phrase);
+        // %s is start image
+        $phrase = str_replace('%s', $start_img, $phrase);
+        // %e is end image
+        $phrase = str_replace('%e', $end_img, $phrase);
+
         $imageList .= '<tr><td colspan=' . $max_col . ' align="center">'
-                    . $thumbsInFolder . $mig_config['lang']['total_images'];
+                    . $phrase;
 
         if ($startFrom) {
             $prevPage = $startFrom - 1;
@@ -149,17 +174,15 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         if ($thumbCounter >= $firstThumb && $row <= $maxRows) {
 
             // Only look at valid image types
-            $ext = getFileExtension($file);
-            if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
+            if (validFileType($file)) {
 
                 // If this is a new row, start a new <TR>
                 if ($col == 0) {
                     $imageList .= '<tr>';
                 }
 
-                $fname = getFileName($file);
                 $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
-                                     $albumURLroot, $fname, $ext,
+                                     $albumURLroot, $file,
                                      $suppressImageInfo, $markerType,
                                      $markerLabel, $useThumbSubdir,
                                      $thumbSubdir, $noThumbs, $thumbExt,

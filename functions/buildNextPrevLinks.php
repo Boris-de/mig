@@ -18,17 +18,17 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     while ($file = readdir($dir)) {
 
         // Ignore thumbnails
-        if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file)) {
+        if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
             continue;
         }
 
-        if ($markerType == 'suffix'
-            and eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file)) {
+        if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
+            && validFileType($file)) {
                 continue;
         }
 
         // Only look at valid image formats
-        if (!eregi('\.(gif|jpg|png|jpeg|jpe)$', $file)) {
+        if (! validFileType($file)) {
             continue; 
         }
 
@@ -39,7 +39,7 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
 
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
-        if (is_file("$albumDir/$currDir/$file") and ! $presorted[$file]) {
+        if (is_file("$albumDir/$currDir/$file") && ! $presorted[$file]) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
             if (ereg("bydate.*", $sortType)) {

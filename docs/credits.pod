@@ -76,7 +76,8 @@ Simon Wood (simon at mungewell.org) for contributing a patch to parse the
 C<MaintAddr> keyword in F<mig.cf> files.
 
 Pawel Dylik (pawel at pavel.toya.net.pl) for contributing a patch which
-resulted in the pagination of large galleries.
+resulted in the pagination of large galleries and the the random thumbnail
+display in place of the generic folder icon.
 
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.

@@ -198,16 +198,12 @@ $albumURLroot = $baseHref . '/albums';
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
-$mig_config['markerType'] = $markerType;
-if ( $mig_config['markerType'] != 'prefix'
-     && $mig_config['markerType'] != 'suffix' )
-{
-    $mig_config['markerType'] = 'suffix';
+if ($markerType != 'prefix' && $markerType != 'suffix' ) {
+    $markerType = 'suffix';
 }
 
-$mig_config['markerLabel'] = $markerLabel;
-if (! $mig_config['markerLabel']) {
-    $mig_config['markerLabel'] = 'th';
+if (! $markerLabel) {
+    $markerLabel = 'th';
 }
 
 // (Try to) get around the track_vars vs. register_globals problem
@@ -217,13 +213,13 @@ if (!$SERVER_NAME) {
 }
 
 // Is this a jump-tag URL?
-if ($jump and $jumpMap[$jump] and $SERVER_NAME) {
+if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
     header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$jump]");
     exit;
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
-if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
+if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
     header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
     exit;
 }
@@ -299,10 +295,12 @@ if ($pageType == 'folder') {
     // Generate some HTML to pass to the template printer
 
     // list of available folders
-    $folderList = buildDirList($baseURL, $albumDir, $currDir, $imageDir,
-                               $useThumbSubdir, $thumbSubdir,
+    $folderList = buildDirList($baseURL, $albumDir, $albumURLroot, $currDir,
+                               $imageDir, $useThumbSubdir, $thumbSubdir,
                                $maxFolderColumns, $hidden, $presort_dir,
-                               $viewFolderCount, $ficons);
+                               $viewFolderCount, $markerType,
+                               $markerLabel, $ficons, $randomFolderThumbs,
+                               $folderNameLength);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,
@@ -317,24 +315,24 @@ if ($pageType == 'folder') {
     // Only frame the lists in table code when appropriate
 
     // no folders or images - print the "no contents" line
-    if ($folderList == 'NULL' and $imageList == 'NULL') {
+    if ($folderList == 'NULL' && $imageList == 'NULL') {
         $folderList = $mig_config['lang']['no_contents'];
-        $folderList = folderFrame($folderList);
+        $folderList = folderFrame($folderList, $randomFolderThumbs);
         $imageList = '';
 
     // images, no folders.  Frame the imagelist in a table
-    } elseif ($folderList == 'NULL' and $imageList != 'NULL') {
+    } elseif ($folderList == 'NULL' && $imageList != 'NULL') {
         $folderList = '';
         $imageList = imageFrame($imageList);
 
     // folders but no images.  Frame the folderlist in a table
-    } elseif ($imageList == 'NULL' and $folderList != 'NULL') {
+    } elseif ($imageList == 'NULL' && $folderList != 'NULL') {
         $imageList = '';
-        $folderList = folderFrame($folderList);
+        $folderList = folderFrame($folderList, $randomFolderThumbs);
 
     // We have folders and we have images, so frame both in tables.
     } else {
-        $folderList = folderFrame($folderList);
+        $folderList = folderFrame($folderList, $randomFolderThumbs);
         $imageList = imageFrame($imageList);
     }
 
@@ -389,13 +387,13 @@ if ($pageType == 'folder') {
 
     // If there's a description but no exifDescription, just make the
     // exifDescription the description
-    if ($exifDescription and ! $description) {
+    if ($exifDescription && ! $description) {
         $description = $exifDescription;
         unset($exifDescription);
     }
 
     // If both descriptions are non-NULL, separate them with an <HR>
-    if ($description and $exifDescription) {
+    if ($description && $exifDescription) {
         $description .= '<hr>';
         $description .= $exifDescription;
     }

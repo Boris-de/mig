@@ -4,7 +4,12 @@ $Id$
 
 =head2 MIG Change Log
 
-=head2 Version 1.3.3 (NOT YET RELEASED)
+=head2 Version 1.3.3 (Mon, 27 May 2002)
+
+Apparently I didn't document it in the changelog, but at some point I added
+code to C<printTemplate()> to check for drive letters in the pathname to
+the template file (as opposed to just looking for a leading / character).
+This change was in the 1.3.2 release and possibly earlier.
 
 Updated Danish translation with patch from Mikkel Kristensen.
 
@@ -12,14 +17,29 @@ Tested Nuke mode with PHPWebSite 0.8.2, works fine with no changes.
 Updated F<phpnuke> document to reflect this.
 
 Merged patch from Pawel Dylik to implement pagination of large galleries.
-This resulted in the new F<config.php> option C<$maxThumbRows>.  Right now,
+This resulted in the new F<config.php> option C<$maxThumbRows>, and a new
+language element C<total_images> found in the language sets.  Right now,
 there's a slight bug in this behavior.  If you click an image while on say,
 page 2, then use the next-image link a bunch of times until you get to an
 image that would be on page 3, if you then go back to thumbnail view, you
 end up back on page 2.  For now I will let this sit, because fixing it
-would require rewriting a lot of code.  However, I may introduce a new
-image sorting function later which addresses this and at the same time
-cleans up some redundant code.
+would require rewriting a lot of code for little real benefit.
+
+Added code so the pagination now shows you which images you are viewing
+(i.e. 21-40 of 49).
+
+Added C<$randomFolderThumbs> to F<config.php>.  If C<TRUE>, a random
+thumbnail from the folder will be used as the icon rather than the generic
+folder icon (unless a C<FolderIcon> is set in F<mig.cf> - that takes
+precedence).  If a given folder has no thumbs (i.e. it has only other
+folders inside), Mig will traverse subdirectories until it finds a usable
+thumbnail.  If it can't find one the generic folder icon is used instead.
+(This was another Pawel patch.)
+
+Added C<$folderNameLength> to F<config.php>.  When C<$randomFolderThumbs>
+is C<TRUE>, folder names are truncated if they are longer than
+C<$folderNameLength> characters (to help with table formatting).
+(Another Pawel patch.)
 
 =head2 Version 1.3.2 (Tue, 21 May 2002)
 

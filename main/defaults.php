@@ -5,6 +5,7 @@
 $commentFilePerImage    = FALSE;
 $distURL                = 'http://mig.sourceforge.net/';
 $exifFormatString       = '|%c|';
+$folderNameLength       = 15;
 $imagePopType           = 'reuse';
 $imagePopup             = FALSE;
 $maintAddr              = 'webmaster@mydomain.com';
@@ -20,6 +21,7 @@ $phpNukeCompatible      = FALSE;
 $phpNukeRoot            = '';
 $phpWebThingsCompatible = FALSE;
 $phpWebThingsRoot       = '';
+$randomFolderThumbs     = FALSE;
 $sortType               = 'default';
 $suppressAltTags        = FALSE;
 $suppressImageInfo      = FALSE;

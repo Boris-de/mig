@@ -103,11 +103,10 @@ $maxThumbColumns = 4;
 
 //
 // $maxThumbRows
-//      Maximum number of rows to use (how many rows of thumbnails on
-//      the screen on a single page) in thumbnail views.  The total
-//      number of images on one "page" is:
-//          ($maxThumbColumns * $maxThumbRows)
-//      So by default, 20 images per page.  Mig will turn a given
+//      Maximum number of rows to use (how many rows of thumbnails on the
+//      screen on a single page) in thumbnail views.  The total number of
+//      images on one "page" is ($maxThumbColumns * $maxThumbRows),
+//      so by default, 20 images per page.  Mig will turn a given
 //      gallery into a set of pages if there are more than 20 images
 //      in a gallery.
 //
@@ -149,6 +148,40 @@ $useThumbSubdir = TRUE;
 //
 
 $thumbSubdir = 'thumbs';
+
+
+//
+// $randomFolderThumbs
+//      If TRUE, instead of the generic folder icon, a represenative
+//      thumbnail from the folder is shown.  If Mig is unable to find a
+//      thumbnail to use, it will use the generic folder icon instead.
+//      Unless there are folders whose subfolders and there subfolders
+//      and so on have no thumbnails, the generic folder icon shouldn't
+//      ever show up.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $randomFolderThumbs = FALSE;
+//
+
+$randomFolderThumbs = FALSE;
+
+
+//
+// $folderNameLength
+//      If $randomFolderThumbs is TRUE, folder names will be truncated
+//      if they are longer than $folderNameLength characters.  This is
+//      done to keep the tables formatted nicely.  This option is ignored
+//      if $randomFolderThumbs is FALSE.
+//
+// Defaults to 15.
+//
+// Example:
+//      $folderNameLength = 15;
+//
+
+$folderNameLength = 15;
 
 
 //
