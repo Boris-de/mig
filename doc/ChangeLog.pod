@@ -28,6 +28,17 @@ Now when invoked with C<-c>, F<mkGallery> will also add a C<Bulletin>
 tag to F<mig.cf>.  In interactive mode it will ask the user for the
 bulletin text, otherwise it will just create an empty bulletin.
 
+[Sourceforge Feature Request #521032] -
+Added new config variable C<$commentFilePerImage> (default C<FALSE>).
+When set to C<TRUE>, Mig looks for comments in a separate file for
+each image rather than looking for all comments in F<mig.cf>.  For
+example if you have F<IMG_4900.JPG>, Mig would look at F<IMG_4900.txt>
+for the comment.  Unlike F<mig.cf>, a comment in one of these files
+does not need to be enclosed in a E<lt>CommentE<gt> block.  The entire
+file is used as the comment.  Mig will strip newlines and tabs out.
+When C<$commentFilePerImage> is C<FALSE>, normal processing of comments
+using the F<mig.cf> file happens.
+
 =head2 Version 1.3.0 (Tue 23 Apr 2002)
 
 Added TITLE tags in thumbnail views so when hovering over a thumbnail,

@@ -179,6 +179,17 @@ $imagePopup = FALSE;
 $imagePopType = 'reuse';
 
 
+// if $commentFilePerImage is set to TRUE, then instead of using just
+// the mig.cf file to contain comments, each image file will have a comment
+// in its own text file (i.e. img_4900.jpg will have a comment file, named
+// img_4900.txt, in the same directory).
+//
+// To have "normal" processing (all comments in mig.cf), set to FALSE.
+// Defaults to FALSE.
+//
+$commentFilePerImage = FALSE;
+
+
 // What language to use  (default is 'en' - English)
 //
 // Possible languages:

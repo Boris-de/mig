@@ -94,6 +94,7 @@ $viewDateInfo           = FALSE;
 $viewFolderCount        = FALSE;
 $imagePopup             = FALSE;
 $imagePopType           = 'reuse';
+$commentFilePerImage    = FALSE;
 
 // Fetch variables from the URI
 //
@@ -158,7 +159,9 @@ if ($maxColumns) {
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (get_magic_quotes_gpc() == 1) {
     $currDir = stripslashes($currDir);
-    $image = stripslashes($image);
+    if ($image) {
+        $image = stripslashes($image);
+    }
 }
 
 // Turn off magic_quotes_runtime (causes trouble with some installations)
@@ -245,7 +248,7 @@ if (! $markerLabel) {
 }
 
 // (Try to) get around the track_vars vs. register_globals problem
-if (! $SERVER_NAME) {
+if (!$SERVER_NAME) {
     $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
     $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
 }
@@ -342,7 +345,7 @@ if ($pageType == 'folder' or $pageType == '') {
                                 $thumbExt, $suppressAltTags, $mig_language,
                                 $mig_messages, $sortType, $hidden,
                                 $presort_img, $desc, $imagePopup,
-                                $imagePopType);
+                                $imagePopType, $commentFilePerImage);
 
     // Only frame the lists in table code when appropriate
 
@@ -415,7 +418,11 @@ if ($pageType == 'folder' or $pageType == '') {
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    $description  = getImageDescription($image, $desc);
+    if ($commentFilePerImage) {
+        $description  = getImageDescFromFile($image, $albumDir, $currDir);
+    } else {
+        $description  = getImageDescription($image, $desc);
+    }
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
                                           $viewCamInfo, $viewDateInfo);
 

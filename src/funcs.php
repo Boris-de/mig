@@ -437,7 +437,8 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $useThumbSubdir, $thumbSubdir, $noThumbs,
                          $thumbExt, $suppressAltTags, $language,
                          $mig_messages, $sortType, $hidden, $presorted,
-                         $description, $imagePopup, $imagePopType )
+                         $description, $imagePopup, $imagePopType,
+                         $commentFilePerImage )
 {
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
@@ -531,7 +532,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                                  $useThumbSubdir, $thumbSubdir, $noThumbs,
                                  $thumbExt, $suppressAltTags, $language,
                                  $mig_messages, $description, $imagePopup,
-                                 $imagePopType);
+                                 $imagePopType, $commentFilePerImage);
             $imageList .= $img;
 
             // Keep track of what row and column we are on
@@ -624,7 +625,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
                         $markerLabel, $suppressImageInfo, $useThumbSubdir,
                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
                         $language, $mig_messages, $description, $imagePopup,
-                        $imagePopType )
+                        $imagePopType, $commentFilePerImage )
 {
 
     // newCurrDir is currDir without leading './'
@@ -706,7 +707,11 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // Get description, if any
-    $alt_desc = getImageDescription("$fname.$ext", $description);
+    if ($commentFilePerImage) {
+        $alt_desc = getImageDescFromFile("$fname.$ext", $albumDir, $currDir);
+    } else {
+        $alt_desc = getImageDescription("$fname.$ext", $description);
+    }
     $alt_desc = strip_tags($alt_desc);
 
     // if both are present, separate with "--"
@@ -1062,7 +1067,6 @@ function getFileName( $file )
 
 function getImageDescription( $image, $description )
 {
-
     $imageDesc = '';
     if ($description[$image]) {
         $imageDesc = $description[$image];
@@ -1070,6 +1074,35 @@ function getImageDescription( $image, $description )
     return $imageDesc;
 
 }   // -- End of getImageDescription()
+
+
+
+// ----------------------------------------------------------------------
+// getImageDescFromFile() - Fetches an image description from a
+// per-image comment file (used if $commentFilePerImage is TRUE)
+
+function getImageDescFromFile( $image, $albumDir, $currDir )
+{
+    $imageDesc = '';
+    $fname = getFileName($image);
+
+    if (file_exists("$albumDir/$currDir/$fname.txt")) {
+
+        $file = fopen("$albumDir/$currDir/$fname.txt", 'r');
+        $line = fgets($file, 4096);     // get first line
+
+        while (!feof($file)) {
+            $line = trim($line);
+            $imageDesc .= "$line ";
+            $line = fgets($file, 4096); // get next line
+        }
+
+        fclose($file);
+    }
+
+    return $imageDesc;
+
+}   // -- End of getImageDescFromFile();
 
 
 
@@ -1161,6 +1194,8 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
             $line = fgets($file, 4096);
         }
+
+        fclose($file);
 
         // return $desc[$image];
 
