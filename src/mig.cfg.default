@@ -1,10 +1,10 @@
 <?php // $Revision$
 
 //
-// mig.cfg - Configuration file for MiG
+// mig.cfg - Configuration file for Mig
 //
-// Copyright (c) 2000-2001 Dan Lowe <dan@tangledhelix.com>
-//     http://mig.sourceforge.net/
+// Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
+// Mig is available at http://mig.sourceforge.net/
 //
 // Lines starting with // are comments.
 // You can also use the C style of comments, i.e.
@@ -134,7 +134,7 @@ $noThumbs = FALSE;
 // To use a subdirectory for thumbnails, set this to TRUE.
 // When this is set to true, $markerType and $markerLabel are ignored.
 //
-$useThumbSubdir = FALSE;
+$useThumbSubdir = TRUE;
 
 
 // What subdirectory to use for thumbnails.  This is ignored if

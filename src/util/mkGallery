@@ -2,8 +2,9 @@
 #
 # mkGallery - turns a directory full of image files into a "gallery".
 #
-# Copyright (C) 2000-2001 Dan Lowe <dan@tangledhelix.com>
-#     http://mig.sourceforge.net/
+# Copyright 2000-2002 by Daniel M. Lowe <dan@tangledhelix.com>
+#
+# Mig is available at http://mig.sourceforge.net/
 #
 # $Revision$
 #
@@ -34,15 +35,15 @@
 # I haven't tested this under Windows, so use it at your own risk.
 #
 # You should not need to modify this code directly.  If you do so, and
-# want to contribute your changes to MiG, please send me a note with a
+# want to contribute your changes to Mig, please send me a note with a
 # code diff, and if I agree that your change is of use to the general
-# public, I will incorporate it into the main codebase of MiG.
+# public, I will incorporate it into the main codebase of Mig.
 #
-# However, in general MiG is written with the goal that the user should
+# However, in general Mig is written with the goal that the user should
 # never have to modify actual code to use the software - everything is
 # taken care of either automatically, or using configuration files.
 #
-# Please report any bugs to <mig-bugs@tangledhelix.com>.
+# Please report any bugs to <dan@tangledhelix.com>
 #
 
 use strict;
@@ -77,7 +78,7 @@ my $defaultThumbDir = "thumbs"; # default
 my $thumbDirMode    = 0755;     # default
 my $defaultThumbExt = "";       # default
 
-my $pkgName = "MiG";
+my $pkgName = "Mig";
 my $url = "http://mig.sourceforge.net/";
 my $email = "dan\@tangledhelix.com";
 my $migConfig = "mig.cf";

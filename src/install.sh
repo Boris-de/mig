@@ -2,16 +2,16 @@
 #
 # $Revision$
 #
-# Installation script for MiG
+# Installation script for Mig
 #
 # - See the file docs/INSTALL for directions
 # - WINDOWS USERS: also see docs/Windows.txt
 # - PHP-NUKE USERS: also see docs/phpNuke.txt
 #
-# MiG - A general purpose photo gallery management system.
+# Mig - A general purpose photo gallery management system.
 #
-# Copyright (C) 2000-2001 Dan Lowe <dan@tangledhelix.com>
-#     http://mig.sourceforge.net/
+# Copyright 2000-2002 by Daniel M. Lowe <dan@tangledhelix.com>
+# Mig is available at http://mig.sourceforge.net/
 #
 # LICENSE INFORMATION
 # -------------------
@@ -48,7 +48,7 @@ TMPL="folder.html image.html style.css"
 # Template files for "PHP-Nuke" mode
 NTMPL="mig_folder.php mig_image.php"
 
-# Where you can find MiG online
+# Where you can find Mig online
 HOMEPAGE="http://mig.sourceforge.net/"
 # Location of the license file
 LICENSE="docs/LICENSE"
@@ -67,12 +67,12 @@ fi
 # Initial marquis
 echo " "
 echo " "
-echo "MiG Installer, Copyright (C) 2000-2001 Dan Lowe"
+echo "Mig Installer, Copyright (C) 2000-2001 Dan Lowe"
 echo " "
-echo "MiG comes with ABSOLUTELY NO WARRANTY.  This is free software, and"
+echo "Mig comes with ABSOLUTELY NO WARRANTY.  This is free software, and"
 echo "you are welcome to redistribute it under certain conditions."
 echo " "
-echo "MiG is released under the GNU General Public License (GPL)."
+echo "Mig is released under the GNU General Public License (GPL)."
 echo " "
 echo "You can type \"quit\" at any prompt to exit the installer."
 echo " "
@@ -143,14 +143,14 @@ if [ "${phpNuke}" = "ON" ]; then
 
     echo " "
     echo "I need to know where the root of your PHP-Nuke installation is"
-    echo "because MiG includes the header & footer files from there."
+    echo "because Mig includes the header & footer files from there."
     echo "No changes will be made to your PHP-Nuke installation directory"
-    echo "unless you explicitly set it as your MiG install directory in"
+    echo "unless you explicitly set it as your Mig install directory in"
     echo "the following step."
     echo " "
     echo "The directory we are asking for here is where the root of your"
     echo "PHP-Nuke site lives.  A subdirectory called \"mig\" will be"
-    echo "created there, and MiG will be installed into that subdirectory."
+    echo "created there, and Mig will be installed into that subdirectory."
     echo "I will also place the script \"mig.php\" there.  \"mig.php\" is"
     echo "what you will point to when you want to point to your image"
     echo "gallery."
@@ -196,7 +196,7 @@ echo " "
 if [ "${phpNuke}" = "ON" ]; then
     echo " "
     echo "  * Will use ${phpnukeroot}/mig"
-    echo "  * as the installation directory for MiG."
+    echo "  * as the installation directory for Mig."
     echo " "
     installdir="${phpnukeroot}/mig"
     if [ ! -d ${installdir} ]; then
@@ -285,7 +285,7 @@ if [ "${answer}" = "n" ]; then
 fi
 
 echo " "
-echo "OK then, Installing MiG files..."
+echo "OK then, Installing Mig files..."
 echo " "
 
 # Install things as appropriate
@@ -392,7 +392,7 @@ if [ -d "${installdir}/albums/Examples and Such" ]; then
 fi
 
 echo " "
-echo "An example gallery is included with MiG to provide a tactile"
+echo "An example gallery is included with Mig to provide a tactile"
 echo "installation which you can use to learn more about how a gallery"
 echo "might be set up."
 echo " "
@@ -492,7 +492,7 @@ fi
 
 echo " "
 echo "If you are using PHP3 and not PHP4, you might need to have a filename"
-echo "ending in \".php3\".  I can install the main MiG PHP code as"
+echo "ending in \".php3\".  I can install the main Mig PHP code as"
 echo "either \"${mainFile}.php\" or \"${mainFile}.php3\"."
 echo " "
 
@@ -527,7 +527,7 @@ echo "<mig-bugs@tangledhelix.com>."
 
 if [ "${phpNuke}" = "ON" ]; then
     echo " "
-    echo "If this is your first time installing MiG on your PHP-Nuke site,"
+    echo "If this is your first time installing Mig on your PHP-Nuke site,"
     echo "you will need to copy over the config file:"
     echo "   ${installdir}/mig.cfg.default"
     echo "to:"
@@ -536,7 +536,7 @@ if [ "${phpNuke}" = "ON" ]; then
 fi
 
 echo " "
-echo "MiG - ${HOMEPAGE}"
+echo "Mig - ${HOMEPAGE}"
 echo " "
 
 exit 0
