@@ -2,7 +2,7 @@
 #
 # Contributed & written by: Dan Lowe <dan@tangledhelix.com>
 # This used to be in the main Mig distribution but is now deprecated and
-# can be found here in the contrib package.
+# can be found here in the contrib package instead.
 #
 # This script calls mf_conv.pl recursively to do subfolders, so you'll need
 # to make sure mf_conv.pl is available as well!

@@ -2,9 +2,9 @@
 #
 # Contributed & written by : Dan Lowe <dan@tangledhelix.com>
 # This used to be in the main Mig distribution but is now deprecated and is
-# in the contrib directory.
+# in the contrib package instead.
 #
-# Convert meta-files from old Mig (0.83 and before) to new Mig (0.90 and
+# Converts meta-files from old Mig (0.83 and before) to new Mig (0.90 and
 # later).  This does the current directory, but you can grab
 # "convert-metafiles.sh" too which does it recursively for all subfolders.
 #

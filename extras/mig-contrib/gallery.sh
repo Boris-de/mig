@@ -3,11 +3,11 @@
 # Written and contributed by Dan Lowe <dan@tangledhelix.com>
 #
 # I use this when uploading my images.  My digital camera outputs every
-# picture the same size, so I just call this with something like
+# picture the same size, so I just call this with something like:
 #
 #   for i in *jpg; do gallery.sh $i; done
 #
-# After that I use "mkGallery" to create the thumbnails.
+# After that I use "mkGallery.pl" to create the thumbnails.
 #
 # This basically reduces the image to half the original size and puts a
 # 4-pixel black border around it.

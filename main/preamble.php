@@ -38,8 +38,8 @@ $version = 'VeRsIoN';
 //
 // Please see the files in the docs subdirectory.
 //
-// Do not modify this file directly.  Please see the file docs/INSTALL
-// or docs/html/Install.html for installation directions.  Most things
+// Do not modify this file directly.  Please see docs/text/install.txt
+// or docs/html/install.html for installation directions.  Most things
 // you'd want to customize can be customized outside of this file.
 //
 // If you find that is not the case, and you hack in support for some
