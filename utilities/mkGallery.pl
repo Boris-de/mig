@@ -367,7 +367,7 @@ foreach (@processDirs) {
         # Make a thumbnail, if -t was invoked
         if ($thumbFlag) {
 
-            $cmd = "convert -geometry $SIZE -quality $quality";
+            $cmd = "convert -size $SIZE -resize $SIZE -quality $quality";
             unless ($keepProfilesFlag) {
                 $cmd .= ' +profile "*"';
             }

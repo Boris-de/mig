@@ -71,6 +71,14 @@ MP3, WAV, RA, RAM
 
 Fixed bug in jump tags - they should work again.
 
+Fixed bug in folder counting / image counting which ignored hidden items.
+
+Fixed bug in C<getRandomThumb()> that caused random thumbnail selection to
+fail when not using thumbnail subdirectories.
+
+Removed stray C<BR> element causing spacing problems in
+C<getRandomThumb()>.
+
 =head2 Version 1.3.8 (Fri, 25 Oct 2002)
 
 If Mig is called with no parameters, it will redirect to itself with

@@ -8,7 +8,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                         $markerType, $markerLabel, $ficons,
                         $randomFolderThumbs, $folderNameLength,
                         $useThumbFile, $ignoreDotDirectories,
-                        $useRealRandThumbs, $sortType )
+                        $useRealRandThumbs, $sortType, $useLargeImages,
+                        $largeSubdir )
 {
     global $mig_config;
     global $mig_dl;
@@ -110,7 +111,9 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                                                $markerType, $markerLabel);
             $countdir[$file] = getNumberOfDirs($folder, $useThumbSubdir,
                                                $thumbSubdir, $markerType,
-                                               $markerLabel);
+                                               $markerLabel, $useLargeImages,
+                                               $largeSubdir, $albumDir,
+                                               $currDir);
         }
 
         // Handle random folder thumbnails if desired

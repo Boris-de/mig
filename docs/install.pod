@@ -41,7 +41,7 @@ generate thumbnail images, it also requires ImageMagick
 The F<jhead> utility which is called by F<mkGallery.pl> for EXIF header
 parsing is a C source code file - it must be compiled before use.  On most
 unix-like systems this is as easy as going into the F<jhead> directory and
-typing E<quot>makeE<quot>.
+typing E<quot>makeE<quot> (GNU make is recommended).
 
 Windows users can download the pre-built F<jhead> program from Mathias
 Wandel's site at http://www.sentex.net/~mwandel/jhead/
@@ -460,6 +460,13 @@ line at the top).
     error_reporting (E_ALL & ~E_NOTICE);    // for PHP3 systems
 
     error_reporting (2039);                 // for PHP4 systems
+
+=item 3.  I'm getting thumbnails like image.jpg.0 or image.jpg.0.0.  Why?
+
+I'm not exactly sure, but it appears to happen with certain versions of
+the F<convert> program.  If it is happening to you, try running
+F<mkGallery.pl> using the C<-K> flag and see if your images come out
+properly then.
 
 =back
 

@@ -13,7 +13,13 @@ function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
 
     $count = 0;
 
+    // Get hidden item list from mig.cf
+    list($hidden, $x) = parseMigCf($folder, $useThumbSubdir,
+                                   $thumbSubdir, $useLargeImages,
+                                   $largeSubdir);
+
     while ($file = readdir($dir)) {
+
         // Skip over thumbnails
         if (!$useThumbSubdir) {  // unless $useThumbSubdir is set,
                                  // then don't waste time on this check
@@ -25,6 +31,12 @@ function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
             if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
                 continue;
             }
+
+        }
+
+        // Ignore hidden items
+        if ($hidden[$file]) {
+            continue;
         }
 
         // We'll look at this one only if it's a file and it matches our list

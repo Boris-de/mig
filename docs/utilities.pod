@@ -204,8 +204,9 @@ address is available at the URL shown above.
 
 F<jhead> is a C program, and must be compiled before it can be used.  On
 most unix-like systems, that's as easy as going into the F<jhead> directory
-and typing E<quot>makeE<quot>.  When make is finished, there should be a
-F<jhead> file, which you can copy to some other directory for safekeeping.
+and typing E<quot>makeE<quot>.  GNU make is recommended.  When make is
+finished, there should be a F<jhead> file, which you can copy to some other
+directory for safekeeping.
 
 The makefile for F<jhead> assumes F<gcc> is available.  If that's not
 the case, edit F<Makefile> to point to your compiler.  I've successfully

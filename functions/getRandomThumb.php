@@ -9,6 +9,9 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
 {
     global $hidden;
 
+    // I don't know why this was here but it broke layout badly...
+    //print "<br>";
+
     // SECTION ONE ...
     // If we're using thumbnail subdirectories.
 
@@ -96,6 +99,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                                        $markerType, $markerLabel,
                                        $useRealRandThumbs,
                                        $ignoreDotDirectories);
+
                         if ($mySample) {
                             return $mySample;
                         }
@@ -114,6 +118,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                                     $markerType, $markerLabel,
                                     $useRealRandThumbs,
                                     $ignoreDotDirectories);
+
                 return $mySample;
             }
         }
@@ -124,12 +129,21 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
     } else {
 
         if (is_dir($folder)) {
+            // Open $folder as a directory handle
             $readSample = opendir($folder);
         } else {
+            // If it's not a directory, just bail out now.
             return FALSE;
         }
 
+        // Iterate through all files in this folder...
         while ($sample = readdir($readSample)) {
+
+            unset($mySample);    // Cleanup from last loop iteration
+
+            // Using prefix/suffix and label settings,
+            // figure out if this is a thumbnail or not.
+            // This is so we skip over regular images.
             if ($markerType == 'prefix') {
                 if (ereg("^$markerLabel\_", $sample)
                     && getFileType($sample))
@@ -208,6 +222,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                                         $markerType, $markerLabel,
                                         $useRealRandThumbs,
                                         $ignoreDotDirectories);
+
                     if ($mySample) {
                         return $mySample;
                     }
@@ -218,7 +233,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
         closedir($readSample);
     }
 
-    if ($randThumbList[0]) {
+    if ($randThumbList) {
         srand((double)microtime()*1000000);   // choose random thumb
         $randval = rand(0,(sizeof($randThumbList)-1));
         return $randThumbList[$randval];

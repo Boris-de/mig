@@ -458,7 +458,7 @@ if ($pageType == 'folder') {
                                $markerLabel, $ficons, $randomFolderThumbs,
                                $folderNameLength, $useThumbFile,
                                $ignoreDotDirectories, $useRealRandThumbs,
-                               $folderSortType);
+                               $folderSortType, $useLargeImages, $largeSubdir);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,

@@ -23,8 +23,7 @@ default:
 	@echo "    make clean"
 	@echo " "
 	@echo "    make index2                index2.php to tangledhelix.com"
-	@echo "    make test                  index to local test gallery"
-	@echo "    make testgalleries         gallery_subdir & gallery_th"
+	@echo "    make test                  index to local test galleries"
 	@echo "    make cms                   index to phpnuke, etc"
 	@echo "    make mig.sf.net ver=X      index & templates to mig.sf.net"
 	@echo "    make ingeni.us ver=X       index to ingeni.us"
@@ -92,7 +91,10 @@ monkeysr.us: index
 	scp index.php snoopy.net:/www/monkeysr.us/html/gallery
 	@echo "URL: http://monkeysr.us/gallery/"
 
-testgalleries: gallery_subdir gallery_th
+test: local_gallery gallery_subdir gallery_th
+
+local_gallery: index
+	cp index.php $(WEB)/gallery
 
 gallery_subdir: index
 	cp index.php $(WEB)/gallery_subdir
@@ -103,9 +105,6 @@ gallery_th: index
 	cp index.php $(WEB)/gallery_th
 	cp templates/*.html $(WEB)/gallery_th/templates
 	cp templates/*.css $(WEB)/gallery_th/templates
-
-test: index
-	cp index.php $(WEB)/gallery
 
 cms: index
 	cp index.php $(WEB)/phpnuke/mig.php
