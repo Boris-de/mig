@@ -7,13 +7,13 @@ function getImageDescFromFile ( $currDir, $short_flag )
 {
     global $mig_config;
 
-    $imageDesc = "";
-    $fname = getFileName($mig_config["image"]);
+    $imageDesc = '';
+    $fname = getFileName($mig_config['image']);
     $fname = rawurldecode($fname);
 
-    if (file_exists($mig_config["albumdir"]."/$currDir/$fname.txt")) {
+    if (file_exists($mig_config['albumdir']."/$currDir/$fname.txt")) {
 
-        $file = fopen($mig_config["albumdir"]."/$currDir/$fname.txt", "r");
+        $file = fopen($mig_config['albumdir']."/$currDir/$fname.txt", 'r');
         $line = fgets($file, 4096);         // get first line
 
         // This double-check exists so that files ending without

@@ -12,31 +12,31 @@ function getFileType ( $filename )
 
     switch ($ext) {
 
-        case "jpg":
-        case "gif":
-        case "png":
-        case "jpeg":            // Alternate JPEG
-        case "jpe":             // Alternate JPEG
+        case 'jpg':
+        case 'gif':
+        case 'png':
+        case 'jpeg':            // Alternate JPEG
+        case 'jpe':             // Alternate JPEG
 
-            return "image";
+            return 'image';
             break;
 
-        case "mov":             // Apple Quicktime
-        case "avi":             // Microsoft AVI
-        case "mpg":             // MPEG video
-        case "mpeg":            // Alternate MPEG video
-        case "wmv":             // Windows Media video
-        case "mp4":             // MPEG-4 video
+        case 'mov':             // Apple Quicktime
+        case 'avi':             // Microsoft AVI
+        case 'mpg':             // MPEG video
+        case 'mpeg':            // Alternate MPEG video
+        case 'wmv':             // Windows Media video
+        case 'mp4':             // MPEG-4 video
 
-            return "video";
+            return 'video';
             break;
 
-        case "mp3":             // MPEG-3 audio
-        case "wav":             // Microsoft WAV audio
-        case "ra":              // Realaudio
-        case "ram":             // Realaudio
+        case 'mp3':             // MPEG-3 audio
+        case 'wav':             // Microsoft WAV audio
+        case 'ra':              // Realaudio
+        case 'ram':             // Realaudio
 
-            return "audio";
+            return 'audio';
             break;
 
         default:

@@ -16,23 +16,23 @@ function getNumberOfDirs ( $folder, $currDir )
 
     while ($file = readdir($dir)) {
         // Get hidden item list from mig.cf
-        list($mig_config["hidden"], $x) = parseMigCf($folder);
+        list($mig_config['hidden'], $x) = parseMigCf($folder);
 
         // Must be a directory, and can't be . or ..
-        if ($file != "." && $file != ".." && is_dir("$folder/$file"))
+        if ($file != '.' && $file != '..' && is_dir("$folder/$file"))
         {
             // Ignore thumbnail subdirectories if in use
-            if ($mig_config["usethumbsubdir"]
-                && $file == $mig_config["thumbsubdir"])
+            if ($mig_config['usethumbsubdir']
+                && $file == $mig_config['thumbsubdir'])
                 continue;
 
             // And full-size directories too
-            if ($mig_config["uselargeimages"]
-                && $file == $mig_config["largesubdir"])
+            if ($mig_config['uselargeimages']
+                && $file == $mig_config['largesubdir'])
                 continue;
 
             // Ignore hidden items
-            if ($mig_config["hidden"][$file]) {
+            if ($mig_config['hidden'][$file]) {
                 continue;
             }
 

@@ -6,16 +6,13 @@ function getRandomThumb ( $file, $folder, $currDir )
 {
     global $mig_config;
     
-    $markerLabel = $mig_config["markerlabel"];
-
-    // I don't know why this was here but it broke layout badly...
-    //print "<br>";
+    $markerLabel = $mig_config['markerlabel'];
 
     // SECTION ONE ...
     // If we're using thumbnail subdirectories.
 
-    if ($mig_config["usethumbsubdir"]) {
-        $myThumbDir = $folder . "/" . $mig_config["thumbsubdir"];
+    if ($mig_config['usethumbsubdir']) {
+        $myThumbDir = $folder . '/' . $mig_config['thumbsubdir'];
 
         // Does the thumb subdir exist?  Why would it not?  It would not
         // if we're in a folder that contains only other folders, for
@@ -28,24 +25,24 @@ function getRandomThumb ( $file, $folder, $currDir )
             // Read each item in the directory...
             while ($sample = readdir($readSample)) {
                 // Ignoring . and ..
-                if ($sample != "." && $sample != "..") {
+                if ($sample != '.' && $sample != '..') {
 
                     // Ignore hidden items
-                    if ($mig_config["hidden"][$sample]) {
+                    if ($mig_config['hidden'][$sample]) {
                         continue;
                     }
 
                     // And use the first valid match found
                     if (getFileType($sample)) {
-                        $mySample = $mig_config["albumurlroot"] . "/"
+                        $mySample = $mig_config['albumurlroot'] . '/'
                                   . migURLencode($currDir)
-                                  . "/" . migURLencode($file)
-                                  . "/" .$mig_config["thumbsubdir"]
-                                  . "/" . $sample;
+                                  . '/' . migURLencode($file)
+                                  . '/' .$mig_config['thumbsubdir']
+                                  . '/' . $sample;
 
                         // If "real rand" is in use, add this to the
                         // list.  Otherwise just return what we found.
-                        if ($mig_config["userealrandthumbs"]) {
+                        if ($mig_config['userealrandthumbs']) {
                             $randThumbList[] = $mySample;
                         } else {
                             return $mySample;
@@ -71,17 +68,17 @@ function getRandomThumb ( $file, $folder, $currDir )
             $subfList = array ();
 
             while ($item = readdir($dirlist)) {
-                if (is_dir("$folder/$item") && $item != "."
-                            && $item != "..")
+                if (is_dir("$folder/$item") && $item != '.'
+                            && $item != '..')
                 {
 
                     // Ignore hidden items
-                    if ($mig_config["hidden"][$item]) {
+                    if ($mig_config['hidden'][$item]) {
                         continue;
                     }
 
                     // Ignore dot directories if appropriate
-                    if ($mig_config["ignoredotdirectories"] && ereg("^\.", $item)) {
+                    if ($mig_config['ignoredotdirectories'] && ereg('^\.', $item)) {
                         continue;
                     }
 
@@ -89,12 +86,12 @@ function getRandomThumb ( $file, $folder, $currDir )
                     // and pick a random folder, then recurse into it.
                     // Otherwise just use the first folder found,
                     // and recurse into that.
-                    if ($mig_config["userealrandthumbs"]) {
+                    if ($mig_config['userealrandthumbs']) {
                         $subfList[] = $item;
                     } else {
-                        $mySample = getRandomThumb($file."/".$item, $folder."/".$item,
+                        $mySample = getRandomThumb($file.'/'.$item, $folder.'/'.$item,
                                                    $currDir,
-                                                   $mig_config["userealrandthumbs"]);
+                                                   $mig_config['userealrandthumbs']);
 
                         if ($mySample) {
                             return $mySample;
@@ -107,8 +104,8 @@ function getRandomThumb ( $file, $folder, $currDir )
             if ($subfList[0]) {
                 srand((double)microtime()*1000000); // get random folder
                 $randval = rand(0,(sizeof($subfList)-1));
-                $mySample = getRandomThumb($file."/".$subfList[$randval],
-                                    $folder."/".$subfList[$randval], $currDir);
+                $mySample = getRandomThumb($file.'/'.$subfList[$randval],
+                                    $folder.'/'.$subfList[$randval], $currDir);
 
                 return $mySample;
             }
@@ -135,13 +132,13 @@ function getRandomThumb ( $file, $folder, $currDir )
             // Using prefix/suffix and label settings,
             // figure out if this is a thumbnail or not.
             // This is so we skip over regular images.
-            if ($mig_config["markertype"] == "prefix") {
+            if ($mig_config['markertype'] == 'prefix') {
                 if (ereg("^$markerLabel\_", $sample)
                     && getFileType($sample))
                 {
                     $mySample = $sample;
                 }
-            } elseif ($mig_config["markertype"] == "suffix") {
+            } elseif ($mig_config['markertype'] == 'suffix') {
                 if (ereg("_$markerLabel\.[^.]+$", $sample)
                     && getFileType($sample))
                 {
@@ -149,18 +146,18 @@ function getRandomThumb ( $file, $folder, $currDir )
                 }
 
             } else {
-                print "ERROR: no markerType set in getRandomThumb()";
+                print 'ERROR: no markerType set in getRandomThumb()';
                 exit;
             }
 
             if ($mySample) {
-                $mySample = $mig_config["albumurlroot"] . "/" . $currDir . "/" . $file
-                          . "/" . $mySample;
+                $mySample = $mig_config['albumurlroot'] . '/' . $currDir . '/' . $file
+                          . '/' . $mySample;
 
                 // If "real rand" is in effect, add to the list for
                 // later random selection.  Otherwise just return
                 // what we found.
-                if ($mig_config["userealrandthumbs"]) {
+                if ($mig_config['userealrandthumbs']) {
                     $randThumbList[] = $mySample;
                 } else {
                     return $mySample;
@@ -170,24 +167,24 @@ function getRandomThumb ( $file, $folder, $currDir )
                 $dirlist = opendir($folder);
                 $subfList = array ();
                 while ($item = readdir($dirlist)) {
-                    if (is_dir("$folder/$item") && $item != "."
-                               && $item != "..")
+                    if (is_dir("$folder/$item") && $item != '.'
+                               && $item != '..')
                     {
 
                         // Ignore hidden items
-                        if ($mig_config["hidden"][$item]) {
+                        if ($mig_config['hidden'][$item]) {
                             continue;
                         }
 
                         // Ignore dot directories if appropriate
-                        if ($mig_config["ignoredotdirectories"] && ereg("^\.", $item)) {
+                        if ($mig_config['ignoredotdirectories'] && ereg('^\.', $item)) {
                             continue;
                         }
 
-                        if ($mig_config["userealrandthumbs"]) {
+                        if ($mig_config['userealrandthumbs']) {
                             $subfList[] = $item;
                         } else {
-                            $mySample = getRandomThumb($file."/".$item, $folder."/".$item,
+                            $mySample = getRandomThumb($file.'/'.$item, $folder.'/'.$item,
                                             $currDir);
 
                             if ($mySample) {
@@ -201,8 +198,8 @@ function getRandomThumb ( $file, $folder, $currDir )
                 if ($subfList[0]) {
                     srand((double)microtime()*1000000);     // get random folder
                     $randval = rand(0,(sizeof($subfList)-1));
-                    $mySample = getRandomThumb($file."/".$subfList[$randval],
-                                        $folder."/".$subfList[$randval], $currDir);
+                    $mySample = getRandomThumb($file.'/'.$subfList[$randval],
+                                        $folder.'/'.$subfList[$randval], $currDir);
 
                     if ($mySample) {
                         return $mySample;
