@@ -10,7 +10,7 @@
 #
 # MiG - A general purpose photo gallery management system.
 #
-# Copyright (C) 2000-2001 Daniel M. Lowe <dan@tangledhelix.com>
+# Copyright (C) 2000-2001 Dan Lowe <dan@tangledhelix.com>
 #     http://mig.sourceforge.net/
 #
 # LICENSE INFORMATION
@@ -67,7 +67,7 @@ fi
 # Initial marquis
 echo " "
 echo " "
-echo "MiG Installer, Copyright (C) 2000-2001 Daniel M. Lowe"
+echo "MiG Installer, Copyright (C) 2000-2001 Dan Lowe"
 echo " "
 echo "MiG comes with ABSOLUTELY NO WARRANTY.  This is free software, and"
 echo "you are welcome to redistribute it under certain conditions."

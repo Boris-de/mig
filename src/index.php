@@ -3,7 +3,7 @@
 //
 // MiG - A general purpose photo gallery management system.
 //       http://mig.sourceforge.net/
-// Copyright (C) 2000-2001 Daniel M. Lowe <dan@tangledhelix.com>
+// Copyright (C) 2000-2001 Dan Lowe <dan@tangledhelix.com>
 //
 //
 // LICENSE INFORMATION
@@ -49,43 +49,46 @@
 $version = '1.2.7';
 
 // URL to call myself again
-if ($PHP_SELF)      // if using register_globals
+if ($PHP_SELF) {    // if using register_globals
     $baseURL = $PHP_SELF;
-else                // otherwise, must be using track_vars
+} else {            // otherwise, must be using track_vars
     $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
+}
 
 // base directory of installation
-if ($PATH_TRANSLATED)   // if using register_glolals
+if ($PATH_TRANSLATED) {   // if using register_glolals
     $baseDir = dirname($PATH_TRANSLATED);
-else                    // otherwise, must be using track_vars
+} else {                  // otherwise, must be using track_vars
     $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
+}
 
 $configFile = $baseDir . '/mig.cfg';	// Configuration file
 $defaultConfigFile = $configFile . '.default';	// Default config file
 		// (used if $configFile does not exist)
 
 // Collect the server name if possible
-if ($SERVER_SOFTWARE)
+if ($SERVER_SOFTWARE) {
     $server = $SERVER_SOFTWARE;
-else
+} else {
     $server = $HTTP_SERVER_VARS['SERVER_SOFTWARE'];
+}
 
 // Default settings (probably over-ridden by mig.cfg or mig.cfg.default)
-$maxFolderColumns = 2;
-$maxThumbColumns = 4;
-$pageTitle = 'Photo Album';
-$maintAddr = 'webmaster@mydomain.com';
-$distURL = 'http://mig.sourceforge.net/';
-$markerType = 'suffix';
-$markerLabel = 'th';
-$phpNukeCompatible = FALSE;
-$suppressImageInfo = FALSE;
-$useThumbSubdir = FALSE;
-$thumbSubdir = 'thumbs';
-$noThumbs = FALSE;
-$suppressAltTags = FALSE;
-$mig_language = 'en';
-$sortType = 'default';
+$maxFolderColumns       = 2;
+$maxThumbColumns        = 4;
+$pageTitle              = 'My Photo Album';
+$maintAddr              = 'webmaster@mydomain.com';
+$distURL                = 'http://mig.sourceforge.net/';
+$markerType             = 'suffix';
+$markerLabel            = 'th';
+$phpNukeCompatible      = FALSE;
+$suppressImageInfo      = FALSE;
+$useThumbSubdir         = FALSE;
+$thumbSubdir            = 'thumbs';
+$noThumbs               = FALSE;
+$suppressAltTags        = FALSE;
+$mig_language           = 'en';
+$sortType               = 'default';
 
 // Fetch variables from the URI
 //
@@ -95,21 +98,24 @@ if (!$currDir) {        // not using register_globals, so the assumption
     $image          = $HTTP_GET_VARS['image'];
     $pageType       = $HTTP_GET_VARS['pageType'];
 }
-if (!$jump)
+if (!$jump) {
     $jump           = $HTTP_GET_VARS['jump'];       // for track_vars
+}
 
-// Set a current directory if one doesn't exist
-// Or if there is one present, strip URL encoding from it
-if ($currDir == '')
+if ($currDir == '') {
+    // Set a current directory if one doesn't exist
     $currDir = '.';
-else
+} else {
+    // If there is one present, strip URL encoding from it
     $currDir = rawurldecode($currDir);
+}
 
 // Read configuration file
-if (file_exists($configFile))
+if (file_exists($configFile)) {
     $realConfig = $configFile;
-else
+} else {
     $realConfig = $defaultConfigFile;
+}
 if (file_exists($realConfig)) {
     include($realConfig);
 } else {
@@ -118,8 +124,9 @@ if (file_exists($realConfig)) {
 }
 
 // Change $baseDir for PHP-Nuke compatibility mode
-if ($phpNukeCompatible)
+if ($phpNukeCompatible) {
     $baseDir .= '/mig';
+}
 
 // Load function library
 $funcsFile = $baseDir . '/funcs.php';
@@ -139,8 +146,9 @@ if (file_exists($langFile)) {
 }
 
 // Backward compatibility with older mig.cfg versions
-if ($maxColumns)
+if ($maxColumns) {
     $maxThumbColumns = $maxColumns;
+}
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (get_magic_quotes_gpc() == 1) {
@@ -160,10 +168,12 @@ while ($workCopy) {
     if ($protect[$workCopy]) {
 
         // Try to get around the track_vars/register_globals problem
-        if (!$PHP_AUTH_USER)
+        if (!$PHP_AUTH_USER) {
             $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
-        if (!$PHP_AUTH_PW)
+        }
+        if (!$PHP_AUTH_PW) {
             $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
+        }
 
         // If there's not a username yet, fetch one by popping up a
         // login dialog box
@@ -190,12 +200,13 @@ while ($workCopy) {
     }
 
     // if $workCopy is already down to '.' just nullify to end loop
-    if ($workCopy == '.')
+    if ($workCopy == '.') {
         $workCopy = FALSE;
-    else
+    } else {
         // pare $workCopy down one directory at a time
         // so we can check back all the way to '.'
         $workCopy = ereg_replace('/[^/]+$', '', $workCopy);
+    }
 }
 
 $albumDir = $baseDir . '/albums';	// Where albums live
@@ -207,8 +218,9 @@ $templateDir = $baseDir . '/templates';	// Where templates live
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
 
 // Change $baseHref for PHP-Nuke compatibility mode
-if ($phpNukeCompatible)
+if ($phpNukeCompatible) {
     $baseHref .= '/mig';
+}
 
 // Location of image library (for instance, where icons are kept)
 $imageDir = $baseHref . '/images';
@@ -220,15 +232,18 @@ $albumURLroot = $baseHref . '/albums';
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
-if ($markerType != 'prefix' and $markerType != 'suffix')
+if ($markerType != 'prefix' and $markerType != 'suffix') {
     $markerType='suffix';
-if (!$markerLabel)
+}
+if (!$markerLabel) {
     $markerLabel = 'th';
+}
 
 // (Try to) get around the track_vars vs. register_globals problem
-if (!$SERVER_NAME)
+if (!$SERVER_NAME) {
     $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
     $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
+}
 
 // Is this a jump-tag URL?
 if ($jump and $jumpMap[$jump] and $SERVER_NAME) {
@@ -251,8 +266,9 @@ if ($phpNukeCompatible) {
         exit;
     }
 
-    if (!isset($mainfile))
+    if (!isset($mainfile)) {
         include('mainfile.php');        // PHP-Nuke library
+    }
 
     include('header.php');  // PHP-Nuke library
 
@@ -279,10 +295,11 @@ $image = rawurldecode($image);
 if ($pageType == 'folder' or $pageType == '') {
 
     // Determine which template to use depending on the mode
-    if ($phpNukeCompatible)
+    if ($phpNukeCompatible) {
         $templateFile = 'mig_folder.php';
-    else
+    } else {
         $templateFile = 'folder.html';
+    }
 
     // Generate some HTML to pass to the template printer
 
@@ -325,8 +342,9 @@ if ($pageType == 'folder' or $pageType == '') {
     }
 
     // We have a bulletin
-    if ($bulletin != '')
+    if ($bulletin != '') {
         $bulletin = descriptionFrame($bulletin);
+    }
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
@@ -372,18 +390,20 @@ if ($pageType == 'folder' or $pageType == '') {
     }
 
     // If there's a description at all, frame it in a table.
-    if ($description != '')
+    if ($description != '') {
         $description = descriptionFrame($description);
+    }
 
     // Build the "you are here" line
     $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $mig_language,
                                   $mig_messages);
 
     // Determine what template to use, based on what mode we are in
-    if ($phpNukeCompatible)
+    if ($phpNukeCompatible) {
         $templateFile = 'mig_image.php';
-    else
+    } else {
         $templateFile = 'image.html';
+    }
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
