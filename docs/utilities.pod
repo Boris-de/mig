@@ -186,7 +186,8 @@ built F<jhead> on systems running Linux, FreeBSD, Solaris and Apple OSX.
 Windows users should download the pre-built Windows version of F<jhead>
 available at the URL above.
 
-F<jhead> should be placed in the same directory as F<mkGallery.pl>.
+F<jhead> should be placed in the F<utilities> subdirectory of your Mig
+installation.
 
 (F<jhead> is not something you need to run directly - it is used by
 F<mkGallery.pl> if you invoke F<mkGallery.pl> with the C<-e> flag.)

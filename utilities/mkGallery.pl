@@ -1,16 +1,16 @@
 #!/usr/bin/perl -w
 #
-# mkGallery - turns a directory full of image files into a "gallery".
+# mkGallery.pl - turns a directory full of image files into a "gallery".
 #
 # Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
 #
-# Mig is available at http://mig.sourceforge.net/
+# http://mig.sourceforge.net/
 #
 # $Id$
 #
 #
 # LICENSE INFORMATION
-# -------------------
+# ===================
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -28,23 +28,28 @@
 #
 #
 # MISCELLANEOUS
-# -------------
+# =============
 #
-# See the file docs/Utilities.txt for more information.
+# See the file docs/text/utilities.txt for more information.
+# (If you prefer HTML, docs/html/utilities.html)
 #
-# I haven't tested this under Windows, so use it at your own risk.
+#     I haven't tested mkGallery.pl under Microsoft Windows, so Windows
+#     users will proceed at their own risk!
 #
-# You should not need to modify this code directly.  If you do so, and
-# want to contribute your changes to Mig, please send me a note with a
-# code diff, and if I agree that your change is of use to the general
-# public, I will incorporate it into the main codebase of Mig.
+# You should not need to modify this code directly.  If you do, and want
+# to contribute your changes to Mig, please send me email with a diff
+# (contextual diffs are preferred, i.e. "diff -c"), and if I agree that
+# your change is of use to the general public, I will incorporate it into
+# the main code tree.
 #
 # However, in general Mig is written with the goal that the user should
 # never have to modify actual code to use the software - everything is
 # taken care of either automatically, or using configuration files.
 #
-# Please report any bugs at the Sourceforge Bug Tracker:
-# http://sourceforge.net/tracker/?group_id=24365
+# Please submit any bug reports or feature requests to the Sourceforge
+# Tracker:
+#
+#     http://sourceforge.net/tracker/?group_id=24365
 #
 
 use strict;
@@ -53,39 +58,53 @@ use File::Basename;
 use File::Find;
 use Getopt::Std;
 
-my $myself = File::Basename::basename($0);
-my $mydir  = File::Basename::dirname($0);
-my $myRoot = cwd;                           # stash value of '.'
+my $myself = File::Basename::basename($0);  # Program name
+my $mydir  = File::Basename::dirname($0);   # Directory $myself lives in
+my $myRoot = cwd;                           # Directory I was started in
 
-my $exifProg = $mydir . '/jhead';
-my $exifArgs = '-v';
-my $exifFile = 'exif.inf';
+my $exifProg = $mydir . '/jhead';           # Location of jhead program
+my $exifArgs = '-v';                        # Flags to pass jhead
+my $exifFile = 'exif.inf';                  # File to store exif data in
 
-my $allFlag         = 0;    # default
-my $exifFlag        = 0;    # default
-my $overwriteFlag   = 0;    # default
-my $thumbFlag       = 0;    # default
-my $commentsFlag    = 0;    # default
-my $interactFlag    = 0;    # default
-my $recurseFlag     = 0;    # default
-my $newOnlyFlag     = 0;    # default
-my $thumbDirFlag    = 0;    # default
+# Defaults for boolean command-line flags
+my $allFlag         = 0;        # -a: Process all images
+my $exifFlag        = 0;        # -e: Process EXIF data
+my $overwriteFlag   = 0;        # -w: Over-write files instead of appending
+my $thumbFlag       = 0;        # -t: Create thumbnails
+my $commentsFlag    = 0;        # -c: Create comments
+my $interactFlag    = 0;        # -i: Interactive mode
+my $recurseFlag     = 0;        # -r: Recursion mode
+my $newOnlyFlag     = 0;        # -n: Process only new items
+my $thumbDirFlag    = 0;        # -d: Use thumbnail subdirectories
 
-my $defaultSize     = 100;      # default
-my $defaultQuality  = 50;       # default
-my $defaultMarker   = 'th';     # default
-my $markerType      = 'suffix'; # default
-my $defaultThumbDir = 'thumbs'; # default
-my $thumbDirMode    = 0755;     # default
-my $defaultThumbExt = '';       # default
+# Defaults for command-line flags which take arguments
+my $defaultSize     = 100;          # -s: Thumbnail size
+my $defaultQuality  = 50;           # -q: Thumbnail quality
+my $defaultMarker   = '';           # -m: Thumbnail label
+my $markerType      = '';           # -M: Thumbnail label position
+my $defaultThumbDir = 'thumbs';     # -D: Name of thumbnail subdirectory
+my $defaultThumbExt = '';           # -E: File extension for thumbnails
 
+# Mode to use for thumbnail subdirectories
+my $thumbDirMode    = 0755;
+
+# For the help routine
 my $pkgName = 'Mig';
 my $url = 'http://mig.sourceforge.net/';
 my $email = 'dan@tangledhelix.com';
-my $migConfig = 'mig.cf';
-my $globalConfig = $mydir . '/../config.php';
 
-# Parse local config file, if it exists.
+my $migConfig = 'mig.cf';       # Name of per-directory configuration file
+
+my $globalConfig = $mydir . '/../config.php';       # Global config file
+
+# Fetch command line options
+my %opt = ();
+getopts('acdD:eE:f:hiM:m:nq:rs:tw', \%opt);
+
+# Set new config file if one was specified.
+$globalConfig = $opt{'f'} if $opt{'f'};
+
+# Parse global config file, if it exists.
 if (-r $globalConfig) {
     ($markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir,
      $defaultThumbExt) =
@@ -93,10 +112,6 @@ if (-r $globalConfig) {
                                $thumbDirFlag, $defaultThumbDir,
                                $defaultThumbExt);
 }
-
-# Fetch command line options
-my %opt = ();
-getopts('acdD:eE:hiM:m:nq:rs:tw', \%opt);
 
 # Prototypes
 my ($item, $file, $ext, $size, $quality, $markerLabel, $marktestpat, $cmd);
@@ -110,6 +125,7 @@ my @newfile         = ();
 my %FILE            = ();
 my %EXT             = ();
 
+# Set appropriate flag variables
 $allFlag        = 1 if $opt{'a'};   # set "process all images" flag
 $commentsFlag   = 1 if $opt{'c'};   # set "process comments" flag
 $exifFlag       = 1 if $opt{'e'};   # set "process EXIF info" flag
@@ -120,9 +136,11 @@ $recurseFlag    = 1 if $opt{'r'};   # set "recursion" flag
 $newOnlyFlag    = 1 if $opt{'n'};   # set "new only" flag
 $thumbDirFlag   = 1 if $opt{'d'};   # set "use thumb subdir" flag
 
+# For "convert"
 $size       = $opt{'s'};    # thumbnail size in pixels
 $quality    = $opt{'q'};    # quality level for thumbnails
 
+# Thumbnail naming rules
 $markerLabel = $defaultMarker;
 $markerLabel = $opt{'m'} if $opt{'m'};
 $markerType = $opt{'M'} if $opt{'M'};
@@ -131,25 +149,25 @@ $thumbDir = $opt{'D'} if $opt{'D'};
 $thumbExt = $defaultThumbExt;
 $thumbExt = $opt{'E'} if $opt{'E'};
 
-# print help, if asked to.
+# Print help, if asked to.
 if ($opt{'h'}) {
     &helpMessage($myself, $pkgName, $url, $email, $exifFile);
     exit(0);
 }
 
-# error out and exit if there are both filenames and "-a" specified.
+# Error out and exit if there are both filenames and "-a" specified.
 if ($allFlag and $ARGV[0]) {
     print "ERROR: -a specified as well as filenames.\n\n";
     exit(1);
 }
 
-# error out and exit if -r is present without -a
+# Error out and exit if -r is present without -a
 if ($recurseFlag and not $allFlag) {
     print "ERROR: -r specified without -a.\n\n";
     exit(1);
 }
 
-# error out and exit if -n is present without -t
+# Error out and exit if -n is present without -t
 if ($newOnlyFlag and not $thumbFlag) {
     print "ERROR: -n specified without -t.\n\n";
     exit(1);
@@ -451,9 +469,10 @@ sub helpMessage {
     print "\nUsage:\n";
     print "   $myself [ -h ] [ -a ] [ -w ] [ -t ] [ -e ] [ -c ] [ -i ]\n";
     print "\t[ -s <size> ] [ -q <quality> ] [ -M <type> ] [ -m <label> ]\n";
-    print "\t[ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ]\n";
+    print "\t[ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ] [ -f <file> ]\n";
     print "\t[ <file1> <file2> <...> ]\n\n";
     print "      -h : Prints this help message.\n";
+    print "      -f : Use alternate configuration file (config.php)\n";
     print "      -a : Process all image files in current directory.\n";
     print "      -w : Turn over-write on.  By default, files written such\n";
     print "           as the EXIF file will be appended to rather than\n";

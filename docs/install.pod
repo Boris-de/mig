@@ -138,6 +138,12 @@ If you can run Perl scripts on the commandline on your server, and you have
 Perl and ImageMagick available, use F<mkGallery.pl> to create thumbnail
 images.  See the F<utilities> document for more information on how.
 
+You should create a F<utilities> subdirectory in your Mig installation and
+copy F<mkGallery.pl> there, as well as F<jhead> if you plan to use
+F<jhead>.  If Perl is somewhere other than F</usr/bin/perl> on your system
+you may need to modify the first line of F<mkGallery.pl> to reflect the
+proper location of Perl.
+
 If you can't run Perl scripts, you can make your own thumbnail images in
 whatever way is handy for you (an image editing program, for example).
 In each album folder, create a subdirectory called F<thumbs>, and put
@@ -179,7 +185,9 @@ present, but it's sloppy to leave them laying around.
 =item 4.
 
 If you wish to use F<mkGallery.pl>, copy mkGallery.pl from the F<utilities>
-directory to someplace on your system that makes sense to you.
+directory to the F<utilities> subdirectory of your Mig installation.  You
+may need to modify the first line if Perl is somewhere other than
+F</usr/bin/perl> on your system.
 
 =item 5.
 
@@ -189,7 +197,7 @@ of F<jhead> if it's a newer version than you're using now (to find out when
 F<jhead> was last updated, check the E<quot>changelogE<quot> document).
 
 If you want F<mkGallery.pl> to be able to use F<jhead>, put F<jhead> in the
-same directory as F<mkGallery.pl>.
+F<utilities> subdirectory of your Mig installation with F<mkGallery.pl>.
 
 =back
 
