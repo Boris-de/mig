@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.9';
+$version = '1.3.0';
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
@@ -90,6 +90,7 @@ $suppressAltTags        = FALSE;
 $mig_language           = 'en';
 $sortType               = 'default';
 $viewCamInfo            = FALSE;
+$viewDateInfo           = FALSE;
 $viewFolderCount        = FALSE;
 $imagePopup             = FALSE;
 $imagePopType           = 'reuse';
@@ -415,8 +416,7 @@ if ($pageType == 'folder' or $pageType == '') {
     // Get image description
     $description  = getImageDescription($image, $desc);
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
-                                          $viewCamInfo, $mig_messages,
-                                          $mig_language);
+                                          $viewCamInfo, $viewDateInfo);
 
     // If there's a description but no exifDescription, just make the
     // exifDescription the description

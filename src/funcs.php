@@ -44,6 +44,7 @@
 //
 
 
+// ----------------------------------------------------------------------
 // parseMigCf - Parse a mig.cf file for sort and hidden blocks
 
 function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
@@ -167,6 +168,7 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
 
 
 
+// ----------------------------------------------------------------------
 // printTemplate() - prints HTML page from a template file
 
 function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
@@ -285,6 +287,7 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
 
 
 
+// ----------------------------------------------------------------------
 // buildDirList() - creates list of directories available
 
 function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
@@ -425,6 +428,7 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
 
 
 
+// ----------------------------------------------------------------------
 // buildImageList() - creates a list of images available
 
 function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
@@ -557,6 +561,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 
 
 
+// ----------------------------------------------------------------------
 // buildBackLink() - spits out a "back one section" link
 
 function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
@@ -611,6 +616,7 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
 
 
 
+// ----------------------------------------------------------------------
 // buildImageURL() -- spit out HTML for a particular image
 
 function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
@@ -700,7 +706,6 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // Get description, if any
-    //$alt_exif = getExifDescription($albumDir, $currDir, "$fname.$ext", '');
     $alt_desc = getImageDescription("$fname.$ext", $description);
     $alt_desc = strip_tags($alt_desc);
 
@@ -797,6 +802,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 
 
 
+// ----------------------------------------------------------------------
 // buildNextPrevLinks() -- Build a link to the "next" and "previous"
 // images.
 
@@ -932,6 +938,7 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
 
 
+// ----------------------------------------------------------------------
 // buildYouAreHere() - build the "You are here" line for the top
 // of each page
 
@@ -996,6 +1003,7 @@ function buildYouAreHere( $baseURL, $currDir, $image, $language,
 
 
 
+// ----------------------------------------------------------------------
 // getFileExtension() - figure out a file's extension and return it.
 
 function getFileExtension( $file )
@@ -1009,6 +1017,7 @@ function getFileExtension( $file )
 
 
 
+// ----------------------------------------------------------------------
 // getFileName() - figure out a file's name sans extension.
 
 function getFileName( $file )
@@ -1022,6 +1031,7 @@ function getFileName( $file )
 
 
 
+// ----------------------------------------------------------------------
 // getImageDescription() - Fetches an image description from the
 // comments file (mig.cf)
 
@@ -1038,12 +1048,16 @@ function getImageDescription( $image, $description )
 
 
 
+// ----------------------------------------------------------------------
 // getExifDescription() - Fetches a comment if available from the
-// Exif comments file (exif.inf)
+// Exif comments file (exif.inf) as well as fetching EXIF data
 
 function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
-                             $mig_messages, $mig_language )
+                             $viewDateInfo)
 {
+    // Use global language settings
+    global $mig_messages;
+    global $mig_language;
 
     $desc = array ();
     $model = array ();
@@ -1052,6 +1066,7 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
     $foclen = array ();
     $flash = array ();
     $iso = array ();
+    $timestamp = array ();
 
     if (file_exists("$albumDir/$currDir/exif.inf")) {
 
@@ -1088,6 +1103,8 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
                 } elseif (ereg('^Aperture     : ', $line)) {
                     $x = ereg_replace('^Aperture     : ', '', $line);
+                    // make it fN.N instead of f/N.N
+                    $x = ereg_replace('/', '', $x);
                     $x = chop($x);
                     $aperture[$fname] = $x;
 
@@ -1107,6 +1124,13 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
                 } elseif (ereg('^Flash used   : Yes', $line)) {
                     $flash[$fname] = TRUE;
+
+                } elseif (ereg('^Date/Time    : ', $line)) {
+                    $x = ereg_replace('Date/Time    : ', '', $line);
+                    $x = chop($x);
+
+                    // Turn into human readable format and record
+                    $timestamp[$fname] = parseExifDate($x);
                 }
             }
 
@@ -1122,7 +1146,11 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
         if ($viewCamInfo and $model[$image]) {
 
-            $return .= '<font size="-1">(' . $model[$image] . ', ';
+            $return .= '<i>';
+            if ($viewDateInfo) {
+                $return .= $timestamp[$image] .' - ';
+            }
+            $return .= $model[$image] . '<br>';
             if ($iso[$image]) {
                 $return .= 'ISO ' . $iso[$image] . ', ';
             }
@@ -1130,9 +1158,10 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
             $return .= $shutter[$image] . ' ';
             $return .= $aperture[$image];
             if ($flash[$image]) {
-                $return .= ', ' . $mig_messages[$mig_language]['flash_used'];
+                $return .= ' ('
+                        . $mig_messages[$mig_language]['flash_used']
+                        . ')';
             }
-            $return .= ')</font>';
         }
 
         return $return;
@@ -1145,6 +1174,74 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
 
 
+// ----------------------------------------------------------------------
+//  parseExifDate() - parses an EXIF date string and returns it in a
+//  more human-readable format.
+
+function parseExifDate ($stamp)
+{
+    // Use global language settings
+    global $mig_messages;
+    global $mig_language;
+
+    // Separate into a date and a time
+    list($date,$time) = split(' ', $stamp);
+
+    // Parse date
+    list($year, $month, $day) = split(':', $date);
+    // Turn numeric month into a 3-character month string
+    $month = $mig_messages[$mig_language]['month'][$month];
+    $date = $month .' '. $day .' '. $year;
+
+    // Parse time
+    list($hour, $minute, $second) = split(':', $time);
+
+    // Translate into 12-hour time
+    switch ($hour) {
+        case '00':
+            $time = '12:' .$minute. 'AM';
+            break;
+        case '01':
+        case '02':
+        case '03':
+        case '04':
+        case '05':
+        case '06':
+        case '07':
+        case '08':
+        case '09':
+        case '10':
+        case '11':
+            $time = $hour .':'. $minute .'AM';
+            break;
+        case '12':
+            $time = $hour .':'. $minute . 'PM';
+            break;
+        case '13':
+        case '14':
+        case '15':
+        case '16':
+        case '17':
+        case '18':
+        case '19':
+        case '20':
+        case '21':
+        case '22':
+        case '23':
+            $time = ($hour - 12) .':'. $minute . 'PM';
+            break;
+    }
+
+    // Re-join before returning so it's one string
+    $stamp = $date .', '. $time;
+
+    return ($stamp);
+
+}   // -- End of parseExifDate()
+
+
+
+// ----------------------------------------------------------------------
 // getNewCurrDir() - replaces the silly old $newCurrDir being all
 // over the place.  Especially in the URI string itself.
 
@@ -1160,6 +1257,7 @@ function getNewCurrDir( $currDir )
 
 
 
+// ----------------------------------------------------------------------
 // getNumberOfImages() - counts images in a given folder
 
 function getNumberOfImages( $folder, $useThumbSubdir, $markerType,
@@ -1197,6 +1295,7 @@ function getNumberOfImages( $folder, $useThumbSubdir, $markerType,
 
 
 
+// ----------------------------------------------------------------------
 // migURLencode() - fixes a problem where "/" turns into "%2F" when
 // using rawurlencode()
 
@@ -1215,6 +1314,7 @@ function migURLencode( $string )
 
 
 
+// ----------------------------------------------------------------------
 // folderFrame() - frames stuff in HTML table code... avoids template
 // problems in places where there are images but no folders, or vice
 // versa.
@@ -1231,6 +1331,7 @@ function folderFrame( $input )
 
 
 
+// ----------------------------------------------------------------------
 // descriptionFrame() - Same thing as folderFrame() for descriptions.
 
 function descriptionFrame( $input )
@@ -1245,6 +1346,7 @@ function descriptionFrame( $input )
 
 
 
+// ----------------------------------------------------------------------
 // imageFrame() - Same thing as folderFrame() but for image tables.
 
 function imageFrame( $input )
@@ -1256,6 +1358,5 @@ function imageFrame( $input )
     return $retval;
 
 }   // -- End of imageFrame()
-
 
 ?>

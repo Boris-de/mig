@@ -103,6 +103,16 @@ $suppressAltTags = FALSE;
 $viewCamInfo = FALSE;
 
 
+// Boolean to determine whether to show date from EXIF (if available).
+// Defaults to FALSE.  If $viewCamInfo is FALSE, then $viewDateInfo
+// is also set to false
+//
+// If you want EXIF info to include the date & time the image was
+// taken, set to TRUE.
+//
+$viewDateInfo = FALSE;
+
+
 // Boolean to determine whether or not to count images in each folder
 // and display this, in folder views, next to the folder name.
 // Defaults to FALSE.

@@ -40,7 +40,11 @@ $mig_messages['en'] = array (
     'no_contents'   => 'No&nbsp;contents.',
     'previmage'     => 'previous&nbsp;image',
     'thumbview'     => 'back&nbsp;to&nbsp;thumbnail&nbsp;view',
-    'up_one'        => 'up&nbsp;one&nbsp;level'
+    'up_one'        => 'up&nbsp;one&nbsp;level',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // French - courtesy of jérôme ROUER <CCFRANCE.bibli@bigpond.com.kh>
@@ -56,7 +60,11 @@ $mig_messages['fr'] = array (
     'no_contents'   => 'VIDE',
     'previmage'     => 'Image&nbsp;pr&#233;c&#233;dente',
     'thumbview'     => 'Retour&nbsp;vue&nbsp;par&nbsp;vignettes',
-    'up_one'        => 'Remonter&nbsp;niveau&nbsp;sup&#233;rieur'
+    'up_one'        => 'Remonter&nbsp;niveau&nbsp;sup&#233;rieur',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // German - courtesy of "Burckhard Loeh" <lb@loeh.cx>
@@ -71,7 +79,11 @@ $mig_messages['de'] = array (
     'no_contents'   => 'Keinen&nbsp;Inhalt.',
     'previmage'     => 'vorheriges&nbsp;Bild',
     'thumbview'     => 'zurueck&nbsp;zur&nbsp;Kleinbild&nbsp;uebersicht',
-    'up_one'        => 'Eine&nbsp;Ebene&nbsp;hoeher'
+    'up_one'        => 'Eine&nbsp;Ebene&nbsp;hoeher',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Norwegian
@@ -87,7 +99,11 @@ $mig_messages['no'] = array (
     'no_contents'   => 'Tom&nbsp;katalog',
     'previmage'     => 'forrige&nbsp;bilde',
     'thumbview'     => 'tilbake&nbsp;til&nbsp;oversikt',
-    'up_one'        => 'opp&nbsp;et&nbsp;niv&#229;'
+    'up_one'        => 'opp&nbsp;et&nbsp;niv&#229;',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Portugese - courtesy of Fadel <fadel@fee.unicamp.br>
@@ -102,7 +118,11 @@ $mig_messages['br'] = array (
     'no_contents'   => 'Sem&nbsp;conte&#250;do.',
     'previmage'     => 'imagem&nbsp;anterior',
     'thumbview'     => 'Voltar&nbsp;para&nbsp;os&nbsp;thumbnails',
-    'up_one'        => 'subir&nbsp;um&nbsp;n&#237;vel'
+    'up_one'        => 'subir&nbsp;um&nbsp;n&#237;vel',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Finnish - courtesy of Jani Mikkonen <jani@mikkonen.org>
@@ -117,7 +137,11 @@ $mig_messages['fi'] = array (
     'no_contents'   => 'Albumi&nbsp;on&nbsp;tyhj&#228;',
     'previmage'     => 'edellinen&nbsp;kuva',
     'thumbview'     => 'takaisin&nbsp;kuva&nbsp;valikkoon',
-    'up_one'        => 'paluu&nbsp;edelliselle&nbsp;sivulle'
+    'up_one'        => 'paluu&nbsp;edelliselle&nbsp;sivulle',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Romanian - courtesy of Eugen Dedu <dedu@ese-metz.fr>
@@ -132,7 +156,11 @@ $mig_messages['ro'] = array (
     'no_contents'   => 'Repertoriu&nbsp;GOL',
     'previmage'     => 'imaginea&nbsp;precedenta',
     'thumbview'     => '&#238;napoi&nbsp;la&nbsp;repertoriu',
-    'up_one'        => 'nivelul&nbsp;precedent'
+    'up_one'        => 'nivelul&nbsp;precedent',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 
@@ -161,7 +189,11 @@ $mig_messages['ru'] = array (
                      . '&#252;&#248;&#229;&#237;&#237;&#238;&#236;&#243;'
                      . '&nbsp;&#226;&#232;&#228;&#243;',
     'up_one'        => '&#239;&#240;&#229;&#228;&#251;&#228;&#243;&#249;'
-                     . '&#224;&#255;&nbsp;&#239;&#224;&#239;&#234;&#224;'
+                     . '&#224;&#255;&nbsp;&#239;&#224;&#239;&#234;&#224;',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Russian KOI8-R - courtesy of Anatoly Ropotov <lynx@rulez.lv>
@@ -189,7 +221,11 @@ $mig_messages['koi8r'] = array (
                      . '&#216;&#219;&#197;&#206;&#206;&#207;&#205;&#213;'
                      . '&nbsp;&#215;&#201;&#196;&#213;',
     'up_one'        => '&#208;&#210;&#197;&#196;&#217;&#196;&#213;&#221;'
-                     . '&#193;&#209;&nbsp;&#208;&#193;&#208;&#203;&#193;'
+                     . '&#193;&#209;&nbsp;&#208;&#193;&#208;&#203;&#193;',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Turkish - courtesy of Dogan Sariguzel <dogan@procam.com.tr>
@@ -205,7 +241,11 @@ $mig_messages['tr'] = array (
     'previmage'     => '&#246;nceki&nbsp;resim',
     'thumbview'     => 'k&#252;&#231;&#252;k&nbsp;resimlere&nbsp;geri&nbsp;'
                      . 'd&#246;n',
-    'up_one'        => 'bir&nbsp;seviye&nbsp;yukar&#253;'
+    'up_one'        => 'bir&nbsp;seviye&nbsp;yukar&#253;',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Swedish - courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
@@ -222,7 +262,11 @@ $mig_messages['se'] = array (
     'previmage'     => 'f&ouml;reg&aring;ende&nbsp;bild',
     'thumbview'     => 'tillbaka&nbsp;till&nbsp;miniatyrbilderna',
     'up_one'        => 'tillbaka&nbsp;till&nbsp;f&ouml;reg&aring;ende'
-                     . '&nbsp;sida'
+                     . '&nbsp;sida',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Danish - courtesy of Mikkel Mondrup Kristensen <hh00d-mmk@uv.horshs.dk>
@@ -237,38 +281,50 @@ $mig_messages['da'] = array (
     'no_contents'   => 'intet&nbsp;inhold.',
     'previmage'     => 'forrige&nbsp;billed',
     'thumbview'     => 'tilbage&nbsp;til&nbsp;oversigten',
-    'up_one'        => 'tilbage'
+    'up_one'        => 'tilbage',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
 $mig_messages['it'] = array (
-     'backhome'     => 'torna&nbsp;a',
-     'bytes'        => '&nbsp;bytes',
-     'flash_used'   => 'usato flash',
-     'main'         => 'Principale',
-     'must_auth'    => 'Devi inserire un nome utente ed una password validi'
-                     . ' per accedere',
-     'nextimage'    => 'prossima&nbsp;immagine',
-     'no_contents'  => 'Vuoto.',
-     'previmage'    => 'immagine&nbsp;precedente',
-     'thumbview'    => 'torna&nbsp;alla&nbsp;vista&nbsp;per&nbsp;icone',
-     'up_one'       => 'torna&nbsp;al&nbsp;livello&nbsp;superiore'
+    'backhome'     => 'torna&nbsp;a',
+    'bytes'        => '&nbsp;bytes',
+    'flash_used'   => 'usato flash',
+    'main'         => 'Principale',
+    'must_auth'    => 'Devi inserire un nome utente ed una password validi'
+                    . ' per accedere',
+    'nextimage'    => 'prossima&nbsp;immagine',
+    'no_contents'  => 'Vuoto.',
+    'previmage'    => 'immagine&nbsp;precedente',
+    'thumbview'    => 'torna&nbsp;alla&nbsp;vista&nbsp;per&nbsp;icone',
+    'up_one'       => 'torna&nbsp;al&nbsp;livello&nbsp;superiore',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
 // with some adjustments from JMN <umjumasa@terra.es>
 $mig_messages['es'] = array (
-     'backhome'     => 'regresar&nbsp;inicio',
-     'bytes'        => '&nbsp;bytes',
-     'flash_used'   => 'flash usado',
-     'main'         => 'Principal',
-     'must_auth'    => 'Debes introducir un usuario y clave v&#225;lidas'
-                     . ' para acceder',
-     'nextimage'    => 'siguiente&nbsp;im&#225;gen',
-     'no_contents'  => 'Sin&nbsp;contenidos.',
-     'previmage'    => 'anterior&nbsp;im&#225;gen',
-     'thumbview'    => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
-     'up_one'       => 'subir&nbsp;un&nbsp;nivel'
+    'backhome'     => 'regresar&nbsp;inicio',
+    'bytes'        => '&nbsp;bytes',
+    'flash_used'   => 'flash usado',
+    'main'         => 'Principal',
+    'must_auth'    => 'Debes introducir un usuario y clave v&#225;lidas'
+                    . ' para acceder',
+    'nextimage'    => 'siguiente&nbsp;im&#225;gen',
+    'no_contents'  => 'Sin&nbsp;contenidos.',
+    'previmage'    => 'anterior&nbsp;im&#225;gen',
+    'thumbview'    => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
+    'up_one'       => 'subir&nbsp;un&nbsp;nivel',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Slovak - courtesy of Juro Polak <polak@axon.sk>
@@ -284,7 +340,11 @@ $mig_messages['sk'] = array (
     'previmage'     => 'predch&#225;dzaj&#250;ci&nbsp;obr&#225;zok',
     'thumbview'     => 'sp&#228;?&nbsp;na&nbsp;zmen?eniny&nbsp;obr&#225;zkov'
                      . '(thumbnail)',
-    'up_one'        => 'o&nbsp;&#250;rove&#242;&nbsp;vy??ie'
+    'up_one'        => 'o&nbsp;&#250;rove&#242;&nbsp;vy??ie',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Dutch - courtesy of Erik@Braindisorder.org
@@ -299,7 +359,11 @@ $mig_messages['nl'] = array (
     'no_contents'   => 'Geen&nbsp;commentaar.',
     'previmage'     => 'vorige&nbsp;foto',
     'thumbview'     => 'terug&nbsp;naar&nbsp;overzicht',
-    'up_one'        => 'een&nbsp;niveau&nbsp;omhoog'
+    'up_one'        => 'een&nbsp;niveau&nbsp;omhoog',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Polish - courtesy of martvin@box43.pl
@@ -314,7 +378,11 @@ $mig_messages['pl'] = array (
     'no_contents'   => 'nie&nbsp;ma zawartoœci.',
     'previmage'     => 'poprzedni&nbsp;obrazek',
     'thumbview'     => 'powr&#243;t&nbsp;do&nbsp;widoku&nbsp;miniatur',
-    'up_one'        => 'powr&#243;t&nbsp;&nbsp;'
+    'up_one'        => 'powr&#243;t&nbsp;&nbsp;',
+    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 ?>

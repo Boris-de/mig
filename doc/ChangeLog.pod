@@ -9,7 +9,7 @@ Z<>
 
 Z<>
 
-=head2 Version 1.3.0 (NOT YET RELEASED)
+=head2 Version 1.3.0 (Tue 23 Apr 2002)
 
 Added TITLE tags in thumbnail views so when hovering over a thumbnail,
 you get the comment whether using Mozilla/Gecko/Netscape or Internet
@@ -18,6 +18,14 @@ Explorer.  C<$suppressAltTags> will also suppress the TITLE tags.
 Added Polish translation.
 
 Replaced Italian translation with cleaner one from Marco Ermini.
+
+Added date/time stamp parsing to C<getExifDescription()>.  This can be
+activated by setting C<$viewDateInfo> to C<TRUE> in F<mig.cfg>.
+(It is C<FALSE> by default).
+
+Changed C<getExifDescription()> formatting slightly.
+Changed f-stop display to omit any '/' if present.
+
 
 =head2 Version 1.2.9 (Thu 16 Aug 2001)
 
@@ -32,7 +40,7 @@ applied to all folders that contain images, whether they are sorted or
 not.
 
 [Sourceforge bug report #442760] -
-Fixed a bug in getExifDescription.  The string &quot;flash used&quot;
+Fixed a bug in C<getExifDescription()>.  The string &quot;flash used&quot;
 was hard-coded rather than being included in the language library.
 
 Upgraded to most recent revision of jhead to get ISO rating support.
