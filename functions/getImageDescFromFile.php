@@ -4,16 +4,16 @@
 //                          per-image comment file (only used if
 //                          $commentFilePerImage is TRUE)
 
-function getImageDescFromFile ( $image, $albumDir, $currDir, $short_flag )
+function getImageDescFromFile ( $image, $currDir, $short_flag )
 {
 
     $imageDesc = '';
     $fname = getFileName($image);
     $fname = rawurldecode($fname);
 
-    if (file_exists("$albumDir/$currDir/$fname.txt")) {
+    if (file_exists($mig_config['albumdir']."/$currDir/$fname.txt")) {
 
-        $file = fopen("$albumDir/$currDir/$fname.txt", 'r');
+        $file = fopen($mig_config['albumdir']."/$currDir/$fname.txt", 'r');
         $line = fgets($file, 4096);     // get first line
 
         // This double-check exists so that files ending without

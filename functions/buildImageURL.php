@@ -2,7 +2,7 @@
 
 // buildImageURL() - spit out HTML for a particular image
 
-function buildImageURL ( $albumDir, $currDir,
+function buildImageURL ( $currDir,
                          $albumURLroot, $filename, $suppressImageInfo,
                          $markerType, $markerLabel,
                          $noThumbs, $thumbExt,
@@ -38,11 +38,11 @@ function buildImageURL ( $albumDir, $currDir,
         if ($mig_config['usethumbsubdir']) {
 
             if ($thumbExt) {
-                $thumbFile = "$albumDir/$oldCurrDir/"
+                $thumbFile = $mig_config['albumdir']."/$oldCurrDir/"
                            . $mig_config['thumbsubdir']
                            . "/$fname.$thumbExt";
             } else {
-                $thumbFile = "$albumDir/$oldCurrDir/"
+                $thumbFile = $mig_config['albumdir']."/$oldCurrDir/"
                            . $mig_config['thumbsubdir']
                            . "/$fname.$ext";
             }
@@ -50,7 +50,7 @@ function buildImageURL ( $albumDir, $currDir,
         } else {
 
             if ($markerType == 'prefix') {
-                $thumbFile  = "$albumDir/$oldCurrDir/$markerLabel";
+                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$markerLabel";
 
                 if ($thumbExt) {
                     $thumbFile .= "_$fname.$thumbExt";
@@ -60,7 +60,7 @@ function buildImageURL ( $albumDir, $currDir,
             }
 
             if ($markerType == 'suffix') {
-                $thumbFile  = "$albumDir/$oldCurrDir/$fname";
+                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname";
 
                 if ($thumbExt) {
                     $thumbFile .= "_$markerLabel.$thumbExt";
@@ -123,7 +123,7 @@ function buildImageURL ( $albumDir, $currDir,
 
     // Get description, if any
     if ($commentFilePerImage) {
-        list($alt_desc, $x) = getImageDescFromFile("$fname.$ext", $albumDir,
+        list($alt_desc, $x) = getImageDescFromFile("$fname.$ext",
                                         $currDir, $commentFileShortComments);
         // Get a conventional comment if there isn't one here.
         if (! $alt_desc) {
@@ -144,7 +144,7 @@ function buildImageURL ( $albumDir, $currDir,
 
     if ($type == 'image') {
         // Figure out the image's size (in bytes and pixels) for display
-        $imageFile = "$albumDir/$oldCurrDir/$fname.$ext";
+        $imageFile = $mig_config['albumdir']."/$oldCurrDir/$fname.$ext";
 
         // Figure out the pixels
         $imageProps = GetImageSize($imageFile);

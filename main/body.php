@@ -65,6 +65,8 @@ $mig_config['usethumbsubdir'] = $useThumbSubdir;
 $mig_config['thumbsubdir'] = $thumbSubdir;
 $mig_config['largesubdir'] = $largeSubdir;
 $mig_config['uselargeimages'] = $useLargeImages;
+$mig_config['homelink'] = $homeLink;
+$mig_config['homelabel'] = $homeLabel;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
@@ -344,7 +346,7 @@ while ($workCopy) {
     }
 }
 
-$albumDir = $mig_config['basedir'] . '/albums';     // Where albums live
+$mig_config['albumdir'] = $mig_config['basedir'] . '/albums';     // Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
 $templateDir = $mig_config['basedir'] . '/templates'; // Where templates live
@@ -383,7 +385,7 @@ if (! $folderSortType) {
 list($hidden, $presort_dir, $presort_img, $desc, $short_desc, $bulletin,
      $ficons, $folderTemplate, $folderPageTitle, $folderFolderCols,
      $folderThumbCols, $folderThumbRows, $folderMaintAddr, $useThumbFile)
-  = parseMigCf("$albumDir/$currDir");
+  = parseMigCf($mig_config['albumdir']."/$currDir");
 
 // Determine page title to use
 if ($folderPageTitle) {
@@ -459,7 +461,7 @@ if ($pageType == 'folder') {
     // Generate some HTML to pass to the template printer
 
     // list of available folders
-    $folderList = buildDirList($albumDir, $albumURLroot, $currDir,
+    $folderList = buildDirList($albumURLroot, $currDir,
                                $imageDir,
                                $maxFolderColumns, $hidden, $presort_dir,
                                $viewFolderCount, $markerType,
@@ -468,7 +470,7 @@ if ($pageType == 'folder') {
                                $ignoreDotDirectories, $useRealRandThumbs,
                                $folderSortType);
     // list of available images
-    $imageList = buildImageList($albumDir, $currDir,
+    $imageList = buildImageList($currDir,
                                 $albumURLroot, $maxThumbColumns,
                                 $maxThumbRows, $markerType, $markerLabel,
                                 $folderList, $suppressImageInfo,
@@ -532,8 +534,8 @@ if ($pageType == 'folder') {
     }
 
     // build the "back" link
-    $backLink = buildBackLink($currDir, 'back', $homeLink,
-                              $homeLabel, $noThumbs, '', $pageType, $image);
+    $backLink = buildBackLink($currDir, 'back',
+                              $noThumbs, '', $pageType, $image);
 
     // build the "you are here" line
     $youAreHere = buildYouAreHere($currDir, '', $omitImageName);
@@ -545,7 +547,7 @@ if ($pageType == 'folder') {
     printTemplate($templateDir, $templateFile, $version, $maintAddr,
                   $folderList, $imageList, $backLink, '', '', '',
                   $newCurrDir, $pageTitle, '', '', '', $bulletin,
-                  $youAreHere, $distURL, $albumDir, $pathConvertFlag,
+                  $youAreHere, $distURL, $pathConvertFlag,
                   $pathConvertRegex, $pathConvertTarget, $pageType,
                   '', '', '', '', '');
 
@@ -562,7 +564,7 @@ if ($pageType == 'folder') {
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
-    $Links = buildNextPrevLinks($albumDir, $currDir, $image,
+    $Links = buildNextPrevLinks($currDir, $image,
                                 $markerType, $markerLabel,
                                 $hidden, $presort_img, $sortType, $startFrom,
                                 $pageType);
@@ -570,7 +572,7 @@ if ($pageType == 'folder') {
 
     // Get image description
     if ($commentFilePerImage) {
-        list($x, $description) = getImageDescFromFile($image, $albumDir,
+        list($x, $description) = getImageDescFromFile($image,
                                         $currDir, $commentFileShortComments);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
@@ -583,7 +585,7 @@ if ($pageType == 'folder') {
                                                      $short_desc);
     }
 
-    $exifDescription = getExifDescription($albumDir, $currDir, $image,
+    $exifDescription = getExifDescription($currDir, $image,
                                           $exifFormatString);
 
     // If there's a description but no exifDescription, just make the
@@ -621,7 +623,7 @@ if ($pageType == 'folder') {
     $newCurrDir = getNewCurrDir($currDir);
 
     if ($mig_config['uselargeimages'] &&
-            file_exists("$albumDir/$currDir/"
+            file_exists($mig_config['albumdir']."/$currDir/"
                       . $mig_config['largesubdir']
                       . "/$image"))
     {
@@ -644,7 +646,7 @@ if ($pageType == 'folder') {
     printTemplate($templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir,
+                  $description, $youAreHere, $distURL,
                   $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
                   $pageType, '', $largeLink, $largeHrefStart, $largeHrefEnd,
                   $largeLinkBorder);
@@ -661,7 +663,7 @@ if ($pageType == 'folder') {
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
-    $Links = buildNextPrevLinks($albumDir, $currDir, $image,
+    $Links = buildNextPrevLinks($currDir, $image,
                                 $markerType, $markerLabel,
                                 $hidden, $presort_img, $sortType, $startFrom,
                                 $pageType);
@@ -669,7 +671,7 @@ if ($pageType == 'folder') {
 
     // Get image description
     if ($commentFilePerImage) {
-        list($x, $description) = getImageDescFromFile($image, $albumDir,
+        list($x, $description) = getImageDescFromFile($image,
                                         $currDir, $commentFileShortComments);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
@@ -682,7 +684,7 @@ if ($pageType == 'folder') {
                                                      $short_desc);
     }
 
-    $exifDescription = getExifDescription($albumDir, $currDir, $image,
+    $exifDescription = getExifDescription($currDir, $image,
                                           $exifFormatString);
 
     // If there's a description but no exifDescription, just make the
@@ -723,7 +725,7 @@ if ($pageType == 'folder') {
     printTemplate($templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir,
+                  $description, $youAreHere, $distURL,
                   $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
                   $pageType, '', '', '', '');
 }

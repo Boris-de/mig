@@ -2,7 +2,7 @@
 
 // buildImageList() - creates a list of images available
 
-function buildImageList ( $albumDir, $currDir,
+function buildImageList ( $currDir,
                           $albumURLroot, $maxColumns, $maxRows, $markerType,
                           $markerLabel, $directoryList, $suppressImageInfo,
                           $noThumbs, $thumbExt,
@@ -17,8 +17,8 @@ function buildImageList ( $albumDir, $currDir,
     global $mig_config;
     global $mig_dl;
 
-    if (is_dir("$albumDir/$currDir")) {
-        $dir = opendir("$albumDir/$currDir"); // Open directory handle
+    if (is_dir($mig_config['albumdir']."/".$currDir)) {
+        $dir = opendir($mig_config['albumdir']."/".$currDir);
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
         exit;
@@ -70,7 +70,7 @@ function buildImageList ( $albumDir, $currDir,
 
         // We'll look at this one only if it's a file
         // and it matches our list of approved extensions
-        if (is_file("$albumDir/$currDir/$file")
+        if (is_file($mig_config['albumdir']."/".$currDir."/".$file)
                         && ! $presorted[$file] && getFileType($file))
         {
             // Increase thumb counter
@@ -81,7 +81,8 @@ function buildImageList ( $albumDir, $currDir,
 
             // and stash a timestamp as well if needed
             if (ereg("bydate.*", $sortType)) {
-                $timestamp = filemtime("$albumDir/$currDir/$file");
+                $timestamp = filemtime($mig_config['albumdir']
+                                       . "/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
             }
         }
@@ -225,7 +226,7 @@ function buildImageList ( $albumDir, $currDir,
                     $imageList .= "\n   <tr>";
                 }
 
-                $img = buildImageURL($albumDir, $currDir,
+                $img = buildImageURL($currDir,
                                      $albumURLroot, $file, $suppressImageInfo,
                                      $markerType, $markerLabel,
                                      $noThumbs,

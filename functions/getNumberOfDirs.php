@@ -4,7 +4,7 @@
 
 function getNumberOfDirs ( $folder,
                            $markerType, $markerLabel,
-                           $albumDir, $currDir )
+                           $currDir )
 {
     global $mig_config;
     

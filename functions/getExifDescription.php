@@ -4,7 +4,7 @@
 //                        Exif comments file (exif.inf) as well as
 //                        fetching EXIF data
 
-function getExifDescription ( $albumDir, $currDir, $image, $formatString )
+function getExifDescription ( $currDir, $image, $formatString )
 {
 
     global $mig_config;
@@ -21,9 +21,9 @@ function getExifDescription ( $albumDir, $currDir, $image, $formatString )
     $time       = array ();
     $year       = array ();
 
-    if (file_exists("$albumDir/$currDir/exif.inf")) {
+    if (file_exists($mig_config['albumdir']."/$currDir/exif.inf")) {
 
-        $file = fopen("$albumDir/$currDir/exif.inf", 'r');
+        $file = fopen($mig_config['albumdir']."/$currDir/exif.inf", 'r');
         $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
 

@@ -6,7 +6,7 @@ function printTemplate ( $templateDir, $templateFile, $version,
                          $maintAddr, $folderList, $imageList, $backLink,
                          $albumURLroot, $image, $currDir, $newCurrDir,
                          $pageTitle, $prevLink, $nextLink, $currPos,
-                         $description, $youAreHere, $distURL, $albumDir,
+                         $description, $youAreHere, $distURL,
                          $pathConvertFlag, $pathConvertRegex,
                          $pathConvertTarget, $pageType,
                          $largeLink, $largeHrefStart, $largeHrefEnd,
@@ -33,7 +33,7 @@ function printTemplate ( $templateDir, $templateFile, $version,
     // checks for a leading slash, for Windows-like system it checks for
     // a leading drive letter or an SMB share.
     if (! eregi('^(/|[a-z]:|[\\]{2})', $templateFile)) {
-        $templateFile = $albumDir . '/' . $newCurrDir . '/' . $templateFile;
+        $templateFile = $mig_config['albumdir'] . '/' . $newCurrDir . '/' . $templateFile;
     }
 
     // Panic if the template file doesn't exist.
@@ -52,7 +52,7 @@ function printTemplate ( $templateDir, $templateFile, $version,
             $orig_line = $line;
             $line = trim($line);
             $line = str_replace('#include "', '', $line);
-            $line = str_replace('";', '', $line);
+            $line = str_replace('";', '', $line);		//"
             if (strstr($line, '/')) {
                 $line = '<!-- ERROR: #include directive failed.'
                       . ' Path included a "/" character, indicating'
@@ -95,10 +95,10 @@ function printTemplate ( $templateDir, $templateFile, $version,
             if ($image) {
                 // Get image pixel size for <IMG> element
                 if ($pageType == 'image') {
-                    $imageProps = GetImageSize("$albumDir/$currDir/$image");
+                    $imageProps = GetImageSize($mig_config['albumdir']."/$currDir/$image");
                 } elseif ($pageType == 'large') {
                     $imageProps =
-                      GetImageSize("$albumDir/$currDir/"
+                      GetImageSize($mig_config['albumdir']."/$currDir/"
                                  . $mig_config['largesubdir']
                                  . "/$image");
                 }

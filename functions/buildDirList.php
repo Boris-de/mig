@@ -2,7 +2,7 @@
 
 // buildDirList() - creates list of directories available
 
-function buildDirList ( $albumDir, $albumURLroot, $currDir,
+function buildDirList ( $albumURLroot, $currDir,
                         $imageDir,
                         $maxColumns, $hidden, $presorted, $viewFolderCount,
                         $markerType, $markerLabel, $ficons,
@@ -25,8 +25,9 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
     $samples = array ();
     $filedates = array ();
 
-    if (is_dir("$albumDir/$currDir")) {
-        $dir = opendir("$albumDir/$currDir");   // Open directory handle
+    if (is_dir($mig_config['albumdir']."/".$currDir)) {
+        // Open directory handle
+        $dir = opendir($mig_config['albumir']."/".$currDir);
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
         exit;
@@ -35,7 +36,7 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
     while ($file = readdir($dir)) {
 
         // Only pay attention to directories
-        if (! is_dir("$albumDir/$currDir/$file"))
+        if (! is_dir($mig_config['albumdir']."/".$currDir."/".$file))
             continue;
 
         // Ignore . and ..
@@ -56,7 +57,8 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
 
         // And stash a timestamp
         if (ereg("bydate.*", $sortType)) {
-            $timestamp = filemtime("$albumDir/$currDir/$file");
+            $timestamp = filemtime($mig_config['albumdir']."/".$currDir
+                                   ."/"$file);
             $filedates["$timestamp-$file"] = $file;
         }
     }
@@ -102,15 +104,14 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
     // Iterate through all folders now that we have our final list.
     while (list($file,$junk) = each($presorted)) {
 
-        $folder = "$albumDir/$currDir/$file";
+        $folder = $mig_config['albumdir']."/".$currDir."/".$file;
 
         // Calculate how many images in the folder if desired
         if ($viewFolderCount) {
             $counts[$file] = getNumberOfImages($folder,
                                                $markerType, $markerLabel);
             $countdir[$file] = getNumberOfDirs($folder, $markerType,
-                                               $markerLabel, $albumDir,
-                                               $currDir);
+                                               $markerLabel, $currDir);
         }
 
         // Handle random folder thumbnails if desired
@@ -145,12 +146,13 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
         $enc_file = migURLencode($newCurrDir);
 
         // Build the link itself for re-use below
-        $linkURL = '<a href="' . $mig_config['baseurl']
+        $linkURL = '<a href="'							//"
+                 . $mig_config['baseurl']
                  . '?pageType=folder&amp;currDir=' . $enc_file;
         if ($mig_dl) {
             $linkURL .= '&amp;mig_dl=' . $mig_dl;
         }
-        $linkURL .= '">';
+        $linkURL .= '">';							//"
 
         // Reword $file so it doesn't allow wrapping of the label
         // (fixes odd formatting bug in MSIE).
@@ -174,10 +176,11 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
 
         // Build the full link (icon plus folder name) and tack it on
         // the end of the list.
-        $directoryList .= "\n     " . '<td valign="middle" class="'
+        $directoryList .= "\n     " . '<td valign="middle" class="'		//"
                         . $folderTableClass . '" align="'
-                        . $folderTableAlign . '">' . $linkURL
-                        . '<img src="';
+                        . $folderTableAlign . '">'				//"
+                        . $linkURL
+                        . '<img src="';						//"
 
         if ($useThumbFile[$file]) {
             // Found a UseThumb line in mig.cf - process as such
@@ -229,7 +232,8 @@ function buildDirList ( $albumDir, $albumURLroot, $currDir,
         $altlabel = str_replace('_', ' ', $file);
 
         // Output the rest of the link, label, etc.
-        $directoryList .= '" border="0" alt="' . $altlabel . '"/></a>' . $sep
+        $directoryList .= '" '							//"
+                       . border="0" alt="' . $altlabel . '"/></a>' . $sep
                        . $linkURL . $nbspfile . '</a>';
 
         // Display counts if appropriate

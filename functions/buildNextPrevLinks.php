@@ -3,7 +3,7 @@
 // buildNextPrevLinks() - Build a link to the "next" and "previous"
 //                        images.
 
-function buildNextPrevLinks ( $albumDir, $currDir, $image,
+function buildNextPrevLinks ( $currDir, $image,
                               $markerType, $markerLabel,
                               $hidden, $presorted, $sortType, $startFrom,
                               $pageType )
@@ -14,11 +14,11 @@ function buildNextPrevLinks ( $albumDir, $currDir, $image,
     // newCurrDir is currDir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
-    if (is_dir("$albumDir/$currDir")) {
+    if (is_dir($mig_config['albumdir']."/$currDir")) {
         if ($pageType == 'large') {
-            $dir = opendir("$albumDir/$currDir/".$mig_config['largesubdir']);
+            $dir = opendir($mig_config['albumdir']."/$currDir/".$mig_config['largesubdir']);
         } else {
-            $dir = opendir("$albumDir/$currDir");
+            $dir = opendir($mig_config['albumdir']."/$currDir");
         }
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
@@ -51,11 +51,11 @@ function buildNextPrevLinks ( $albumDir, $currDir, $image,
 
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
-        if (is_file("$albumDir/$currDir/$file") && ! $presorted[$file]) {
+        if (is_file($mig_config['albumdir']."/$currDir/$file") && ! $presorted[$file]) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
             if (ereg("bydate.*", $sortType)) {
-                $timestamp = filemtime("$albumDir/$currDir/$file");
+                $timestamp = filemtime($mig_config['albumdir']."/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
             }
         }

@@ -2,8 +2,7 @@
 
 // buildBackLink() - spits out a "back one section" link
 
-function buildBackLink ( $currDir, $type, $homeLink, $homeLabel,
-                         $noThumbs, $startFrom, $pageType, $image )
+function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $image )
 {
 
     global $mig_config;
@@ -22,19 +21,20 @@ function buildBackLink ( $currDir, $type, $homeLink, $homeLabel,
 
     // don't send a link back if we're a the root of the tree
     if ($currDir == '.') {
-        if ($homeLink != '') {
+        if ($mig_config['homelink'] != '') {
 
-            if ($homeLabel == '') {
-                $homeLabel = $homeLink;
+            if ($mig_config['homelabel'] == '') {
+                $mig_config['homelabel'] = $mig_config['homelink'];
             } else {
                 // Get rid of spaces due to silly formatting in MSIE
-                $homeLabel = str_replace(' ', '&nbsp;', $homeLabel);
+                $mig_config['homelabel'] = str_replace(' ', '&nbsp;', $mig_config['homelabel']);
             }
 
             // Build a link to the "home" page
-            $retval  = '&nbsp;[&nbsp;<a href="' . $homeLink . '">'
+            $retval  = '&nbsp;[&nbsp;<a href="'					//"
+                     . $mig_config['homelink'] . '">'						//"
                      . $mig_config['lang']['backhome'] . '&nbsp;'
-                     . $homeLabel . '</a>&nbsp;]&nbsp;';
+                     . $mig_config['homelabel'] . '</a>&nbsp;]&nbsp;';
         } else {
             $retval = '<!-- no backLink in root tree -->';
         }
@@ -45,7 +45,7 @@ function buildBackLink ( $currDir, $type, $homeLink, $homeLabel,
     $junk = ereg_replace('/[^/]+$', '', $currDir);
     $newCurrDir = migURLencode($junk);
 
-    $retval = '&nbsp;[&nbsp;<a href="'
+    $retval = '&nbsp;[&nbsp;<a href="'						//"
             . $mig_config['baseurl'] . '?currDir=' . $newCurrDir;
     if ($startFrom) {
         $retval .= '&amp;startFrom=' . $startFrom;
@@ -58,7 +58,8 @@ function buildBackLink ( $currDir, $type, $homeLink, $homeLabel,
     } elseif ($pageType == 'large') {
         $retval .= '&amp;pageType=image&amp;image=' . $image;
     }
-    $retval .= '">' . $label . '</a>&nbsp;]&nbsp;';
+    $retval .= '">'								//"
+            . $label . '</a>&nbsp;]&nbsp;';
 
     return $retval;
 
