@@ -1,4 +1,4 @@
-<?php
+
 
 // Estonian - courtesy of Jan Jasinski <jan@sps.ee>
 $mig_config["lang_lib"]["ee"] = array (
@@ -29,4 +29,4 @@ $mig_config["lang_lib"]["ee"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

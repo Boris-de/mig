@@ -1,4 +1,4 @@
-<?php
+
 
 // Defaults - these values can be over-ridden using config.php
 //
@@ -53,4 +53,4 @@ $useRealRandThumbs          = TRUE;
 $useThumbSubdir             = TRUE;
 $viewFolderCount            = FALSE;
 
-?>
+

@@ -6,6 +6,7 @@ function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $ima
 {
     global $mig_config;
     global $mig_dl;
+    
 
     // $type notes whether we want a "back" link or "up one level" link.
     if ($type == "back" or $noThumbs) {

@@ -1,4 +1,4 @@
-<?php
+
 
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
 // with some adjustments from JMN <umjumasa@terra.es>
@@ -31,4 +31,4 @@ $mig_config["lang_lib"]["es"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

@@ -1,4 +1,4 @@
-<?php
+
 
 // Polish ISO-8859-2
 // courtesy of Krzysztof Wojtas <krzysin@cyklon.chemia.pk.edu.pl>
@@ -31,4 +31,4 @@ $mig_config["lang_lib"]["pliso"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

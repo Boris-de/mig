@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Written and contributed by:
-# 	Artem G. Abanov <aga@andrey.physics.wisc.edu>
+#       Artem G. Abanov <aga@andrey.physics.wisc.edu>
 #
 #######################################################################
 #
@@ -15,8 +15,8 @@
 #
 # This script requires these external programs:
 #
-# "rdjpgcom"	(part of the "jpeg" package)
-# "wrjpgcom"	(part of the "jpeg" package)
+# "rdjpgcom"    (part of the "jpeg" package)
+# "wrjpgcom"    (part of the "jpeg" package)
 #
 # If you do not have these programs, you can get a copy of the jpeg package
 # by anonymous FTP at ftp://ftp.uu.net/graphics/jpeg/ or if you are using
@@ -37,37 +37,37 @@ echo ""
 for filename in $@; do
 
 # Start the view command
-	$viewcommand $filename&
+    $viewcommand $filename&
 
 # Get the old comment
-	oldcomment=`rdjpgcom $filename`
+    oldcomment=`rdjpgcom $filename`
 
 # Ask for the new comment
-	echo "$filename"
-	echo  "Enter new comment [ $oldcomment ]? "
-	read  comment1
-	while test "${comment1}"; do
-		sep=""
-		if test "$comment"; then
-			sep='\n'
-		fi
-		comment="${comment}${sep}${comment1}"
-		read comment1
-	done
+    echo "$filename"
+    echo  "Enter new comment [ $oldcomment ]? "
+    read  comment1
+    while test "${comment1}"; do
+        sep=""
+        if test "$comment"; then
+            sep='\n'
+        fi
+        comment="${comment}${sep}${comment1}"
+        read comment1
+    done
 
 # Kill the viewer
-	kill $!
+    kill $!
 
 # Echo the new comment back (use the old comment if the new wasn't set)
-	echo -e "new comment:\n"${comment:=$oldcomment}
-	echo ""
+    echo -e "new comment:\n"${comment:=$oldcomment}
+    echo ""
 
 # Replace the comment in the file
-	wrjpgcom -replace -comment \"$comment\" $filename > $filename"_com"
+    wrjpgcom -replace -comment \"$comment\" $filename > $filename"_com"
 #"
 
 # Move the newly commented file back
-	mv $filename"_com" $filename
+    mv $filename"_com" $filename
 
 done
 

@@ -492,7 +492,7 @@ $sortType = "default";
 // Defaults to "default".
 //
 // Example:
-//	$folderSortType = "default";
+//      $folderSortType = "default";
 //
 
 $folderSortType = "default";

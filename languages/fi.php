@@ -1,4 +1,4 @@
-<?php
+
 
 // Finnish - courtesy of Jani Mikkonen <jani@mikkonen.org>
 $mig_config["lang_lib"]["fi"] = array (
@@ -30,4 +30,4 @@ $mig_config["lang_lib"]["fi"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

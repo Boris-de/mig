@@ -22,32 +22,38 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
     $samples = array ();
     $filedates = array ();
 
-    if (is_dir($mig_config["albumdir"]."/".$currDir)) {
+    $x = $mig_config["albumdir"]."/".$currDir;
+    if (is_dir($x)) {
         // Open directory handle
-        $dir = opendir($mig_config["albumir"]."/".$currDir);
+        $dir = opendir($x);
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
         exit;
     }
 
     while ($file = readdir($dir)) {
-
+    
         // Only pay attention to directories
-        if (! is_dir($mig_config["albumdir"]."/".$currDir."/".$file))
+        $x = $mig_config["albumdir"]."/".$currDir."/".$file;
+        if (! is_dir($x)) {
             continue;
-
+        }
+            
         // Ignore . and ..
-        if ($file == "." || $file == "..")
+        if ($file == "." || $file == "..") {
             continue;
+        }
 
         // Ignore presorted items
-        if ($presorted[$file])
+        if ($presorted[$file]) {
             continue;
+        }
 
         // Ignore directories whose name begins with "." if the
         // appropriate option is set
-        if ($ignoreDotDirectories && ereg("^\.", $file))
+        if ($ignoreDotDirectories && ereg("^\.", $file)) {
             continue;
+        }
 
         // If we got here, store it as a valid directory
         $directories[$file] = TRUE;
@@ -55,7 +61,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
         // And stash a timestamp
         if (ereg("bydate.*", $sortType)) {
             $timestamp = filemtime($mig_config["albumdir"]."/".$currDir
-                                   ."/"$file);
+                                   ."/".$file);
             $filedates["$timestamp-$file"] = $file;
         }
     }
@@ -64,7 +70,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
 
     // If we have directories, start a table
     if ($directories) {
-        $directoryList .= "\n" . "   <table summary=\"Folder Links\""
+        $directoryList .= "\n   <table summary=\"Folder Links\""
                         . " border=\"0\" cellspacing=\"0\"><tbody>";
     }
 
@@ -113,9 +119,8 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
 
         // Handle random folder thumbnails if desired
         if ($randomFolderThumbs) {
-            $samples[$file] = getRandomThumb($file, $folder, $albumURLroot,
-                                             $currDir, $markerType,
-                                             $markerLabel, $useRealRandThumbs,
+            $samples[$file] = getRandomThumb($file, $folder, $albumURLroot, $currDir,
+                                             $markerType, $markerLabel, $useRealRandThumbs,
                                              $ignoreDotDirectories);
         }
     }

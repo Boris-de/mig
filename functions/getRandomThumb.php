@@ -210,7 +210,7 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                 closedir($dirlist);
 
                 if ($subfList[0]) {
-                    srand((double)microtime()*1000000); 		// get random folder
+                    srand((double)microtime()*1000000);     // get random folder
                     $randval = rand(0,(sizeof($subfList)-1));
                     $mySample = getRandomThumb($file."/".$subfList[$randval],
                                         $folder."/".$subfList[$randval],

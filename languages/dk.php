@@ -1,4 +1,4 @@
-<?php
+
 
 // Danish - courtesy of Mikkel Mondrup Kristensen <mikkel@tdx.dk>
 $mig_config["lang_lib"]["dk"] = array (
@@ -30,4 +30,4 @@ $mig_config["lang_lib"]["dk"] = array (
                                "10" => "Okt", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

@@ -2,50 +2,50 @@ This file contains a description of each script in the mig-contrib
 package.  You can get the latest mig-contrib package at http://mig.sf.net/
 
 ===========================================================================
-convert-metafiles.sh		(requires a shell)
-	This file used to be in the main Mig distribution, but it's now
-	deprecated.  It is used to call mf_conv.pl recursively to handle
-	all subfolders.  See description for mf_conv.pl.
+convert-metafiles.sh        (requires a shell)
+    This file used to be in the main Mig distribution, but it's now
+    deprecated.  It is used to call mf_conv.pl recursively to handle
+    all subfolders.  See description for mf_conv.pl.
 
 ===========================================================================
-crypt.pl			(requires Perl)
-	Turns a plaintext password into a crypt() password
+crypt.pl                    (requires Perl)
+    Turns a plaintext password into a crypt() password
 
 ===========================================================================
 featured.php
-	Fetches a random URL from a file and displays it.  Commonly used
-	for a "featured photo" link on one's site.
+    Fetches a random URL from a file and displays it.  Commonly used
+    for a "featured photo" link on one's site.
 
 ===========================================================================
-gallery.sh			(requires a shell)
-	Automates resizing of image files using ImageMagick (mogrify).
+gallery.sh                  (requires a shell)
+    Automates resizing of image files using ImageMagick (mogrify).
 
 ===========================================================================
-mf_conv.pl			(requires Perl)
-	This file used to be in the main Mig distribution, but it's now
-	deprecated.  It converts meta-files from old version of Mig (0.83
-	and earlier) to the new format (used in 0.90 and later).  If you
-	are not using a very old Mig you have no use for this script.
+mf_conv.pl                  (requires Perl)
+    This file used to be in the main Mig distribution, but it's now
+    deprecated.  It converts meta-files from old version of Mig (0.83
+    and earlier) to the new format (used in 0.90 and later).  If you
+    are not using a very old Mig you have no use for this script.
 
 ===========================================================================
-migPutCommentInFile.sh		(requires a shell)
-	Inserts comments into JPEG files.
+migPutCommentInFile.sh      (requires a shell)
+    Inserts comments into JPEG files.
 
 ===========================================================================
 mkGallery.php
-	Lets you run mkGallery via a web browser (useful to folks who
-	don't have shell access to their web server).
+    Lets you run mkGallery via a web browser (useful to folks who
+    don't have shell access to their web server).
 
 ===========================================================================
-mkthumbs.com			(requires VMS)
-	A VMS procedure to make thumbnails.
+mkthumbs.com                (requires VMS)
+    A VMS procedure to make thumbnails.
 
 ===========================================================================
 phpnuke_module.php
-	A mock PHP-Nuke module so you can put Mig into the modules menu.
+    A mock PHP-Nuke module so you can put Mig into the modules menu.
 
 ===========================================================================
-grabexif-0.1.tar.gz  		(requires C compiler)
-	Grabexif generates exif.inf files for use by mig (mig.sf.net),
-	from the html files found on the Casio QV-7000SX (and others?).
+grabexif-0.1.tar.gz         (requires C compiler)
+    Grabexif generates exif.inf files for use by mig (mig.sf.net),
+    from the html files found on the Casio QV-7000SX (and others?).
 

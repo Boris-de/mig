@@ -1,4 +1,4 @@
-<?php
+
 
 // English (default)
 $mig_config["lang_lib"]["en"] = array (
@@ -30,4 +30,4 @@ $mig_config["lang_lib"]["en"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

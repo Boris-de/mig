@@ -1,4 +1,4 @@
-<?php
+
 
 // Turkish - courtesy of Dogan Sariguzel <dogan@procam.com.tr>
 $mig_config["lang_lib"]["tr"] = array (
@@ -31,4 +31,4 @@ $mig_config["lang_lib"]["tr"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

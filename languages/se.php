@@ -1,4 +1,4 @@
-<?php
+
 
 // Swedish - courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
 $mig_config["lang_lib"]["se"] = array (
@@ -32,4 +32,4 @@ $mig_config["lang_lib"]["se"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+

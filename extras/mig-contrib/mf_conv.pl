@@ -34,7 +34,7 @@ while (<IN>) {
   chdir "$basedir/$_";
 
   if ( -f ".hidden.txt" ) {
-    %hidden = ();		# empty between directories
+    %hidden = ();               # empty between directories
     open(HIDDEN, ".hidden.txt") or die "Can't open .hidden.txt\n";
     while (<HIDDEN>) {
       chomp;
@@ -52,7 +52,7 @@ while (<IN>) {
   }
 
   if ( -f ".comments.txt" ) {
-    %comments = ();		# empty between directories
+    %comments = ();         # empty between directories
     open(COMMENTS, ".comments.txt") or die "Can't open .comments.txt\n";
     while (<COMMENTS>) {
       chomp;

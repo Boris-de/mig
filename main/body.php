@@ -1,50 +1,52 @@
-<?php
+
 
 // URL to use to call myself again
-if ($_SERVER["PHP_SELF"])
+if ($_SERVER["PHP_SELF"]) {
     $mig_config["baseurl"] = $_SERVER["PHP_SELF"];
-elseif ($HTTP_SERVER_VARS["PHP_SELF"])
+} elseif ($HTTP_SERVER_VARS["PHP_SELF"]) {
     $mig_config["baseurl"] = $HTTP_SERVER_VARS["PHP_SELF"];
-elseif ($PHP_SELF)
+} elseif ($PHP_SELF) {
     $mig_config["baseurl"] = $PHP_SELF;
-else {
+} else {
     print "FATAL ERROR: Could not set baseurl";
     exit;
 }
 
 // Base directory of installation
-if ($_SERVER["PATH_TRANSLATED"])
+if ($_SERVER["PATH_TRANSLATED"]) {
     $mig_config["basedir"] = $_SERVER["PATH_TRANSLATED"];
-elseif ($HTTP_SERVER_VARS["PATH_TRANSLATED"])
+} elseif ($HTTP_SERVER_VARS["PATH_TRANSLATED"]) {
     $mig_config["basedir"] = $HTTP_SERVER_VARS["PATH_TRANSLATED"];
-elseif ($PATH_TRANSLATED)
+} elseif ($PATH_TRANSLATED) {
     $mig_config["basedir"] = $PATH_TRANSLATED;
-elseif ($_SERVER["SCRIPT_FILENAME"])
+} elseif ($_SERVER["SCRIPT_FILENAME"]) {
     $mig_config["basedir"] = $_SERVER["SCRIPT_FILENAME"];
-elseif ($HTTP_SERVER_VARS["SCRIPT_FILENAME"])
+} elseif ($HTTP_SERVER_VARS["SCRIPT_FILENAME"]) {
     $mig_config["basedir"] = $HTTP_SERVER_VARS["SCRIPT_FILENAME"];
-elseif ($SCRIPT_FILENAME)
+} elseif ($SCRIPT_FILENAME) {
     $mig_config["basedir"] = $SCRIPT_FILENAME;
-else {
+} else {
     print "FATAL ERROR: Can not set basedir";
     exit;
 }
+
+// Strip down to just directory name
 $mig_config["basedir"] = dirname($mig_config["basedir"]);
 
 // Locate and load configuration
-if (file_exists($mig_config["basedir"] . "/mig/config.php")) {
+if (file_exists($mig_config["basedir"]."/mig/config.php")) {
     // Found it - we're in Nuke mode
-    $configFile = $mig_config["basedir"] . "/mig/config.php";
-} elseif (file_exists($mig_config["basedir"] . "/config.php")) {
+    $configFile = $mig_config["basedir"]."/mig/config.php";
+} elseif (file_exists($mig_config["basedir"]."/config.php")) {
     // Found it - regular mode
-    $configFile = $mig_config["basedir"] . "/config.php";
-} else {
-    // Uh oh.
-    print "FATAL ERROR: Can't find Mig configuration!";
-    exit;
+    $configFile = $mig_config["basedir"]."/config.php";
 }
-include(convertIncludePath($pathConvertFlag, $configFile, $pathConvertRegex,
-            $pathConvertTarget));
+
+// Include config file, making sure to modify the include path if appropriate.
+if ($configFile) {
+    include(convertIncludePath($pathConvertFlag, $configFile,
+                               $pathConvertRegex, $pathConvertTarget));
+}
             
 // Return an error if too many modes are set at once
 $usePortal = 0;
@@ -60,13 +62,13 @@ if ($usePortal > 1) {
     exit;
 }
 
-// Fetch some settings
-$mig_config["usethumbsubdir"] = $useThumbSubdir;
-$mig_config["thumbsubdir"] = $thumbSubdir;
-$mig_config["largesubdir"] = $largeSubdir;
-$mig_config["uselargeimages"] = $useLargeImages;
-$mig_config["homelink"] = $homeLink;
+// Fetch some settings into $mig_config
 $mig_config["homelabel"] = $homeLabel;
+$mig_config["homelink"] = $homeLink;
+$mig_config["largesubdir"] = $largeSubdir;
+$mig_config["thumbsubdir"] = $thumbSubdir;
+$mig_config["uselargeimages"] = $useLargeImages;
+$mig_config["usethumbsubdir"] = $useThumbSubdir;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
@@ -217,7 +219,7 @@ if (strstr($currDir, "..")) {
 //     must begin with "./" and dot or slash can't follow that
 //     for at least two positions.
 //
-if ( $currDir != "." && ! ereg("^./[^./][^./]*", $currDir) ) {
+if ( $currDir != "." && ! ereg("^./[^/][^/]*", $currDir) ) {
     print "ERROR: \$currDir is invalid.  Exiting.";
     exit;
 }
@@ -346,10 +348,10 @@ while ($workCopy) {
     }
 }
 
-$mig_config["albumdir"] = $mig_config["basedir"] . "/albums";     // Where albums live
+$mig_config["albumdir"] = $mig_config["basedir"] . "/albums";   // Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
-$templateDir = $mig_config["basedir"] . "/templates"; // Where templates live
+$templateDir = $mig_config["basedir"] . "/templates";           // Where templates live
 
 // baseURL with the scriptname torn off the end
 $baseHref = ereg_replace("/[^/]+$", "", $mig_config["baseurl"]);
@@ -558,8 +560,7 @@ if ($pageType == "folder") {
 
     // Trick back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink("$currDir/blah", "up", "", "",
-                              $noThumbs, $startFrom, $pageType, $image);
+    $backLink = buildBackLink("$currDir/blah", "up", $noThumbs, $startFrom, $pageType, $image);
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
@@ -766,4 +767,3 @@ if ($phpNukeCompatible) {
 
 }
 
-?>

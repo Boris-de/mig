@@ -1,4 +1,4 @@
-<?php
+
 
 // Russian KOI8-R - courtesy of Anatoly Ropotov <lynx@rulez.lv>
 $mig_config["lang_lib"]["koi8r"] = array (
@@ -46,4 +46,4 @@ $mig_config["lang_lib"]["koi8r"] = array (
                                "10" => "Oct", "11" => "Nov", "12" => "Dec")
 );
 
-?>
+
