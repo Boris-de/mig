@@ -6,6 +6,7 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
 {
 
     global $mig_config;
+    global $mig_dl;
 
     // Use $workingCopy so we don't trash value of $currDir
     $workingCopy = $currDir;
@@ -27,7 +28,11 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
             $url = '&nbsp;&gt;&nbsp;' . $label;
         } else {
             $url = '&nbsp;&gt;&nbsp;<a href="' . $baseURL . '?currDir='
-                 . $encodedCopy . '">' . $label . '</a>';
+                 . $encodedCopy;
+            if ($mig_dl) {
+                $url .= '&amp;mig_dl=' . $mig_dl;
+            }
+            $url .= '">' . $label . '</a>';
         }
 
         // Strip the last piece off of $workingCopy to go to next loop
@@ -46,8 +51,11 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
 
     // Or if we're not, then Main should be a link instead of just text
     } else {
-        $url = '<a href="' . $baseURL . '?currDir=' . $workingCopy
-             . '">' . $mig_config['lang']['main'] . '</a>';
+        $url = '<a href="' . $baseURL . '?currDir=' . $workingCopy;
+        if ($mig_dl) {
+            $url .= '&amp;mig_dl=' . $mig_dl;
+        }
+        $url .= '">' . $mig_config['lang']['main'] . '</a>';
         $x = $hereString;
         $hereString = $url . $x;
     }

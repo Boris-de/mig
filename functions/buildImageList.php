@@ -13,6 +13,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                           $commentFileShortComments, $showShortOnThumbPage )
 {
     global $mig_config;
+    global $mig_dl;
 
     if (is_dir("$albumDir/$currDir")) {
         $dir = opendir("$albumDir/$currDir"); // Open directory handle
@@ -88,18 +89,18 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
     reset($imagefiles); // reset array pointer
 
-    if ($sortType == "bydate-ascend") {
+    if ($sortType == 'bydate-ascend') {
         ksort($filedates);
         reset($filedates);
 
-    } elseif ($sortType == "bydate-descend") {
+    } elseif ($sortType == 'bydate-descend') {
         krsort($filedates);
         reset($filedates);
     }
 
     // Join the two sorted lists together into a single list
     if (ereg("bydate.*", $sortType)) {
-        while(list($junk,$file) = each($filedates)) {
+        while (list($junk,$file) = each($filedates)) {
             $presorted[$file] = TRUE;
         }
 
@@ -165,9 +166,12 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
             $prevPage = $startFrom - 1;
 
             $imageList .= '<a href="' . $baseURL
-                        . '?pageType=folder&currDir=' . $urlCurrDir
-                        . '&startFrom=' . $prevPage
-                        . '">&laquo;</A>&nbsp;&nbsp;';
+                        . '?pageType=folder&amp;currDir=' . $urlCurrDir
+                        . '&amp;startFrom=' . $prevPage;
+            if ($mig_dl) {
+                $imageList .= '&amp;mig_dl=' . $mig_dl;
+            }
+            $imageList .= '">&laquo;</A>&nbsp;&nbsp;';
         }
 
         for ($i = 1; $i <= $pages; ++$i) {
@@ -179,17 +183,24 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
             } else {
                 $ib = $i - 1;
                 $imageList .= '<a href="' . $baseURL
-                            . '?pageType=folder&currDir=' . $urlCurrDir
-                            . '&startFrom=' . $ib . '">'
-                            . $i . '</a>&nbsp;&nbsp;';
+                            . '?pageType=folder&amp;currDir=' . $urlCurrDir
+                            . '&amp;startFrom=' . $ib;
+                if ($mig_dl) {
+                    $imageList .= '&amp;mig_dl=' . $mig_dl;
+                }
+                $imageList .= '">' . $i . '</a>&nbsp;&nbsp;';
             }
         }
 
         if (($startFrom + 1) < $pages) {
             $nextPage = $startFrom + 1;
             $imageList .= '<a href="' . $baseURL
-                        . '?pageType=folder&currDir=' . $urlCurrDir
-                        . '&startFrom=' . $nextPage . '">&raquo;</A>';
+                        . '?pageType=folder&amp;currDir=' . $urlCurrDir
+                        . '&amp;startFrom=' . $nextPage;
+            if ($mig_dl) {
+                $imageList .= '&amp;mig_dl=' . $mig_dl;
+            }
+            $imageList .= '">&raquo;</A>';
         }
 
         $imageList .= "</small></td>\n   </tr>";

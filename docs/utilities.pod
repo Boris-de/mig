@@ -70,6 +70,9 @@ F<mkGallery.pl> has not been tested under Microsoft Windows to my knowledge.
       -D : Name of thumbnail subdirectory to use (default is "thumbs" or
            whatever is in your config.php file).
       -E : File extension to use for thumbnails.
+      -K : Keep profiles in thumbnails.  Normally this should
+           be off because profiles in thumbnails are not useful
+           but add a lot to the file size.
 
     * If creating thumbnails, "convert" must be in your $PATH.
     * This program supports JPEG, PNG and GIF formats.

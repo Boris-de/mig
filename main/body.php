@@ -1,17 +1,34 @@
 
 // URL to use to call myself again
-if ($PHP_SELF) {                                        // register_globals
-    $baseURL = $PHP_SELF;
-} else {                                                // track_vars
+if ($_SERVER['PHP_SELF']) {
+    $baseURL = $_SERVER['PHP_SELF'];
+} elseif ($HTTP_SERVER_VARS['PHP_SELF']) {
     $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
+} elseif ($PHP_SELF) {
+    $baseURL = $PHP_SELF;
+} else {
+    print "FATAL ERROR: Could not set baseURL";
+    exit;
 }
 
 // Base directory of installation
-if ($PATH_TRANSLATED) {                                 // register_globals
-    $baseDir = dirname($PATH_TRANSLATED);
-} else {                                                // track_vars
-    $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
+if ($_SERVER['PATH_TRANSLATED']) {
+    $baseDir = $_SERVER['PATH_TRANSLATED'];
+} elseif ($HTTP_SERVER_VARS['PATH_TRANSLATED']) {
+    $baseDir = $HTTP_SERVER_VARS['PATH_TRANSLATED'];
+} elseif ($PATH_TRANSLATED) {
+    $baseDir = $PATH_TRANSLATED;
+} elseif ($_SERVER['SCRIPT_FILENAME']) {
+    $baseDir = $_SERVER['SCRIPT_FILENAME'];
+} elseif ($HTTP_SERVER_VARS['SCRIPT_FILENAME']) {
+    $baseDir = $HTTP_SERVER_VARS['SCRIPT_FILENAME'];
+} elseif ($SCRIPT_FILENAME) {
+    $baseDir = $SCRIPT_FILENAME;
+} else {
+    print "FATAL ERROR: Can not set baseDir";
+    exit;
 }
+$baseDir = dirname($baseDir);
 
 // Locate and load configuration
 if (file_exists($baseDir . '/mig/config.php')) {
@@ -75,10 +92,12 @@ if ($phpNukeCompatible) {
 }
 
 // Get currDir.  If there isn't one, default to '.'
-if (! $currDir && ! $HTTP_GET_VARS['currDir']) {
-    $currDir = '.';
+if ($_GET['currDir']) {
+    $currDir = $_GET['currDir'];
 } elseif ($HTTP_GET_VARS['currDir']) {
     $currDir = $HTTP_GET_VARS['currDir'];
+} elseif (! $currDir) {
+    $currDir = '.';
 }
 
 // Strip URL encoding
@@ -86,24 +105,53 @@ $currDir = rawurldecode($currDir);
 
 // Get image, if there is one.
 if (! $image) {
-    $image = $HTTP_GET_VARS['image'];
+    if ($_GET['image']) {
+        $image = $_GET['image'];
+    } elseif ($HTTP_GET_VARS['image']) {
+        $image = $HTTP_GET_VARS['image'];
+    }
 }
 
 // Get pageType.  If there isn't one, default to "folder"
 if (! $pageType) {
-    $pageType = $HTTP_GET_VARS['pageType'];
-}
-
-if (! $pageType) {
-    $pageType = 'folder';
+    if ($_GET['pageType']) {
+        $pageType = $_GET['pageType'];
+    } elseif ($HTTP_GET_VARS['pageType']) {
+        $pageType = $HTTP_GET_VARS['pageType'];
+    } else {
+        $pageType = 'folder';
+    }
 }
 
 if (! $jump) {
-    $jump = $HTTP_GET_VARS['jump'];         // for track_vars
+    if ($_GET['jump']) {
+        $jump = $_GET['jump'];
+    } elseif ($HTTP_GET_VARS['jump']) {
+        $jump = $HTTP_GET_VARS['jump'];
+    }
 }
 
 if (! $startFrom) {
-    $startFrom = $HTTP_GET_VARS['startFrom'];
+    if ($_GET['startFrom']) {
+        $startFrom = $_GET['startFrom'];
+    } elseif ($HTTP_GET_VARS['startFrom']) {
+        $startFrom = $HTTP_GET_VARS['startFrom'];
+    }
+}
+
+// use language set specified in URL, if one was.
+if (! $mig_dl) {
+    if ($_GET['mig_dl']) {
+        $mig_dl = $_GET['mig_dl'];
+    } elseif ($HTTP_GET_VARS['mig_dl']) {
+        $mig_dl = $HTTP_GET_VARS['mig_dl'];
+    }
+}
+// Only use it if we find it - otherwise fall back to default language
+if ($mig_dl && $mig_config['lang_lib'][$mig_dl]) {
+    $mig_language = $mig_dl;
+} else {
+    unset ($mig_dl);        // destroy it so it isn't used in URLs
 }
 
 // Grab appropriate language from library
@@ -135,12 +183,19 @@ while ($workCopy) {
 
     if ($protect[$workCopy]) {
 
-        // Try to get around the track_vars/register_globals problem
         if (! $PHP_AUTH_USER) {
-            $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+            if ($_SERVER['PHP_AUTH_USER']) {
+                $PHP_AUTH_USER = $_SERVER['PHP_AUTH_USER'];
+            } elseif ($HTTP_SERVER_VARS['PHP_AUTH_USER']) {
+                $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+            }
         }
         if (! $PHP_AUTH_PW) {
-            $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
+            if ($_SERVER['PHP_AUTH_PW']) {
+                $PHP_AUTH_PW = $_SERVER['PHP_AUTH_PW'];
+            } elseif ($HTTP_SERVER_VARS['PHP_AUTH_PW']) {
+                $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
+            }
         }
 
         // If there's not a username yet, fetch one by popping up a
@@ -207,10 +262,20 @@ if (! $markerLabel) {
     $markerLabel = 'th';
 }
 
-// (Try to) get around the track_vars vs. register_globals problem
-if (!$SERVER_NAME) {
-    $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
-    $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
+if (! $SERVER_NAME) {
+    if ($_SERVER['SERVER_NAME']) {
+        $SERVER_NAME = $_SERVER['SERVER_NAME'];
+    } elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
+        $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
+    }
+}
+
+if (! $PATH_INFO) {
+    if ($_SERVER['PATH_INFO']) {
+        $PATH_INFO = $_SERVER['PATH_INFO'];
+    } elseif ($HTTP_SERVER_VARS['PATH_INFO']) {
+        $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
+    }
 }
 
 // Is this a jump-tag URL?
@@ -223,6 +288,11 @@ if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
 if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
     header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
     exit;
+}
+
+// Override folder sort if one's not present
+if (! $folderSortType) {
+    $folderSortType = $sortType;
 }
 
 // Fetch mig.cf information
@@ -302,7 +372,8 @@ if ($pageType == 'folder') {
                                $viewFolderCount, $markerType,
                                $markerLabel, $ficons, $randomFolderThumbs,
                                $folderNameLength, $useThumbFile,
-                               $ignoreDotDirectories, $useRealRandThumbs);
+                               $ignoreDotDirectories, $useRealRandThumbs,
+                               $folderSortType);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,

@@ -378,6 +378,19 @@ $sortType = 'default';
 
 
 //
+// $folderSortType
+//      If present, overrides the value of $sortType when sorting folders.
+//      Has the same possible values as $sortType (see above).
+//
+// Defaults to 'default'.
+//
+// Example: $folderSortType = 'default';
+//
+
+$folderSortType = 'default';
+
+
+//
 // $imagePopup
 //     If $imagePopup is set to TRUE, any time a thumbnail is clicked on,
 //     a pop-up window will be opened.  See also $imagePopType,
@@ -592,6 +605,21 @@ $exifFormatString = '|%c|';
 //       ee      Estonian
 //       jp      Japanese (ISO-2022-JP)
 //       pliso   Polish ISO-8859-2
+//
+//     You can also define a language by using mig_dl in the URL.  Just
+//     add a mig_dl={lang} to the query string.  For example, if you have
+//     a default language of english (en) you can have a spanish translation
+//     by adding mig_dl=es to your URL as a parameter.  Examples:
+//
+//         http://mysite.com/gallery/index.php?currDir=./My_Stuff
+//
+//     Change to:
+//     
+//         http://mysite.com/gallery/index.php?currDir=./My_Stuff&mig_dl=es
+//
+//     In this way you can have multiple translations of your site by just
+//     having a different hyperlink for each one.  See the install document
+//     for more information.
 //
 //     If you want to translate Mig into another language, please contact
 //     me via email (dan@tangledhelix.com).

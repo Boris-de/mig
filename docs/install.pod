@@ -329,6 +329,28 @@ French, German, Norwegian, Portugese, Finnish, Romanian, Russian
 Slovak, Dutch, Polish (including an ISO-8859-2 version), Estonian and
 Japanese (ISO-2022-JP).
 
+It's also possible to use multiple languages with Mig, although you must
+pick one to be the default language - that is the one you define in
+F<config.php> in the C<$mig_language> variable.  To change the language,
+simply add the parameter C<mig_dl=LANG> to a URL as a parameter.  For
+example, take this URL:
+
+    http://mysite.com/gallery/index.php?currDir=./MyStuff
+
+Assuming the default is something else, you can tell Mig to display it in
+Spanish by doing this:
+
+    http://mysite.com/gallery/index.php?currDir=./MyStuff&mig_dl=es
+
+To do this at the root of your page (i.e. to have links to your site in
+different languages for example) you can do this:
+
+    http://mysite.com/gallery/index.php?mig_dl=no   (Norwegian)
+
+    http://mysite.com/gallery/index.php?mig_dl=fi   (Finnish)
+
+    http://mysite.com/gallery/index.php?mig_dl=ro   (Romanian)
+
 =item 6. Pop-up windows
 
 Pop-up windows can be used (see the C<$imagePopup> option in

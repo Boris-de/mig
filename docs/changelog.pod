@@ -2,6 +2,27 @@
 
 =head2 MIG Change Log
 
+=head2 Version 1.3.7 (Sat, 19 Oct 2002)
+
+Fixed some table code and default templates - Mig's default layout now
+passes the W3C HTML 4.01 Transitional validator.  The CSS code also passes
+the validator.
+
+Added C<mig_dl> parameter to URL parser - see the install document for more
+on this feature.  It lets you translate Mig into any language on the fly,
+regardless of the setting of C<$mig_language>.
+
+Added C<$folderSortType> to F<config.php>.  This option, if set, will
+override the value of C<$sortType> when sorting folders.
+
+Changed F<mkGallery.pl> to strip profiles from thumbnails by default.
+Profiles add to the file size but are not useful in thumbnails.  Testing on
+a few images I have around showed that old behavior would result in
+thumbnails averaging 16K (sometimes up to 32K) and now they are all 1.5K or
+2K or so.  Quite an improvement!  People who for some reason want to keep
+using profiles in their thumbnails can go back to the old behavior by
+calling F<mkGallery.pl> with the C<-K> flag.
+
 =head2 Version 1.3.6 (Mon, 30 Sep 2002)
 
 Updated Danish, Italian and German translations.

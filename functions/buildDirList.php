@@ -7,9 +7,10 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                         $markerType, $markerLabel, $ficons,
                         $randomFolderThumbs, $folderNameLength,
                         $useThumbFile, $ignoreDotDirectories,
-                        $useRealRandThumbs )
+                        $useRealRandThumbs, $sortType )
 {
     global $mig_config;
+    global $mig_dl;
 
     $oldCurrDir = $currDir;         // Stash this to build full path
 
@@ -21,6 +22,7 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
     $counts = array ();
     $countdir = array ();
     $samples = array ();
+    $filedates = array ();
 
     if (is_dir("$albumDir/$currDir")) {
         $dir = opendir("$albumDir/$currDir");   // Open directory handle
@@ -50,6 +52,12 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
         // If we got here, store it as a valid directory
         $directories[$file] = TRUE;
+
+        // And stash a timestamp
+        if (ereg("bydate.*", $sortType)) {
+            $timestamp = filemtime("$albumDir/$currDir/$file");
+            $filedates["$timestamp-$file"] = $file;
+        }
     }
 
     closedir($dir);
@@ -63,10 +71,25 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
     ksort($directories);    // sort so we can yank them in sorted order
     reset($directories);    // reset array pointer to beginning
 
-    // snatch each element from $directories and shove it on the end of
-    // $presorted
-    while (list($file,$junk) = each($directories)) {
-        $presorted[$file] = TRUE;
+    if ($sortType == 'bydate-ascend') {
+        ksort($filedates);
+        reset($filedates);
+
+    } elseif ($sortType == 'bydate-descend') {
+        krsort($filedates);
+        reset($filedates);
+    }
+
+    // Join the two sorted lists together into a single list
+    if (ereg("bydate.*", $sortType)) {
+        while (list($junk,$file) = each($filedates)) {
+            $presorted[$file] = TRUE;
+        }
+
+    } else {
+        while (list($file,$junk) = each($directories)) {
+            $presorted[$file] = TRUE;
+        }
     }
 
     // Make sure hidden items aren't displayed
@@ -123,7 +146,11 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
         // Build the link itself for re-use below
         $linkURL = '<a href="' . $baseURL
-                 . '?pageType=folder&currDir=' . $enc_file . '">';
+                 . '?pageType=folder&amp;currDir=' . $enc_file;
+        if ($mig_dl) {
+            $linkURL .= '&amp;mig_dl=' . $mig_dl;
+        }
+        $linkURL .= '">';
 
         // Reword $file so it doesn't allow wrapping of the label
         // (fixes odd formatting bug in MSIE).
@@ -227,7 +254,7 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
     }
 
     // If there aren't any subfolders to look at, then just say so.
-    if ($directoryList == '') {
+    if ($directoryList == '' || ereg('<tbody>$', $directoryList)) {
         return 'NULL';
     } elseif (!eregi('</tr>$', $directoryList)) {
         // Stick a </tr> on the end if it isn't there already, and close

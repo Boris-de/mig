@@ -12,6 +12,7 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
                          $commentFileShortComments, $showShortOnThumbPage )
 {
     global $mig_config;
+    global $mig_dl;
 
     $fname = getFileName($filename);
     $ext = getFileExtension($filename);
@@ -163,11 +164,15 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     $url .= $baseURL . '?currDir='
-         . $currDir . '&pageType=image&image=' . $newFname
+         . $currDir . '&amp;pageType=image&amp;image=' . $newFname
          . '.' . $ext;
 
     if ($startFrom) {
-        $url .= '&startFrom=' . $startFrom;
+        $url .= '&amp;startFrom=' . $startFrom;
+    }
+
+    if ($mig_dl) {
+        $url .= '&amp;mig_dl=' . $mig_dl;
     }
 
     if ($imagePopup) {

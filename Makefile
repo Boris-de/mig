@@ -14,10 +14,18 @@ SPOOLDIR= mig-$(ver)
 ARCHIVE= $(DISTDIR)/$(SPOOLDIR).tar.gz
 
 default:
-	@echo "make dist ver={version}        Builds distribution bundle"
-	@echo "make index ver={version}       Builds just index.php"
+	@echo "make dist ver={ver}            Builds distribution bundle"
+	@echo "make index ver={ver}           Builds just index.php"
 	@echo "make docpublish                Publishes docs to mig.sf.net"
-	@echo "make snoopy                    Pushes index2.php to snoopy"
+	@echo "make index2                    Pushes index2.php to snoopy"
+	@echo " "
+	@echo "make sf-net ver={ver}          Pushes files to mig.sf.net"
+	@echo "                               (including templates)"
+	@echo " "
+	@echo "==> These just install index.php"
+	@echo "make tangledhelix ver={ver}    Install on tangledhelix.com"
+	@echo "make gallery_th ver={ver}      Install on /gallery_th/"
+	@echo "make monkeysrus ver={ver}      Install on monkeysr.us"
 
 mig: dist
 
@@ -57,5 +65,24 @@ index:
 docpublish:
 	cd docs ; make publish
 
-snoopy: index
+index2: index
 	scp index.php snoopy.net:/www/tangledhelix.com/html/gallery/index2.php
+	@echo "URL: http://ingeni.us/gallery/index2.php"
+
+sf-net: index
+	scp index.php mig.sf.net:web/gallery
+	scp templates/*html templates/*.css mig.sf.net:web/gallery/templates
+	@echo "URL: http://mig.sf.net/gallery/"
+
+tangledhelix: index
+	scp index.php snoopy.net:/www/tangledhelix.com/html/gallery
+	@echo "URL: http://tangledhelix.com/gallery/"
+
+gallery_th: index
+	scp index.php snoopy.net:/www/tangledhelix.com/html/dev/gallery_th
+	@echo "URL: http://tangledhelix.com/dev/gallery_th/"
+
+monkeysrus: index
+	scp index.php snoopy.net:/www/monkeysr.us/html/gallery
+	@echo "URL: http://monkeysr.us/gallery/"
+

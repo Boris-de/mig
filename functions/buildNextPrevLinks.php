@@ -7,6 +7,7 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
                               $hidden, $presorted, $sortType, $startFrom )
 {
     global $mig_config;
+    global $mig_dl;
 
     // newCurrDir is currDir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -141,10 +142,13 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     // else show a real link
     } else {
         $pLink = '&nbsp;[&nbsp;<a href="' . $baseURL
-               . '?pageType=image&currDir=' . $currDir . '&image='
+               . '?pageType=image&amp;currDir=' . $currDir . '&amp;image='
                . $prev;
         if ($startFrom) {
-            $pLink .= '&startFrom=' . $startFrom;
+            $pLink .= '&amp;startFrom=' . $startFrom;
+        }
+        if ($mig_dl) {
+            $pLink .= '&amp;mig_dl=' . $mig_dl;
         }
         $pLink .= '">' . $mig_config['lang']['previmage']
                 . '</a>&nbsp;]&nbsp;';
@@ -158,10 +162,13 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     // else show a real link
     } else {
         $nLink = '&nbsp;[&nbsp;<a href="' . $baseURL
-               . '?pageType=image&currDir=' . $currDir . '&image='
+               . '?pageType=image&amp;currDir=' . $currDir . '&amp;image='
                . $next;
         if ($startFrom) {
-            $nLink .= '&startFrom=' . $startFrom;
+            $nLink .= '&amp;startFrom=' . $startFrom;
+        }
+        if ($mig_dl) {
+            $nLink .= '&amp;mig_dl=' . $mig_dl;
         }
         $nLink .= '">' . $mig_config['lang']['nextimage']
                 . '</a>&nbsp;]&nbsp;';

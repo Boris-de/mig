@@ -67,15 +67,16 @@ my $exifArgs = '-v';                        # Flags to pass jhead
 my $exifFile = 'exif.inf';                  # File to store exif data in
 
 # Defaults for boolean command-line flags
-my $allFlag         = 0;        # -a: Process all images
-my $exifFlag        = 0;        # -e: Process EXIF data
-my $overwriteFlag   = 0;        # -w: Over-write files instead of appending
-my $thumbFlag       = 0;        # -t: Create thumbnails
-my $commentsFlag    = 0;        # -c: Create comments
-my $interactFlag    = 0;        # -i: Interactive mode
-my $recurseFlag     = 0;        # -r: Recursion mode
-my $newOnlyFlag     = 0;        # -n: Process only new items
-my $thumbDirFlag    = 0;        # -d: Use thumbnail subdirectories
+my $allFlag             = 0;        # -a: Process all images
+my $exifFlag            = 0;        # -e: Process EXIF data
+my $overwriteFlag       = 0;        # -w: Overwrite files instead of append
+my $thumbFlag           = 0;        # -t: Create thumbnails
+my $commentsFlag        = 0;        # -c: Create comments
+my $interactFlag        = 0;        # -i: Interactive mode
+my $recurseFlag         = 0;        # -r: Recursion mode
+my $newOnlyFlag         = 0;        # -n: Process only new items
+my $thumbDirFlag        = 0;        # -d: Use thumbnail subdirectories
+my $keepProfilesFlag    = 0;        # -K: Keep profiles intact
 
 # Defaults for command-line flags which take arguments
 my $defaultSize     = 100;          # -s: Thumbnail size
@@ -99,7 +100,7 @@ my $globalConfig = $mydir . '/../config.php';       # Global config file
 
 # Fetch command line options
 my %opt = ();
-getopts('acdD:eE:f:hiM:m:nq:rs:tw', \%opt);
+getopts('acdD:eE:f:hiKM:m:nq:rs:tw', \%opt);
 
 # Set new config file if one was specified.
 $globalConfig = $opt{'f'} if $opt{'f'};
@@ -126,15 +127,16 @@ my %FILE            = ();
 my %EXT             = ();
 
 # Set appropriate flag variables
-$allFlag        = 1 if $opt{'a'};   # set "process all images" flag
-$commentsFlag   = 1 if $opt{'c'};   # set "process comments" flag
-$exifFlag       = 1 if $opt{'e'};   # set "process EXIF info" flag
-$thumbFlag      = 1 if $opt{'t'};   # set "thumbnails" flag
-$overwriteFlag  = 1 if $opt{'w'};   # set "overwrite" flag
-$interactFlag   = 1 if $opt{'i'};   # set "interactive" flag
-$recurseFlag    = 1 if $opt{'r'};   # set "recursion" flag
-$newOnlyFlag    = 1 if $opt{'n'};   # set "new only" flag
-$thumbDirFlag   = 1 if $opt{'d'};   # set "use thumb subdir" flag
+$allFlag            = 1 if $opt{'a'};   # set "process all images" flag
+$commentsFlag       = 1 if $opt{'c'};   # set "process comments" flag
+$exifFlag           = 1 if $opt{'e'};   # set "process EXIF info" flag
+$thumbFlag          = 1 if $opt{'t'};   # set "thumbnails" flag
+$overwriteFlag      = 1 if $opt{'w'};   # set "overwrite" flag
+$interactFlag       = 1 if $opt{'i'};   # set "interactive" flag
+$recurseFlag        = 1 if $opt{'r'};   # set "recursion" flag
+$newOnlyFlag        = 1 if $opt{'n'};   # set "new only" flag
+$thumbDirFlag       = 1 if $opt{'d'};   # set "use thumb subdir" flag
+$keepProfilesFlag   = 1 if $opt{'K'};   # set "keep profiles" flag
 
 # For "convert"
 $size       = $opt{'s'};    # thumbnail size in pixels
@@ -354,8 +356,11 @@ foreach (@processDirs) {
         # Make a thumbnail, if -t was invoked
         if ($thumbFlag) {
 
-            $cmd = "convert -geometry $SIZE -quality $quality \"$orig_file\"";
-            $cmd .= " \"$new_file\"";
+            $cmd = "convert -geometry $SIZE -quality $quality";
+            unless ($keepProfilesFlag) {
+                $cmd .= ' +profile "*"';
+            }
+            $cmd .= " \"$orig_file\" \"$new_file\"";
 
             # 1) -n wasn't used.
             if (not $newOnlyFlag) {
@@ -495,7 +500,11 @@ sub helpMessage {
     print "      -d : Use thumbnail subdirectories (instead of using _th, etc)\n";
     print "      -D : Name of thumbnail subdirectory to use (default is \"thumbs\" or\n";
     print "           whatever is in your config.php file).\n";
-    print "      -E : File extension to use for thumbnails.\n\n";
+    print "      -E : File extension to use for thumbnails.\n";
+    print "      -K : Keep profiles in thumbnails.  Normally this should\n";
+    print "           be off because profiles in thumbnails are not useful\n";
+    print "           but add a lot to the file size.\n";
+    print "\n";
     print " * If creating thumbnails, \"convert\" must be in your \$PATH.\n";
     print " * This program supports JPEG, PNG and GIF formats.\n";
     print " * The \"-e\" feature only supports JPEG files.\n";

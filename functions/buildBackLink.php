@@ -6,6 +6,7 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
 {
 
     global $mig_config;
+    global $mig_dl;
 
     // $type notes whether we want a "back" link or "up one level" link.
     if ($type == 'back' or $noThumbs) {
@@ -42,7 +43,10 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     $retval = '&nbsp;[&nbsp;<a href="'
             . $baseURL . '?currDir=' . $newCurrDir;
     if ($startFrom) {
-        $retval .= '&startFrom=' . $startFrom;
+        $retval .= '&amp;startFrom=' . $startFrom;
+    }
+    if ($mig_dl) {
+        $retval .= '&amp;mig_dl=' . $mig_dl;
     }
     $retval .= '">' . $label . '</a>&nbsp;]&nbsp;';
 
