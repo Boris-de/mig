@@ -23,6 +23,9 @@ It can do all of them at the same time, too.  It can accept a list of
 images to work with, or simply process all images in the current directory.
 It can also recurse directories and do an entire album.
 
+F<mkGallery.pl> ignores audio and video content.  It only cares about
+images.
+
 (Note that F<mkGallery.pl> requires Perl.  Perl is not required for Mig
 itself.  It is required only to use the F<mkGallery.pl> utility.
 To generate thumbnails, the F<convert> utility from

@@ -56,7 +56,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                                  // then don't waste time on this check
 
             if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
-                && validFileType($file)) {
+                && getFileType($file)) {
                     continue;
             }
 
@@ -69,7 +69,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         // We'll look at this one only if it's a file
         // and it matches our list of approved extensions
         if (is_file("$albumDir/$currDir/$file")
-                        && ! $presorted[$file] && validFileType($file))
+                        && ! $presorted[$file] && getFileType($file))
         {
             // Increase thumb counter
             ++$thumbsInFolder;
@@ -216,7 +216,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         if ($thumbCounter >= $firstThumb && $row <= $maxRows) {
 
             // Only look at valid image types
-            if (validFileType($file)) {
+            if (getFileType($file)) {
 
                 // If this is a new row, start a new <TR>
                 if ($col == 0) {

@@ -18,7 +18,7 @@ function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
                                  // then don't waste time on this check
 
             if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$",$file)
-                && validFileType($file)) {
+                && getFileType($file)) {
                     continue;
             }
             if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
@@ -28,7 +28,7 @@ function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
 
         // We'll look at this one only if it's a file and it matches our list
         // of approved extensions
-        if (is_file("$folder/$file") && validFileType($file)) {
+        if (is_file("$folder/$file") && getFileType($file)) {
                 ++$count;
         }
     }

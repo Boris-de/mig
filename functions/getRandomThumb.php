@@ -33,7 +33,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                     }
 
                     // And use the first valid match found
-                    if (validFileType($sample)) {
+                    if (getFileType($sample)) {
                         $mySample = $albumURLroot . '/'
                                   . migURLencode($currDir)
                                   . '/' . migURLencode($file)
@@ -131,13 +131,13 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
         while ($sample = readdir($readSample)) {
             if ($markerType == 'prefix') {
                 if (ereg("^$markerLabel\_", $sample)
-                    && validFileType($sample))
+                    && getFileType($sample))
                 {
                     $mySample = $sample;
                 }
             } elseif ($markerType == 'suffix') {
                 if (ereg("_$markerLabel\.[^.]+$", $sample)
-                    && validFileType($sample))
+                    && getFileType($sample))
                 {
                     $mySample = $sample;
                 }

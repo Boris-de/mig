@@ -34,12 +34,12 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
         }
 
         if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
-            && validFileType($file)) {
+            && getFileType($file)) {
                 continue;
         }
 
         // Only look at valid image formats
-        if (! validFileType($file)) {
+        if (! getFileType($file)) {
             continue; 
         }
 

@@ -88,8 +88,8 @@ under the new Mig directory.
 
 =item 5.
 
-Copy the files F<image.gif> and F<no_thumb.gif> from the F<images>
-subdirectory to the new F<images> subdirectory.
+Copy the images from the F<images> subdirectory to your new F<images>
+subdirectory.
 
 =item 6.
 
@@ -130,10 +130,18 @@ The above example ends up being these eight gallery folders:
     The Zoo : Lions
     Cars
 
-Mig supports JPEG, GIF and PNG files.  So files with any of these
-extensions will be recognized:
+Mig supports JPEG, GIF and PNG images.  So files with any of these
+extensions will be recognized as images:
 
     .gif .png .jpg .jpe .jpeg
+
+Files with these extensions are recognized as audio:
+
+    .mp3 .wav .ra .ram
+
+File with these extensions are recognized as video:
+
+    .mov .avi .mpg .mpeg .wmv .mp4
 
 =item 8.
 
@@ -223,6 +231,13 @@ F<utilities> subdirectory of your Mig installation with F<mkGallery.pl>.
 If you already have F<jhead>, check the F<changelog> document to see if
 it's been upgraded since you last installed it.  You may want to install
 a fresh version over your old copy.
+
+=item 7.
+
+If you are upgrading to 1.4.0 from an earlier version, you should copy the
+F<movie.gif> and F<music.gif> icons from the F<images> folder to your Mig
+installation's F<images> folder, if you plan to have any audio or video
+content on your site.
 
 =back
 
