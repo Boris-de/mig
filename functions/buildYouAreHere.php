@@ -15,6 +15,7 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
 
         // $label is the "last" thing in the path. Strip up to that
         $label = ereg_replace('^.*/', '', $workingCopy);
+
         // Render underscores as spaces and turn spaces into &nbsp;
         $label = str_replace('_', '&nbsp;', $label);
         $label = str_replace(' ', '&nbsp;', $label);
@@ -23,9 +24,9 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
         $encodedCopy = migURLencode($workingCopy);
 
         if ($image == '' && $workingCopy == $currDir) {
-            $url = '&nbsp;:&nbsp;<b>' . $label . '</b>';
+            $url = '&nbsp;&gt;&nbsp;' . $label;
         } else {
-            $url = '&nbsp;:&nbsp;<a href="' . $baseURL . '?currDir='
+            $url = '&nbsp;&gt;&nbsp;<a href="' . $baseURL . '?currDir='
                  . $encodedCopy . '">' . $label . '</a>';
         }
 
@@ -39,7 +40,7 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
 
     // If we're down to '.' as our currDir then this is 'Main'
     if ($currDir == '.') {
-        $url = '<b>' . $mig_config['lang']['main'] . '</b>';
+        $url = $mig_config['lang']['main'];
         $x = $hereString;
         $hereString = $url . $x;
 
@@ -53,11 +54,9 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
 
     // If there's an image, tack it onto the end of the hereString
     if ($image != '') {
-        $hereString .= '&nbsp;:&nbsp;<b>' . $image . '</b>';
+        $hereString .= '&nbsp;&gt;&nbsp;' . $image;
     }
 
-    $x = $hereString;
-    $hereString = '<font size="-1">' . $x . '</font>';
     return $hereString;
 
 }   // -- End of buildYouAreHere()

@@ -1,8 +1,8 @@
 
 // getNumberOfDirs() - Counts subdirectories in a given folder
 
-function getNumberOfDirs ( $folder, $useThumbSubdir, $markerType,
-                           $markerLabel )
+function getNumberOfDirs ( $folder, $useThumbSubdir, $thumbSubdir,
+                           $markerType, $markerLabel )
 {
     if (is_dir($folder)) {
         $dir = opendir($folder);    // Open directory handle
@@ -11,11 +11,17 @@ function getNumberOfDirs ( $folder, $useThumbSubdir, $markerType,
     }
 
     $count = 0;
+
     while ($file = readdir($dir)) {
-        if ($file != '.' && $file != '..' && $file != 'thumbs'
-            && is_dir("$folder/$file"))
+        // Must be a directory, and can't be . or ..
+        if ($file != '.' && $file != '..' && is_dir("$folder/$file"))
         {
-            ++$count;
+            // Ignore thumbnail subdirectories if in use
+            if ( (! $useThumbSubdir) ||
+                 ($useThumbSubdir && $file != $thumbSubdir) )
+            {
+                ++$count;
+            }
         }
     }
     

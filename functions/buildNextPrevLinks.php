@@ -102,11 +102,11 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
         }
 
         $fList[$i] = $file;     // Stash filename in the array
-        $i++;                   // increment the counter, of course.
+        ++$i;                   // increment the counter, of course.
     } 
     reset($fList);
 
-    $i--;                       // Get rid of the last increment...
+    --$i;                       // Get rid of the last increment...
 
     // Next is one more than $ThisImagePos.  Test if that has a value
     // and if it does, consider it "next".
@@ -134,44 +134,43 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
 
     // If there is no previous image, show a greyed-out link
     if ($prev == 'NA') {
-        $pLink = '<font size="-1">[&nbsp;<font color="#999999">'
+        $pLink = '&nbsp;[&nbsp;<font color="#999999">'
                . $mig_config['lang']['previmage']
-               . '</font>&nbsp;]</font>';
+               . '</font>&nbsp;]&nbsp;';
 
     // else show a real link
     } else {
-        $pLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
+        $pLink = '&nbsp;[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
                . $prev;
         if ($startFrom) {
             $pLink .= '&startFrom=' . $startFrom;
         }
         $pLink .= '">' . $mig_config['lang']['previmage']
-                . '</a>&nbsp;]</font>';
+                . '</a>&nbsp;]&nbsp;';
     }
 
     // If there is no next image, show a greyed-out link
     if ($next == 'NA') {
-        $nLink = '<font size="-1">[&nbsp;<font color="#999999">'
+        $nLink = '&nbsp;[&nbsp;<font color="#999999">'
                . $mig_config['lang']['nextimage']
-               . '</font>&nbsp;]</font>';
+               . '</font>&nbsp;]&nbsp;';
     // else show a real link
     } else {
-        $nLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
+        $nLink = '&nbsp;[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
                . $next;
         if ($startFrom) {
             $nLink .= '&startFrom=' . $startFrom;
         }
         $nLink .= '">' . $mig_config['lang']['nextimage']
-                . '</a>&nbsp;]</font>';
+                . '</a>&nbsp;]&nbsp;';
     }
 
     // Current position in the list
     $currPos = '#' . $ThisImagePos . '&nbsp;of&nbsp;' . $i;
 
-    $retval = array( $nLink, $pLink, $currPos );
-    return $retval;
+    return array( $nLink, $pLink, $currPos );
 
 }   // -- End of buildNextPrevLinks()
 

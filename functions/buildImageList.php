@@ -2,14 +2,15 @@
 // buildImageList() - creates a list of images available
 
 function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
-                          $albumURLroot, $maxColumns, $maxRows,
-                          $markerType, $markerLabel,
-                          $directoryList, $suppressImageInfo, $useThumbSubdir,
-                          $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
-                          $sortType, $hidden, $presorted, $description,
-                          $imagePopup, $imagePopType, $imagePopLocationBar,
+                          $albumURLroot, $maxColumns, $maxRows, $markerType,
+                          $markerLabel, $directoryList, $suppressImageInfo,
+                          $useThumbSubdir, $thumbSubdir, $noThumbs, $thumbExt,
+                          $suppressAltTags, $sortType, $hidden, $presorted,
+                          $description, $short_desc, $imagePopup,
+                          $imagePopType, $imagePopLocationBar,
                           $imagePopMenuBar, $imagePopToolBar,
-                          $commentFilePerImage, $startFrom )
+                          $commentFilePerImage, $startFrom,
+                          $commentFileShortComments, $showShortOnThumbPage )
 {
     global $mig_config;
 
@@ -20,19 +21,32 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         exit;
     }
 
+    // URL-encoded version of currDir
+    $urlCurrDir = migURLencode($currDir);
+
     $row = 0;               // Counters for the table formatting
     $col = 0;
 
-    $maxColumns--;          // Tricks maxColumns into working since it
+    --$maxColumns;          // Tricks maxColumns into working since it
                             // really starts at 0, not 1.
 
-    $maxRows--;             // same for rows
+    --$maxRows;             // same for rows
 
     // prototype the arrays
     $imagefiles     = array ();
     $filedates      = array ();
 
     $thumbsInFolder = 0;
+
+    // Count presorted images for pagination purposes
+    if ($presorted) {
+        while (list($x,$y) = each($presorted)) {
+            ++$thumbsInFolder;
+        }
+    }
+
+    // Reset array pointer
+    reset($presorted);
 
     while ($file = readdir($dir)) {
         // Skip over thumbnails
@@ -97,6 +111,12 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
     reset($presorted);          // reset array pointer
 
+    // If there are images, start the table
+    if ($thumbsInFolder) {
+        $imageList .= "\n  " . '<table summary="Image Links" border="0"'
+                    . ' cellspacing="0"><tbody>';
+    }
+
     // Set up pagination environment
     $max_col = $maxColumns + 1;
     $max_row = $maxRows + 1;
@@ -134,28 +154,28 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         // %e is end image
         $phrase = str_replace('%e', $end_img, $phrase);
 
-        $imageList .= '<tr><td colspan=' . $max_col . ' align="center">'
-                    . $phrase;
+        $imageList .= "\n   " . '<tr>' . "\n    " . '<td colspan="'
+                    . $max_col . '" align="center"><small>' . $phrase;
 
         if ($startFrom) {
             $prevPage = $startFrom - 1;
 
             $imageList .= '<a href="' . $baseURL
-                        . '?pageType=folder&currDir=' . $currDir
+                        . '?pageType=folder&currDir=' . $urlCurrDir
                         . '&startFrom=' . $prevPage
                         . '">&laquo;</A>&nbsp;&nbsp;';
         }
 
         for ($i = 1; $i <= $pages; ++$i) {
             if (floor(($i - 11) / 20) == (($i - 11) / 20)) {
-                $imageList .= '<br>';
+                $imageList .= '<br />';
             }
             if ($i == ($startFrom + 1)) {
                 $imageList .= '<b>' . $i . '</b>&nbsp;&nbsp;';
             } else {
                 $ib = $i - 1;
                 $imageList .= '<a href="' . $baseURL
-                            . '?pageType=folder&currDir=' . $currDir
+                            . '?pageType=folder&currDir=' . $urlCurrDir
                             . '&startFrom=' . $ib . '">'
                             . $i . '</a>&nbsp;&nbsp;';
             }
@@ -164,11 +184,11 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         if (($startFrom + 1) < $pages) {
             $nextPage = $startFrom + 1;
             $imageList .= '<a href="' . $baseURL
-                        . '?pageType=folder&currDir=' . $currDir
+                        . '?pageType=folder&currDir=' . $urlCurrDir
                         . '&startFrom=' . $nextPage . '">&raquo;</A>';
         }
 
-        $imageList .= '</td></tr>';
+        $imageList .= "</small></td>\n   </tr>";
     }
 
     $thumbCounter = -1;
@@ -184,24 +204,24 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
                 // If this is a new row, start a new <TR>
                 if ($col == 0) {
-                    $imageList .= '<tr>';
+                    $imageList .= "\n   <tr>";
                 }
 
                 $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
-                                     $albumURLroot, $file,
-                                     $suppressImageInfo, $markerType,
-                                     $markerLabel, $useThumbSubdir,
-                                     $thumbSubdir, $noThumbs, $thumbExt,
-                                     $suppressAltTags, $description,
-                                     $imagePopup, $imagePopType,
+                                     $albumURLroot, $file, $suppressImageInfo,
+                                     $markerType, $markerLabel,
+                                     $useThumbSubdir, $thumbSubdir, $noThumbs,
+                                     $thumbExt, $suppressAltTags, $description,
+                                     $short_desc, $imagePopup, $imagePopType,
                                      $imagePopLocationBar, $imagePopMenuBar,
                                      $imagePopToolBar, $commentFilePerImage,
-                                     $startFrom);
+                                     $startFrom, $commentFileShortComments,
+                                     $showShortOnThumbPage);
                 $imageList .= $img;
 
                 // Keep track of what row and column we are on
                 if ($col == $maxColumns) {
-                    $imageList .= '</tr>';
+                    $imageList .= "\n   </tr>";
                     ++$row;
                     $col = 0;
                 } else {
@@ -217,8 +237,12 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
     if ($imageList == '') {
         $imageList = 'NULL';
     } elseif (!eregi('</tr>$', $imageList)) {
-        // Stick a </tr> on the end if it isn't there already.
-        $imageList .= '</tr>';
+        // Stick a </tr> on the end if it isn't there already and close
+        // the table
+        $imageList .= "\n  </tr>\n  </tbody></table>";
+    } else {
+        // Close the table.
+        $imageList .= "\n  </tbody></table>";
     }
 
     return $imageList;

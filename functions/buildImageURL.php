@@ -3,12 +3,13 @@
 
 function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
                          $albumURLroot, $filename, $suppressImageInfo,
-                         $markerType, $markerLabel,
-                         $useThumbSubdir, $thumbSubdir, $noThumbs, $thumbExt,
-                         $suppressAltTags, $description, $imagePopup,
+                         $markerType, $markerLabel, $useThumbSubdir,
+                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
+                         $description, $short_desc, $imagePopup,
                          $imagePopType, $imagePopLocationBar,
                          $imagePopMenuBar, $imagePopToolBar,
-                         $commentFilePerImage, $startFrom )
+                         $commentFilePerImage, $startFrom,
+                         $commentFileShortComments, $showShortOnThumbPage )
 {
     global $mig_config;
 
@@ -100,13 +101,21 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
 
     // Get description, if any
     if ($commentFilePerImage) {
-        $alt_desc = getImageDescFromFile("$fname.$ext", $albumDir, $currDir);
+        list($alt_desc, $x) = getImageDescFromFile("$fname.$ext", $albumDir,
+                                        $currDir, $commentFileShortComments);
         // Get a conventional comment if there isn't one here.
         if (! $alt_desc) {
-            $alt_desc = getImageDescription("$fname.$ext", $description);
+            list($alt_desc, $desc) = getImageDescription("$fname.$ext",
+                                                $description, $short_desc);
         }
     } else {
-        $alt_desc = getImageDescription("$fname.$ext", $description);
+        list($alt_desc, $desc) = getImageDescription("$fname.$ext",
+                                                $description, $short_desc);
+    }
+
+    // If there's a full description but no alt, use the full as alt.
+    if ($desc && ! $alt_desc) {
+        $alt_desc = $desc;
     }
 
     $alt_desc = strip_tags($alt_desc);
@@ -138,7 +147,7 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // beginning of the table cell
-    $url = '<td class="image"><a';
+    $url = "\n    " . '<td align="center" class="image"><a';
 
     if (!$suppressAltTags) {
         $url .= ' title="' . $alt_desc . '"';
@@ -208,13 +217,19 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
 
     // If $suppressImageInfo is FALSE, show the image info
     if (!$suppressImageInfo) {
-        $url .= '<br><font size="-1">';
+        $url .= '<br />';
         if (!$noThumbs) {
-            $url .= $fname . '.' . $ext . '<br>';
+            $url .= $fname . '.' . $ext . '<br />';
         }
 
         $url .= '(' . $imageWidth . 'x' . $imageHeight . ', '
-             . $imageSize . ')</font>';
+             . $imageSize . ')';
+    }
+
+    // If $showShortOnThumbPage is TRUE, show short comment
+    if ($showShortOnThumbPage) {
+        $url .= '<br />';
+        $url .= $alt_desc;
     }
 
     $url .= '</td>';        // Close table cell

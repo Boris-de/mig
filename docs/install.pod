@@ -186,12 +186,22 @@ present, but it's sloppy to leave them laying around.
 
 =item 4.
 
+In version 1.3.5 a lot of changes to the layout system were made.  As a
+result, anyone upgrading to 1.3.5 or later (from 1.3.4 or earlier) will
+want to use the new template files provided with the Mig distribution.  If
+you have customized your template files, don't fret - it should be easy for
+you to merge your customizations into the new template files (they're not
+very different from the old template files).  Make sure especially to use
+the new CSS file.
+
+=item 5.
+
 If you wish to use F<mkGallery.pl>, copy mkGallery.pl from the F<utilities>
 directory to the F<utilities> subdirectory of your Mig installation.  You
 may need to modify the first line if Perl is somewhere other than
 F</usr/bin/perl> on your system.
 
-=item 5.
+=item 6.
 
 If you wish to use F<jhead> (note that using the EXIF functions of
 F<mkGallery.pl> implies using F<jhead>), you may wish to compile a new copy
@@ -221,7 +231,7 @@ album would cause problems, so avoid using commas.
 If you want to see an example gallery (that is, install one on your system
 and examine the files that it contains), you can download one from the Mig
 project page at http://sf.net/projects/mig/ (look in the
-E<quot>mig-extrasE<quot> section in the project files listing).  After
+E<quot>ExtrasE<quot> section in the project files listing).  After
 downloading the file, unpack it in the albums sub directory and it should
 appear as E<quot>Mig Example GalleryE<quot>.
 
@@ -267,6 +277,10 @@ but nothing in particular to say about the car.  Add this to F<mig.cf>:
 The description can be multiple lines, as long as it's enclosed inside the
 E<lt>commentE<gt>...E<lt>/commentE<gt> structure.  Tags such as
 E<lt>commentE<gt> must be at the start of a new line.
+
+(If you want to use shorter comments for thumbnail hover-overs and leave
+your longer comments only on the image page itself, see the F<mig_cf>
+document and read about E<lt>ShortE<gt> tags).
 
 =item 3. EXIF data
 
@@ -336,6 +350,12 @@ icon.  So the only time the generic icon will be used is in a situation
 where there is a folder that contains no thumbnails, whose subfolders and
 their subfolders, etc, contain no thumbnails.  In other words, only a
 useless folder branch would result in the generic folder icon being shown.
+
+=item 9. Using a specific thumbnail instead of a folder icon
+
+If you want to use thumbnails as icons, but would rather pick your own
+instead of letting Mig pick for you, check out the C<UseThumb> option in
+F<mig.cf> files.  See the F<mig_cf> document for more information.
 
 =back
 

@@ -55,9 +55,7 @@ function parseExifDate ( $stamp )
             break;
     }
 
-    $retval = array ( $year, $month, $day, $time );
-
-    return ($retval);
+    return array ( $year, $month, $day, $time );
 
 }   // -- End of parseExifDate()
 

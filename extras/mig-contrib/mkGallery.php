@@ -10,26 +10,28 @@
 // before using it on a real album.
 //
 
-// URL to use to call myself again
 echo '<pre>';
+
+// URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
     $baseURL = $PHP_SELF;
-    } else {            // otherwise, must be using track_vars
-        $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
-    }
-    // base directory of installation
-    if ($PATH_TRANSLATED) {   // if using register_glolals
-        $baseDir = dirname($PATH_TRANSLATED);
-    } else {                  // otherwise, must be using track_vars
-        $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
-    }
+} else {            // otherwise, must be using track_vars
+    $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
+}
 
-    $albumDir = $baseDir . '/albums';
-    $mkGallery = $baseDir . '/util/mkGallery -rant';
+// base directory of installation
+if ($PATH_TRANSLATED) {   // if using register_glolals
+    $baseDir = dirname($PATH_TRANSLATED);
+} else {                  // otherwise, must be using track_vars
+    $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
+}
 
-    chdir("$albumDir");
-    passthru("$mkGallery");
+$albumDir = $baseDir . '/albums';
+$mkGallery = $baseDir . '/util/mkGallery -rant';
 
-    echo "</pre><font color=\"#dddddd\">Done</font>";
+chdir("$albumDir");
+passthru("$mkGallery");
+
+echo "</pre><font color=\"#dddddd\">Done</font>";
 
 ?>

@@ -1,34 +1,48 @@
 <style type="text/css">
 <!--
-    BODY {
-        color: #000000;
-        background: #FFFFFF
+    /* Default typeface */
+    A, B, P, TABLE, SMALL, BODY, TD, OL, UL, MENU, BLOCKQUOTE, DIV {
+        font-family: Arial, Helvetica, sans-serif;
     }
-    A:link {
-        color: #0000FF;
-        text-decoration: underline
+    PRE, TT, INPUT, TEXTAREA {
+        font-family: Courier, fixed;
     }
-    A:visited {
-        color: #0000FF;
-        text-decoration: underline
+    
+    /* Link appearance */
+    A:link, A:visited { text-decoration: none }
+    A:active, A:hover { text-decoration: underline }
+    A:hover { color: blue }
+
+    /* Folder table (text) */
+    TD.foldertext {
+        color: #000000;        padding-top: 0px;
+        background: #f0f0f0;   padding-bottom: 1px;
+        font-size: .75em;      padding-left: 3px;
+        text-align: left;      padding-right: 8px;
     }
-    A:active {
-        color: #FFFF00;
-        text-decoration: underline
+
+    /* Folder table (thumbnails) */
+    TD.folderthumbs {
+        color: #000000;        padding-top: 2px;
+        background: #f0f0f0;   padding-bottom: 2px;
+        font-size: .7em;       padding-left: 4px;
+        text-align: center;    padding-right: 8px;
     }
-    TD.folder {
-        background: #CCCCCC;
-        text-align: left;
-    }
+
+    /* Image table */
     TD.image {
-        color: #000000;
-        background: #CCCCFF;
-        text-align: center;
+        color: #000000;          padding-top: 2px;
+        background: #f0f0f0;     padding-bottom: 2px;
+        font-size: .8em;         padding-left: 4px;
+        text-align: center;      padding-right: 8px;
     }
+
+    /* Description table */
     TD.desc {
-        color: #000000;
-        background: #CCCCFF;
-        text-align: center;
+        color: #333333;          padding-top: 4px;
+        background: #f0f0f0;     padding-bottom: 3px;
+        font-size: .9em;         padding-left: 4px;
+        text-align: center;      padding-right: 6px;
     }
 -->
 </style>

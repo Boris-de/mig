@@ -237,6 +237,21 @@ $markerLabel = 'th';
 
 
 //
+// $suppressAltTags
+//     Boolean to use ALT tags or not in thumbnail lists.
+//     If you don't want image descriptions in ALT tags in thumbnail
+//     lists, set to TRUE.
+//
+// Defaults to FALSE.
+//
+// Example:
+//     $suppressAltTags = FALSE;
+//
+
+$suppressAltTags = FALSE;
+
+
+//
 // $suppressImageInfo
 //     Boolean to turn image information in thumbnail pages on or off.
 //     To suppress information below each thumbnail such as image size,
@@ -252,18 +267,19 @@ $suppressImageInfo = FALSE;
 
 
 //
-// $suppressAltTags
-//     Boolean to use ALT tags or not in thumbnail lists.
-//     If you don't want image descriptions in ALT tags in thumbnail
-//     lists, set to TRUE.
+// $showShortOnThumbPage
+//      If set to TRUE, shows any short comment on the thumbnail page.
+//      Note that enabling this can lead to /very/ ugly formatting
+//      currently due to the way tables are laid out, if you forget
+//      to set a short comment on an image, but a long one exists.
 //
 // Defaults to FALSE.
 //
 // Example:
-//     $suppressAltTags = FALSE;
+//      $showShortOnThumbPage = FALSE
 //
 
-$suppressAltTags = FALSE;
+$showShortOnThumbPage = FALSE;
 
 
 //
@@ -421,6 +437,27 @@ $imagePopToolBar = FALSE;
 //
 
 $commentFilePerImage = FALSE;
+
+
+//
+// $commentFileShortComments
+//      If $commentFileShortComments is set to TRUE, and $commentFilePerImage
+//      is being used, the first line of a comment file will be used as a
+//      short comment (for ALT tags).  The remaining lines will be used as
+//      the normal ("long") comment.  If a comment file contains only one
+//      line, this line is used for both comments.
+//
+//      To disable short comments and use the entire file for both, set
+//      $commentFileShortComments to FALSE.  This option is ignored if
+//      $commentFilePerImage is FALSE.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $commentFileShortComments = FALSE;
+//
+
+$commentFileShortComments = FALSE;
 
 
 //
@@ -619,20 +656,20 @@ $phpWebThingsRoot = '';
 // these unless you have to, and know you have to.  If you don't
 // need to use them and do anyway, you'll probably break Mig.
 //
-// $convertPathFlag
+// $pathConvertFlag
 //     This is a boolean to determine if conversion is needed.  Only
 //     set this to TRUE if you know you need to do so.
 //
 // Defaults to FALSE.
 //
 // Example:
-//     $convertPathFlag = FALSE;
+//     $pathConvertFlag = FALSE;
 //
 
-$convertPathFlag = FALSE;
+$pathConvertFlag = FALSE;
 
 //
-// $convertPathRegex
+// $pathConvertRegex
 //     This is a regular expression string, used to tell Mig how to
 //     modify your include path.  If you don't know regular expressions,
 //     here's probably all you need to know:
@@ -648,9 +685,9 @@ $convertPathFlag = FALSE;
 //         /mig/myfile.php
 //
 //     You could define:
-//         $convertPathFlag = TRUE;
-//         $convertPathRegex = '^.*/www/';
-//         $convertPathTarget = '/';
+//         $pathConvertFlag = TRUE;
+//         $pathConvertRegex = '^.*/www/';
+//         $pathConvertTarget = '/';
 //
 //     So the regex would match this:  /u25/vhost/www12345/www/
 //     and replace it with a single slash... resulting in:
@@ -659,13 +696,13 @@ $convertPathFlag = FALSE;
 // Defaults to an empty string.
 //
 // Example:
-//     $convertPathRegex = '^.*/www/';
+//     $pathConvertRegex = '^.*/www/';
 //
 
-$convertPathRegex = '';
+$pathConvertRegex = '';
 
 //
-// $convertPathTarget
+// $pathConvertTarget
 //     This is the target string, which replaces the portion matched by
 //     the regex.  Usually this should be '/', but it can be changed.
 //     See the notes for $convertPathRegex (above) for more details.
@@ -673,10 +710,10 @@ $convertPathRegex = '';
 // Defaults to an empty string.
 //
 // Example:
-//     $convertPathTarget = '/';
+//     $pathConvertTarget = '/';
 //
 
-$convertPathTarget = '';
+$pathConvertTarget = '';
 
 
 ?>

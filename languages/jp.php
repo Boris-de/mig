@@ -19,7 +19,7 @@ $mig_config['lang_lib']['jp'] = array (
     //     %e :    Last image shown this page
     'total_images'  => '表示中&nbsp;%s&nbsp;枚目&nbsp;'
                      . '-&nbsp;%e&nbsp;枚目&nbsp;/&nbsp;'
-                     . '全画像数&nbsp;%t&nbsp;枚<br>',
+                     . '全画像数&nbsp;%t&nbsp;枚<br />',
     'up_one'        => '一つ上に行く',
     'month'         => array ( '01' => '1&nbsp;月',
                                '02' => '2&nbsp;月',

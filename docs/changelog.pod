@@ -4,6 +4,41 @@ $Id$
 
 =head2 MIG Change Log
 
+=head2 Version 1.3.5 (NOT YET RELEASED)
+
+Fixed bug in F<config.php> - the C<$pathConvert*> variables were
+incorrectly named as C<$convertPath*> - Doh!
+
+Fixed bug in C<FolderIcon> directive.  It had broken at some point and was
+no longer properly pointing to the F<images> directory for icon files.
+
+Fixed a bug where pre-sorted image lists would break pagination.
+
+Added C<UseThumb> keyword to F<mig.cf> parser.
+
+Applied a series of patches provided by H. Fox which are aimed at improving
+HTML/XHTML compliance, and moving hard-coded HTML elements out of the PHP
+code and into either CSS or template files.  Some table code cleanup was
+done as well.  The three frame functions are gone and replaced by the
+C<buildTable()> function.   Almost all E<lt>fontE<gt> tags have been
+removed from the PHP code and replaced with other mechanisms in the
+templates or CSS.  The layout is much cleaner now (IMO), however, anyone
+upgrading from 1.3.4 or earlier and using the old templates, or their own
+custom templates based on pre-1.3.5 template files, will not like the
+changes.  I suggest everyone use the new templates, or re-do their
+customizations based on the new templates and CSS.
+
+Applied updated French translation from Yannick MassE<eacute>.
+
+Added option C<$commentFileShortComments> to F<config.php>.
+
+Added E<lt>ShortE<gt> tags to F<mig.cf> parser.
+
+Added C<$showShortOnThumbPage> to F<config.php>.
+
+Fixed bug in C<getNumberOfDirs()> where it was not properly handling
+thumbnail subdirectories.
+
 =head2 Version 1.3.4 (Tue, 11 Jun 2002)
 
 Added Estonian and Japanese translations.

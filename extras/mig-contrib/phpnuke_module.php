@@ -12,7 +12,8 @@
 // PHP-Nuke module way of doing things.  Yeah, it probably doesn't.
 // But Mig wasn't written to be a module, the PHP-Nuke code was
 // written later as a side thing, and you're not obligated to use
-// it as a module anyway.
+// it as a module anyway.  It works as a standalone script too.
+// It only has to be a module to be in the menu box, I believe.
 //
 
 // Munge base reference

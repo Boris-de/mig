@@ -30,7 +30,7 @@ $mig_config['lang_lib']['ru'] = array (
                      . '&#252;&#248;&#229;&#237;&#237;&#238;&#236;&#243;'
                      . '&nbsp;&#226;&#232;&#228;&#243;',
     'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                     . '&nbsp;total<br>',
+                     . '&nbsp;total<br />',
     'up_one'        => '&#239;&#240;&#229;&#228;&#251;&#228;&#243;&#249;'
                      . '&#224;&#255;&nbsp;&#239;&#224;&#239;&#234;&#224;',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',

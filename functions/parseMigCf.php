@@ -1,5 +1,5 @@
 
-// parseMigCf - Parse a mig.cf file for sort and hidden blocks
+// parseMigCf - Parse a mig.cf file
 
 function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
 {
@@ -11,8 +11,10 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
     $hidden         = array ();
     $presort_dir    = array ();
     $presort_img    = array ();
+    $short_desc     = array ();
     $desc           = array ();
     $ficons         = array ();
+    $usethumbfile   = array ();
 
     // Hide thumbnail subdirectory if one is in use.
     if ($useThumbSubdir) {
@@ -76,11 +78,34 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 $mycomment = '';
             }
 
+            // Parse <short> structure
+            if (eregi('^<short', $line)) {
+                $shortfilename = trim($line);
+                $shortfilename = str_replace('">', '', $shortfilename);
+                $shortfilename = eregi_replace('^<short "','',$shortfilename);
+                $line = fgets($file, 4096);
+                while (! eregi('^</short', $line)) {
+                    $line = trim($line);
+                    $myshort .= "$line ";
+                    $line = fgets($file, 4096);
+                }
+                $short_desc[$shortfilename] = $myshort;
+                $shortfilename = '';
+                $myshort = '';
+            }
+
             // Parse FolderIcon lines
             if (eregi('^foldericon ', $line)) {
                 $x = trim($line);
                 list($y, $folder, $icon) = explode(' ', $x);
                 $ficons[$folder] = $icon;
+            }
+
+            // Parse UseThumb lines
+            if (eregi('^usethumb ', $line)) {
+                $x = trim($line);
+                list($y, $folder, $thumbnail) = explode(' ', $x);
+                $usethumbfile[$folder] = $thumbnail;
             }
 
             // Parse FolderTemplate lines
@@ -127,10 +152,9 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
         fclose($file);
     }
 
-    $retval = array ($hidden, $presort_dir, $presort_img, $desc,
-                     $bulletin, $ficons, $template, $pagetitle,
-                     $fcols, $tcols, $trows, $maintaddr);
-    return $retval;
+    return array ($hidden, $presort_dir, $presort_img, $desc, $short_desc,
+                  $bulletin, $ficons, $template, $pagetitle, $fcols,
+                  $tcols, $trows, $maintaddr, $usethumbfile);
 
 }   //  -- End of parseMigCf()
 

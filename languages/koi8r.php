@@ -30,7 +30,7 @@ $mig_config['lang_lib']['koi8r'] = array (
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
     'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                     . '&nbsp;total<br>',
+                     . '&nbsp;total<br />',
     'up_one'        => '&#208;&#210;&#197;&#196;&#217;&#196;&#213;&#221;'
                      . '&#193;&#209;&nbsp;&#208;&#193;&#208;&#203;&#193;',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',

@@ -86,6 +86,21 @@ avoided, notably things like E<lt>A HREFE<gt>.  You can turn ALT/TITLE
 tags off if you wish, by setting C<$suppressAltTags> to C<TRUE> in
 F<config.php>.
 
+=head2 Short Comments
+
+    <Short "image_file">
+    [some text]
+    </Short>
+
+Sometimes you want a long comment on the image itself, but a shorter one
+used in the ALT and TITLE tags on the thumbnail page (for hovering over
+links).  You can use the E<lt>ShortE<gt> tag in mig.cf files for that.
+This element works just like E<lt>CommentE<gt> except that it is used only
+in the hover-over tags on thumbnail pages.
+
+If there is a E<lt>CommentE<gt> block but no E<lt>ShortE<gt> block for an
+image, the E<lt>CommentE<gt> block will be used for the hover-over.
+
 =head2 Folder Icons
 
     FolderIcon folder_name icon_file.gif
@@ -102,6 +117,22 @@ located in the root directory of your Mig installation.
 
 If you are using C<$randomFolderThumbs>, note that C<FolderIcon> overrides
 that setting.
+
+If you want to use a specific thumbnail for a given directory as its
+folder icon, you instead want to look at the C<UseThumb> directive.
+
+=head2 Thumbnails as Folder Icons
+
+    UseThumb folder_name image_name 
+
+To pick a specific image to use as a thumbnail for your folder, use the
+C<UseThumb> directive.  The thumbnail file associated with that image will
+be displayed as the folder's icon.
+
+    UseThumb Rome IMG_4935.JPG
+
+In that case, the image F<IMG_4935.JPG>, which should be located in the
+F<Rome> folder, will be used as the folder's icon.
 
 =head2 Per-folder Template
 

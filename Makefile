@@ -5,13 +5,13 @@
 #
 
 # Where to keep distributions (directory)
-DISTDIR=../bundles/mig
+DISTDIR= ../bundles/mig
 
 # Temporary directory to build a Mig install in (this gets tarred up)
-SPOOLDIR=mig-$(ver)
+SPOOLDIR= mig-$(ver)
 
 # Archive name (output file)
-ARCHIVE=$(DISTDIR)/$(SPOOLDIR).tar.gz
+ARCHIVE= $(DISTDIR)/$(SPOOLDIR).tar.gz
 
 default:
 	@echo "make dist ver={version}        Builds distribution bundle"

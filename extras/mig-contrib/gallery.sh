@@ -15,6 +15,9 @@
 # It requires mogrify, which is part of the ImageMagick suite.
 # http://www.imagemagick.org/
 #
+# Actually I don't use this anymore... I use Photoshop.  But I used to
+# use this and it didn't work too badly for me.
+#
 
 echo "processing $1 ..."
 mogrify -border 8x8 -sample 50%x50% -bordercolor black $1

@@ -226,9 +226,9 @@ if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
 }
 
 // Fetch mig.cf information
-list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
-     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
-     $folderThumbRows, $folderMaintAddr)
+list($hidden, $presort_dir, $presort_img, $desc, $short_desc, $bulletin,
+     $ficons, $folderTemplate, $folderPageTitle, $folderFolderCols,
+     $folderThumbCols, $folderThumbRows, $folderMaintAddr, $useThumbFile)
   = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
 // Determine page title to use
@@ -301,7 +301,7 @@ if ($pageType == 'folder') {
                                $maxFolderColumns, $hidden, $presort_dir,
                                $viewFolderCount, $markerType,
                                $markerLabel, $ficons, $randomFolderThumbs,
-                               $folderNameLength);
+                               $folderNameLength, $useThumbFile);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,
@@ -309,41 +309,60 @@ if ($pageType == 'folder') {
                                 $folderList, $suppressImageInfo,
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $sortType,
-                                $hidden, $presort_img, $desc, $imagePopup,
-                                $imagePopType, $imagePopLocationBar,
-                                $imagePopMenuBar, $imagePopToolBar,
-                                $commentFilePerImage, $startFrom);
+                                $hidden, $presort_img, $desc, $short_desc,
+                                $imagePopup, $imagePopType,
+                                $imagePopLocationBar, $imagePopMenuBar,
+                                $imagePopToolBar, $commentFilePerImage,
+                                $startFrom, $commentFileShortComments,
+                                $showShortOnThumbPage);
 
     // Only frame the lists in table code when appropriate
+    
+    // Set style of table, either with text or thumbnails
+    if ($randomFolderThumbs) {
+        $folderTableClass = "folderthumbs";
+    } else {
+        $folderTableClass = "foldertext";
+    }
 
     // no folders or images - print the "no contents" line
     if ($folderList == 'NULL' && $imageList == 'NULL') {
         $folderList = $mig_config['lang']['no_contents'];
-        $folderList = folderFrame($folderList, $randomFolderThumbs,
-                                  $maxFolderColumns);
+        $tablesummary = 'Folders Frame';
+        $folderList = buildTable($folderList, $folderTableClass,
+                                 $tablesummary);
         $imageList = '';
 
     // images, no folders.  Frame the imagelist in a table
     } elseif ($folderList == 'NULL' && $imageList != 'NULL') {
         $folderList = '';
-        $imageList = imageFrame($imageList);
+        $tablesummary = 'Images Frame';
+        $tableclass = 'image';
+        $imageList = buildTable($imageList, $tableclass, $tablesummary);
 
     // folders but no images.  Frame the folderlist in a table
     } elseif ($imageList == 'NULL' && $folderList != 'NULL') {
         $imageList = '';
-        $folderList = folderFrame($folderList, $randomFolderThumbs,
-                                  $maxFolderColumns);
+        $tablesummary = 'Folders Frame';
+        $folderList = buildTable($folderList, $folderTableClass,
+                                 $tablesummary);
 
     // We have folders and we have images, so frame both in tables.
     } else {
-        $folderList = folderFrame($folderList, $randomFolderThumbs,
-                                  $maxFolderColumns);
-        $imageList = imageFrame($imageList);
+        $tablesummary = 'Folders Frame';
+        $folderList = buildTable($folderList, $folderTableClass,
+                                 $tablesummary);
+        $tablesummary = 'Images Frame';
+        $tableclass = 'image';
+        $imageList = buildTable($imageList, $tableclass, $tablesummary);
     }
 
     // We have a bulletin
     if ($bulletin != '') {
-        $bulletin = descriptionFrame($bulletin);
+        $tablesummary = 'Bulletin Frame" width="60%';  //<--- kludge for now
+        $tableclass = 'desc';
+        $bulletin = '<center>' . $bulletin . '</center>';
+        $bulletin = buildTable($bulletin, $tableclass, $tablesummary);
     }
 
     // build the "back" link
@@ -383,14 +402,17 @@ if ($pageType == 'folder') {
 
     // Get image description
     if ($commentFilePerImage) {
-        $description  = getImageDescFromFile($image, $albumDir, $currDir);
+        list($x, $description) = getImageDescFromFile($image, $albumDir,
+                                        $currDir, $commentFileShortComments);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
-            $description  = getImageDescription($image, $desc);
+            list($x, $description) = getImageDescription($image, $desc,
+                                                         $short_desc);
         }
     } else {
-        $description  = getImageDescription($image, $desc);
+        list($x, $description) = getImageDescription($image, $desc,
+                                                     $short_desc);
     }
 
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
@@ -405,13 +427,16 @@ if ($pageType == 'folder') {
 
     // If both descriptions are non-NULL, separate them with an <HR>
     if ($description && $exifDescription) {
-        $description .= '<hr>';
+        $description .= '<hr />';
         $description .= $exifDescription;
     }
 
     // If there's a description at all, frame it in a table.
     if ($description != '') {
-        $description = descriptionFrame($description);
+        $tablesummary = 'Description Frame" width="60%'; //<-- kludge for now
+        $tableclass = 'desc';
+        $description = '<center>' . $description . '</center>';
+        $description = buildTable($description, $tableclass, $tablesummary);
     }
 
     // Build the "you are here" line
@@ -437,7 +462,7 @@ if ($pageType == 'folder') {
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke
 if ($phpNukeCompatible) {
-    print '</table></center></td></tr></table>';
+    print '</tbody></table></center></td></tr></tbody></table>';
     include('footer.php');
 } elseif ($phpWebThingsCompatible) {
     theme_draw_center_box_close();

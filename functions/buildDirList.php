@@ -5,7 +5,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                         $imageDir, $useThumbSubdir, $thumbSubdir,
                         $maxColumns, $hidden, $presorted, $viewFolderCount,
                         $markerType, $markerLabel, $ficons,
-                        $randomFolderThumbs, $folderNameLength )
+                        $randomFolderThumbs, $folderNameLength,
+                        $useThumbFile )
 {
     global $mig_config;
 
@@ -36,12 +37,18 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
             // Ignore anything that's hidden or was already sorted.
             if (! $hidden[$file] && ! $presorted[$file]) {
                 // Stash file in an array
-                    $directories[$file] = TRUE;
+                $directories[$file] = TRUE;
             }
         }
     }
 
     closedir($dir);
+
+    // If we have directories, start a table
+    if ($directories) {
+        $directoryList .= "\n" . '   <table summary="Folder Links"'
+                        . ' border="0" cellspacing="0"><tbody>';
+    }
 
     ksort($directories);    // sort so we can yank them in sorted order
     reset($directories);    // reset array pointer to beginning
@@ -64,7 +71,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
             $counts[$file] = getNumberOfImages($folder, $useThumbSubdir,
                                                $markerType, $markerLabel);
             $countdir[$file] = getNumberOfDirs($folder, $useThumbSubdir,
-                                               $markerType, $markerLabel);
+                                               $thumbSubdir, $markerType,
+                                               $markerLabel);
         }
 
         // Handle random folder thumbnails if desired
@@ -81,14 +89,14 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
     // Track columns
     $row = 0;
     $col = 0;
-    $maxColumns--;  // Tricks $maxColumns into working since it
+    --$maxColumns;  // Tricks $maxColumns into working since it
                     // really starts at 0, not 1
 
     while (list($file,$junk) = each($presorted)) {
 
         // Start a new row if appropriate
         if ($col == 0) {
-            $directoryList .= '<tr>';
+            $directoryList .= "\n   <tr>";
         }
 
         // Surmise the full path to work with
@@ -114,29 +122,74 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
         $nbspfile = str_replace(' ', '&nbsp;', $nbspfile);
         $nbspfile = str_replace('_', '&nbsp;', $nbspfile);
 
+        if ($randomFolderThumbs) {
+            $folderTableClass = 'folderthumbs';
+            $folderTableAlign = 'center';
+        } else {
+            $folderTableClass = 'foldertext';
+            $folderTableAlign = 'left';
+        }
+
         // Build the full link (icon plus folder name) and tack it on
         // the end of the list.
-        $directoryList .= '<td valign="bottom" class="folder">'
-                        . $linkURL . '<img src="';
-        if ($ficons[$file]) {
-            $directoryList .= $ficons[$file];
+        $directoryList .= "\n     " . '<td valign="middle" class="'
+                        . $folderTableClass . '" align="'
+                        . $folderTableAlign . '">' . $linkURL
+                        . '<img src="';
+
+        if ($useThumbFile[$file]) {
+            // Found a UseThumb line in mig.cf - process as such
+
+            $fname = getFileName($useThumbFile[$file]);
+            if ($thumbExt) {
+                $fext = $thumbExt;
+            } else {
+                $fext = getFileExtension($useThumbFile[$file]);
+            }
+
+            $directoryList .= $albumURLroot . '/' . $currDir . '/'
+                            . $file . '/';
+            if ($useThumbSubdir) {
+                $directoryList .= $thumbSubdir . '/' . $fname . '.' . $fext;
+            } else {
+                if ($markerType == 'prefix') {
+                    $directoryList .= $markerLabel . '_' . $fname;
+                } else {
+                    $directoryList .= $fname . '_' . $markerLabel;
+                }
+                $directoryList .= '.' . $fext;
+            }
+        } elseif ($ficons[$file]) {
+            // Found a FolderIcon line in mig.cf - process as such
+            $directoryList .= $imageDir . '/' . $ficons[$file];
         } elseif ($samples[$file]) {
+            // Using a random thumbnail as the folder icon
             $directoryList .= $samples[$file];
         } else {
+            // Otherwise, we're out a thumbnail; use the generic
+            // folder icon as a last resort
             $directoryList .= $imageDir . '/folder.gif';
         }
 
-        if (! $samples[$file]) {
-            $sep = '&nbsp;';
+        // Define a separator of either a space or a line break,
+        // depending on whether we're using a random thumbnail or not.
+        // (Use a line break if random thumbnail is present so the name
+        // appears underneath it - also use a line break if the thumbnail
+        // was specified).
+        if ($samples[$file] || $useThumbFile[$file]) {
+            $sep = '<br />';
         } else {
-            $sep = '<br>';
+            $sep = '&nbsp;';
         }
 
+        // Display _ as space
         $altlabel = str_replace('_', ' ', $file);
-        $directoryList .= '" border="0" alt="' . $altlabel . '"></a>' . $sep
-                       . $linkURL . '<font size="-2">' . $nbspfile
-                       . '</font></a>';
 
+        // Output the rest of the link, label, etc.
+        $directoryList .= '" border="0" alt="' . $altlabel . '"></a>' . $sep
+                       . $linkURL . $nbspfile . '</a>';
+
+        // Display counts if appropriate
         if ($viewFolderCount &&
                 (($counts[$file] > 0) || ($countdir[$file] > 0)) )
         {
@@ -144,15 +197,16 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                             . $counts[$file] . ')';
         }
 
+        // Don't forget to close the table cell
         $directoryList .= '</td>';
 
         // Keep track of what row/column we're on
         if ($col == $maxColumns) {
-            $directoryList .= '</tr>';
-            $row++;
+            $directoryList .= "\n   </tr>";
+            ++$row;
             $col = 0;
         } else {
-            $col++;
+            ++$col;
         }
     }
 
@@ -160,8 +214,12 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
     if ($directoryList == '') {
         return 'NULL';
     } elseif (!eregi('</tr>$', $directoryList)) {
-        // Stick a </tr> on the end if it isn't there already
-        $directoryList .= '</tr>';
+        // Stick a </tr> on the end if it isn't there already, and close
+        // the table.
+        $directoryList .= "\n   </tr>\n  </tbody></table>";
+    } else {
+        // Close the table.
+        $directoryList .= "\n  </tbody></table>";
     }
 
     return $directoryList;

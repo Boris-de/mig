@@ -26,15 +26,11 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
             }
 
             // Build a link to the "home" page
-            $retval  = '<font size="-1">[&nbsp;<a href="'
-                     . $homeLink
-                     . '">'
-                     . $mig_config['lang']['backhome']
-                     . '&nbsp;'
-                     . $homeLabel
-                     . '</a>&nbsp;]</font><br><br>';
+            $retval  = '&nbsp;[&nbsp;<a href="' . $homeLink . '">'
+                     . $mig_config['lang']['backhome'] . '&nbsp;'
+                     . $homeLabel . '</a>&nbsp;]&nbsp;';
         } else {
-            $retval = '<br>';
+            $retval = '<!-- no backLink in root tree -->';
         }
         return $retval;
     }
@@ -43,12 +39,12 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     $junk = ereg_replace('/[^/]+$', '', $currDir);
     $newCurrDir = migURLencode($junk);
 
-    $retval = '<font size="-1">[&nbsp;<a href="'
+    $retval = '&nbsp;[&nbsp;<a href="'
             . $baseURL . '?currDir=' . $newCurrDir;
     if ($startFrom) {
         $retval .= '&startFrom=' . $startFrom;
     }
-    $retval .= '">' . $label . '</a>&nbsp;]</font><br><br>';
+    $retval .= '">' . $label . '</a>&nbsp;]&nbsp;';
 
     return $retval;
 

@@ -85,9 +85,6 @@ As of version 1.2.5 it is possible to include PHP files as well as other
 types of files.  The one difference is that for PHP files the filename must
 have an extension of either E<quot>.phpE<quot> or E<quot>.php3E<quot>.
 
-Look at either F<image.html> or F<folder.html> for an example (C<#include>
-is used to embed the CSS style sheet file C<style.css>).
-
 =back
 
 =head2 Special Files
@@ -251,39 +248,28 @@ I don't have the inclination or time to write a tutorial on how CSS works,
 so please see http://www.htmlhelp.com/reference/css/ or whatever else you
 come across to figure out how CSS works.  There are some books on this
 topic available as well (try searching for E<quot>CSSE<quot> at Amazon.com).
+A basic example follows, though.
 
-A basic example or two follow, though.
-
-To change color of HREF links from C<#0000FF> (blue) to C<#00FF00> (green):
-
-    Before:      A:link    { color: #0000FF }
-    After:       A:link    { color: #00FF00 }
-
-To change background color of description tables from C<#CCCCFF> (grey)
+To change background color of description tables from C<#f0f0f0> (grey)
 to C<#FF0000> (red):
 
     Before:
         TD.desc {
-            color: #000000;
-            background: #CCCCFF;
-            text-align: justify;
+            color: #333333;          padding-top: 4px;
+            background: #f0f0f0;     padding-bottom: 3px;
+            font-size: .9em;         padding-left: 4px;
+            text-align: center;      padding-right: 6px;
         }
 
     After:
         TD.desc {
-            color: #000000;
-            background: #FF0000;
-            text-align: justify;
+            color: #333333;          padding-top: 4px;
+            background: #ff0000;     padding-bottom: 3px;
+            font-size: .9em;         padding-left: 4px;
+            text-align: center;      padding-right: 6px;
         }
 
-The E<quot>BODYE<quot> element controls the main background / text color
-for the pages overall.  However, Netscape seems to have forgotten the BODY
-element when implementing their CSS engine, so Netscape doesn't handle this
-correctly.  For that reason, a default coloration of white background /
-black text is hard-coded into the HTML templates in the BODY element.  If
-you want to use another colorization for BODY, feel free to do so, but be
-aware you'll need to update both F<templates/style.css> and
-F<templates/*.html> to do it correctly.
+In this example, only the third line (background) was changed.
 
 =cut
 

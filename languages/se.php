@@ -20,7 +20,7 @@ $mig_config['lang_lib']['se'] = array (
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
     'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                     . '&nbsp;total<br>',
+                     . '&nbsp;total<br />',
     'up_one'        => 'tillbaka&nbsp;till&nbsp;f&ouml;reg&aring;ende'
                      . '&nbsp;sida',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',

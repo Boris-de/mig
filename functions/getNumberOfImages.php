@@ -29,7 +29,7 @@ function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
         // We'll look at this one only if it's a file and it matches our list
         // of approved extensions
         if (is_file("$folder/$file") && validFileType($file)) {
-                $count++;
+                ++$count;
         }
     }
 

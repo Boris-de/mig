@@ -35,9 +35,7 @@ function getExifDescription ( $albumDir, $currDir, $image, $formatString )
                 $comment = chop($comment);
                 $desc[$fname] = $comment;
 
-            }
-
-            if (ereg('^Camera model : ', $line)) {
+            } elseif (ereg('^Camera model : ', $line)) {
                 $x = str_replace('Camera model : ', '', $line);
                 $x = chop($x);
                 $model[$fname] = $x;

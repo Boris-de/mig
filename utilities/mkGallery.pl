@@ -610,7 +610,8 @@ sub processComments {
     }
 
     open(OUT, ">>$migConfig");
-    print OUT "\n";
+    # Not sure why this was here.
+    #print OUT "\n";
     # stick a bulletin entry in while we are here, unless one is already
     # present in mig.cf.
     unless ($saw_bulletin) {
