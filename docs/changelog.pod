@@ -4,6 +4,8 @@
 
 =head2 Version 1.4.1 (NOT YET RELEASED)
 
+Added Hungarian (hu) translation (Dan)
+
 Added Slovenian (si) translation (Dan)
 
 [Sourceforge bug report #930628] - Fixed bug with image popups (Dan)
