@@ -64,7 +64,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         }
     }
 
-    if (file_exists($thumbFile)) {
+    if (file_exists($thumbFile) && $type == 'image') {
         if ($mig_config['usethumbsubdir']) {
             $thumbImage  = $mig_config['albumurlroot'] . "/$currDir/"
                          . $mig_config['thumbsubdir'] . "/$fname.";
@@ -167,7 +167,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     // Figure out thumbnail geometry
     $thumbHTML = '';
-    if (file_exists($thumbFile)) {
+    if (file_exists($thumbFile) && $type == 'image') {
         $thumbProps = GetImageSize($thumbFile);
         $thumbHTML = $thumbProps[3];
     }
