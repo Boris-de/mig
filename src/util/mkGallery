@@ -53,7 +53,7 @@ use Getopt::Std;
 
 my $myself = File::Basename::basename($0);
 my $mydir  = File::Basename::dirname($0);
-my $myRoot = cwd;				# stash value of '.'
+my $myRoot = cwd;                           # stash value of '.'
 
 my $exifProg = $mydir . "/jhead/jhead";
 my $exifArgs = "-v";
@@ -214,13 +214,13 @@ $quality = $defaultQuality unless $quality;
 # If we're running in recursion mode, then figure out what directories we
 # need to be looking at.
 if ($recurseFlag) {
-    @File::Find::mkGalleryDirs = ();	# initialize empty array
+    @File::Find::mkGalleryDirs = ();    # initialize empty array
     # define what to look for
     sub dirfind {
         my $thumbDirFlag = $File::Find::mkGalleryThumbDirFlag;
         my $thumbDir = $File::Find::mkGalleryThumbDir;
         if ($thumbDirFlag) {
-	    unless (/^$thumbDir$/) {
+            unless (/^$thumbDir$/) {
                 push(@File::Find::mkGalleryDirs, $File::Find::name) if -d;
             }
         } else {
@@ -230,7 +230,7 @@ if ($recurseFlag) {
     $File::Find::mkGalleryThumbDirFlag = $thumbDirFlag;
     $File::Find::mkGalleryThumbDir = $thumbDir;
     find(\&dirfind, $myRoot); # do the find itself
-    @processDirs = @File::Find::mkGalleryDirs;	# stash in @processDirs
+    @processDirs = @File::Find::mkGalleryDirs;  # stash in @processDirs
 } else {
     # otherwise, just do the current directory (default behavior)
     @processDirs = ( $myRoot );
@@ -240,9 +240,9 @@ if ($recurseFlag) {
 foreach (@processDirs) {
 
     chdir $_;
-    print "=> $_\n";		# print a line each time we chdir()
+    print "=> $_\n";        # print a line each time we chdir()
 
-    if ($allFlag) {		# build a list of all files
+    if ($allFlag) {         # build a list of all files
 
         opendir(DIR, $_) or die "Can't open directory $_ !\n";
         @contents = ();
@@ -331,7 +331,7 @@ foreach (@processDirs) {
 
         $SIZE = $size . "x" . $size;
 
-	    # Make a thumbnail, if -t was invoked
+        # Make a thumbnail, if -t was invoked
         if ($thumbFlag) {
 
             $cmd = "convert -geometry $SIZE -quality $quality \"$orig_file\"";
@@ -388,7 +388,7 @@ sub fileExtension {
 
     return $stripname, $extension;
 
-}	# -- End of fileExtension()
+}   # -- End of fileExtension()
 
 
 
@@ -404,7 +404,7 @@ sub testFileType {
     } else {
         return 0;
     }
-}	# -- End of testFileType()
+}   # -- End of testFileType()
 
 
 
@@ -432,7 +432,7 @@ sub getExifInfo {
 
     return 1;
 
-}	# -- End of getExifInfo()
+}   # -- End of getExifInfo()
 
 
 
@@ -484,7 +484,7 @@ sub helpMessage {
 
     return 1;
 
-}	# -- End of helpMessage()
+}   # -- End of helpMessage()
 
 
 
@@ -512,7 +512,7 @@ sub parseMyConfig {
         chomp;
         if (/^[\s]*\$markerType/) {
             s/^.*\$markerType[\s]*=[\s]*["']([^"']*)["'][\s]*;.*$/$1/i;
-            $type = lc $_;	# just in case
+            $type = lc $_;          # just in case
             if ($type eq "prefix" or $type eq "suffix") {
                 $markerType = $type;
             }
@@ -540,7 +540,7 @@ sub parseMyConfig {
     return $markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir,
            $defaultThumbExt;
 
-}	# -- End of parseMyConfig()
+}   # -- End of parseMyConfig()
 
 
 
@@ -555,6 +555,9 @@ sub processComments {
 
     my $tempConfig = $migConfig . ".tmp";
     my $commIn = undef;
+    my $saw_bulletin = undef;
+    my $bulletin = undef;
+    my $bullIn = undef;
     my %noadd = ();
 
     # Bail out if the file is there but it can't be read.
@@ -579,12 +582,34 @@ sub processComments {
                 s/^<comment[\s]+\"([^"]+)\"[\s]*>.*$/$1/i;
                 $noadd{$_} = 1 if $_ ne "";
             }
+            if (/^<bulletin/i) {
+                $saw_bulletin = 1;
+            }
         }
         close CF;
     }
 
     open(OUT, ">>$migConfig");
     print OUT "\n";
+    # stick a bulletin entry in while we are here, unless one is already
+    # present in mig.cf.
+    unless ($saw_bulletin) {
+        if ($interactFlag) {
+            print "A bulletin entry is a comment covering the entire\n";
+            print "folder.  It shows up on the thumbnail page for the\n";
+            print "folder.\n\n";
+            print "Would you like to add a bulletin entry? (y/n) ";
+            $bullIn = <STDIN>;
+            if ($bullIn =~ /^[yY]/) {
+                print "Enter bulletin: ";
+                chomp($bulletin = <STDIN>);
+                print OUT "<Bulletin>\n$bulletin\n</Bulletin>\n\n";
+            }
+        } else {
+            print OUT "<Bulletin>\n</Bulletin>\n\n";
+        }
+    }
+
     foreach (@process) {
         unless ($noadd{$_}) {
             print OUT "<Comment \"", $_, "\">\n";
@@ -602,5 +627,5 @@ sub processComments {
 
     return 1;
 
-}	# -- End of processComments()
+}   # -- End of processComments()
 
