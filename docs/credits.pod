@@ -97,6 +97,8 @@ ISO-8859-2 translation.
 
 Marius Scurtescu (marius at scurtescu.com) for the Xoops integration patch.
 
+Belle Liu (belle at belleliu.com) for the Chinese big5 translation.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.
 

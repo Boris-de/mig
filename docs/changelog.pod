@@ -2,7 +2,7 @@
 
 =head2 MIG Change Log
 
-=head2 Version 1.3.8 (NOT YET RELEASED)
+=head2 Version 1.3.8 (Fri, 25 Oct 2002)
 
 If Mig is called with no parameters, it will redirect to itself with
 C<currDir=.> appended.  This makes it easier to tack on more parameters
@@ -30,6 +30,8 @@ provided by Marius Scurtescu.  See the F<portals> document.
 
 Files formerly found in F<templates/phpnuke> will now be in
 F<templates/portals>.
+
+Added Chinese big5 translation (zh).
 
 =head2 Version 1.3.7 (Sat, 19 Oct 2002)
 

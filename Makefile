@@ -72,7 +72,7 @@ docpublish:
 	cd docs ; make publish
 
 index2: index
-	scp index.php snoopy.net:/www/tangledhelix.com/html/gallery/index2.php
+	scp index.php snoopy.net:/www/ingeni.us/html/gallery/index2.php
 	@echo "URL: http://ingeni.us/gallery/index2.php"
 
 mig.sf.net: index
@@ -81,7 +81,7 @@ mig.sf.net: index
 	@echo "URL: http://mig.sf.net/gallery/"
 
 ingeni.us: index
-	scp index.php snoopy.net:/www/tangledhelix.com/html/gallery
+	scp index.php snoopy.net:/www/ingeni.us/html/gallery
 	@echo "URL: http://tangledhelix.com/gallery/"
 
 monkeysr.us: index
