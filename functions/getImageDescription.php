@@ -2,20 +2,20 @@
 
 // getImageDescription() - Fetches an image description from the comment file (mig.cf).
 
-function getImageDescription ( $description, $short_desc )
+function getImageDescription ( $file, $description, $short_desc )
 {
     global $mig_config;
     
     $imageDesc = '';
 
     // "Long" description
-    if ($description[$mig_config['image']]) {
-        $imageDesc = $description[$mig_config['image']];
+    if ($description[$file]) {
+        $imageDesc = $description[$file];
     }
 
     // "Short" description
-    if ($short_desc[$mig_config['image']]) {
-        $imageShort = $short_desc[$mig_config['image']];
+    if ($short_desc[$file]) {
+        $imageShort = $short_desc[$file];
     }
 
     // Return both - let the calling code decide which to use.

@@ -100,6 +100,13 @@ manipulations in either result of an if/else test.
 Got rid of a misplaced backslash in C<buildImageURL()>.  This may fix a bug
 where Mig URLs can get embedded quote marks where they don't belong.
 
+Mig can now properly handle redirection on servers running on something
+other than port 80.
+
+Fixed bug in handling of E<lt>ShortE<gt> blocks.
+
+Fixed bug in Exif format string handling.
+
 =head2 Version 1.3.8 (Fri, 25 Oct 2002)
 
 If Mig is called with no parameters, it will redirect to itself with

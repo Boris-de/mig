@@ -68,7 +68,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     if (file_exists($thumbFile)) {
         if ($mig_config['usethumbsubdir']) {
             $thumbImage  = $mig_config['albumurlroot'] . "/$currDir/"
-                         . $mig_config['thumbSubdir'] . "/$fname.";
+                         . $mig_config['thumbsubdir'] . "/$fname.";
 
             if ($mig_config['thumbext']) {
                 $thumbImage .= $mig_config['thumbext'];
@@ -123,12 +123,10 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         list($alt_desc, $x) = getImageDescFromFile("$fname.$ext", $currDir);
         // Get a conventional comment if there isn't one here.
         if (! $alt_desc) {
-            list($alt_desc, $desc) = getImageDescription("$fname.$ext",
-                                                $description, $short_desc);
+            list($alt_desc, $desc) = getImageDescription("$fname.$ext", $description, $short_desc);
         }
     } else {
-        list($alt_desc, $desc) = getImageDescription("$fname.$ext",
-                                                $description, $short_desc);
+        list($alt_desc, $desc) = getImageDescription("$fname.$ext", $description, $short_desc);
     }
 
     // If there's a full description but no alt, use the full as alt.

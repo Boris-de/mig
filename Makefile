@@ -9,6 +9,8 @@ DISTDIR= ../bundles/mig
 
 # Webserver root
 WEB= /Users/dan/Sites
+WTEST= $(WEB)/mig_test
+WPORT= $(WEB)/mig_portal
 
 # Temporary directory to build a Mig install in (this gets tarred up)
 SPOOLDIR= mig-$(ver)
@@ -79,25 +81,25 @@ mig.sf.net: index
 test: local_gallery gallery_subdir gallery_th
 
 local_gallery: index
-	cp index.php $(WEB)/gallery
+	cp index.php $(WTEST)/gallery
 
 gallery_subdir: index
-	cp index.php $(WEB)/gallery_subdir
-	cp templates/*.html $(WEB)/gallery_subdir/templates
-	cp templates/*.css $(WEB)/gallery_subdir/templates
+	cp index.php $(WTEST)/gallery_subdir
+	cp templates/*.html $(WTEST)/gallery_subdir/templates
+	cp templates/*.css $(WTEST)/gallery_subdir/templates
 
 gallery_th: index
-	cp index.php $(WEB)/gallery_th
-	cp templates/*.html $(WEB)/gallery_th/templates
-	cp templates/*.css $(WEB)/gallery_th/templates
+	cp index.php $(WTEST)/gallery_th
+	cp templates/*.html $(WTEST)/gallery_th/templates
+	cp templates/*.css $(WTEST)/gallery_th/templates
 
 cms: index
-	cp index.php $(WEB)/phpnuke/mig.php
-	cp index.php $(WEB)/postnuke/mig.php
-	cp index.php $(WEB)/phpwebsite/mig.php
-	cp index.php $(WEB)/phpwebthings/mig.php
-	cp index.php $(WEB)/xoops/modules/mig/index.php
-	cp index.php $(WEB)/geeklog/public_html/mig/index.php
+	cp index.php $(WPORT)/phpnuke/mig.php
+	cp index.php $(WPORT)/postnuke/mig.php
+	cp index.php $(WPORT)/phpwebsite/mig.php
+	cp index.php $(WPORT)/phpwebthings/mig.php
+	cp index.php $(WPORT)/xoops/modules/mig/index.php
+	cp index.php $(WPORT)/geeklog/public_html/mig/index.php
 
 clean:
 	rm -rf docs/html docs/text index.php

@@ -2,7 +2,7 @@
 #
 # mkGallery.pl - turns a directory full of image files into a "gallery".
 #
-# Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
+# Copyright 2000-2003 Daniel M. Lowe <dan@tangledhelix.com>
 #
 # http://mig.sourceforge.net/
 #

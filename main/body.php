@@ -198,6 +198,18 @@ if (! $SERVER_NAME) {
     }
 }
 
+if (! $SERVER_PORT) {
+    if ($_SERVER['SERVER_PORT']) {
+        $SERVER_PORT = $_SERVER['SERVER_PORT'];
+    } elseif ($HTTP_SERVER_VARS['SERVER_PORT']) {
+        $SERVER_PORT = $HTTP_SERVER_VARS['SERVER_PORT'];
+    }
+}
+
+if (! $SERVER_PORT) {
+    $SERVER_PORT = "80";
+}
+
 if (! $PATH_INFO) {
     if ($_SERVER['PATH_INFO']) {
         $PATH_INFO = $_SERVER['PATH_INFO'];
@@ -208,14 +220,14 @@ if (! $PATH_INFO) {
 
 // Is this a jump-tag URL?
 if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME" . $mig_config['baseurl']
+    header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$jump]");
     exit;
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
 if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME" . $mig_config['baseurl']
+    header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$PATH_INFO]");
     exit;
 }
@@ -227,14 +239,8 @@ if ($_GET['currDir']) {
 } elseif ($HTTP_GET_VARS['currDir']) {
     $currDir = $HTTP_GET_VARS['currDir'];
 } elseif (! $currDir) {
-    if ($_SERVER['SERVER_NAME']) {
-        $SERVER_NAME = $_SERVER['SERVER_NAME'];
-    } elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
-        $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
-    }
-
     if ($SERVER_NAME) {
-        header("Location: http://$SERVER_NAME" . $mig_config['baseurl']
+        header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
              . '?currDir=.');
         exit;
     }
@@ -590,10 +596,10 @@ if ($mig_config['pagetype'] == 'folder') {
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
-            list($x, $description) = getImageDescription($desc, $short_desc);
+            list($x, $description) = getImageDescription($image, $desc, $short_desc);
         }
     } else {
-        list($x, $description) = getImageDescription($desc, $short_desc);
+        list($x, $description) = getImageDescription($image, $desc, $short_desc);
     }
 
     $exifDescription = getExifDescription($currDir, $exifFormatString);
@@ -678,10 +684,10 @@ if ($mig_config['pagetype'] == 'folder') {
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
-            list($x, $description) = getImageDescription($desc,$short_desc);
+            list($x, $description) = getImageDescription($image, $desc,$short_desc);
         }
     } else {
-        list($x, $description) = getImageDescription($desc,$short_desc);
+        list($x, $description) = getImageDescription($image, $desc,$short_desc);
     }
 
     $exifDescription = getExifDescription($currDir,$exifFormatString);

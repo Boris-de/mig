@@ -2,7 +2,7 @@
 
 =head2 Mig - A general purpose photo gallery
 
-Copyright 2000-2002 Daniel M. Lowe
+Copyright 2000-2003 Daniel M. Lowe
 
 =head2 License Information
 

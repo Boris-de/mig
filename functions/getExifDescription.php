@@ -43,8 +43,8 @@ function getExifDescription ( $currDir, $formatString )
             // the colon, sometimes not.  Try to work either way.
             } elseif (ereg('^Exposure time: ?', $line)) {
                 $x = ereg_replace('^Exposure time: ?', '', $line);
-                if (ereg('(', $x)) {
-                    $x = ereg_replace('^.*(', '', $x);
+                if (ereg('\(', $x)) {
+                    $x = ereg_replace('^.*\(', '', $x);
                     $x = ereg_replace(').*$', '', $x);
                 }
                 $x = chop($x);

@@ -30,62 +30,47 @@ function formatExifData ( $formatString, $exifData )
                      'M' => $exifData['month'],
                      'D' => $exifData['day'],
                      'T' => $exifData['time']           );
+                     
+    // separate elements of format string
+    $matches = explode('|', $formatString);
+    
+    while (list($key,$val) = each($matches)) {
+    
+        // $changeflag is used to tell us if we should bother
+        // printing this block at all.  If none of the format
+        // characters in this block can be expanded, we never set
+        // $changeflag to TRUE.  If it's not TRUE at the end of this
+        // while(), the block is just dumped.
+        $changeflag = FALSE;
 
-    // get rid of trailing | character if there is one
-    $formatString = ereg_replace('|$', '', $formatString);
+        // Keep on going until every %X atom has been examined and
+        // expanded.
 
-    // Nibble away at format string until it is empty
-    while ($formatString) {
+        while (ereg('%([a-zA-Z])', $val, $lettermatch)) {
 
-        // Try to match a block (a block is a pipe followed by a format
-        // atom (such as %c) surrounded by optional text)
+            // which letter matched?
+            $letter = $lettermatch[1];
 
-        if (ereg('^|[^|]*%[a-zA-Z][^|]*', $formatString, $matches)) {
-
-            $x = $matches[0];               // entire match (this is the
-                                            // block pattern, which we
-                                            // can work on as a whole now)
-
-            $x = str_replace('|','', $x);   // get rid of leading | char
-
-            // $changeflag is used to tell us if we should bother
-            // printing this block at all.  If none of the format
-            // characters in this block can be expanded, we never set
-            // $changeflag to TRUE.  If it's not TRUE at the end of this
-            // while(), the block is just dumped.
-            $changeflag = FALSE;
-
-            // Keep on going until every %X atom has been examined and
-            // expanded.
-
-            while (ereg('%([a-zA-Z])', $x, $lettermatch)) {
-
-                // which letter matched?
-                $letter = $lettermatch[1];
-
-                // If this can be expanded, do so.  If it can be,
-                // set $changeflag to TRUE so we know to include this
-                // block instead of dumping it.
-                if ($table[$letter]) {
-                    $newtext = $table[$letter];
-                    $changeflag = TRUE;
-                }
-
-                // Do interpolation
-                $x = str_replace("%$letter", $newtext, $x);
+            // If this can be expanded, do so.  If it can be,
+            // set $changeflag to TRUE so we know to include this
+            // block instead of dumping it.
+            if ($table[$letter]) {
+                $newtext = $table[$letter];
+                $changeflag = TRUE;
             }
 
-            // Only if $changeflag is TRUE do we bother tacking this
-            // onto the final product.
-            if ($changeflag) {
-                $newstr .= $x;
-            }
-
-            // shrink format string by one block.
-            $formatString = ereg_replace('^|[^|]+', '', $formatString);
+            // Do interpolation
+            $val = str_replace("%$letter", $newtext, $val);
         }
-    }
 
+        // Only if $changeflag is TRUE do we bother tacking this
+        // onto the final product.
+        if ($changeflag) {
+            $newstr .= $val;
+        }
+            
+    }
+    
     return $newstr;
 
 }   // -- End of formatExifData()
