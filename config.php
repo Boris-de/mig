@@ -401,14 +401,14 @@ $suppressImageInfo = FALSE;
 //
 // Examples:
 //   Everything is shown (old mig behaviour)
-//   $fileInfoFormatString = "%n<br>(%i, %s)";
+//   $fileInfoFormatString = "%n<br />(%i, %s)";
 //
 // Default to %n<br>(%i, %s)
 //
 
-$fileInfoFormatString['image'] = "%n<br>(%i, %s)";
-$fileInfoFormatString['audio'] = "%n<br>(%s)";
-$fileInfoFormatString['video'] = "%n<br>(%s)";
+$fileInfoFormatString['image'] = "%n<br />(%i, %s)";
+$fileInfoFormatString['audio'] = "%n<br />(%s)";
+$fileInfoFormatString['video'] = "%n<br />(%s)";
 
 
 //

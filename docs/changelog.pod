@@ -4,13 +4,15 @@
 
 =head2 Version 1.4.0 (NOT YET RELEASED)
 
-Added F<config.php> options C<$prevFormatString> and C<$nextFormatString>.
-Now individual pics or text is possible for the "previous image" and "next image" in the image-view.
+Fixed Security-Bug when modifying the image-parameter in the URL. The real filesystem path is no longer shown, mig aborts (Werner)
 
-Moved brackets [] from the prev-next-back to thumbnail-view - large image to F<templates/image.html>. If you don't need large images, please edit this file, otherwise some brackets are shown, but no link...
+Added F<config.php> options C<$prevFormatString> and C<$nextFormatString>.
+Now individual pics or text is possible for the "previous image" and "next image" in the image-view (Werner)
+
+Moved brackets [] from the prev-next-back to thumbnail-view - large image to F<templates/image.html>. If you don't need large images, please edit this file, otherwise some brackets are shown, but no link... (Werner)
 
 Added F<config.php> options C<$fileInfoFormatString>.
-C<$suppressImageInfo> is not needed any more and will be removed in Version 2.0
+C<$suppressImageInfo> is not needed any more and will be removed in Version 2.0  (Werner)
 
 Added F<config.php> options C<$imagePopMaxWidth> and C<$imagePopMaxHeight>
 related to popup windows.

@@ -235,6 +235,12 @@ if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
     exit;
 }
 
+//moved this some lines up... need it for checking if the image-file exists. wmk
+
+$mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums live
+// If you change the directory here also make sure to change $albumURLroot
+
+
 
 // Get currDir.  If there isn't one, default to "."
 if ($_GET['currDir']) {
@@ -284,6 +290,16 @@ if (! $image) {
     }
 }
 $mig_config['image'] = $image;
+
+// check if the image exists...
+
+if (($mig_config['image'])AND(!file_exists($mig_config['albumdir']."/$currDir/".$mig_config['image']))){
+    echo "ERROR: ".$currDir."/".$mig_config['image']." is invalid.  Exiting.";
+    exit;
+}
+
+
+
 
 // Get pageType.  If there isn't one, default to "folder"
 if (! $pageType) {
@@ -401,8 +417,6 @@ while ($workCopy) {
     }
 }
 
-$mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums live
-// If you change the directory here also make sure to change $albumURLroot
 
 // Where templates live
 $mig_config['templatedir'] = $mig_config['basedir'] . '/templates';
