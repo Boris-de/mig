@@ -1,64 +1,55 @@
 
 // URL to use to call myself again
-if ($PHP_SELF) {    // if using register_globals
+if ($PHP_SELF)                                          // register_globals
     $baseURL = $PHP_SELF;
-} else {            // otherwise, must be using track_vars
+else                                                    // track_vars
     $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
-}
 
-// base directory of installation
-if ($PATH_TRANSLATED) {   // if using register_glolals
+// Base directory of installation
+if ($PATH_TRANSLATED)                                   // register_globals
     $baseDir = dirname($PATH_TRANSLATED);
-} else {                  // otherwise, must be using track_vars
+else                                                    // track_vars
     $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
-}
 
-$configFile = $baseDir . '/config.php';             // Configuration file
+$configFile = $baseDir . '/config.php';   // Configuration file
 
-// Collect the server name if possible
-if ($SERVER_SOFTWARE) {
-    $server = $SERVER_SOFTWARE;
-} else {
-    $server = $HTTP_SERVER_VARS['SERVER_SOFTWARE'];
-}
-
-// Fetch variables from the URI
-//
-if (! $currDir) {       // not using register_globals, so the assumption
-                        // is that track_vars is in use
-    $currDir        = $HTTP_GET_VARS['currDir'];
-    $image          = $HTTP_GET_VARS['image'];
-    $pageType       = $HTTP_GET_VARS['pageType'];
-}
-if (! $jump) {
-    $jump           = $HTTP_GET_VARS['jump'];       // for track_vars
-}
-
-if ($currDir == '') {
-    // Set a current directory if one doesn't exist
+// Get currDir.  If there isn't one, default to '.'
+if (! $currDir && ! $HTTP_GET_VARS['currDir'])
     $currDir = '.';
-} else {
-    // If there is one present, strip URL encoding from it
-    $currDir = rawurldecode($currDir);
-}
+elseif ($HTTP_GET_VARS['currDir'])
+    $currDir = $HTTP_GET_VARS['currDir'];
+
+// Strip URL encoding
+$currDir = rawurldecode($currDir);
+
+// Get image, if there is one.
+if (! $image)
+    $image = $HTTP_GET_VARS['image'];
+
+// Get pageType.  If there isn't one, default to "folder"
+if (! $pageType)
+    $pageType = $HTTP_GET_VARS['pageType'];
+
+if (! $pageType)
+    $pageType = 'folder';
+
+if (! $jump)
+    $jump = $HTTP_GET_VARS['jump'];         // for track_vars
 
 // Read configuration file
-if (file_exists($configFile)) {
+if (file_exists($configFile))
     include($configFile);
-}
 
-// Set up language parameters
+// Grab appropriate language from library
 $mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
 
-// Change $baseDir for PHP-Nuke compatibility mode
-if ($phpNukeCompatible) {
+// Change baseDir for PHP-Nuke compatibility mode
+if ($phpNukeCompatible)
     $baseDir .= '/mig';
-}
 
 // Backward compatibility with older config.php/mig.cfg versions
-if ($maxColumns) {
+if ($maxColumns)
     $maxThumbColumns = $maxColumns;
-}
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (get_magic_quotes_gpc() == 1) {
@@ -71,21 +62,21 @@ if (get_magic_quotes_gpc() == 1) {
 // Turn off magic_quotes_runtime (causes trouble with some installations)
 set_magic_quotes_runtime(0);
 
+//
 // Handle any password authentication needs
+//
 
-$workCopy = $currDir;       // temporary copy of $currDir
+$workCopy = $currDir;     // temporary copy of currDir
 
 while ($workCopy) {
 
     if ($protect[$workCopy]) {
 
         // Try to get around the track_vars/register_globals problem
-        if (! $PHP_AUTH_USER) {
+        if (! $PHP_AUTH_USER)
             $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
-        }
-        if (! $PHP_AUTH_PW) {
+        if (! $PHP_AUTH_PW)
             $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
-        }
 
         // If there's not a username yet, fetch one by popping up a
         // login dialog box
@@ -112,27 +103,26 @@ while ($workCopy) {
     }
 
     // if $workCopy is already down to '.' just nullify to end loop
-    if ($workCopy == '.') {
+    if ($workCopy == '.')
         $workCopy = FALSE;
-    } else {
+    else
         // pare $workCopy down one directory at a time
         // so we can check back all the way to '.'
         $workCopy = ereg_replace('/[^/]+$', '', $workCopy);
-    }
+
 }
 
-$albumDir = $baseDir . '/albums';           // Where albums live
+$albumDir = $baseDir . '/albums';     // Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
-$templateDir = $baseDir . '/templates';     // Where templates live
+$templateDir = $baseDir . '/templates'; // Where templates live
 
-// $baseURL with the scriptname torn off the end
+// baseURL with the scriptname torn off the end
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
 
 // Change $baseHref for PHP-Nuke compatibility mode
-if ($phpNukeCompatible) {
+if ($phpNukeCompatible)
     $baseHref .= '/mig';
-}
 
 // Location of image library (for instance, where icons are kept)
 $imageDir = $baseHref . '/images';
@@ -144,12 +134,11 @@ $albumURLroot = $baseHref . '/albums';
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
-if ($markerType != 'prefix' and $markerType != 'suffix') {
+if ($markerType != 'prefix' and $markerType != 'suffix')
     $markerType='suffix';
-}
-if (! $markerLabel) {
+
+if (! $markerLabel)
     $markerLabel = 'th';
-}
 
 // (Try to) get around the track_vars vs. register_globals problem
 if (!$SERVER_NAME) {
@@ -169,7 +158,7 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
     exit;
 }
 
-// Is this a phpNuke compatible site?
+// Is this a PHP-Nuke site?
 if ($phpNukeCompatible) {
 
     // Bail out if the root directory isn't set.
@@ -178,9 +167,8 @@ if ($phpNukeCompatible) {
         exit;
     }
 
-    if (! isset($mainfile)) {
+    if (! isset($mainfile))
         include('mainfile.php');        // PHP-Nuke library
-    }
 
     include('header.php');              // PHP-Nuke library
 
@@ -191,11 +179,10 @@ if ($phpNukeCompatible) {
         . ' bgcolor="#FFFFFF"><tr><td>';
 }
 
-// Look at $currDir from a security angle.  Don't let folks go outside
+// Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
-// if (ereg('\.\.', $currDir)) {
 if (strstr($currDir, '..')) {
-    print "SECURITY VIOLATION";
+    print "SECURITY VIOLATION - ABANDON SHIP";
     exit;
 }
 
@@ -206,38 +193,34 @@ $image = rawurldecode($image);
 list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
      $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
      $folderMaintAddr)
-    = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
+  = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
-// if $pageType is null, or "folder") generate a folder view
+// if pageType is "folder") generate a folder view
 
-if ($pageType == 'folder' or $pageType == '') {
+if ($pageType == 'folder') {
 
     // Determine which template to use
-    if ($folderTemplate) {
+    if ($folderTemplate)
         $templateFile = $folderTemplate;
-    } elseif ($phpNukeCompatible) {
+    elseif ($phpNukeCompatible)
         $templateFile = $templateDir . '/mig_folder.php';
-    } else {
+    else
         $templateFile = $templateDir . '/folder.html';
-    }
 
     // Determine page title to use
-    if ($folderPageTitle) {
+    if ($folderPageTitle)
         $pageTitle = $folderPageTitle;
-    }
 
     // Set per-folder $maintAddr if one was defined
-    if ($folderMaintAddr) {
+    if ($folderMaintAddr)
         $maintAddr = $folderMaintAddr;
-    }
 
     // Determine columns to use
-    if ($folderFolderCols) {
+    if ($folderFolderCols)
         $maxFolderColumns = $folderFolderCols;
-    }
-    if ($folderThumbCols) {
+
+    if ($folderThumbCols)
         $maxThumbColumns = $folderThumbCols;
-    }
 
     // Generate some HTML to pass to the template printer
 
@@ -281,44 +264,41 @@ if ($pageType == 'folder' or $pageType == '') {
     }
 
     // We have a bulletin
-    if ($bulletin != '') {
+    if ($bulletin != '')
         $bulletin = descriptionFrame($bulletin);
-    }
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
                               $homeLabel, $noThumbs);
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, '');
+    $youAreHere = buildYouAreHere($baseURL, $currDir, NULL);
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
     // parse the template file and print to stdout
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
-                  $folderList, $imageList, $backLink, '', '', '', $newCurrDir,
-                  $pageTitle, '', '', '', $bulletin, $youAreHere, $distURL,
-                  $albumDir, $server);
+                  $folderList, $imageList, $backLink, NULL, NULL, NULL,
+                  $newCurrDir, $pageTitle, NULL, NULL, NULL, $bulletin,
+                  $youAreHere, $distURL, $albumDir);
 
 
-// If $pageType is "image", show an image
+// If pageType is "image", show an image
 
 } elseif ($pageType == 'image') {
 
     // Set per-foler page title if one was defined
-    if ($folderPageTitle) {
+    if ($folderPageTitle)
         $pageTitle = $folderPageTitle;
-    }
 
     // Set per-folder maintAddr if one was defined
-    if ($folderMaintAddr) {
+    if ($folderMaintAddr)
         $maintAddr = $folderMaintAddr;
-    }
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
+    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', NULL, NULL,
                               $noThumbs);
 
     // Get the "next image" and "previous image" links, and the current
@@ -330,11 +310,11 @@ if ($pageType == 'folder' or $pageType == '') {
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    if ($commentFilePerImage) {
+    if ($commentFilePerImage)
         $description  = getImageDescFromFile($image, $albumDir, $currDir);
-    } else {
+    else
         $description  = getImageDescription($image, $desc);
-    }
+
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
                                           $viewCamInfo, $viewDateInfo);
 
@@ -352,28 +332,26 @@ if ($pageType == 'folder' or $pageType == '') {
     }
 
     // If there's a description at all, frame it in a table.
-    if ($description != '') {
+    if ($description != '')
         $description = descriptionFrame($description);
-    }
 
     // Build the "you are here" line
     $youAreHere = buildYouAreHere($baseURL, $currDir, $image);
 
     // Determine what template to use, based on what mode we are in
-    if ($phpNukeCompatible) {
+    if ($phpNukeCompatible)
         $templateFile = $templateDir . '/mig_image.php';
-    } else {
+    else
         $templateFile = $templateDir . '/image.html';
-    }
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
     // Send it all to the template printer to dump to stdout
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
-                  '', '', $backLink, $albumURLroot, $image, $currDir,
+                  NULL, NULL, $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir, $server);
+                  $description, $youAreHere, $distURL, $albumDir);
 }
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke
