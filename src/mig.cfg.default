@@ -153,6 +153,7 @@ $sortType = 'default';
 //   koi8r  Russian KOI8-R
 //   tr     Turkish
 //   se     Swedish
+//   da     Danish
 //
 // If you want to translate MiG into another language, please contact
 // dan@tangledhelix.com.

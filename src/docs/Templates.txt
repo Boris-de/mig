@@ -91,6 +91,11 @@ MIG TEMPLATES
         #include custom.html;             # WRONG - no quotes
         <p>#include "custom.html";</p>    # WRONG - not alone on line
 
+    4. As of version 1.2.5 you can include PHP files as well as
+    other types of files. The one difference is that for PHP files
+    you have to make sure the filename has an extension of either
+    ".php" or ".php3"
+
     Look at either image.html or folder.html for an example
     (`#include' is used to embed the CSS style sheet file
     `style.css').

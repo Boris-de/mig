@@ -59,6 +59,10 @@ MiG - A general purpose photo gallery management system.
 
     Installation is fairly straightforward.
 
+    NOTE: the following directions presume you have a unix shell on
+    your server. If you have only FTP access, please refer to
+    docs/FTPinstall.txt.
+
     1. Unpack this archive and enter the resulting directory.
 
         gzip -dc mig-VERSION.tar.gz | tar xf -
@@ -451,7 +455,8 @@ MiG - A general purpose photo gallery management system.
 
     (see mig.cfg.default for more information - MiG now supports
     English, French, German, Norwegian, Portugese, Finnish,
-    Romanian, Russian Windows-1251, Russian KOI8-R and Turkish)
+    Romanian, Russian Windows-1251, Russian KOI8-R, Turkish, Swedish
+    and Danish)
 
   BUG REPORTING
 

@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.4';
+$version = '1.2.5';
 
 // URL to call myself again
 if ($PHP_SELF)      // if using register_globals

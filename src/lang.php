@@ -20,6 +20,7 @@
 //  koi8r   Russian KOI8-R
 //  tr      Turkish
 //  se      Swedish
+//  da      Danish
 //
 
 // English (default)
@@ -155,7 +156,7 @@ $mig_messages['tr'] = array (
     'up_one' => 'bir&nbsp;seviye&nbsp;yukar&#253;'
 );
 
-// Swedish courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
+// Swedish - courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
 $mig_messages['se'] = array (
     'backhome' => 'tillbaka',
     'bytes' => '&nbsp;byte',
@@ -166,6 +167,19 @@ $mig_messages['se'] = array (
     'previmage' => 'f&ouml;reg&aring;ende&nbsp;bild',
     'thumbview' => 'tillbaka&nbsp;till&nbsp;miniatyrbilderna',
     'up_one' => 'tillbaka&nbsp;till&nbsp;f&ouml;reg&aring;ende&nbsp;sida'
+);
+
+// Danish - courtesy of Mikkel Mondrup Kristensen <hh00d-mmk@uv.horshs.dk>
+$mig_messages['da'] = array (
+    'backhome' => 'tilbage&nbsp;til',
+    'bytes' => '&nbsp;bytes',
+    'main' => 'Main',
+    'must_auth' => 'Du skal skrive et gyldigt brugernavn og password for at komme ind',
+    'nextimage' => 'n&#230;ste&nbsp;billed',
+    'no_contents' => 'intet&nbsp;inhold.',
+    'previmage' => 'forrige&nbsp;billed',
+    'thumbview' => 'tilbage&nbsp;til&nbsp;oversigten',
+    'up_one' => 'tilbage'
 );
 
 ?>

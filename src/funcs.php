@@ -82,12 +82,20 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
                 $incl_file = $line;
                 if (file_exists("$templateDir/$incl_file")) {
 
-                    // virtual() only works for Apache
-                    if ( eregi('^apache', $GLOBALS['SERVER_SOFTWARE'])
-                         and $useVirtual )
-                             virtual("$templateDir/$incl_file");
-                    else
-                             readfile("$templateDir/$incl_file");
+                    // Is this a PHP file?
+                    if (eregi('\.php3?', $incl_file)) {
+                        // include as php
+                        include("$templateDir/$incl_file");
+
+                    } else {        // Not PHP, either CGI or just text
+
+                        // virtual() only works for Apache
+                        if ( eregi('^apache', $GLOBALS['SERVER_SOFTWARE'])
+                             and $useVirtual )
+                                 virtual("$templateDir/$incl_file");
+                        else
+                                 readfile("$templateDir/$incl_file");
+                    }
 
                 } else {
                     $line = '<!-- ERROR: #include directive failed.'
@@ -1069,4 +1077,3 @@ function imageFrame( $input )
 
 
 ?>
-
