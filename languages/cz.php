@@ -6,28 +6,28 @@
 $mig_config["lang_lib"]["cz"] = array (
        "am"            => "AM",
        "pm"            => "PM",
-       "backhome"      => "zp¨§t&nbsp;dom0–1",
-       "bytes"         => "&nbsp;byt0–1",
-       "flash_used"    => "flash&nbsp;pou0—6it",
-       "largelink"     => "zobrazit&nbsp;velk0‹5&nbsp;obr¨¢zek",
-       "largeview"     => "zp¨§t&nbsp;na&nbsp;zobrazen¨ª&nbsp;mal0‹5ch&nbsp;obr¨¢zk0–1",
-       "main"          => "Hlavn¨ª",
-       "must_auth"     => "Mus¨ªte&nbsp;vlo0—6it&nbsp;spr¨¢vn¨¦&nbsp;jm¨¦no&nbsp;a"
+       "backhome"      => "zpìt&nbsp;domù",
+       "bytes"         => "&nbsp;bytù1",
+       "flash_used"    => "flash&nbsp;pou¾it",
+       "largelink"     => "zobrazit&nbsp;velký&nbsp;obrázek",
+       "largeview"     => "zpìt&nbsp;na&nbsp;zobrazení&nbsp;malý‹5ch&nbs;obrázkù",      
+       "main"          => "Hlavní",
+       "must_auth"     => "Musíte&nbsp;vlo¾it&nbsp;správné&nbsp;jméno&nbsp;a"
                         . "&nbsp;heslo&nbsp;pro&nbsp;vstup",
-       "nextimage"     => "n¨¢sleduj¨ªc¨ª&nbsp;obr¨¢zek",
-       "no_contents"   => "0—5¨¢dn¨¦&nbsp;obr¨¢zky.",
-       "previmage"     => "p0”0edchoz¨ª&nbsp;obr¨¢zek",
-       "thumbview"     => "zp¨§t&nbsp;na&nbsp;zobrazen¨ª&nbsp;n¨¢hled0–1",
+       "nextimage"     => "následující&nbsp;obrázek",
+       "no_contents"   => "¾ádné&nbsp;obrázky.",
+       "previmage"     => "pøedchozí&nbsp;obrázek",
+       "thumbview"     => "zpìt&nbsp;na&nbsp;zobrazení&nbsp;náhledù",
        // total_images is special.  It has three elements you can use:
        //     %t :    Total images in folder
        //     %s :    First image shown this page
        //     %e :    Last image shown this page
-       "total_images"  => "Zobrazuji&nbsp;obr¨¢zky&nbsp;%s-%e&nbsp;z&nbsp;%t"
+       "total_images"  => "Zobrazuji&nbsp;obrázky&nbsp;%s-%e&nbsp;z&nbsp;%t"
                         . "&nbsp;celkem<br />",
-       "up_one"        => "o&nbsp;¨²rove¨¾&nbsp;v0‹50”8e",
-       "month"         => array ( "01" => "Led", "02" => "0‰3no", "03" => "B0”0e",
-                                  "04" => "Dub", "05" => "Kv¨§", "06" => "0Œ9en",
-                                  "07" => "0Œ9ec", "08" => "Srp", "09" => "Z¨¢0”0",
-                                  "10" => "0“9¨ªj", "11" => "Lis", "12" => "Pro" )
+       "up_one"        => "o&nbsp;úroveò&nbsp;vý¹e",
+       "month"         => array ( "01" => "Led", "02" => "Úno", "03" => "Bøe",
+                                  "04" => "Dub", "05" => "Kvì", "06" => "Èen",
+                                  "07" => "Èec", "08" => "Srp", "09" => "Záø",
+                                  "10" => "Øíj", "11" => "Lis", "12" => "Pro" )
 );
 
