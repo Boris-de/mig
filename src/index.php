@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.3';
+$version = '1.2.4';
 
 // URL to call myself again
 if ($PHP_SELF)      // if using register_globals
@@ -104,10 +104,12 @@ if (file_exists($configFile))
     $realConfig = $configFile;
 else
     $realConfig = $defaultConfigFile;
-if (file_exists($realConfig))
+if (file_exists($realConfig)) {
     include($realConfig);
-else
-    die("FATAL ERROR: Configuration file missing!");
+} else {
+    print "FATAL ERROR: Configuration file missing!";
+    exit;
+}
 
 // Change $baseDir for PHP-Nuke compatibility mode
 if ($phpNukeCompatible)
@@ -115,17 +117,20 @@ if ($phpNukeCompatible)
 
 // Load function library
 $funcsFile = $baseDir . '/funcs.php';
-if (file_exists($funcsFile))
+if (file_exists($funcsFile)) {
     include($funcsFile);
-else
-    die("FATAL ERROR: Function library missing!");
+} else {
+    print "FATAL ERROR: Function library missing!";
+    exit;
+}
 
 // Load language library
 $langFile = $baseDir . '/lang.php';
-if (file_exists($langFile))
+if (file_exists($langFile)) {
     include($langFile);
-else
-    die("FATAL ERROR: Language library missing!");
+} else {
+    print "FATAL ERROR: Language library missing!";
+}
 
 // Backward compatibility with older mig.cfg versions
 if ($maxColumns)
@@ -235,8 +240,10 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
 if ($phpNukeCompatible) {
 
     // Bail out if the root directory isn't set.
-    if (!$phpNukeRoot)
-        die("FATAL ERROR: phpNuke Root Directory is not set.");
+    if (!$phpNukeRoot) {
+        print "FATAL ERROR: phpNuke Root Directory is not set.";
+        exit;
+    }
 
     if (!isset($mainfile))
         include('mainfile.php');        // PHP-Nuke library
@@ -252,8 +259,10 @@ if ($phpNukeCompatible) {
 
 // Look at $currDir from a security angle.  Don't let folks go outside
 // the album directory base
-if (ereg('\.\.', $currDir))
-    die("SECURITY VIOLATION");
+if (ereg('\.\.', $currDir)) {
+    print "SECURITY VIOLATION";
+    exit;
+}
 
 // strip URL encoding here too
 $image = rawurldecode($image);

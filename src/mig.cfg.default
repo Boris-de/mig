@@ -152,6 +152,7 @@ $sortType = 'default';
 //   ru     Russian Windows-1251
 //   koi8r  Russian KOI8-R
 //   tr     Turkish
+//   se     Swedish
 //
 // If you want to translate MiG into another language, please contact
 // dan@tangledhelix.com.

@@ -19,6 +19,7 @@
 //  ru      Russian Windows-1251
 //  koi8r   Russian KOI8-R
 //  tr      Turkish
+//  se      Swedish
 //
 
 // English (default)
@@ -152,6 +153,19 @@ $mig_messages['tr'] = array (
     'previmage' => '&#246;nceki&nbsp;resim',
     'thumbview' => 'k&#252;&#231;&#252;k&nbsp;resimlere&nbsp;geri&nbsp;d&#246;n',
     'up_one' => 'bir&nbsp;seviye&nbsp;yukar&#253;'
+);
+
+// Swedish courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
+$mig_messages['se'] = array (
+    'backhome' => 'tillbaka',
+    'bytes' => '&nbsp;byte',
+    'main' => 'F&ouml;rsta&nbsp;sidan',
+    'must_auth' => 'Du m&aring;ste ange korrekt anv&auml;ndarnamn och l&ouml;senord f&ouml;r att komma vidare',
+    'nextimage' => 'n&auml;sta&nbsp;bild',
+    'no_contents' => 'Det&nbsp;h&auml;r&nbsp;albumet&nbsp;&auml;r&nbsp;tomt',
+    'previmage' => 'f&ouml;reg&aring;ende&nbsp;bild',
+    'thumbview' => 'tillbaka&nbsp;till&nbsp;miniatyrbilderna',
+    'up_one' => 'tillbaka&nbsp;till&nbsp;f&ouml;reg&aring;ende&nbsp;sida'
 );
 
 ?>

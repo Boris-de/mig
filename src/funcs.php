@@ -54,8 +54,10 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
 {
 
     // Panic if the template file doesn't exist.
-    if (!file_exists("$templateDir/$templateFile"))
-        die("ERROR: $templateDir/$templateFile does not exist!");
+    if (!file_exists("$templateDir/$templateFile")) {
+        print "ERROR: $templateDir/$templateFile does not exist!";
+        exit;
+    }
 
     $file = fopen("$templateDir/$templateFile",'r'); // Open template file
     $line = fgets($file, 4096);                         // Get first line
