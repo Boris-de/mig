@@ -1,10 +1,10 @@
 #!/usr/bin/perl -w
 #
 # Contributed & written by : Dan Lowe <dan@tangledhelix.com>
-# This used to be in the main MiG distribution but is now deprecated and is
+# This used to be in the main Mig distribution but is now deprecated and is
 # in the contrib directory.
 #
-# Convert meta-files from old MiG (0.83 and before) to new MiG (0.90 and
+# Convert meta-files from old Mig (0.83 and before) to new Mig (0.90 and
 # later).  This does the current directory, but you can grab
 # "convert-metafiles" too which does it recursively for all subfolders.
 #
