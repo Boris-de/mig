@@ -209,10 +209,10 @@ while ($workCopy) {
     }
 }
 
-$albumDir = $baseDir . '/albums';// Where albums live
+$albumDir = $baseDir . '/albums';           // Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
-$templateDir = $baseDir . '/templates';// Where templates live
+$templateDir = $baseDir . '/templates';     // Where templates live
 
 // $baseURL with the scriptname torn off the end
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
@@ -270,7 +270,7 @@ if ($phpNukeCompatible) {
         include('mainfile.php');        // PHP-Nuke library
     }
 
-    include('header.php');  // PHP-Nuke library
+    include('header.php');              // PHP-Nuke library
 
     // A table to nest MiG in, inside the PHPNuke framework
     print '<table width="100%" border="0" cellspacing="0" cellpadding="2"'

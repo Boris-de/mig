@@ -149,10 +149,10 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
         exit;
     }
 
-    $file = fopen("$templateDir/$templateFile",'r'); // Open template file
+    $file = fopen("$templateDir/$templateFile",'r');    // Open template file
     $line = fgets($file, 4096);                         // Get first line
 
-    while (! feof($file)) {// Loop until EOF
+    while (! feof($file)) {             // Loop until EOF
 
         // Look for include directives and process them
         if (ereg('^#include', $line)) {
@@ -226,15 +226,15 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                 $line = str_replace("%%$val%%", $$val, $line);
             }
 
-            print $line;// Print resulting line
+            print $line;                // Print resulting line
         }
-        $line = fgets($file, 4096);// Grab another line
+        $line = fgets($file, 4096);     // Grab another line
     }
 
     fclose($file);
     return TRUE;
 
-}// -- End of printTemplate()
+}    // -- End of printTemplate()
 
 
 
@@ -245,7 +245,7 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
                         $hidden, $presorted )
 {
 
-    $oldCurrDir = $currDir;// Stash this to build full path with
+    $oldCurrDir = $currDir;         // Stash this to build full path with
 
     // Create a URL-encoded version of $currDir
     $enc_currdir = $currDir;
@@ -269,8 +269,8 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
         }
     }
 
-    ksort($directories);// sort so we can yank them in sorted order
-    reset($directories);// reset array pointer to beginning
+    ksort($directories);    // sort so we can yank them in sorted order
+    reset($directories);    // reset array pointer to beginning
 
     // snatch each element from $directories and shove it on the end of
     // $presorted
@@ -278,7 +278,7 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
         $presorted[$file] = TRUE;
     }
 
-    reset($presorted);// reset array pointer
+    reset($presorted);          // reset array pointer
 
     // Track columns
     $row = 0;
@@ -342,7 +342,7 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
 
     return $directoryList;
 
-}// -- End of buildDirList()
+} // -- End of buildDirList()
 
 
 
@@ -357,13 +357,13 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $description )
 {
 
-    $dir = opendir("$albumDir/$currDir");// Open directory handle
+    $dir = opendir("$albumDir/$currDir");       // Open directory handle
 
-    $row = 0;// Counters for the table formatting
+    $row = 0;               // Counters for the table formatting
     $col = 0;
 
-    $maxColumns--;// Tricks maxColumns into working since it
-// really starts at 0, not 1.
+    $maxColumns--;          // Tricks maxColumns into working since it
+                            // really starts at 0, not 1.
 
     // prototype the arrays
     $imagefiles     = array ();
@@ -402,10 +402,10 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         }
     }
 
-    ksort($imagefiles);// sort, so we get a sorted list to stuff onto the
+    ksort($imagefiles); // sort, so we get a sorted list to stuff onto the
                         // end of $presorted
 
-    reset($imagefiles);// reset array pointer
+    reset($imagefiles); // reset array pointer
 
     if ($sortType == "bydate-ascend") {
         ksort($filedates);
@@ -428,7 +428,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         }
     }
 
-    reset($presorted);// reset array pointer
+    reset($presorted);          // reset array pointer
 
     while (list($file,$junk) = each($presorted)) {
 
@@ -473,7 +473,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 
     return $imageList;
 
-}// -- End of buildImageList()
+}   // -- End of buildImageList()
 
 
 
@@ -527,7 +527,7 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
 
     return $retval;
 
-}// -- End of buildBackLink()
+}   // -- End of buildBackLink()
 
 
 
@@ -686,7 +686,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     $url .= '</td>';        // Close table cell
     return $url;
 
-}// -- End of buildImageURL()
+}   // -- End of buildImageURL()
 
 
 
@@ -733,8 +733,8 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
     closedir($dir); 
 
-    ksort($fileList);// sort, so we see sorted results
-    reset($fileList);// reset array pointer
+    ksort($fileList);       // sort, so we see sorted results
+    reset($fileList);       // reset array pointer
 
     // snatch each element from $filelist and shove it on the end of
     // $presorted
@@ -742,11 +742,11 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
         $presorted[$file] = TRUE;
     }
 
-    reset($presorted);// reset array pointer
+    reset($presorted);      // reset array pointer
 
     // Gather all files into an array
 
-    $i = 1; // iteration counter, etc
+    $i = 1;                 // iteration counter, etc
 
     // Yes, position 0 is garbage.  Makes the math easier later.
     $fList = array ( 'blah' ); 
@@ -757,12 +757,12 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
         if ($file == $image) {
             $ThisImagePos = $i;
         }
-        $fList[$i] = $file;// Stash filename in the array
-        $i++;              // increment the counter, of course.
+        $fList[$i] = $file;     // Stash filename in the array
+        $i++;                   // increment the counter, of course.
     } 
     reset($fList);
 
-    $i--;// Get rid of the last increment...
+    $i--;                       // Get rid of the last increment...
 
     // Next is one more than $ThisImagePos.  Test if that has a value
     // and if it does, consider it "next".
@@ -821,7 +821,7 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     $retval = array( $nLink, $pLink, $currPos );
     return $retval;
 
-}// -- End of buildNextPrevLinks()
+}   // -- End of buildNextPrevLinks()
 
 
 
@@ -885,7 +885,7 @@ function buildYouAreHere( $baseURL, $currDir, $image, $language,
     $hereString = '<font size="-1">' . $x . '</font>';
     return $hereString;
 
-}// -- End of buildYouAreHere()
+}   // -- End of buildYouAreHere()
 
 
 
@@ -898,7 +898,7 @@ function getFileExtension( $file )
 
     return $ext;
 
-}// -- End of getFileExtension()
+}   // -- End of getFileExtension()
 
 
 
@@ -911,7 +911,7 @@ function getFileName( $file )
 
     return $fname;
 
-}// -- End of getFileName()
+}   // -- End of getFileName()
 
 
 
@@ -927,7 +927,7 @@ function getImageDescription( $image, $description )
     }
     return $imageDesc;
 
-}// -- End of getImageDescription()
+}   // -- End of getImageDescription()
 
 
 
@@ -940,7 +940,7 @@ function getExifDescription( $albumDir, $currDir, $image )
     if (file_exists("$albumDir/$currDir/exif.inf")) {
 
         $file = fopen("$albumDir/$currDir/exif.inf", 'r');
-        $line = fgets($file, 4096);// get first line
+        $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
             if (ereg('^BEGIN ', $line)) {
                 $fname = ereg_replace('^BEGIN ', '', $line);
@@ -959,7 +959,7 @@ function getExifDescription( $albumDir, $currDir, $image )
         return "";
     }
 
-}// -- End of getExifDescription()
+}   // -- End of getExifDescription()
 
 
 
@@ -974,7 +974,7 @@ function getNewCurrDir( $currDir )
     $newCurrDir = migURLencode($newCurrDir);
     return $newCurrDir;
 
-}// -- End of getNewCurrDir()
+}   // -- End of getNewCurrDir()
 
 
 
@@ -985,14 +985,14 @@ function migURLencode( $string )
 {
 
     $new = $string;
-    $new = rawurldecode($new);// decode first
-    $new = rawurlencode($new);// then encode
+    $new = rawurldecode($new);      // decode first
+    $new = rawurlencode($new);      // then encode
 
-    $new = str_replace('%2F', '/', $new);// slash (/)
+    $new = str_replace('%2F', '/', $new);       // slash (/)
 
     return $new;
 
-}// -- End of migURLencode()
+}   // -- End of migURLencode()
 
 
 
@@ -1008,7 +1008,7 @@ function folderFrame( $input )
 
     return $retval;
 
-}// -- End of folderFrame()
+}   // -- End of folderFrame()
 
 
 
@@ -1022,7 +1022,7 @@ function descriptionFrame( $input )
 
     return $retval;
 
-}// -- End of descriptionFrame()
+}   // -- End of descriptionFrame()
 
 
 
@@ -1036,7 +1036,7 @@ function imageFrame( $input )
 
     return $retval;
 
-}// -- End of imageFrame()
+}   // -- End of imageFrame()
 
 
 ?>
