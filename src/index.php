@@ -460,7 +460,7 @@ if ($pageType == 'folder' or $pageType == '') {
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke
 if ($phpNukeCompatible) {
-    print '</table></center></td></tr></table></td></tr></table>';
+    print '</table></center></td></tr></table>';
     include('footer.php');
 }
 
