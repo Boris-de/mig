@@ -7,6 +7,8 @@ $mig_config['lang_lib']['ru'] = array (
                      . '&ntilde;&yuml;&nbsp;&ecirc;',
     'bytes'         => '&nbsp;&aacute;&agrave;&eacute;&ograve;',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => '&Euml;&egrave;&ouml;&aring;&acirc;&agrave;&yuml;',
     'must_auth'     => '&Acirc;&ucirc; &auml;&icirc;&euml;&aelig;&iacute;'
                      . '&ucirc; &acirc;&acirc;&aring;&ntilde;&ograve;&egrave;'
@@ -22,15 +24,15 @@ $mig_config['lang_lib']['ru'] = array (
     'previmage'     => '&iuml;&eth;&aring;&auml;&ucirc;&auml;&oacute;&ugrave;'
                      . '&agrave;&yuml;&nbsp;&ecirc;&agrave;&eth;&ograve;'
                      . '&egrave;&iacute;&icirc;&agrave;',
-    // total_images is special.  It has three elements you can use:
-    //     %t :    Total images in folder
-    //     %s :    First image shown this page
-    //     %e :    Last image shown this page
     'thumbview'     => '&acirc;&aring;&eth;&iacute;&oacute;&ograve;&uuml;'
                      . '&ntilde;&yuml;&nbsp;&ecirc;&nbsp;&oacute;&igrave;'
                      . '&aring;&iacute;&uuml;&oslash;&aring;&iacute;&iacute;'
                      . '&icirc;&igrave;&oacute;&nbsp;&acirc;&egrave;&auml;'
                      . '&oacute;',
+    // total_images is special.  It has three elements you can use:
+    //     %t :    Total images in folder
+    //     %s :    First image shown this page
+    //     %e :    Last image shown this page
     'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
                      . '&nbsp;total<br />',
     'up_one'        => '&iuml;&eth;&aring;&auml;&ucirc;&auml;&oacute;&ugrave;'

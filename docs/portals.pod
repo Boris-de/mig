@@ -25,13 +25,18 @@ http://phpdbform.com/ (tested with 0.5test7)
 
 =item Xoops
 
-http://xoops.org/ (Tested with RC3.0.5)
+http://xoops.org/ (tested with RC3.0.5)
+
+=item Geeklog
+
+http://geeklog.sourceforge.net/ (tested with 1.3.6)
 
 =back
 
 =head2 Installing for PHP-Nuke, PostNuke, PHPWebSite or PHPWebThings
 
-(Xoops users, see the Xoops section below).
+(Xoops users, see the Xoops section below.  Geeklog users, see the Geeklog
+section below.)
 
 Find the base install directory for your content management system.  Using
 PHP-Nuke as an example, I'll assume that it's F</www/mysite.com/nuke>
@@ -126,7 +131,8 @@ the folder structure when you copy / move the files).
 
 Edit Mig's F<config.php> and set C<$mig_xoopsCompatible> to TRUE.
 You may have to change C<$mig_xoopsRoot>, but the default should
-work in most cases.
+work in most cases.  Optionally set C<$mig_xoopsRBlockForImage> and
+C<$mig_xoopsRBlockForFolder> as you wish.
 
 =item 4.
 
@@ -135,4 +141,23 @@ The module is called "Photo Album".
 
 =back
 
+=head2 Installing for Geeklog sites
+
+=over 4
+
+=item 1.
+
+Instead of the templates that the F<install> document mentions, copy over
+the two files in F<templates/portals>.  The HTML and CSS files Mig normally
+uses are not used in Geeklog mode.
+
+=item 2.
+
+Edit Mig's F<config.php> and set C<$mig_GeeklogCompatible> to TRUE.  Change
+C<$mig_GeeklogRoot> to the base directory of your Geeklog installation.
+Use the public docs directory, not the private admin directory.  Do not use
+a trailing slash ("/").  Optionally set C<$mig_GeeklogRBlockForImage> and
+C<$mig_GeeklogRBlockForFolder> as you wish.
+
 =cut
+

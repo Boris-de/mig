@@ -5,14 +5,15 @@
 
  <!-- navigation -->
 <center>
- <small>%%prevLink%% %%nextLink%% %%backLink%%<br /></small>
+ <small>%%prevLink%% %%nextLink%% %%backLink%% %%largeLink%%<br /></small>
  <br />
 </center>
 
 <!-- image display -->
 <center>
- <img src="%%albumURLroot%%/%%newCurrDir%%/%%encodedImageURL%%"
-      alt="%%image%%" %%imageSize%%><br/>
+%%largeHrefStart%%<img
+    src="%%albumURLroot%%/%%newCurrDir%%/%%encodedImageURL%%"
+    alt="%%image%%" %%imageSize%%%%largeLinkBorder%%>%%largeHrefEnd%%<br/>
  <br />
 </center>
 
@@ -23,7 +24,7 @@
 
  <!-- navigation and site info -->
 <center>
- <small>%%prevLink%% %%nextLink%% %%backLink%%</small>
+ <small>%%prevLink%% %%nextLink%% %%backLink%% %%largeLink%%</small>
  <br />
 </center>
 

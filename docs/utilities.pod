@@ -38,15 +38,17 @@ extra installations were needed).
     File::Find
     Getopt::Std
 
-F<mkGallery.pl> has not been tested under Microsoft Windows to my knowledge.
+F<mkGallery.pl> has not been tested under Microsoft Windows by the author.
 
-  Usage:
+    Usage:
+
     mkGallery.pl [ -h ] [ -a ] [ -w ] [ -t ] [ -e ] [ -c ] [ -i ]
         [ -s <size> ] [ -q <quality> ] [ -M <type> ] [ -m <label> ]
-        [ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ]
+        [ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ] [ -f <file> ]
         [ <file1> <file2> <...> ]
 
       -h : Prints this help message.
+      -f : Use alternate configuration file (config.php)
       -a : Process all image files in current directory.
       -w : Turn over-write on.  By default, files written such
            as the EXIF file will be appended to rather than
@@ -56,7 +58,7 @@ F<mkGallery.pl> has not been tested under Microsoft Windows to my knowledge.
       -e : Build "exif.inf" file.  You must compile the jhead
            utility (included) before you can use the -e option.
       -c : Generate blank comments for uncommented images.
-      -i : "Interactive" mode for comments
+      -i : "Interactive" mode for comments.
       -s : Set pixel size for thumbnails.
       -q : Set quality level for thumbnails.
       -M : Define type of "prefix" or "suffix".
@@ -64,9 +66,11 @@ F<mkGallery.pl> has not been tested under Microsoft Windows to my knowledge.
       -n : Only process thumbnails that don't exist (new-only).
            Will also process thumbnails which are older than the
            full-size images they are associated with.
+           If using with -e, only files not already cached
+           in exif.inf will be processed for EXIF data.
       -r : Recursive mode - process this folder as well as any
            folders and subfolders beneath it.
-      -d : Use thumbnail subdirectories (instead of using _th, etc).
+      -d : Use thumbnail subdirectories (instead of using _th, etc)
       -D : Name of thumbnail subdirectory to use (default is "thumbs" or
            whatever is in your config.php file).
       -E : File extension to use for thumbnails.
@@ -74,10 +78,12 @@ F<mkGallery.pl> has not been tested under Microsoft Windows to my knowledge.
            be off because profiles in thumbnails are not useful
            but add a lot to the file size.
 
-    * If creating thumbnails, "convert" must be in your $PATH.
-    * This program supports JPEG, PNG and GIF formats.
-    * The "-e" feature only supports JPEG files.
-      Mig - http://mig.sourceforge.net/
+ * If creating thumbnails, "convert" must be in your $PATH.
+ * This program supports JPEG, PNG and GIF formats.
+ * The "-e" feature only supports JPEG files.
+ * See the "utilities" document for more information.
+
+   Mig - http://mig.sourceforge.net/
 
 =head2 Generating EXIF files
 
@@ -87,6 +93,10 @@ use the C<-e> flag.
 B<NOTE>: If you use C<-e> without C<-w>, your EXIF files will be appended
 to, instead of overwritten.  In some circumstances this ends up making your
 EXIF files grow and grow by appending the same data over and over again.
+For this reason, C<-e> should always be used with either C<-w> or C<-n>.
+The author recommends C<-n> as it reads the existing EXIF file to see what
+was already cached, then only parses new images for data - this is more
+efficient then erasing the file each time and starting over with all images.
 
 =head2 A note about pixel sizes
 
@@ -155,6 +165,11 @@ thumbnail file, re-generate the thumbnail.
 If C<-n> is not specified, a new thumbnail will be generated for every
 image.
 
+If using C<-n> along with C<-e> (EXIF mode), only images not already
+cached in the exif.inf file will be processed for EXIF data.  If C<-w>
+is also being used this is not the case, since the exif.inf file is
+removed before processing takes place (so no cache is present).
+
 =head2 Recursive mode
 
 Recursive mode makes it simple to do large chunks of an album.  For
@@ -169,7 +184,7 @@ New users can simply go to their root (F<albums>) and invoke C<mkGallery.pl
 entire gallery.
 
 Personally I find C<-rant> to be the most useful combination of modes.
-It's also easy to remember.
+It's also easy to remember.  Add -e for EXIF parsing (C<-trane>).
 
 Recursive mode works with all of the action modes (C<-c>, C<-e>, C<-t>).
 

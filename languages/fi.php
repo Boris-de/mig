@@ -6,6 +6,8 @@ $mig_config['lang_lib']['fi'] = array (
     'backhome'      => 'takaisin',
     'bytes'         => '&nbsp;byte&auml;',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Etusivu',
     'must_auth'     => 'Sinun&nbsp;pit&auml;&auml;&nbsp;antaa&nbsp;oikea'
                      . '&nbsp;tunnus&nbsp;ja&nbsp;salasana'

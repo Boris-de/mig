@@ -6,6 +6,8 @@ $mig_config['lang_lib']['br'] = array (
     'backhome'      => 'voltar&nbsp;para',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash&nbsp;usado',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Principal',
     'must_auth'     => 'Voc&ecirc;&nbsp;deve&nbsp;entrar&nbsp;com&nbsp;um'
                      . '&nbsp;login&nbsp;e&nbsp;senha&nbsp;v&aacute;lido'

@@ -8,6 +8,7 @@ function getImageDescFromFile ( $image, $albumDir, $currDir, $short_flag )
 
     $imageDesc = '';
     $fname = getFileName($image);
+    $fname = rawurldecode($fname);
 
     if (file_exists("$albumDir/$currDir/$fname.txt")) {
 

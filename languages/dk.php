@@ -6,6 +6,8 @@ $mig_config['lang_lib']['dk'] = array (
     'backhome'      => 'Tilbage&nbsp;til',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'Flash&nbsp;brugt',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Hovedside',
     'must_auth'     => 'Du&nbsp;skal&nbsp;skrive&nbsp;et&nbsp;gyldigt'
                      . '&nbsp;brugernavn&nbsp;og&nbsp;password'

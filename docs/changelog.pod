@@ -2,6 +2,64 @@
 
 =head2 MIG Change Log
 
+=head2 Version 1.4.0 (NOT YET RELEASED)
+
+Added F<config.php> options C<$imagePopMaxWidth> and C<$imagePopMaxHeight>
+related to popup windows.
+
+Added support for "large" or full-size images.  That is, in addition to
+thumbnails and normal images, one can specify a directory of full size
+images (generally speaking this would be the original images from the
+camera, but they could be any larger image you choose to use).  They use
+the same filename as the normal image but live in the directory specified
+by C<$largeSubdir> (by default, this is "large").  This entire feature is
+off by default.  To turn it on, set C<$useLargeImages> to C<TRUE>.
+
+Added new template tags to support large images: C<largeLink>,
+C<largeHrefStart>, C<largeHrefEnd>, C<largeLinkBorder>.  See the
+F<templates> document for more details.  These four tags must be present in
+your F<image.html> or F<mig_image.php> template for large image support to
+function.  Either copy the new F<image.html> over your old one or use it as
+a guide to modify your custom template.
+
+Added new template files F<large.html> and F<mig_large.php> to support
+large images.  You don't need to use these files if you aren't planning to
+use large image support, but if you are, copy the appropriate one to your
+templates directory - F<large.html> for normal users, F<mig_large.php> for
+users of PHP-Nuke, et al.
+
+Added new F<config.php> options to support large images:
+C<$useLargeImages>, C<$largeSubdir>, C<$largeLinkFromMedium>,
+C<$largeLinkUseBorders>.  See F<config.php> for more details.
+
+Added new language tags C<largeview> and C<largelink> to each translation
+to support large images.
+
+Modified F<mkGallery.pl> with regard to EXIF behavior.  Now if C<-n> and
+C<-e> are both used, only files not already cached in F<exif.inf> will be
+examined for EXIF data.  This has no effect if C<-w> is also used, because
+in that case the F<exif.inf> file is removed before processing takes place,
+and the cache is therefore empty.  Also changed the flags passed to
+F<jhead> since the existing behavior using C<-v> (verbose) made no sense.
+It just added extra junk to the cache file that served no useful purpose.
+Improved the code to find the location of F<jhead> by adding its directory
+to the execution path temporarily during F<mkGallery.pl> execution.
+
+C<$pathConvertFlag>, C<$pathConvertRegex> and C<$pathConvertTarget>
+have moved to F<index.php>.  This is because they are used to
+include F<config.php>, so obviously they can't be located inside it.
+
+Fixed bug in C<getImageDescFromFile()> that was not URL-decoding filenames.
+
+Added Geeklog compatibility mode.  See F<config.php> and the F<portals>
+document.
+
+Reversed the order of entries in the F<credits> document - I always felt
+bad that new entries were at the bottom, since they were less likely to get
+read, especially as the list got longer.  So now the newer entries are near
+the top and will be more visible (although will still sink down the list
+over time).  I think this is more fair than the other ordering.
+
 =head2 Version 1.3.8 (Fri, 25 Oct 2002)
 
 If Mig is called with no parameters, it will redirect to itself with

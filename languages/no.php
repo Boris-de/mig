@@ -8,6 +8,8 @@ $mig_config['lang_lib']['no'] = array (
     'backhome'      => 'tilbake',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Galleriet',
     'must_auth'     => 'Du&nbsp;m&aring;&nbsp;oppgi&nbsp;gyldig'
                      . '&nbsp;brukernavn&nbsp;og&nbsp;passord',

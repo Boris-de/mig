@@ -4,7 +4,8 @@
 
 function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
                               $markerType, $markerLabel,
-                              $hidden, $presorted, $sortType, $startFrom )
+                              $hidden, $presorted, $sortType, $startFrom,
+                              $pageType, $largeSubdir )
 {
     global $mig_config;
     global $mig_dl;
@@ -13,7 +14,11 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     $newCurrDir = getNewCurrDir($currDir);
 
     if (is_dir("$albumDir/$currDir")) {
-        $dir = opendir("$albumDir/$currDir");  // Open directory handle
+        if ($pageType == 'large') {
+            $dir = opendir("$albumDir/$currDir/$largeSubdir");
+        } else {
+            $dir = opendir("$albumDir/$currDir");
+        }
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
         exit;
@@ -142,8 +147,8 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     // else show a real link
     } else {
         $pLink = '&nbsp;[&nbsp;<a href="' . $baseURL
-               . '?pageType=image&amp;currDir=' . $currDir . '&amp;image='
-               . $prev;
+               . '?pageType=' . $pageType . '&amp;currDir=' . $currDir
+               . '&amp;image=' . $prev;
         if ($startFrom) {
             $pLink .= '&amp;startFrom=' . $startFrom;
         }
@@ -162,8 +167,8 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     // else show a real link
     } else {
         $nLink = '&nbsp;[&nbsp;<a href="' . $baseURL
-               . '?pageType=image&amp;currDir=' . $currDir . '&amp;image='
-               . $next;
+               . '?pageType=' . $pageType . '&amp;currDir=' . $currDir
+               . '&amp;image=' . $next;
         if ($startFrom) {
             $nLink .= '&amp;startFrom=' . $startFrom;
         }

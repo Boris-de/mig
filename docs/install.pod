@@ -57,6 +57,7 @@ make sure to read the F<portals> document.
     PHPWebSite
     PHPWebThings
     Xoops
+    Geeklog
 
 =head2 New Installation
 
@@ -179,12 +180,13 @@ Starting with version 1.3.1, F<mig.cfg> is now called F<config.php>.
 If F<mig.cfg> is present, rename it to F<config.php>.  The distribution
 comes with F<config.php.default>, which is the new default config file.
 F<config.php.default> is just an example.  There is no need to copy it over
-to the Mig directory.
+to the Mig directory, but you might want to look it over to see if new
+settings are available which you'd want to use.
 
 =item 3.
 
 Starting with version 1.3.2, the F<funcs.php> and F<lang.php> files are no
-longer used.  If they are prsent, delete them.  All code is now contained in
+longer used.  If they are present, delete them.  All code is now contained in
 F<index.php>.  Mig will not fail if F<funcs.php> or F<lang.php> are
 present, but it's sloppy to leave them laying around.
 
@@ -203,7 +205,10 @@ the new CSS file.
 If you wish to use F<mkGallery.pl>, copy mkGallery.pl from the F<utilities>
 directory to the F<utilities> subdirectory of your Mig installation.  You
 may need to modify the first line if Perl is somewhere other than
-F</usr/bin/perl> on your system.
+F</usr/bin/perl> on your system.  If you already have F<mkGallery.pl>,
+check the F<changelog> document to see if it's been changed since you
+last installed it.  You may want to copy a fresh version of it over your
+old copy.
 
 =item 6.
 
@@ -214,6 +219,10 @@ F<jhead> was last updated, check the E<quot>changelogE<quot> document).
 
 If you want F<mkGallery.pl> to be able to use F<jhead>, put F<jhead> in the
 F<utilities> subdirectory of your Mig installation with F<mkGallery.pl>.
+
+If you already have F<jhead>, check the F<changelog> document to see if
+it's been upgraded since you last installed it.  You may want to install
+a fresh version over your old copy.
 
 =back
 
@@ -250,6 +259,16 @@ appear as E<quot>Mig Example GalleryE<quot>.
 You can see a list of sites using Mig at: http://mig.sf.net/users.php
 
 If you'd like to list your site there, email me: at dan@tangledhelix.com
+
+=head2 How much does Mig cost?
+
+Mig is free.  But I don't object to getting postcards if you feel like
+telling me how much you like Mig.  Postcards can be sent to:
+
+    Dan Lowe
+    P.O. Box 5725
+    Cleveland, OH  44095
+    USA
 
 =head2 Optional Customization
 
@@ -374,6 +393,12 @@ desired (how many thumbnails across from left to right in one row).  Set
 C<$maxThumbRows> to the maximum number of rows per page/screen.  The
 defaults are 4 columns and 5 rows (for 20 images per page).
 
+Note that even with pagination, Mig still has to look over the entire
+directory (to sort it, decide what is on which page, etc) and in really
+large directories, you'll still run into problems.  Mig may take a long
+time to run, etc.  It's best to keep directories down to more reasonable
+sizes (after all, that's why directories were invented - organization).
+
 =item 8. Using random thumbnails instead of folder icons
 
 Instead of using the generic folder icon for folder views, Mig can use a
@@ -412,8 +437,8 @@ instructions on how to name the files and where to put them.
 
 =item 2.  I am getting a bunch of errors in my browser!
 
-You (or your web server admin) probably have C<error_reporting> set
-incorrectly in the PHP configuration in your web server.  Put this line
+You (or your web server admin) probably have C<error_reporting> set too
+high in the PHP configuration in your web server.  Put this line
 near the top of F<index.php> (but not before the E<quot>E<lt>?phpE<quot>
 line at the top).
 

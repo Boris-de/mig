@@ -7,6 +7,8 @@ $mig_config['lang_lib']['de'] = array (
     'backhome'      => 'zur&uuml;ck&nbsp;zu',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'Blitz&nbsp;benutzt',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Hauptverzeichnis',
     'must_auth'     => 'F&uuml;r&nbsp;den&nbsp;Zugang&nbsp;m&uuml;ssen&nbsp;'
                      . 'Sie&nbsp;eine&nbsp;g&uuml;ltige&nbsp;Benutzerkennung'

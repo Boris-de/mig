@@ -2,7 +2,7 @@
 // buildBackLink() - spits out a "back one section" link
 
 function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
-                         $noThumbs, $startFrom )
+                         $noThumbs, $startFrom, $pageType, $image )
 {
 
     global $mig_config;
@@ -12,7 +12,11 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     if ($type == 'back' or $noThumbs) {
         $label = $mig_config['lang']['up_one'];
     } elseif ($type == 'up') {
-        $label = $mig_config['lang']['thumbview'];
+        if ($pageType == 'large') {
+            $label = $mig_config['lang']['largeview'];
+        } elseif ($pageType == 'image') {
+            $label = $mig_config['lang']['thumbview'];
+        }
     }
 
     // don't send a link back if we're a the root of the tree
@@ -47,6 +51,11 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     }
     if ($mig_dl) {
         $retval .= '&amp;mig_dl=' . $mig_dl;
+    }
+    if ($pageType == 'image') {
+        $retval .= '&amp;pageType=folder&amp;image=' . $image;
+    } elseif ($pageType == 'large') {
+        $retval .= '&amp;pageType=image&amp;image=' . $image;
     }
     $retval .= '">' . $label . '</a>&nbsp;]&nbsp;';
 

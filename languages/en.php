@@ -6,6 +6,8 @@ $mig_config['lang_lib']['en'] = array (
     'backhome'      => 'back&nbsp;to',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Main',
     'must_auth'     => 'You&nbsp;must&nbsp;enter&nbsp;a&nbsp;valid'
                      . '&nbsp;username&nbsp;and&nbsp;password&nbsp;to'

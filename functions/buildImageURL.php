@@ -9,7 +9,8 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
                          $imagePopType, $imagePopLocationBar,
                          $imagePopMenuBar, $imagePopToolBar,
                          $commentFilePerImage, $startFrom,
-                         $commentFileShortComments, $showShortOnThumbPage )
+                         $commentFileShortComments, $showShortOnThumbPage,
+                         $imagePopMaxWidth, $imagePopMaxHeight, $pageType )
 {
     global $mig_config;
     global $mig_dl;
@@ -160,6 +161,14 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
     if ($imagePopup) {
         $popup_width = $imageWidth + 30;
         $popup_height = $imageHeight + 150;
+        
+        // Add max size for popup window
+        if ($popup_width > $imagePopMaxWidth) {
+            $popup_width = $imagePopMaxWidth;
+        }
+        if ($popup_height > $imagePopMaxHeight) {
+            $popup_height = $imagePopMaxHeight;
+        }
         $url .= '#" onClick="window.open(\'';
     }
 
@@ -215,7 +224,7 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
                 $url .= ' alt="' . $alt_desc . '"';
             }
 
-        $url .= ' border="0" ' . $thumbHTML . '>';
+        $url .= ' border="0" ' . $thumbHTML . '/>';
     }
 
     $url .= '</a>';     // End the <A> element

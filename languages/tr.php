@@ -6,6 +6,8 @@ $mig_config['lang_lib']['tr'] = array (
     'backhome'      => 'geri&nbsp;d&ouml;n:',
     'bytes'         => '&nbsp;bit',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Ana',
     'must_auth'     => 'Ge&ccedil;erli&nbsp;bir&nbsp;kullan&yacute;c&yacute;'
                      . '&nbsp;ad&yacute;&nbsp;ve&nbsp;&thorn;ifre'

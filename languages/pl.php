@@ -6,6 +6,8 @@ $mig_config['lang_lib']['pl'] = array (
     'backhome'      => 'powr&oacute;t&nbsp;do',
     'bytes'         => '&nbsp;bajt&oacute;w',
     'flash_used'    => 'u&iquest;yto&nbsp;Flash',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
     'main'          => 'G&sup3;&oacute;wna',
     'must_auth'     => 'Musisz&nbsp;wpisa&aelig;&nbsp;prawid&sup3;ow&sup1;'
                      . '&nbsp;nazw&ecirc;&nbsp;u&iquest;ytkownika&nbsp;i'

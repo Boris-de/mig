@@ -6,6 +6,8 @@ $mig_config['lang_lib']['nl'] = array (
     'backhome'      => 'Terug&nbsp;naar',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Hoofdmenu',
     'must_auth'     => 'Je&nbsp;moet&nbsp;een&nbsp;geldige&nbsp;naam&nbsp;en'
                      . '&nbsp;wachtwoord&nbsp;invoeren&nbsp;om&nbsp;hier'

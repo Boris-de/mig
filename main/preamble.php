@@ -41,6 +41,8 @@ $version = 'VeRsIoN';
 // Do not modify this file directly.  Please see docs/text/install.txt
 // or docs/html/install.html for installation directions.  Most things
 // you'd want to customize can be customized outside of this file.
+// (Exception: if you need to use the $pathConvert* features those should
+// be modified here).
 //
 // If you find that is not the case, and you hack in support for some
 // feature you want to see in Mig, please contact me with a code diff and

@@ -6,6 +6,8 @@ $mig_config['lang_lib']['se'] = array (
     'backhome'      => 'tillbaka',
     'bytes'         => '&nbsp;byte',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'F&ouml;rsta&nbsp;sidan',
     'must_auth'     => 'Du&nbsp;m&aring;ste&nbsp;ange&nbsp;korrekt'
                      . '&nbsp;anv&auml;ndarnamn&nbsp;och&nbsp;l&ouml;senord'

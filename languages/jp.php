@@ -6,6 +6,8 @@ $mig_config['lang_lib']['jp'] = array (
     'backhome'      => 'ホームに戻る&nbsp;-',
     'bytes'         => '&nbsp;バイト',
     'flash_used'    => 'Flush&nbsp;Used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'メインページ',
     'must_auth'     => 'ユーザ名とパスワードを入力してください'
                      . '&nbsp;Enter&nbsp;を押してください',

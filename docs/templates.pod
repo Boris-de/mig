@@ -108,11 +108,13 @@ markup.
 
 =back
 
-If you are using PHP-Nuke, PostNuke or phpWebThings, these three files will
-not exist.  This is called E<quot>NukeE<quot> mode.  In their place you'll
-find F<mig_folder.php> and F<mig_image.php> which are the same basically as
-F<folder.html> and F<image.html> respectively.  In Nuke mode the CSS file
-is not used (Nuke systems have their own CSS already).
+If you are using PHP-Nuke, PostNuke, phpWebThings, PHPWebSite, XOOPS or
+Geeklog these three files will not exist.  This is called
+E<quot>PortalE<quot> mode.  In their place you'll find F<mig_folder.php>
+and F<mig_image.php> which are the same basically as F<folder.html> and
+F<image.html> respectively.  In Portal mode the CSS file is not used (Portal
+systems usually have their own CSS definitions).  See the F<portal>
+document for more about how to properly install things in Portal mode.
 
 =head2 Defined Tags
 
@@ -204,7 +206,7 @@ an & instead of ?
 
 =item 2.
 
-Tags used only in F<folder.html> (or F<mig_folder.php> in Nuke mode)
+Tags used only in F<folder.html> (or F<mig_folder.php> in Portal mode)
 
 =over 4
 
@@ -222,7 +224,7 @@ displays a list of images in the current folder.
 
 =item 3.
 
-Tags used only in F<image.html> (or F<mig_image.php> in Nuke mode)
+Tags used only in F<image.html> (or F<mig_image.php> in Portal mode)
 
 =over 4
 
@@ -256,6 +258,24 @@ there's a space embedded in it or something.
 
 HTML that gives WIDTH=nnn and HEIGHT=nnn tags
 for the image being displayed.
+
+=item largeLink
+
+Expands to a navigation link pointing to the large version of an image when
+using large-image support
+
+=item largeHrefStart
+
+Expands to an E<lt>a hrefE<gt> surrounding a medium size image when using
+large-image support
+
+=item largeHrefEnd
+
+Expands to E<lt>/aE<gt> when using large-image support
+
+=item largeLinkBorder
+
+Used to turn borders on or off in accordance with C<$largeLinkUseBorders>
 
 =back
 

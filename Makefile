@@ -20,6 +20,7 @@ default:
 	@echo "    make dist ver=X            Builds distribution bundle"
 	@echo "    make index ver=X           Builds just index.php"
 	@echo "    make docpublish            Publishes docs to mig.sf.net"
+	@echo "    make clean"
 	@echo " "
 	@echo "    make index2                index2.php to tangledhelix.com"
 	@echo "    make test                  index to local test gallery"
@@ -59,7 +60,7 @@ dist: index
 
 index:
 	( echo '<?php'; sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
-	  cat main/defaults.php; \
+	  cat main/pathConvert.php; cat main/defaults.php; \
 	  echo '//'; echo '// Function library'; echo '//'; \
 	  cat functions/*.php; \
 	  echo '//'; echo '// Language library'; echo '//'; \
@@ -103,20 +104,13 @@ gallery_th: index
 test: index
 	cp index.php $(WEB)/gallery
 
-phpnuke: index
+cms: index
 	cp index.php $(WEB)/phpnuke/mig.php
-
-postnuke: index
 	cp index.php $(WEB)/postnuke/mig.php
-
-phpwebsite: index
 	cp index.php $(WEB)/phpwebsite/mig.php
-
-phpwebthings: index
 	cp index.php $(WEB)/phpwebthings/mig.php
-
-xoops: index
 	cp index.php $(WEB)/xoops/modules/mig/index.php
 
-cms: phpnuke postnuke phpwebsite phpwebthings xoops
+clean:
+	rm -rf docs/html docs/text index.php
 

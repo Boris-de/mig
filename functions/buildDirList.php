@@ -228,7 +228,7 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
         $altlabel = str_replace('_', ' ', $file);
 
         // Output the rest of the link, label, etc.
-        $directoryList .= '" border="0" alt="' . $altlabel . '"></a>' . $sep
+        $directoryList .= '" border="0" alt="' . $altlabel . '"/></a>' . $sep
                        . $linkURL . $nbspfile . '</a>';
 
         // Display counts if appropriate

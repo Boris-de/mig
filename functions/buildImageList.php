@@ -10,7 +10,8 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                           $imagePopType, $imagePopLocationBar,
                           $imagePopMenuBar, $imagePopToolBar,
                           $commentFilePerImage, $startFrom,
-                          $commentFileShortComments, $showShortOnThumbPage )
+                          $commentFileShortComments, $showShortOnThumbPage,
+                          $imagePopMaxWidth, $imagePopMaxHeight, $pageType )
 {
     global $mig_config;
     global $mig_dl;
@@ -231,7 +232,8 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                                      $imagePopLocationBar, $imagePopMenuBar,
                                      $imagePopToolBar, $commentFilePerImage,
                                      $startFrom, $commentFileShortComments,
-                                     $showShortOnThumbPage);
+                                     $showShortOnThumbPage, $imagePopMaxWidth,
+                                     $imagePopMaxHeight, $pageType);
                 $imageList .= $img;
 
                 // Keep track of what row and column we are on

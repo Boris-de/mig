@@ -6,6 +6,8 @@ $mig_config['lang_lib']['sk'] = array (
     'backhome'      => 'sp&auml;?&nbsp;na',
     'bytes'         => '&nbsp;bytov',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Hlavn&aacute;&nbsp;str&aacute;nka',
     'must_auth'     => 'Mus&iacute;te&nbsp;uvies?&nbsp;u?&iacute;vate'
                      . '&frac34;sk&eacute;&nbsp;meno&nbsp;a&nbsp;heslo&nbsp;'

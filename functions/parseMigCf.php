@@ -1,7 +1,8 @@
 
 // parseMigCf - Parse a mig.cf file
 
-function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
+function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir,
+                      $useLargeImages, $largeSubdir )
 {
 
     // What file to parse
@@ -19,6 +20,11 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
     // Hide thumbnail subdirectory if one is in use.
     if ($useThumbSubdir) {
         $hidden[$thumbSubdir] = TRUE;
+    }
+
+    // Hide large subdirectory if one is in use.
+    if ($useLargeImages) {
+        $hidden[$largeSubdir] = TRUE;
     }
 
     if (file_exists("$directory/$cfgfile")) {

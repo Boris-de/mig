@@ -6,6 +6,8 @@ $mig_config['lang_lib']['ro'] = array (
     'backhome'      => '&icirc;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Principal',
     'must_auth'     => 'Pentru&nbsp;a&nbsp;intra,&nbsp;trebuie&nbsp;sa'
                      . '&nbsp;introduceti&nbsp;un&nbsp;nume&nbsp;de'

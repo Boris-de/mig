@@ -62,8 +62,12 @@ my $myself = File::Basename::basename($0);  # Program name
 my $mydir  = File::Basename::dirname($0);   # Directory $myself lives in
 my $myRoot = cwd;                           # Directory I was started in
 
-my $exifProg = $mydir . '/jhead';           # Location of jhead program
-my $exifArgs = '-v';                        # Flags to pass jhead
+# Add this to the exec path - easier to find jhead than with relative paths.
+# This will not modify the path outside of mkGallery.pl.
+$ENV{'PATH'} .= ":$myRoot/$mydir";
+
+my $exifProg = 'jhead';                     # Name of jhead program
+my $exifArgs = '';                          # Pass no args to jhead
 my $exifFile = 'exif.inf';                  # File to store exif data in
 
 # Defaults for boolean command-line flags
@@ -125,6 +129,7 @@ my @origfile        = ();
 my @newfile         = ();
 my %FILE            = ();
 my %EXT             = ();
+my %exifCache       = ();
 
 # Set appropriate flag variables
 $allFlag            = 1 if $opt{'a'};   # set "process all images" flag
@@ -169,8 +174,8 @@ if ($recurseFlag and not $allFlag) {
     exit(1);
 }
 
-# Error out and exit if -n is present without -t
-if ($newOnlyFlag and not $thumbFlag) {
+# Error out and exit if -n is present without either -t or -e
+if ($newOnlyFlag and not ($thumbFlag or $exifFlag)) {
     print "ERROR: -n specified without -t.\n\n";
     exit(1);
 }
@@ -189,7 +194,7 @@ unless ($allFlag or $ARGV[0]) {
 
 # If "-e" is specified but $exifProg isn't executable, bail out.
 if ($exifFlag) {
-    unless (-x $exifProg) {
+    unless (-x "$mydir/$exifProg") {
         print "\nERROR: \"-e\" specified, but $exifProg not found.\n";
         print "See the file docs/Utilities.txt for more information.\n\n";
         exit(1);
@@ -305,9 +310,15 @@ foreach (@processDirs) {
         }
     }
 
-    # If -e and -w were used, remove any existing exif.inf files
+    # If -e and -w were used, remove any existing exif.inf file
     if ($exifFlag and $overwriteFlag) {
         unlink $exifFile;
+    }
+
+    # if we used -n and -e then cache Exif info for later;
+    # so we only process images not already in exif.inf
+    if ($exifFlag and $newOnlyFlag) {
+        %exifCache = &cacheExifInfo;
     }
 
     # If -c was used, process comment file
@@ -383,7 +394,9 @@ foreach (@processDirs) {
             }
         }
 
-        if ($exifFlag and $EXT{$item} =~ /^(jpg|jpe|jpeg)$/i) { # only for JPG
+        if ( $exifFlag and not $exifCache{$item}
+             and $EXT{$item} =~ /^(jpg|jpe|jpeg)$/i )
+        {
             print "Parsing $orig_file EXIF header...\n";
             &getExifInfo($exifProg, $exifArgs, $exifFile, $orig_file);
         }
@@ -448,9 +461,9 @@ sub getExifInfo {
     open(EXIF,"$exifProg $exifArgs \"$image\"|")
                         or die "Can't exec $exifProg\n";
 
-    print OUT "BEGIN $image\n";
+    print OUT "\nBEGIN $image\n";
     print OUT while <EXIF>;
-    print OUT "\n";
+    #print OUT "\n";
     close EXIF;
 
     close OUT;
@@ -458,6 +471,43 @@ sub getExifInfo {
     return 1;
 
 }   # -- End of getExifInfo()
+
+
+
+# cacheExifInfo() - Reads a jhead output file (exif.inf), caches the list
+# of images it contains.  This list is then used to only run jhead against
+# images that aren't already in there.  Returns a hash (keys are files
+# that were found).
+
+sub cacheExifInfo {
+
+    my %files = ();
+    my $line;
+
+    unless (open(EXIF, $exifFile)) {
+        # If we couldnt open the file, just return a bogus list
+        %files = ( 'foo' => 'bar' );
+        return %files;
+    }
+
+    # I had to use $line here instead of $_ for some bizarre reason.
+    # $_ was in global scope and broke things after the sub was done,
+    # but I couldn't scope it locally either.  Perl is normally
+    # better behaved than this about scoping when using strict.
+
+    while ($line = <EXIF>) {
+        chomp($line);
+        if ($line =~ m/^File name\s*:/i) {
+            $line =~ s/^File name\s*:\s*//i;
+            $files{$line} = 1;
+        }
+    }
+
+    close EXIF;
+
+    return %files;
+
+}   # -- End of cacheExifInfo()
 
 
 
@@ -471,45 +521,54 @@ sub helpMessage {
     my $email = shift;
     my $exifFile = shift;
 
-    print "\nUsage:\n";
-    print "   $myself [ -h ] [ -a ] [ -w ] [ -t ] [ -e ] [ -c ] [ -i ]\n";
-    print "\t[ -s <size> ] [ -q <quality> ] [ -M <type> ] [ -m <label> ]\n";
-    print "\t[ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ] [ -f <file> ]\n";
-    print "\t[ <file1> <file2> <...> ]\n\n";
-    print "      -h : Prints this help message.\n";
-    print "      -f : Use alternate configuration file (config.php)\n";
-    print "      -a : Process all image files in current directory.\n";
-    print "      -w : Turn over-write on.  By default, files written such\n";
-    print "           as the EXIF file will be appended to rather than\n";
-    print "           over-written.  Using \"-w\" indicates the file should\n";
-    print "           be over-written instead.\n";
-    print "      -t : Generate thumbnail images.\n";
-    print "      -e : Build \"$exifFile\" file.  You must compile the jhead\n";
-    print "           utility (included) before you can use the -e option.\n";
-    print "      -c : Generate blank comments for uncommented images.\n";
-    print "      -i : \"Interactive\" mode for comments.\n";
-    print "      -s : Set pixel size for thumbnails.\n";
-    print "      -q : Set quality level for thumbnails.\n";
-    print "      -M : Define type of \"prefix\" or \"suffix\".\n";
-    print "      -m : thumbnail marker label (default \"th\").\n";
-    print "      -n : Only process thumbnails that don't exist (new-only).\n";
-    print "           Will also process thumbnails which are older than the\n";
-    print "           full-size images they are associated with.\n";
-    print "      -r : Recursive mode - process this folder as well as any\n";
-    print "           folders and subfolders beneath it.\n";
-    print "      -d : Use thumbnail subdirectories (instead of using _th, etc)\n";
-    print "      -D : Name of thumbnail subdirectory to use (default is \"thumbs\" or\n";
-    print "           whatever is in your config.php file).\n";
-    print "      -E : File extension to use for thumbnails.\n";
-    print "      -K : Keep profiles in thumbnails.  Normally this should\n";
-    print "           be off because profiles in thumbnails are not useful\n";
-    print "           but add a lot to the file size.\n";
-    print "\n";
-    print " * If creating thumbnails, \"convert\" must be in your \$PATH.\n";
-    print " * This program supports JPEG, PNG and GIF formats.\n";
-    print " * The \"-e\" feature only supports JPEG files.\n";
-    print " * See the \"utilities\" document for more information.\n\n";
-    print "   $pkgName - $url\n\n";
+    print <<__EOF__;
+
+Usage:
+
+    $myself [ -h ] [ -a ] [ -w ] [ -t ] [ -e ] [ -c ] [ -i ]
+        [ -s <size> ] [ -q <quality> ] [ -M <type> ] [ -m <label> ]
+        [ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ] [ -f <file> ]
+        [ <file1> <file2> <...> ]
+
+      -h : Prints this help message.
+      -f : Use alternate configuration file (config.php)
+      -a : Process all image files in current directory.
+      -w : Turn over-write on.  By default, files written such
+           as the EXIF file will be appended to rather than
+           over-written.  Using "-w" indicates the file should
+           be over-written instead.
+      -t : Generate thumbnail images.
+      -e : Build "$exifFile" file.  You must compile the jhead
+           utility (included) before you can use the -e option.
+      -c : Generate blank comments for uncommented images.
+      -i : "Interactive" mode for comments.
+      -s : Set pixel size for thumbnails.
+      -q : Set quality level for thumbnails.
+      -M : Define type of "prefix" or "suffix".
+      -m : thumbnail marker label (default "th").
+      -n : Only process thumbnails that don't exist (new-only).
+           Will also process thumbnails which are older than the
+           full-size images they are associated with.
+           If using with -e, only files not already cached
+           in $exifFile will be processed for EXIF data.
+      -r : Recursive mode - process this folder as well as any
+           folders and subfolders beneath it.
+      -d : Use thumbnail subdirectories (instead of using _th, etc)
+      -D : Name of thumbnail subdirectory to use (default is "thumbs" or
+           whatever is in your config.php file).
+      -E : File extension to use for thumbnails.
+      -K : Keep profiles in thumbnails.  Normally this should
+           be off because profiles in thumbnails are not useful
+           but add a lot to the file size.
+
+ * If creating thumbnails, "convert" must be in your \$PATH.
+ * This program supports JPEG, PNG and GIF formats.
+ * The "-e" feature only supports JPEG files.
+ * See the "utilities" document for more information.
+
+   $pkgName - $url
+
+__EOF__
 
     return 1;
 

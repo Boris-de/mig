@@ -202,6 +202,95 @@ $useRealRandThumbs = TRUE;
 
 
 //
+// $useLargeImages
+//      Boolean to turn large image support on or off.
+//
+//      Only turn this feature on if you intend to have three sizes of
+//      image - the thumbnail, the regular size version, and a full-size
+//      "large" version, such as the original file from the camera.  Most
+//      users will want to leave this turned off.
+//
+//      If set to TRUE, Mig will look for a "large" version of the image
+//      in $largeSubdir.  If one is found, a link will be generated
+//      pointing to the large image.
+//
+//      If $largeLinkFromMedium is TRUE, clicking on the medium image
+//      will also take the user to the large image.  If you don't want
+//      a link printed, but just want to have people click on the medium
+//      image only, remove the %%largeLink%% tag from your image.html
+//      or mig_image.php template file.
+//
+//      To use this feature, make sure the following tags are defined in
+//      your image.html or mig_image.php template:
+//
+//          %%largeLink%%       [optional, see above]
+//          %%largeHrefStart%%
+//          %%largeHrefEnd%%
+//          %%largeLinkBorder%%
+//
+//      Also, copy over large.html (or for PHP-Nuke etc, use mig_large.php)
+//      to your templates folder.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $useLargeImages = FALSE;
+//
+
+$useLargeImages = FALSE;
+
+
+//
+// $largeSubdir
+//      Name of subdirectory to use for "large" images.  This option is
+//      ignored if $useLargeImages is FALSE.
+//
+// Defaults to 'large'.
+//
+// Example:
+//      $largeSubdir = 'large';
+//
+
+$largeSubdir = 'large';
+
+
+//
+// $largeLinkFromMedium
+//      If TRUE, when viewing a normal image, clicking the image will
+//      take you to the large version of the image (if present).
+//
+//      If FALSE, clicking on the normal image will do nothing, regardless
+//      of the presence or absence a large version.
+//
+//      In either case, if the template tag %%largeLink%% is used, a link
+//      to the image will be printed along with the other navigational
+//      links on the page.
+//      
+// Defaults to TRUE.
+//
+// Example:
+//      $largeLinkFromMedium = TRUE;
+//
+
+$largeLinkFromMedium = TRUE;
+
+
+//
+// $largeLinkUseBorders
+//      When $largeLinkFromMedium is TRUE, this setting determines whether
+//      to show the link border around a medium image or not.  If TRUE,
+//      the border is shown, if FALSE it is not shown.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $largeLinkUseBorders = FALSE;
+//
+
+$largeLinkUseBorders = FALSE;
+
+
+//
 // $folderNameLength
 //      If $randomFolderThumbs is TRUE, folder names will be truncated
 //      if they are longer than $folderNameLength characters.  This is
@@ -483,6 +572,34 @@ $imagePopToolBar = FALSE;
 
 
 //
+// $imagePopMaxWidth
+//      The maximum initial width for a popup window (in pixels).
+//      
+// Defaults to 640.
+//
+// Example:
+//      $imagePopMaxWidth = 640;
+//
+//
+
+$imagePopMaxWidth = 640;
+
+
+//
+// $imagePopMaxHeight
+//      The maximum initial height for a popup window (in pixels).
+//
+// Defaults to 480.
+//
+// Example:
+//      $imagePopMaxHeight = 480;
+//
+//
+
+$imagePopMaxHeight = 480;
+
+
+//
 // $commentFilePerImage
 //     If $commentFilePerImage is set to TRUE, then instead of using just
 //     the mig.cf file to contain comments, each image file will have a
@@ -671,7 +788,7 @@ $mig_language = 'en';
 
 
 // -----------------------------------------------------------------
-// CONTENT MANAGEMENT SYSTEMS
+// CONTENT MANAGEMENT SYSTEMS (Portals)
 //
 // Compatible with:
 //
@@ -680,6 +797,7 @@ $mig_language = 'en';
 //      phpWebSite              http://phpwebsite.appstate.edu/
 //      phpWebThings            http://phpdbform.com/
 //      Xoops                   http://xoops.org/
+//      Geeklog                 http://geeklog.sourceforge.net/
 //
 // -----------------------------------------------------------------
 //
@@ -689,6 +807,8 @@ $mig_language = 'en';
 //      Set to TRUE if you're using phpWebThings.
 // $mig_xoopsCompatible
 //      Set to TRUE if you're using XOOPS.
+// $mig_GeeklogCompatible
+//      Set to TRUE if you're using Geeklog.
 //
 //      Obviously you only want to set ONE of these to TRUE.
 //
@@ -698,11 +818,13 @@ $mig_language = 'en';
 //      $phpNukeCompatible = FALSE;
 //      $phpWebThingsCompatible = FALSE;
 //      $mig_xoopsCompatible = FALSE;
+//      $mig_GeeklogCompatible = FALSE;
 //
 
 $phpNukeCompatible = FALSE;
 $phpWebThingsCompatible = FALSE;
 $mig_xoopsCompatible = FALSE;
+$mig_GeeklogCompatible = FALSE;
 
 //
 // $phpNukeRoot
@@ -716,8 +838,11 @@ $mig_xoopsCompatible = FALSE;
 // $mig_xoopsRoot
 //      Same thing, only for XOOPS.  Ignored if $mig_xoopsCompatible is
 //      FALSE.
+// $mig_GeeklogRoot
+//      Same thing, only for Geeklog.  Ignored if $mig_GeeklogCompatible
+//      is FALSE.
 //
-// $phpNukeRoot and $phpWebThingsRoot default to ''.
+// $phpNukeRoot, $phpWebThingsRoot and $mig_GeeklogRoot default to ''.
 //
 // $mig_xoopsRoot defaults to '../..'.
 //
@@ -725,20 +850,21 @@ $mig_xoopsCompatible = FALSE;
 //      $phpNukeRoot = '/www/mysite.com/nuke';
 //      $phpWebThingsRoot = '/www/mysite.com/webthings';
 //      $mig_xoopsRoot = '/www/mysite.com/xoops';
+//      $mig_GeeklogRoot = '/www/mysite.com/geeklog';
 //
 
 $phpNukeRoot = '';
 $phpWebThingsRoot = '';
 $mig_xoopsRoot = '../..';
+$mig_GeeklogRoot = '';
 
 //      
 // $mig_xoopsRBlockForImage
 // $mig_xoopsRBlockForFolder
-//      Flags to show or hide the right hand side blocks in image and
-//      folder modes
+//      Flags to show or hide the right-hand side blocks in image and
+//      folder modes (in XOOPS)
 //      
-// They default to 0 and 1, show right block for folders and hide
-// it for images.
+// They default to 0 and 1, show right block for folders, hide for images.
 //
 // Examples:
 //      $mig_xoopsRBlockForImage = 0;
@@ -747,6 +873,22 @@ $mig_xoopsRoot = '../..';
 
 $mig_xoopsRBlockForImage = 0;
 $mig_xoopsRBlockForFolder = 1;
+
+//
+// $mig_GeeklogRBlockForImage
+// $mig_GeeklogRBlockForFolder
+//      Flags to show or hide the right-hand side blocks in image and
+//      folder modes (in Geeklog)
+//
+// They default to 0 and 1, show right block for folders, hide for images.
+//
+// Examples:
+//      $mig_GeeklogRBlockForImage = 0;
+//      $mig_GeeklogRBlockForFolder = 1;
+//
+
+$mig_GeeklogRBlockForImage = 0;
+$mig_GeeklogRBlockForFolder = 1;
 
 
 // -----------------------------------------------------------------
@@ -774,76 +916,9 @@ $mig_xoopsRBlockForFolder = 1;
 //                    MODIFYING THE INCLUDE PATH
 // -----------------------------------------------------------------
 //
-// This is not normally required, but in some peculiar setups you
-// are forced to use non-real paths in order to use the include()
-// function.  That is, you have a real path, for instance:
-//      /u25/vhost/www12345/www/mig/myfile.php
-// but the ISP has PHP installed such that you need to tell include()
-// to use this virtual path instead to the same file:
-//     /mig/myfile.php
+// $pathConvertFlag, $pathConvertRegex and $pathConvertTarget
+// have moved to index.php.  This is because they are used to
+// include config.php, so obviously they can't be INSIDE it.
 //
-// To address this, the following three options exist.  Do not use
-// these unless you have to, and know you have to.  If you don't
-// need to use them and do anyway, you'll probably break Mig.
-//
-// $pathConvertFlag
-//     This is a boolean to determine if conversion is needed.  Only
-//     set this to TRUE if you know you need to do so.
-//
-// Defaults to FALSE.
-//
-// Example:
-//     $pathConvertFlag = FALSE;
-//
-
-$pathConvertFlag = FALSE;
-
-//
-// $pathConvertRegex
-//     This is a regular expression string, used to tell Mig how to
-//     modify your include path.  If you don't know regular expressions,
-//     here's probably all you need to know:
-//     
-//     ^    means "beginning of string"
-//     .*   is a wildcard for any number of characters of any kind
-//          (note - it will also match 0 characters in some cases)
-//
-//     Going back to the earlier example, if you want to start out
-//     with this:
-//         /u25/vhost/www12345/www/mig/myfile.php
-//     and end up with this:
-//         /mig/myfile.php
-//
-//     You could define:
-//         $pathConvertFlag = TRUE;
-//         $pathConvertRegex = '^.*/www/';
-//         $pathConvertTarget = '/';
-//
-//     So the regex would match this:  /u25/vhost/www12345/www/
-//     and replace it with a single slash... resulting in:
-//         /mig/myfile.php
-//
-// Defaults to an empty string.
-//
-// Example:
-//     $pathConvertRegex = '^.*/www/';
-//
-
-$pathConvertRegex = '';
-
-//
-// $pathConvertTarget
-//     This is the target string, which replaces the portion matched by
-//     the regex.  Usually this should be '/', but it can be changed.
-//     See the notes for $convertPathRegex (above) for more details.
-//
-// Defaults to an empty string.
-//
-// Example:
-//     $pathConvertTarget = '/';
-//
-
-$pathConvertTarget = '';
-
 
 ?>

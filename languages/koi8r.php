@@ -7,6 +7,8 @@ $mig_config['lang_lib']['koi8r'] = array (
                      . '&Oacute;&Ntilde;&nbsp;&Euml;',
     'bytes'         => '&nbsp;&Acirc;&Aacute;&Ecirc;&Ocirc;',
     'flash_used'    => 'flash&nbsp;used',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => '&igrave;&Eacute;&Atilde;&Aring;&times;&Aacute;'
                      . '&Ntilde;',
     'must_auth'     => '&divide;&Ugrave; &Auml;&Iuml;&Igrave;&Ouml;&Icirc;'

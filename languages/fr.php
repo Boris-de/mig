@@ -7,6 +7,8 @@ $mig_config['lang_lib']['fr'] = array (
     'backhome'      => 'Retourner&nbsp;sur',
     'bytes'         => '&nbsp;octets',
     'flash_used'    => 'flash&nbsp;utilis&eacute;',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'Liste&nbsp;des&nbsp;albums',
     'must_auth'     => 'Vous&nbsp;devez&nbsp;entrer&nbsp;un&nbsp;nom&nbsp;'
                      . 'login&nbsp;et&nbsp;un&nbsp;mot&nbsp;de&nbsp;passe'

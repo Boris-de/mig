@@ -7,7 +7,9 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $pageTitle, $prevLink, $nextLink, $currPos,
                          $description, $youAreHere, $distURL, $albumDir,
                          $pathConvertFlag, $pathConvertRegex,
-                         $pathConvertTarget )
+                         $pathConvertTarget, $pageType, $largeSubdir,
+                         $largeLink, $largeHrefStart, $largeHrefEnd,
+                         $largeLinkBorder )
 {
     global $REQUEST_URI;
     global $HTTP_SERVER_VARS;
@@ -87,9 +89,15 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
             // Make sure this is URL encoded
             $encodedImageURL = migURLencode($image);
 
+            // If pagetype is large, add largeSubdir to path.
             if ($image) {
                 // Get image pixel size for <IMG> element
-                $imageProps = GetImageSize("$albumDir/$currDir/$image");
+                if ($pageType == 'image') {
+                    $imageProps = GetImageSize("$albumDir/$currDir/$image");
+                } elseif ($pageType == 'large') {
+                    $imageProps =
+                      GetImageSize("$albumDir/$currDir/$largeSubdir/$image");
+                }
                 $imageSize = $imageProps[3];
             }
 
@@ -99,7 +107,9 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                 'imageList', 'backLink', 'currDir', 'newCurrDir',
                 'image', 'albumURLroot', 'pageTitle', 'nextLink',
                 'prevLink', 'currPos', 'description', 'youAreHere',
-                'distURL', 'encodedImageURL', 'imageSize', 'newLang'
+                'distURL', 'encodedImageURL', 'imageSize', 'newLang',
+                'largeSubdir', 'largeLink', 'largeHrefStart',
+                'largeHrefEnd', 'largeLinkBorder'
             );
 
             // Do substitution for various variables

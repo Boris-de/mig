@@ -46,13 +46,14 @@ include(convertIncludePath($pathConvertFlag, $configFile, $pathConvertRegex,
             $pathConvertTarget));
 
 // Return an error if too many modes are set at once
-$cms_count = 0;
+$usePortal = 0;
 
-if ($phpNukeCompatible)             ++$cms_count;
-if ($phpWebThingsCompatible)        ++$cms_count;
-if ($mig_xoopsCompatible)           ++$cms_count;
+if ($phpNukeCompatible)             ++$usePortal;
+if ($phpWebThingsCompatible)        ++$usePortal;
+if ($mig_xoopsCompatible)           ++$usePortal;
+if ($mig_GeeklogCompatible)         ++$usePortal;
 
-if ($cms_count > 1) {
+if ($usePortal > 1) {
     print "FATAL ERROR: more than one content management system ";
     print "is defined.";
     exit;
@@ -114,7 +115,27 @@ if ($phpNukeCompatible) {
         print "FATAL ERROR: XOOPS lib missing!\n";
         exit;
     }
+
+// or for Geeklog...
+} elseif ($mig_GeeklogCompatible) {
+    if (! $mig_GeeklogRoot) {
+        print "FATAL ERROR: \$mig_GeeklogRoot not defined!\n";
+        exit;
+    }
+    $result = chdir($mig_GeeklogRoot);
+    if (! $result) {
+        print "FATAL ERROR: can not chdir() to \$mig_GeeklogRoot!\n";
+        exit;
+    }
+    // Geeklog library
+    if (file_exists('lib-common.php')) {
+        include('lib-common.php');
+    } else {
+        print "FATAL ERROR: lib-common.php missing!\n";
+        exit;
+    }
 }
+
 
 // Get currDir.  If there isn't one, default to '.'
 if ($_GET['currDir']) {
@@ -350,7 +371,8 @@ if (! $folderSortType) {
 list($hidden, $presort_dir, $presort_img, $desc, $short_desc, $bulletin,
      $ficons, $folderTemplate, $folderPageTitle, $folderFolderCols,
      $folderThumbCols, $folderThumbRows, $folderMaintAddr, $useThumbFile)
-  = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
+  = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir,
+               $useLargeImages, $largeSubdir);
 
 // Determine page title to use
 if ($folderPageTitle) {
@@ -391,6 +413,11 @@ if ($phpNukeCompatible) {
 // Is this a XOOPS site?
 } elseif ($mig_xoopsCompatible) {
     include(XOOPS_ROOT_PATH."/header.php");
+
+// is this a Geeklog site?
+} elseif ($mig_GeeklogCompatible) {
+    echo COM_siteHeader ('menu');
+
 }
 
 // strip URL encoding here too
@@ -403,8 +430,7 @@ if ($pageType == 'folder') {
     // Determine which template to use
     if ($folderTemplate) {
         $templateFile = $folderTemplate;
-    } elseif ($phpNukeCompatible || $phpWebThingsCompatible
-              || $mig_xoopsCompatible) {
+    } elseif ($usePortal) {    // portal is in use
         $templateFile = $templateDir . '/mig_folder.php';
     } else {
         $templateFile = $templateDir . '/folder.html';
@@ -442,7 +468,8 @@ if ($pageType == 'folder') {
                                 $imagePopLocationBar, $imagePopMenuBar,
                                 $imagePopToolBar, $commentFilePerImage,
                                 $startFrom, $commentFileShortComments,
-                                $showShortOnThumbPage);
+                                $showShortOnThumbPage, $imagePopMaxWidth,
+                                $imagePopMaxHeight, $pageType);
 
     // Only frame the lists in table code when appropriate
     
@@ -495,7 +522,7 @@ if ($pageType == 'folder') {
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
-                              $homeLabel, $noThumbs, '');
+                              $homeLabel, $noThumbs, '', $pageType, $image);
 
     // build the "you are here" line
     $youAreHere = buildYouAreHere($baseURL, $currDir, '', $omitImageName);
@@ -508,24 +535,123 @@ if ($pageType == 'folder') {
                   $folderList, $imageList, $backLink, '', '', '',
                   $newCurrDir, $pageTitle, '', '', '', $bulletin,
                   $youAreHere, $distURL, $albumDir, $pathConvertFlag,
-                  $pathConvertRegex, $pathConvertTarget);
+                  $pathConvertRegex, $pathConvertTarget, $pageType,
+                  '', '', '', '', '');
 
 
 // If pageType is "image", show an image
 
 } elseif ($pageType == 'image') {
 
-    // Trick the back link into going to the right place by adding
+    // Trick back link into going to the right place by adding
     // a bogus directory at the end
     $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
-                              $noThumbs, $startFrom);
+                              $noThumbs, $startFrom, $pageType, $image);
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel,
-                                $hidden, $presort_img, $sortType, $startFrom);
+                                $hidden, $presort_img, $sortType, $startFrom,
+                                $pageType, $largeSubdir);
+    list($nextLink, $prevLink, $currPos) = $Links;
+
+    // Get image description
+    if ($commentFilePerImage) {
+        list($x, $description) = getImageDescFromFile($image, $albumDir,
+                                        $currDir, $commentFileShortComments);
+        // If getImageDescFromFile() returned false, get the normal
+        // comment if there is one.
+        if (! $description) {
+            list($x, $description) = getImageDescription($image, $desc,
+                                                         $short_desc);
+        }
+    } else {
+        list($x, $description) = getImageDescription($image, $desc,
+                                                     $short_desc);
+    }
+
+    $exifDescription = getExifDescription($albumDir, $currDir, $image,
+                                          $exifFormatString);
+
+    // If there's a description but no exifDescription, just make the
+    // exifDescription the description
+    if ($exifDescription && ! $description) {
+        $description = $exifDescription;
+        unset($exifDescription);
+    }
+
+    // If both descriptions are non-NULL, separate them with an <HR>
+    if ($description && $exifDescription) {
+        $description .= '<hr>';
+        $description .= $exifDescription;
+    }
+
+    // If there's a description at all, frame it in a table.
+    if ($description != '') {
+        $tablesummary = 'Description Frame" width="60%'; //<-- kludge for now
+        $tableclass = 'desc';
+        $description = '<center>' . $description . '</center>';
+        $description = buildTable($description, $tableclass, $tablesummary);
+    }
+
+    // Build the "you are here" line
+    $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $omitImageName);
+
+    // Which template to use.
+    if ($usePortal) {           // portal is in use
+        $templateFile = $templateDir . '/mig_image.php';
+    } else {
+        $templateFile = $templateDir . '/image.html';
+    }
+
+    // newcurrdir is currdir without the leading './'
+    $newCurrDir = getNewCurrDir($currDir);
+
+    if ($useLargeImages &&
+            file_exists("$albumDir/$currDir/$largeSubdir/$image"))
+    {
+        $largeLink = buildLargeLink($baseURL, $currDir, $image, $startFrom);
+
+        // Only build this link if we plan to use it
+        if ($largeLinkFromMedium) {
+            $largeHrefStart = buildLargeHrefStart($baseURL, $currDir,
+                                                  $image, $startFrom);
+            $largeHrefEnd = '</a>';
+        }
+
+        // Use a border?
+        if (! $largeLinkUseBorders) {
+            $largeLinkBorder = ' border="0"';
+        }
+    }
+
+    // Send it all to the template printer to dump to stdout
+    printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
+                  '', '', $backLink, $albumURLroot, $image, $currDir,
+                  $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
+                  $description, $youAreHere, $distURL, $albumDir,
+                  $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
+                  $pageType, '', $largeLink, $largeHrefStart, $largeHrefEnd,
+                  $largeLinkBorder);
+
+// If the pageType is 'large', show a large image
+
+} elseif ($pageType == 'large') {
+
+    // Trick the back link into going to the right place by adding
+    // a bogus directory at the end
+    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
+                              $noThumbs, $startFrom, $pageType, $image);
+
+    // Get the "next image" and "previous image" links, and the current
+    // position (#x of y)
+    $Links = array ();
+    $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
+                                $markerType, $markerLabel,
+                                $hidden, $presort_img, $sortType, $startFrom,
+                                $pageType, $largeSubdir);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
@@ -571,11 +697,10 @@ if ($pageType == 'folder') {
     $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $omitImageName);
 
     // Which template to use
-    if ($phpNukeCompatible || $phpWebThingsCompatible
-                || $mig_xoopsCompatible) {
-        $templateFile = $templateDir . '/mig_image.php';
+    if ($usePortal) {           // portal is in use
+        $templateFile = $templateDir . '/mig_large.php';
     } else {
-        $templateFile = $templateDir . '/image.html';
+        $templateFile = $templateDir . '/large.html';
     }
 
     // newcurrdir is currdir without the leading './'
@@ -586,7 +711,8 @@ if ($pageType == 'folder') {
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
                   $description, $youAreHere, $distURL, $albumDir,
-                  $pathConvertFlag, $pathConvertRegex, $pathConvertTarget);
+                  $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
+                  $pageType, $largeSubdir, '', '', '', '');
 }
 
 // Finish up for content management systems
@@ -615,5 +741,13 @@ if ($phpNukeCompatible) {
         $xoopsOption['show_rblock'] = $mig_xoopsRBlockForFolder;
     }
     include(XOOPS_ROOT_PATH."/footer.php");
+
+} elseif ($mig_GeeklogCompatible) {
+    if ($pageType == 'folder') {
+        echo COM_siteFooter($mig_GeeklogRBlockForFolder);
+    } else {
+        echo COM_siteFooter($mig_GeeklogRBlockForImage);
+    }
+
 }
 

@@ -7,6 +7,8 @@ $mig_config['lang_lib']['pliso'] = array (
     'backhome'      => 'powr&oacute;t&nbsp;do',
     'bytes'         => '&nbsp;bajt&oacute;w',
     'flash_used'    => 'u&iquest;yto&nbsp;Flash',
+    'largelink'     => 'view&nbsp;full-size&nbsp;image',
+    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
     'main'          => 'G?&oacute;wna',
     'must_auth'     => 'Musisz&nbsp;wpisa&aelig;&nbsp;prawid?ow&plusmn;'
                      . '&nbsp;nazw&ecirc;&nbsp;u&iquest;ytkownika&nbsp;i'
