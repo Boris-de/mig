@@ -91,7 +91,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
             if ($mig_config['markertype'] == 'suffix') {
                 $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/$fname_$markerLabel.";
+                             . "/$currDir/${fname}_$markerLabel.";
 
                 if ($mig_config['thumbext']) {
                     $thumbImage .= $mig_config['thumbext'];

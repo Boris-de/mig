@@ -4,6 +4,9 @@
 
 =head2 Version 1.4.0 (NOT YET RELEASED)
 
+Fixed variable name resolution bug related to markerlabel.  Patch courtesy
+of Mattias Ahnberg.  (Dan)
+
 Updated jp (Japanese) translation to UTF-8 provided by Masaru Onozawa (Dan)
 
 Fixed Security-Bug when modifying the image-parameter in the URL. The real filesystem path is no longer shown, mig aborts (Werner)
