@@ -37,6 +37,10 @@ mkGallery.php
 	don't have shell access to their web server).
 
 ===========================================================================
+mkthumbs.com
+	A VMS procedure to make thumbnails.
+
+===========================================================================
 phpnuke_module.php
 	A mock PHP-Nuke module so you can put Mig into the modules menu.
 
