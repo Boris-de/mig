@@ -253,7 +253,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
                 $url .= ',menubar=1';
             }
 
-            $url .= "');";
+            $url .= "');return false;";
         }
 
         $url .= '">';
