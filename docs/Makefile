@@ -22,7 +22,8 @@ text=	changelog.txt credits.txt install.txt license.txt \
 docs: $(html) $(text) sort clean
 
 $(html): %.html: %.pod
-	$(hcmd) $(hargs) --infile=$< --outfile=$@
+	$(hcmd) $(hargs) \
+		--infile=$< --outfile=$@
 
 $(text): %.txt: %.pod
 	$(tcmd) $< $@
