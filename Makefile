@@ -15,6 +15,7 @@ ARCHIVE=$(DISTDIR)/$(SPOOLDIR).tar.gz
 
 default:
 	@echo "make dist ver={version}"
+	@echo "make docpublish"
 
 mig: dist
 
@@ -51,3 +52,5 @@ index:
 	  cat main/body.php; echo '?>' \
 	) > index.php
 
+docpublish:
+	cd docs ; make publish

@@ -2,11 +2,33 @@
 
 $Id$
 
-=head2 PHP-Nuke, PostNuke and phpWebThings compatibility
+=head2 PHP-Nuke, PostNuke, PHPWebSite and PHPWebThings compatibility
 
-Mig can be configured to try to fit into PHP-Nuke, PostNuke and
-phpWebThings sites.  (For simplicity I refer to these collectively as
+Mig can be configured to try to fit into PHP-Nuke, PostNuke, PHPWebSite
+and PHPWebThings sites.  (For simplicity I refer to these collectively as
 E<quot>NukeE<quot> sites in this document.)
+
+Where to find information about these packages:
+
+=over 4
+
+=item PHP-Nuke            
+
+http://www.phpnuke.org/ (tested with 5.5)
+
+=item PostNuke
+
+http://www.postnuke.com/ (tested with 0.714)
+
+=item PHPWebSite
+
+http://phpwebsite.appstate.edu/ (tested with 0.8.2)
+
+=item PHPWebThings
+
+http://www.phpdbform.com/ (tested with 0.41)
+
+=back
 
 Find your Nuke directory.  For example we'll say this is
 F</www/mysite.com/nuke>
@@ -49,8 +71,8 @@ C<$phpWebThingsCompatible> and C<$phpWebThingsRoot>).
 
 That should be it - http://yournukesite.com/mig.php should work.
 
-PostNuke and phpWebThings users can add Mig to their menus like anything
-else, just giving F<mig.php> as the target to load.
+PostNuke, PHPWebSite and PHPWebThings users can add Mig to their menus like
+anything else, just giving F<mig.php> as the target to load.
 
 PHP-Nuke users need a little more work to get their module in place due to
 PHP-Nuke's module system.  In your modules directory, create a new module,

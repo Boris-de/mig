@@ -10,7 +10,7 @@ TAR=/usr/bin/gnutar
 
 # What to ignore when tarring
 EXCEPT= --exclude='CVS' --exclude='.DS_Store' --exclude='.Apple*' \
-	--exclude='.*.swp'
+	--exclude='.FBC*' --exclude='.*.swp'
 
 # Contrib archive
 CONTRIB=$(DISTDIR)/mig-contrib.tar.gz

@@ -4,6 +4,13 @@ $Id$
 
 =head2 MIG Change Log
 
+=head2 Version 1.3.3 (NOT YET RELEASED)
+
+Updated Danish translation with patch from Mikkel Kristensen.
+
+Tested Nuke mode with PHPWebSite 0.8.2, works fine with no changes.
+Updated F<phpnuke> document to reflect this.
+
 =head2 Version 1.3.2 (Tue, 21 May 2002)
 
 Some major changes this release - please pay attention!
