@@ -22,12 +22,9 @@ default:
 	@echo "    make docpublish            Publishes docs to mig.sf.net"
 	@echo "    make clean"
 	@echo " "
-	@echo "    make index2                index2.php to tangledhelix.com"
 	@echo "    make test                  index to local test galleries"
 	@echo "    make cms                   index to phpnuke, etc"
 	@echo "    make mig.sf.net ver=X      index & templates to mig.sf.net"
-	@echo "    make ingeni.us ver=X       index to ingeni.us"
-	@echo "    make monkeysr.us ver=X     index to monkeysr.us"
 
 mig: dist
 
@@ -62,34 +59,34 @@ index:
 	echo "<?php" > index.php
 	( sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
 	  cat main/pathConvert.php; cat main/defaults.php; \
-	  echo '//'; echo '// Function library'; echo '//'; \
+	  echo "//"; echo "// Function library"; echo "//"; \
 	  cat functions/*.php; \
-	  echo '//'; echo '// Language library'; echo '//'; \
+	  echo "//"; echo "// Language library"; echo "//"; \
 	  cat languages/*.php; \
-	  echo '//'; echo '// Main logic'; echo '//'; \
+	  echo "//"; echo "// Main logic"; echo "//"; \
 	  cat main/body.php; echo '?>' \
-	) | egrep -v '^(<\?php|\?>)' >> index.php
+	) | egrep -v "^(<\?php|\?>)" >> index.php
 	echo "?>" >> index.php
 
 docpublish:
 	cd docs ; make publish
 
-index2: index
-	scp index.php snoopy.net:/www/ingeni.us/html/gallery/index2.php
-	@echo "URL: http://ingeni.us/gallery/index2.php"
+#index2: index
+#	scp index.php snoopy.net:/www/ingeni.us/html/gallery/index2.php
+#	@echo "URL: http://ingeni.us/gallery/index2.php"
 
 mig.sf.net: index
 	scp index.php mig.sf.net:web/gallery
 	scp templates/*html templates/*.css mig.sf.net:web/gallery/templates
 	@echo "URL: http://mig.sf.net/gallery/"
 
-ingeni.us: index
-	scp index.php snoopy.net:/www/ingeni.us/html/gallery
-	@echo "URL: http://tangledhelix.com/gallery/"
+#ingeni.us: index
+#	scp index.php snoopy.net:/www/ingeni.us/html/gallery
+#	@echo "URL: http://tangledhelix.com/gallery/"
 
-monkeysr.us: index
-	scp index.php snoopy.net:/www/monkeysr.us/html/gallery
-	@echo "URL: http://monkeysr.us/gallery/"
+#monkeysr.us: index
+#	scp index.php snoopy.net:/www/monkeysr.us/html/gallery
+#	@echo "URL: http://monkeysr.us/gallery/"
 
 test: local_gallery gallery_subdir gallery_th
 
@@ -112,6 +109,7 @@ cms: index
 	cp index.php $(WEB)/phpwebsite/mig.php
 	cp index.php $(WEB)/phpwebthings/mig.php
 	cp index.php $(WEB)/xoops/modules/mig/index.php
+        cp index.php $(WEB)/geeklog/public_html/mig/index.php
 
 clean:
 	rm -rf docs/html docs/text index.php
