@@ -14,6 +14,8 @@ truly stand on the shoulders of giants.
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.
 
+Tamas Buti (buty at axelero.hu) for the Hungarian translation.
+
 Martin Vichar Donaj (martinvd at klaretinci.net) for the Slovenian
 translation.
 
