@@ -41,9 +41,7 @@ respectively.
 
 5. Create subdirectory C<albums> (i.e.
 F</www/site.com/htdocs/gallery/albums>).  This is where your albums will
-live.  If you want to install the example gallery, copy the
-F<Example_Gallery> folder into the albums folder you just created.
-(Installing the example gallery is optional)
+live.
 
 6. Copy the F<config.php.default> file to F<config.php> in your Mig directory.
 Edit it to taste.  If you are upgrading, you may not need to do this (just

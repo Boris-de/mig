@@ -214,9 +214,7 @@ desired - see F<docs/mig_cf.txt> for more information.
 If you have some reason to hide particular files or folders from general
 view (i.e. it can be viewed but only with an exact URL, you don't want
 people wandering in there from the general public) you can list those
-items in a file called F<mig.cf> in the relevant folder.  As an
-example, look at F<albums/Example_Gallery/mig.cf> (if you installed the
-Example Gallery).
+items in a file called F<mig.cf> in the relevant folder.
 
 To add hidden items, just add a E<lt>HiddenE<gt> element, like this:
 
@@ -273,9 +271,6 @@ is that the description must be enclosed inside the
 E<lt>CommentE<gt>...E<lt>/CommentE<gt> structure.  The tags such as
 E<lt>CommentE<gt> and E<lt>/CommentE<gt> MUST be at the start of a new line.
    
-There are examples in F<albums/Example_Gallery/mig.cf> (if you installed
-the example gallery).
-
 See the file F<docs/mig_cf.txt> for information about the format of
 F<mig.cf>.
 

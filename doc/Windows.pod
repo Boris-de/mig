@@ -47,10 +47,7 @@ F<images> and F<templates> subdirectories to those directories,
 respectively.
 
 5. Create subdirectory C<albums> (i.e. F<C:\Mig\Albums>).  This is where
-your albums will live.  If you want to install the example gallery, drag
-the F<Example_Gallery> folder into the albums folder you just created.
-Installing the example gallery is optional and only useful if you want to
-see an actual gallery and how it is set up.
+your albums will live.
 
 6. Make sure you don't write over your own album.  I can't warrant
 that won't happen, because I've seen some really odd things happen when

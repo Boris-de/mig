@@ -23,13 +23,12 @@ example:
 
 At 105 characters long, and having tons of URL-encoded C<%xx> entities
 in it, it's not a pretty URL to have to send someone.  But here's what you
-can do.  Add a line to your F<config.php> that adds to the Jump Map.  There's
-an example of this in F<config.php.default>.
+can do.  Add a line to your F<config.php> that adds to the Jump Map.
 
-    $jumpMap['example'] = 'currdir=./Example_Gallery';
+    $jumpMap['me'] = 'currdir=./Pictures_of_me';
 
-That one goes to the example gallery.  To go to the above URL is a little
-more like this:
+That one goes to a folder at the root of your album called "Pictures of me."
+To go to the above URL is a little more like this:
 
     $jumpMap['house'] = 'currDir=./Our%20House/Before%20We%20Redecorated';
 
