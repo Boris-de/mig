@@ -113,11 +113,11 @@ markup.
 
 =back
 
-If you are using PHP-Nuke or PostNuke mode, these three will not exist.
-In their place you'll find F<mig_folder.php> and F<mig_image.php> which
-are the same basically as F<folder.html> and F<image.html> respectively.
-In Nuke mode the CSS file is not used (Nuke systems have their own CSS
-already).
+If you are using PHP-Nuke, PostNuke or phpWebThings, these three files will
+not exist.  This is called E<quot>NukeE<quot> mode.  In their place you'll
+find F<mig_folder.php> and F<mig_image.php> which are the same basically as
+F<folder.html> and F<image.html> respectively.  In Nuke mode the CSS file
+is not used (Nuke systems have their own CSS already).
 
 =head2 Defined Tags
 

@@ -14,7 +14,7 @@ F<Windows> documents since they are now redundant.  New installation
 procedure is documented in the F<install> document.
 
 PHP-Nuke mode was no longer working, so I fixed it.  While I was at it,
-added PostNuke and phpWebThings compatibility.  See the F<phpnuke>
+I added PostNuke and phpWebThings compatibility.  See the F<phpnuke>
 document.  Tested with PHP-Nuke 5.5, PostNuke 0.714 and phpWebThings 0.41.
 
 Changed language designation for Danish to E<quot>dkE<quot> instead of
@@ -41,12 +41,9 @@ the task of finding it.
 Entirely restructured the CVS tree.  When the smoke cleared, F<funcs.php>
 and F<lang.php> had vanished (merged into F<index.php>).  Mig is just one
 file (well, the PHP code is anyway), plus a config file written in PHP.
-Perhaps not as nice and neat for people to look at, but people wanting nice
-and neat are welcome to check out a CVS copy which is quite neat and tidy
-and modular.
 
 Eliminated C<$useVirtual> - it was not being used by C<printTemplate()>
-anymore anyway.
+anymore.
 
 Modified F<mkGallery.pl> to use thumbnail subdirectories by default.
 

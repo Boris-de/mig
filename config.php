@@ -433,6 +433,52 @@ $mig_language = 'en';
 
 
 // -----------------------------------------------------------------
+// PHPNUKE / POSTNUKE / PHPWEBTHINGS COMPATIBILITY
+// -----------------------------------------------------------------
+//
+// If you are using PHP-Nuke (www.phpnuke.org), PostNuke (www.postnuke.com)
+// or phpWebThings (http://www.phpdbform.com/), you can tell Mig to try to
+// cooperate with your content system.  See the "phpnuke" document for more
+// information.
+//
+// $phpNukeCompatible
+//      Set to TRUE if you're using either PHP-Nuke or PostNuke.
+// $phpWebThingsCompatible
+//      Set to TRUE if you're using phpWebThings.
+//
+//      Obviously you only want to set ONE of these two to TRUE.
+//
+// Both default to FALSE.
+// 
+// Example:
+//      $phpNukeCompatible = FALSE;
+//      $phpWebThingsCompatible = FALSE;
+//
+
+$phpNukeCompatible = FALSE;
+$phpWebThingsCompatible = FALSE;
+
+//
+// $phpNukeRoot
+//      Set to the root directory of your PHP-Nuke or PostNuke
+//      system.  Ignored if $phpNukeCompatible is set to FALSE.
+//      This should be the folder where your PHP-Nuke or PostNuke
+//      site is installed.  Do not include a trailing slash.
+// $phpWebThingsRoot
+//      Same thing, only for phpWebThings.
+//
+// Both default to ''.
+//
+// Example:
+//      $phpNukeRoot = '/www/mysite.com/nuke';
+//      $phpWebThingsRoot = '/www/mysite.com/webthings';
+//
+
+$phpNukeRoot = '';
+$phpWebThingsRoot = '';
+
+
+// -----------------------------------------------------------------
 //                        PASSWORD PROTECTION
 // -----------------------------------------------------------------
 //

@@ -1,4 +1,5 @@
-// Defaults - probably over-ridden by config.php
+
+// Defaults - these values can be over-ridden using config.php
 //
 
 $commentFilePerImage    = FALSE;
@@ -14,6 +15,10 @@ $maxThumbColumns        = 4;
 $mig_language           = 'en';
 $noThumbs               = FALSE;
 $pageTitle              = 'My Photo Album';
+$phpNukeCompatible      = FALSE;
+$phpNukeRoot            = '';
+$phpWebThingsCompatible = FALSE;
+$phpWebThingsRoot       = '';
 $sortType               = 'default';
 $suppressAltTags        = FALSE;
 $suppressImageInfo      = FALSE;

@@ -1,51 +1,106 @@
 
 // URL to use to call myself again
-if ($PHP_SELF)                                          // register_globals
+if ($PHP_SELF) {                                        // register_globals
     $baseURL = $PHP_SELF;
-else                                                    // track_vars
+} else {                                                // track_vars
     $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
+}
 
 // Base directory of installation
-if ($PATH_TRANSLATED)                                   // register_globals
+if ($PATH_TRANSLATED) {                                 // register_globals
     $baseDir = dirname($PATH_TRANSLATED);
-else                                                    // track_vars
+} else {                                                // track_vars
     $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
+}
 
-$configFile = $baseDir . '/config.php';   // Configuration file
+// Locate and load configuration
+if (file_exists($baseDir . '/mig/config.php')) {
+    // Found it - we're in Nuke mode
+    $configFile = $baseDir . '/mig/config.php';
+} elseif (file_exists($baseDir . '/config.php')) {
+    // Found it - regular mode
+    $configFile = $baseDir . '/config.php';
+} else {
+    // Uh oh.
+    print "FATAL ERROR: Can't find Mig configuration!";
+    exit;
+}
+include($configFile);
+
+// Change settings for Nuke mode if appropriate
+if ($phpNukeCompatible) {
+    $baseDir .= '/mig';
+    if (! $phpNukeRoot) {      
+        print "FATAL ERROR: \$phpNukeRoot not defined!\n";
+        exit;
+    }
+    $result = chdir($phpNukeRoot);
+    if (! $result) {
+        print "FATAL ERROR: can not chdir() to \$phpNukeRoot!\n";
+        exit;
+    }
+    // Detect PostNuke if it's there
+    if (file_exists('includes/pnAPI.php')) {
+        include('includes/pnAPI.php');
+        pnInit();
+    }
+
+// or for PhpWebThings...
+} elseif ($phpWebThingsCompatible) {
+    $baseDir .= '/mig';
+    if (! $phpWebThingsRoot) {
+        print "FATAL ERROR: \$phpWebThingsRoot not defined!\n";
+        exit;
+    }
+    $result = chdir($phpWebThingsRoot);
+    if (! $result) {
+        print "FATAL ERROR: can not chdir() to \$phpWebThingsRoot!\n";
+        exit;
+    }
+    // phpWebThings library
+    if (file_exists('core/main.php')) {
+        include('core/main.php');
+    } else {
+        print "FATAL ERROR: phpWebThings lib missing!\n";
+        exit;
+    }
+}
 
 // Get currDir.  If there isn't one, default to '.'
-if (! $currDir && ! $HTTP_GET_VARS['currDir'])
+if (! $currDir && ! $HTTP_GET_VARS['currDir']) {
     $currDir = '.';
-elseif ($HTTP_GET_VARS['currDir'])
+} elseif ($HTTP_GET_VARS['currDir']) {
     $currDir = $HTTP_GET_VARS['currDir'];
+}
 
 // Strip URL encoding
 $currDir = rawurldecode($currDir);
 
 // Get image, if there is one.
-if (! $image)
+if (! $image) {
     $image = $HTTP_GET_VARS['image'];
+}
 
 // Get pageType.  If there isn't one, default to "folder"
-if (! $pageType)
+if (! $pageType) {
     $pageType = $HTTP_GET_VARS['pageType'];
+}
 
-if (! $pageType)
+if (! $pageType) {
     $pageType = 'folder';
+}
 
-if (! $jump)
+if (! $jump) {
     $jump = $HTTP_GET_VARS['jump'];         // for track_vars
-
-// Read configuration file
-if (file_exists($configFile))
-    include($configFile);
+}
 
 // Grab appropriate language from library
 $mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
 
 // Backward compatibility with older config.php/mig.cfg versions
-if ($maxColumns)
+if ($maxColumns) {
     $maxThumbColumns = $maxColumns;
+}
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (get_magic_quotes_gpc() == 1) {
@@ -69,10 +124,12 @@ while ($workCopy) {
     if ($protect[$workCopy]) {
 
         // Try to get around the track_vars/register_globals problem
-        if (! $PHP_AUTH_USER)
+        if (! $PHP_AUTH_USER) {
             $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
-        if (! $PHP_AUTH_PW)
+        }
+        if (! $PHP_AUTH_PW) {
             $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
+        }
 
         // If there's not a username yet, fetch one by popping up a
         // login dialog box
@@ -99,13 +156,13 @@ while ($workCopy) {
     }
 
     // if $workCopy is already down to '.' just nullify to end loop
-    if ($workCopy == '.')
+    if ($workCopy == '.') {
         $workCopy = FALSE;
-    else
+    } else {
         // pare $workCopy down one directory at a time
         // so we can check back all the way to '.'
         $workCopy = ereg_replace('/[^/]+$', '', $workCopy);
-
+    }
 }
 
 $albumDir = $baseDir . '/albums';     // Where albums live
@@ -115,6 +172,10 @@ $templateDir = $baseDir . '/templates'; // Where templates live
 
 // baseURL with the scriptname torn off the end
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
+// Adjust for Nuke mode if appropriate
+if ($phpNukeCompatible || $phpWebThingsCompatible) {
+    $baseHref .= '/mig';
+}
 
 // Location of image library (for instance, where icons are kept)
 $imageDir = $baseHref . '/images';
@@ -126,11 +187,13 @@ $albumURLroot = $baseHref . '/albums';
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
-if ($markerType != 'prefix' and $markerType != 'suffix')
+if ($markerType != 'prefix' and $markerType != 'suffix') {
     $markerType='suffix';
+}
 
-if (! $markerLabel)
+if (! $markerLabel) {
     $markerLabel = 'th';
+}
 
 // (Try to) get around the track_vars vs. register_globals problem
 if (!$SERVER_NAME) {
@@ -148,6 +211,26 @@ if ($jump and $jumpMap[$jump] and $SERVER_NAME) {
 if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
     header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
     exit;
+}
+
+// Is this a phpNuke compatible site?
+if ($phpNukeCompatible) {
+
+    if (! isset($mainfile)) {
+        include('mainfile.php');
+    }
+    include('header.php');
+
+    // A table to nest Mig in, inside the PHPNuke framework
+    print '<table width="100%" border="0" cellspacing="0" cellpadding="2"'
+        . ' bgcolor="#000000"><tr><td>'
+        . '<table width="100%" border="0" cellspacing="1" cellpadding="7"'
+        . ' bgcolor="#FFFFFF"><tr><td>';
+
+// or a PhpWebThings site?
+} elseif ($phpWebThingsCompatible) {
+    draw_header();
+    theme_draw_center_box_open($pageTitle);
 }
 
 // Look at currDir from a security angle.  Don't let folks go outside
@@ -171,25 +254,32 @@ list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
 if ($pageType == 'folder') {
 
     // Determine which template to use
-    if ($folderTemplate)
+    if ($folderTemplate) {
         $templateFile = $folderTemplate;
-    else
+    } elseif ($phpNukeCompatible || $phpWebThingsCompatible) {
+        $templateFile = $templateDir . '/mig_folder.php';
+    } else {
         $templateFile = $templateDir . '/folder.html';
+    }
 
     // Determine page title to use
-    if ($folderPageTitle)
+    if ($folderPageTitle) {
         $pageTitle = $folderPageTitle;
+    }
 
     // Set per-folder $maintAddr if one was defined
-    if ($folderMaintAddr)
+    if ($folderMaintAddr) {
         $maintAddr = $folderMaintAddr;
+    }
 
     // Determine columns to use
-    if ($folderFolderCols)
+    if ($folderFolderCols) {
         $maxFolderColumns = $folderFolderCols;
+    }
 
-    if ($folderThumbCols)
+    if ($folderThumbCols) {
         $maxThumbColumns = $folderThumbCols;
+    }
 
     // Generate some HTML to pass to the template printer
 
@@ -233,8 +323,9 @@ if ($pageType == 'folder') {
     }
 
     // We have a bulletin
-    if ($bulletin != '')
+    if ($bulletin != '') {
         $bulletin = descriptionFrame($bulletin);
+    }
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
@@ -258,12 +349,14 @@ if ($pageType == 'folder') {
 } elseif ($pageType == 'image') {
 
     // Set per-foler page title if one was defined
-    if ($folderPageTitle)
+    if ($folderPageTitle) {
         $pageTitle = $folderPageTitle;
+    }
 
     // Set per-folder maintAddr if one was defined
-    if ($folderMaintAddr)
+    if ($folderMaintAddr) {
         $maintAddr = $folderMaintAddr;
+    }
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
@@ -279,10 +372,11 @@ if ($pageType == 'folder') {
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    if ($commentFilePerImage)
+    if ($commentFilePerImage) {
         $description  = getImageDescFromFile($image, $albumDir, $currDir);
-    else
+    } else {
         $description  = getImageDescription($image, $desc);
+    }
 
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
                                           $exifFormatString);
@@ -301,14 +395,19 @@ if ($pageType == 'folder') {
     }
 
     // If there's a description at all, frame it in a table.
-    if ($description != '')
+    if ($description != '') {
         $description = descriptionFrame($description);
+    }
 
     // Build the "you are here" line
     $youAreHere = buildYouAreHere($baseURL, $currDir, $image);
 
     // Which template to use.
-    $templateFile = $templateDir . '/image.html';
+    if ($phpNukeCompatible || $phpWebThingsCompatible) {
+        $templateFile = $templateDir . '/mig_image.php';
+    } else {
+        $templateFile = $templateDir . '/image.html';
+    }
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -318,5 +417,15 @@ if ($pageType == 'folder') {
                   NULL, NULL, $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
                   $description, $youAreHere, $distURL, $albumDir);
+}
+
+// If in PHPNuke mode, finish up the tables and such needed for PHPNuke
+if ($phpNukeCompatible) {
+    print '</table></center></td></tr></table>';
+    include('footer.php');
+} elseif ($phpWebThingsCompatible) {
+    theme_draw_center_box_close();
+    draw_news(true);
+    draw_footer();
 }
 
