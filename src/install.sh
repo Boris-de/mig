@@ -8,7 +8,6 @@
 # - WINDOWS USERS: also see docs/Windows.txt
 # - PHP-NUKE USERS: also see docs/phpNuke.txt
 #
-#
 # MiG - A general purpose photo gallery management system.
 #
 # Copyright (C) 2000-2001 Daniel M. Lowe <dan@tangledhelix.com>

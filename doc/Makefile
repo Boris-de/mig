@@ -1,7 +1,6 @@
 # $Id$
 #
 # Makefile for MiG documentation
-#
 
 TITLE=	MiG Documentation
 HARGS=	--noindex --title="$(TITLE)"

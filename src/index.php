@@ -5,6 +5,7 @@
 //       http://mig.sourceforge.net/
 // Copyright (C) 2000 Daniel M. Lowe	<dan@tangledhelix.com>
 //
+//
 // LICENSE INFORMATION
 // -------------------
 //
