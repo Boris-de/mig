@@ -97,7 +97,6 @@ static int BytesPerFormat[] = {0,1,1,2,4,8,1,1,2,4,8,4,8};
 #define TAG_USERCOMMENT       0x9286
 
 #define TAG_SUBJECT_DISTANCE  0x9206
-#define TAG_LIGHT_SOURCE      0x9208
 #define TAG_FLASH             0x9209
 
 #define TAG_FOCALPLANEXRES    0xa20E
@@ -105,90 +104,98 @@ static int BytesPerFormat[] = {0,1,1,2,4,8,1,1,2,4,8,4,8};
 #define TAG_EXIF_IMAGEWIDTH   0xA002
 #define TAG_EXIF_IMAGELENGTH  0xA003
 
+// the following is added 05-jan-2001 vcs
+#define TAG_EXPOSURE_BIAS     0x9204
+#define TAG_WHITEBALANCE      0x9208
+#define TAG_METERING_MODE     0x9207
+#define TAG_EXPOSURE_PROGRAM  0x8822
+#define TAG_ISO_EQUIVALENT    0x8827
+#define TAG_COMPRESSION_LEVEL 0x9102
+
 
 static TagTable_t TagTable[] = {
-  {	0x100,	"ImageWidth"},
-  {	0x101,	"ImageLength"},
-  {	0x102,	"BitsPerSample"},
-  {	0x103,	"Compression"},
-  {	0x106,	"PhotometricInterpretation"},
-  {	0x10A,	"FillOrder"},
-  {	0x10D,	"DocumentName"},
-  {	0x10E,	"ImageDescription"},
-  {	0x10F,	"Make"},
-  {	0x110,	"Model"},
-  {	0x111,	"StripOffsets"},
-  {	0x112,	"Orientation"},
-  {	0x115,	"SamplesPerPixel"},
-  {	0x116,	"RowsPerStrip"},
-  {	0x117,	"StripByteCounts"},
-  {	0x11A,	"XResolution"},
-  {	0x11B,	"YResolution"},
-  {	0x11C,	"PlanarConfiguration"},
-  {	0x128,	"ResolutionUnit"},
-  {	0x12D,	"TransferFunction"},
-  {	0x131,	"Software"},
-  {	0x132,	"DateTime"},
-  {	0x13B,	"Artist"},
-  {	0x13E,	"WhitePoint"},
-  {	0x13F,	"PrimaryChromaticities"},
-  {	0x156,	"TransferRange"},
-  {	0x200,	"JPEGProc"},
-  {	0x201,	"JPEGInterchangeFormat"},
-  {	0x202,	"JPEGInterchangeFormatLength"},
-  {	0x211,	"YCbCrCoefficients"},
-  {	0x212,	"YCbCrSubSampling"},
-  {	0x213,	"YCbCrPositioning"},
-  {	0x214,	"ReferenceBlackWhite"},
-  {	0x828D,	"CFARepeatPatternDim"},
-  {	0x828E,	"CFAPattern"},
-  {	0x828F,	"BatteryLevel"},
-  {	0x8298,	"Copyright"},
-  {	0x829A,	"ExposureTime"},
-  {	0x829D,	"FNumber"},
-  {	0x83BB,	"IPTC/NAA"},
-  {	0x8769,	"ExifOffset"},
-  {	0x8773,	"InterColorProfile"},
-  {	0x8822,	"ExposureProgram"},
-  {	0x8824,	"SpectralSensitivity"},
-  {	0x8825,	"GPSInfo"},
-  {	0x8827,	"ISOSpeedRatings"},
-  {	0x8828,	"OECF"},
-  {	0x9000,	"ExifVersion"},
-  {	0x9003,	"DateTimeOriginal"},
-  {	0x9004,	"DateTimeDigitized"},
-  {	0x9101,	"ComponentsConfiguration"},
-  {	0x9102,	"CompressedBitsPerPixel"},
-  {	0x9201,	"ShutterSpeedValue"},
-  {	0x9202,	"ApertureValue"},
-  {	0x9203,	"BrightnessValue"},
-  {	0x9204,	"ExposureBiasValue"},
-  {	0x9205,	"MaxApertureValue"},
-  {	0x9206,	"SubjectDistance"},
-  {	0x9207,	"MeteringMode"},
-  {	0x9208,	"LightSource"},
-  {	0x9209,	"Flash"},
-  {	0x920A,	"FocalLength"},
-  {	0x927C,	"MakerNote"},
-  {	0x9286,	"UserComment"},
-  {	0x9290,	"SubSecTime"},
-  {	0x9291,	"SubSecTimeOriginal"},
-  {	0x9292,	"SubSecTimeDigitized"},
-  {	0xA000,	"FlashPixVersion"},
-  {	0xA001,	"ColorSpace"},
-  {	0xA002,	"ExifImageWidth"},
-  {	0xA003,	"ExifImageLength"},
-  {	0xA005,	"InteroperabilityOffset"},
-  {	0xA20B,	"FlashEnergy"},			        // 0x920B in TIFF/EP
-  {	0xA20C,	"SpatialFrequencyResponse"},	// 0x920C    -  -
-  {	0xA20E,	"FocalPlaneXResolution"},    	// 0x920E    -  -
-  {	0xA20F,	"FocalPlaneYResolution"},	    // 0x920F    -  -
-  {	0xA210,	"FocalPlaneResolutionUnit"},	// 0x9210    -  -
-  {	0xA214,	"SubjectLocation"},		        // 0x9214    -  -
-  {	0xA215,	"ExposureIndex"},		        // 0x9215    -  -
-  {	0xA217,	"SensingMethod"},		        // 0x9217    -  -
-  {	0xA300,	"FileSource"},
-  {	0xA301,	"SceneType"},
+  {   0x100,   "ImageWidth"},
+  {   0x101,   "ImageLength"},
+  {   0x102,   "BitsPerSample"},
+  {   0x103,   "Compression"},
+  {   0x106,   "PhotometricInterpretation"},
+  {   0x10A,   "FillOrder"},
+  {   0x10D,   "DocumentName"},
+  {   0x10E,   "ImageDescription"},
+  {   0x10F,   "Make"},
+  {   0x110,   "Model"},
+  {   0x111,   "StripOffsets"},
+  {   0x112,   "Orientation"},
+  {   0x115,   "SamplesPerPixel"},
+  {   0x116,   "RowsPerStrip"},
+  {   0x117,   "StripByteCounts"},
+  {   0x11A,   "XResolution"},
+  {   0x11B,   "YResolution"},
+  {   0x11C,   "PlanarConfiguration"},
+  {   0x128,   "ResolutionUnit"},
+  {   0x12D,   "TransferFunction"},
+  {   0x131,   "Software"},
+  {   0x132,   "DateTime"},
+  {   0x13B,   "Artist"},
+  {   0x13E,   "WhitePoint"},
+  {   0x13F,   "PrimaryChromaticities"},
+  {   0x156,   "TransferRange"},
+  {   0x200,   "JPEGProc"},
+  {   0x201,   "JPEGInterchangeFormat"},
+  {   0x202,   "JPEGInterchangeFormatLength"},
+  {   0x211,   "YCbCrCoefficients"},
+  {   0x212,   "YCbCrSubSampling"},
+  {   0x213,   "YCbCrPositioning"},
+  {   0x214,   "ReferenceBlackWhite"},
+  {   0x828D,  "CFARepeatPatternDim"},
+  {   0x828E,  "CFAPattern"},
+  {   0x828F,  "BatteryLevel"},
+  {   0x8298,  "Copyright"},
+  {   0x829A,  "ExposureTime"},
+  {   0x829D,  "FNumber"},
+  {   0x83BB,  "IPTC/NAA"},
+  {   0x8769,  "ExifOffset"},
+  {   0x8773,  "InterColorProfile"},
+  {   0x8822,  "ExposureProgram"},
+  {   0x8824,  "SpectralSensitivity"},
+  {   0x8825,  "GPSInfo"},
+  {   0x8827,  "ISOSpeedRatings"},
+  {   0x8828,  "OECF"},
+  {   0x9000,  "ExifVersion"},
+  {   0x9003,  "DateTimeOriginal"},
+  {   0x9004,  "DateTimeDigitized"},
+  {   0x9101,  "ComponentsConfiguration"},
+  {   0x9102,  "CompressedBitsPerPixel"},
+  {   0x9201,  "ShutterSpeedValue"},
+  {   0x9202,  "ApertureValue"},
+  {   0x9203,  "BrightnessValue"},
+  {   0x9204,  "ExposureBiasValue"},
+  {   0x9205,  "MaxApertureValue"},
+  {   0x9206,  "SubjectDistance"},
+  {   0x9207,  "MeteringMode"},
+  {   0x9208,  "LightSource"},
+  {   0x9209,  "Flash"},
+  {   0x920A,  "FocalLength"},
+  {   0x927C,  "MakerNote"},
+  {   0x9286,  "UserComment"},
+  {   0x9290,  "SubSecTime"},
+  {   0x9291,  "SubSecTimeOriginal"},
+  {   0x9292,  "SubSecTimeDigitized"},
+  {   0xA000,  "FlashPixVersion"},
+  {   0xA001,  "ColorSpace"},
+  {   0xA002,  "ExifImageWidth"},
+  {   0xA003,  "ExifImageLength"},
+  {   0xA005,  "InteroperabilityOffset"},
+  {   0xA20B,  "FlashEnergy"},                 // 0x920B in TIFF/EP
+  {   0xA20C,  "SpatialFrequencyResponse"},  // 0x920C    -  -
+  {   0xA20E,  "FocalPlaneXResolution"},     // 0x920E    -  -
+  {   0xA20F,  "FocalPlaneYResolution"},      // 0x920F    -  -
+  {   0xA210,  "FocalPlaneResolutionUnit"},  // 0x9210    -  -
+  {   0xA214,  "SubjectLocation"},             // 0x9214    -  -
+  {   0xA215,  "ExposureIndex"},            // 0x9215    -  -
+  {   0xA217,  "SensingMethod"},            // 0x9217    -  -
+  {   0xA300,  "FileSource"},
+  {   0xA301,  "SceneType"},
   {      0, NULL}
 } ;
 
@@ -504,8 +511,31 @@ static void ProcessExifDir(char * DirStart, char * OffsetBase, unsigned ExifLeng
                 }
                 break;
 
-            case TAG_LIGHT_SOURCE:
-                // Rarely set or useful.
+                // Remaining cases contributed by: Volker C. Schoech (schoech@gmx.de)
+
+            case TAG_EXPOSURE_BIAS:
+                ImageInfo.ExposureBias = (float)ConvertAnyFormat(ValuePtr, Format);
+                break;
+
+            case TAG_WHITEBALANCE:
+                ImageInfo.Whitebalance = (int)ConvertAnyFormat(ValuePtr, Format);
+                break;
+
+            case TAG_METERING_MODE:
+                ImageInfo.MeteringMode = (int)ConvertAnyFormat(ValuePtr, Format);
+                break;
+
+            case TAG_EXPOSURE_PROGRAM:
+                ImageInfo.ExposureProgram = (int)ConvertAnyFormat(ValuePtr, Format);
+                break;
+
+            case TAG_ISO_EQUIVALENT:
+                ImageInfo.ISOequivalent = (int)ConvertAnyFormat(ValuePtr, Format);
+                if ( ImageInfo.ISOequivalent < 80 ) ImageInfo.ISOequivalent *= 200;
+                break;
+
+            case TAG_COMPRESSION_LEVEL:
+                ImageInfo.CompressionLevel = (int)ConvertAnyFormat(ValuePtr, Format);
                 break;
         }
 
@@ -605,15 +635,16 @@ int Exif2tm(struct tm * timeptr, char * ExifTime)
             &timeptr->tm_hour, &timeptr->tm_min, &timeptr->tm_sec);
         
     if (a == 6){
+        timeptr->tm_isdst = 0;     // Should ideally be set to what it was when the 
+                                   // image was taken, I think? 
 
-        timeptr->tm_mon -= 1;      // Adjust for unix zero-based months
-        timeptr->tm_year -= 1900;  // Adjust for year starting at 1900
-        return TRUE; // worked.
+        timeptr->tm_mon -= 1;      // Adjust for unix zero-based months 
+        timeptr->tm_year -= 1900;  // Adjust for year starting at 1900 
+        return TRUE; // worked. 
     }
 
     return FALSE; // Wasn't in Exif date format.
 }
-
 
 //--------------------------------------------------------------------------
 // Show the collected image info, displaying camera F-stop and shutter speed
@@ -677,6 +708,74 @@ void ShowImageInfo(void)
             printf("Focus Dist.  :%5.2fm\n",(double)ImageInfo.Distance);
         }
     }
+
+
+
+
+
+    if (ImageInfo.ISOequivalent){ // 05-jan-2001 vcs
+        printf("ISO equiv.   : %2d\n",(int)ImageInfo.ISOequivalent);
+    }
+    if (ImageInfo.ExposureBias){ // 05-jan-2001 vcs
+        printf("Exposure bias:%4.2f\n",(double)ImageInfo.ExposureBias);
+    }
+        
+    if (ImageInfo.Whitebalance){ // 05-jan-2001 vcs
+        switch(ImageInfo.Whitebalance) {
+        case 1:
+            printf("Whitebalance : sunny\n");
+            break;
+        case 2:
+            printf("Whitebalance : fluorescent\n");
+            break;
+        case 3:
+            printf("Whitebalance : incandescent\n");
+            break;
+        default:
+            printf("Whitebalance : cloudy\n");
+        }
+    }
+    if (ImageInfo.MeteringMode){ // 05-jan-2001 vcs
+        switch(ImageInfo.MeteringMode) {
+        case 2:
+            printf("Metering Mode: center weight\n");
+            break;
+        case 3:
+            printf("Metering Mode: spot\n");
+            break;
+        case 5:
+            printf("Metering Mode: matrix\n");
+            break;
+        }
+    }
+    if (ImageInfo.ExposureProgram){ // 05-jan-2001 vcs
+        switch(ImageInfo.ExposureProgram) {
+        case 2:
+            printf("Exposure     : program (auto)\n");
+            break;
+        case 3:
+            printf("Exposure     : aperture priority (semi-auto)\n");
+            break;
+        case 4:
+            printf("Exposure     : shutter priority (semi-auto)\n");
+            break;
+        }
+    }
+    if (ImageInfo.CompressionLevel){ // 05-jan-2001 vcs
+        switch(ImageInfo.CompressionLevel) {
+        case 1:
+            printf("JPG Quality  : basic\n");
+            break;
+        case 2:
+            printf("JPG Quality  : normal\n");
+            break;
+        case 4:
+            printf("JPG Quality  : fine\n");
+            break;
+       }
+    }
+
+         
 
     for (a=0;;a++){
         if (ProcessTable[a].Tag == ImageInfo.Process || ProcessTable[a].Tag == 0){

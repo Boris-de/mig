@@ -16,3 +16,11 @@ Liscence:
     knowing about it though. You can reach me at matt@rim.net
 
 Matthias Wandel
+
+
+Change notes:
+1.1 --> 1.2
+* Now recognizes more Exif tags (Contributions by Volker C Schoen)
+* One hour off on -ft option fixed (uninitialized DST structure element)
+* More flexible date-renaming option using strftime function
+* -n and -nf option no longer overwrite pre-existing target names under Unix

@@ -123,7 +123,7 @@ $mig_messages['fi'] = array (
 $mig_messages['ro'] = array (
     'backhome'      => '&#238;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
-    'flash_used'    => 'flash_used',
+    'flash_used'    => 'flash used',
     'main'          => 'Principal',
     'must_auth'     => 'Pentru a intra, trebuie sa introduceti un nume de'
                      . ' utilizator si o parola valide',

@@ -2,17 +2,20 @@
 // Program to pull the information out of various types of EFIF digital 
 // camera files and show it in a reasonably consistent way
 //
-// Version 1.0
+// Version 1.2
 //
 // Compiles with MSVC on Windows, or with GCC on Linux
 //
-// Compileing under linux: (have to make it work again) Must include math library.
-// Use: cc -lm -O3 -o jhead jhead.c exif.c 
+// Compiling under linux: 
+// Use: cc -lm -O3 -o jhead jhead.c exif.c
 //
 // Compiling under Windows:  Use MSVC5 or MSVC6, from command line:
 // cl -Ox jhead.c exif.c myglob.c
 //
-// Matthias Wandel,  Dec 1999 - Oct 2000
+// Dec 1999 - Feb 2001
+//
+// by Matthias Wandel (mwandel@rim.net),
+// with contributions by Volker C. Schoech <schoech@gmx.de>
 //--------------------------------------------------------------------------
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,7 +51,8 @@ typedef struct {
     unsigned Size;
 }Section_t;
 
-static Section_t Sections[20];
+#define MAX_SECTIONS 20
+static Section_t Sections[MAX_SECTIONS];
 static int SectionsRead;
 static int HaveAll;
 
@@ -64,8 +68,8 @@ typedef enum {
 //--------------------------------------------------------------------------
 // Command line options flags
 static int remove_thumbnails = FALSE;
-static int DoSubdirs    = FALSE;
 static int RenameToDate = FALSE;
+static char * strftime_args = NULL; // Format for new file name.
 static int SetFileTime  = FALSE;
 static int DoAction     = FALSE;
        int ShowTags     = FALSE;    // Do not show raw by default.
@@ -102,13 +106,13 @@ static int Get16m(const void * Short)
 static void process_COM (const uchar * Data, int length)
 {
     int ch;
-    char Comment[250];
+    char Comment[MAX_COMMENT+1];
     int nch;
     int a;
 
     nch = 0;
 
-    if (length > 200) length = 200; // Truncate if it won't fit in our structure.
+    if (length > MAX_COMMENT) length = MAX_COMMENT; // Truncate if it won't fit in our structure.
 
     for (a=2;a<length;a++){
         ch = Data[a];
@@ -172,11 +176,12 @@ static int ReadJpegSections (FILE * infile,ReadMode_t ReadMode)
     int HaveCom = FALSE;
 
     a = fgetc(infile);
+
+
     if (a != 0xff || fgetc(infile) != M_SOI){
         return FALSE;
     }
-
-    for(;SectionsRead < 19;){
+    for(;SectionsRead < MAX_SECTIONS-1;){
         int itemlen;
         int marker = 0;
         int ll,lh, got;
@@ -185,7 +190,16 @@ static int ReadJpegSections (FILE * infile,ReadMode_t ReadMode)
         for (a=0;a<7;a++){
             marker = fgetc(infile);
             if (marker != 0xff) break;
+
+            if (a >= 6){
+
+                printf("too many padding bytes\n");
+
+                return FALSE;
+
+            }
         }
+
         if (marker == 0xff){
             // 0xff is legal padding, but if we get that many, something's wrong.
             ErrExit("too many padding bytes!");
@@ -223,6 +237,7 @@ static int ReadJpegSections (FILE * infile,ReadMode_t ReadMode)
 
         //printf("Marker '%x' size %d\n",marker, itemlen);
         switch(marker){
+
             case M_SOS:   // stop before hitting compressed data 
                 // If reading entire image is requested, read the rest of the data.
                 if (ReadMode & READ_IMAGE){
@@ -275,6 +290,7 @@ static int ReadJpegSections (FILE * infile,ReadMode_t ReadMode)
                 break;
 
             case M_EXIF:
+
                 if (SectionsRead <= 2){
                     // Seen files from some 'U-lead' software with Vivitar scanner
                     // that uses marker 31 later in the file (no clue what for!)
@@ -320,6 +336,7 @@ void DiscardData(void)
     for (a=0;a<SectionsRead;a++){
         free(Sections[a].Data);
     }
+    memset(&ImageInfo, 0, sizeof(ImageInfo));
     SectionsRead = 0;
     HaveAll = 0;
 }
@@ -419,53 +436,6 @@ void WriteJpegFile(const char * FileName)
     fclose(outfile);
 }
 
-//--------------------------------------------------------------------------
-// Invoke an editor for editing a sting.
-//--------------------------------------------------------------------------
-static void FileEditComment(char * TempFileName, char * Comment)
-{
-    FILE * file;
-    int a;
-    char QuotedPath[300];
-
-    file = fopen(TempFileName, "w");
-    if (file == NULL){
-        fprintf(stderr, "Can't create file '%s'\n",TempFileName);
-        ErrExit("could not create temporary file");
-    }
-    fprintf(file, "%s", Comment);
-
-    fclose(file);
-
-    fflush(stdout); // So logs are contiguous.
-
-    #ifdef _WIN32
-        sprintf(QuotedPath, "\"%s\"",TempFileName);
-        a = _spawnl(_P_WAIT, "c:\\windows\\notepad.exe", "notepad",TempFileName, NULL);
-    #else
-        sprintf(QuotedPath, "kwrite \"%s\"",TempFileName);
-        a = system(QuotedPath);
-    #endif
-
-    if (a != 0){
-        ErrExit("Editor terminated abnormally");
-    }
-
-    file = fopen(TempFileName, "r");
-    if (file == NULL){
-        ErrExit("could not open temp file for read");
-    }
-
-    // Read the file back in.
-    a = fread(Comment, 1, 999, file);
-
-    Comment[a] = '\0';
-    fclose(file);
-
-    unlink(TempFileName);
-}
-
-
 
 //--------------------------------------------------------------------------
 // Apply the specified command to the jpeg file.
@@ -540,8 +510,8 @@ int CheckFileSkip(void)
     if (FilterModel){
         // Filtering processing by camera model.
         if (strstr(ImageInfo.CameraModel, FilterModel) == NULL){
-            DiscardData();
             return TRUE;
+
         }
     }
     return FALSE;
@@ -568,6 +538,12 @@ void ProcessFile(const char * FileName)
     ImageInfo.Distance = 0;
     ImageInfo.CCDWidth = 0;
     ImageInfo.FlashUsed = -1;
+    ImageInfo.ExposureBias = 0;
+    ImageInfo.Whitebalance = 0;
+    ImageInfo.MeteringMode = -1;
+    ImageInfo.ExposureProgram = 0;
+    ImageInfo.ISOequivalent = 0;
+    ImageInfo.CompressionLevel = 0;
 
     // Store file date/time.
     {
@@ -580,13 +556,18 @@ void ProcessFile(const char * FileName)
         }
     }
 
+    strncpy(ImageInfo.FileName, FileName, _MAX_PATH);
+
     if (ApplyCommand){
         // Applying a command is special - the headers from the file have to be
         // rpe-read, then the command executed, and then the image part of the file read.
 
         ReadJpegFile(FileName, READ_EXIF);
 
-        if (CheckFileSkip()) return;
+        if (CheckFileSkip()){
+            DiscardData();
+            return;
+        }
 
         // Discard everything but the exif and comment sections.
         {
@@ -630,26 +611,9 @@ void ProcessFile(const char * FileName)
 
     if (!ReadJpegFile(FileName, ReadMode)) return;
 
-    if (CheckFileSkip()) return;
-
-    // Fill in the file name.
-    if (DoSubdirs){
-        // If doing subdirs, the actual path matters.
-        strncpy(ImageInfo.FileName, FileName, 119);
-    }else{
-        // If not doing subdirs, cut off the path part.
-        for (a = strlen(FileName);a;){
-            --a;
-            #ifdef _WIN32
-            if (FileName[a] == '\\') {
-            #else
-            if (FileName[a] == '/') {
-            #endif
-                a++;
-                break; // Found first slash.
-            }
-        }
-        strncpy(ImageInfo.FileName, FileName+a, 119);
+    if (CheckFileSkip()){
+        DiscardData();
+        return;
     }
 
     if (ShowConcise){
@@ -659,7 +623,6 @@ void ProcessFile(const char * FileName)
             ShowImageInfo();
         }
     }
-
 
     if (remove_thumbnails){
         if (RemoveThumbnail()){
@@ -685,8 +648,6 @@ void ProcessFile(const char * FileName)
         unlink(BackupName);
     }
 
-    DiscardData();
-
 
     if (SetFileTime){
         // Set the file date to the date from the exif header.
@@ -711,11 +672,9 @@ void ProcessFile(const char * FileName)
                     printf("%s\n",FileName);
                 }
             }
-        }else{
-            badtime:
-            printf("Error: Time '%s': cannot convert to Unix time\n",ImageInfo.DateTime);
         }
     }
+
 
     // Feature to rename image according to date and time from camera.
     // I use this feature to put images from multiple digicams in sequence.
@@ -723,42 +682,88 @@ void ProcessFile(const char * FileName)
     if (RenameToDate){
         int NumAlpha = 0;
         int NumDigit = 0;
+        int PrefixPart = 0;
         
         for (a=0;FileName[a];a++){
+            if (FileName[a] == '/' || FileName[a] == '\\'){
+                // Don't count path compoenent.
+                NumAlpha = 0;
+                NumDigit = 0;
+                PrefixPart = a+1;
+            }
             if (isalpha(FileName[a])) NumAlpha += 1;
             if (isdigit(FileName[a])) NumDigit += 1;
         }
+
         if ((NumAlpha <= 8 && NumDigit >= 2) || RenameToDate > 1){
             if (ImageInfo.DateTime[0]){
                 struct tm tm;
                 if (Exif2tm(&tm, ImageInfo.DateTime)){
-                    char NewName[20];
+                    char NewBaseName[_MAX_PATH*2];
 
-                    for (a=0;a<3;a++){
-                        sprintf(NewName, "%02d%02d-%02d%02d%02d.jpg",
-                             tm.tm_mon+1, tm.tm_mday,
-                             tm.tm_hour, tm.tm_min, tm.tm_sec);
-                        
-                        // Try bumping up the second count 2 times if name is already taken.
-                        // That way, pix taken in same second will not conflict.
-                        if (rename(FileName, NewName) == 0){
-                            printf("%s-->%s\n",FileName, NewName);
-                            goto success;
+                    strcpy(NewBaseName, FileName); // Get path component of name.
+
+                    if (strftime_args){
+                        // Complicated scheme for flexibility.  Just pass the args to strftime.
+                        time_t UnixTime;
+
+                        // Call mktime to get weekday and such filled in.
+                        UnixTime = mktime(&tm);
+                        if ((int)UnixTime == -1) goto badtime;
+                        strftime(NewBaseName+PrefixPart, 99, strftime_args, &tm);
+                    }else{
+                        // My favourite scheme.
+                        sprintf(NewBaseName+PrefixPart, "%02d%02d-%02d%02d%02d",
+                             tm.tm_mon+1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+                    }
+
+                    for (a=0;;a++){
+                        char NewName[120];
+                        char NameExtra[3];
+                        struct stat dummy;
+
+                        if (a){
+                            // Generate a suffix for the file name if previous choice of names is taken.
+                            // depending on wether the name ends in a letter or digit, pick the opposite to separate
+                            // it.  This to avoid using a separator character - this because any good separator
+                            // is before the '.' in ascii, and so would end up before the plain name.  but letters
+                            // and digits both come after the '.' character.
+                            if (isdigit(NewBaseName[strlen(NewBaseName)-1])){
+                                NameExtra[0] = 'a'-1+a; // Try a,b,c,d... for suffix if it ends in a letter.
+                            }else{
+                                NameExtra[0] = '0'-1+a; // Try 1,2,3,4... for suffix if it ends in a char.
+                            }
+                            NameExtra[1] = 0;
+                        }else{
+                            NameExtra[0] = 0;
                         }
 
-                        // Rename failed.  Try renaming to one second later.
-                        tm.tm_sec += 1;
+                        sprintf(NewName, "%s%s.jpg", NewBaseName, NameExtra);
 
-                        if (tm.tm_sec > 99){
-                            break; // Whoops - no longer a valid name.
+                        if (stat(NewName, &dummy)){
+                            // This name does not pre-exist.
+                            if (rename(FileName, NewName) == 0){
+                                printf("%s --> %s\n",FileName, NewName);
+                            }else{
+                                printf("Error: Could rename '%s'\n",FileName);
+                            }
+                            break;
+                        }
+
+                        if (a >= 4){
+                            printf("Dest name for '%s' already exists\n",FileName);
+                            break;
                         }
                     }
-                    printf("Error: Could rename '%s'\n",FileName);
-                    success:;
                 }
             }
         }
     }
+    if(0){
+        badtime:
+        printf("Error: Time '%s': cannot convert to Unix time\n",ImageInfo.DateTime);
+    }
+    DiscardData();
 }
 
 //--------------------------------------------------------------------------
@@ -767,49 +772,55 @@ void ProcessFile(const char * FileName)
 static void Usage (void)
 {
     fprintf(stderr,"Program for extracting Digicam setting information from Exif Jpeg headers\n"
-                   "used by most Digital Cameras.  v1.0  Matthias Wandel, May 2000.\n"
+                   "used by most Digital Cameras.  v1.2 Matthias Wandel, Feb 2001.\n"
                    "http://www.sentex.net/~mwandel/jhead  mwandel@sentex.net\n"
                    "\n");
 
     fprintf(stderr,"Usage: %s [options] files\n", progname);
     fprintf(stderr,"Where:\n"
                    "[otpions] are:\n"
+
                    "  -dt   -->  Remove exif header thumbnails from exif files\n"
-                   "\n"
                    "  -h    -->  help (this text)\n"
-                   "\n"
                    "  -v    -->  even more verbose output\n"
-                   "\n"
                    "  -c    -->  concise output\n"
-                   "\n"
                    "  -model model\n"
                    "        -->  Only process files from digicam containing model substring in\n"
                    "             camera model description\n"
-                   "\n"
                    "  -ft   -->  Set file modification time to Exif time.\n"
-                   "\n"
-                   "  -n    -->  Rename files according to date mmdd-hhmmss.  This\n"
-                   "             feature is useful for ordering files from multipe \n"
-                   "             digicams to sequence of taking.  Only renames files\n"
-                   "             Whose names are mostly numerical (as assigned by digicam)\n"
-                   "\n"
-                   "  -nf   -->  Same as -n, but rename regardless of original name\n"
-                   "\n"
+                   "  -n[format-string]\n"
+                   "        -->  Rename files according to date.  If the optional format-string is\n"
+                   "             not supplied, the format is mmdd-hhmmss.  If a format-string is\n"
+                   "             given, it is passed to the 'strftime' function for formatting\n"
+                   "             This feature is useful for ordering files from multipe digicams to\n"
+                   "             sequence of taking.  Only renames files whose names are mostly\n"
+                   "             numerical (as assigned by digicam)\n"
+                   "             The '.jpg' is automatically added to the end of the name.  If the\n"
+                   "             destination name already exists, a letter or digit is added to \n"
+                   "             the end of the name to make it uniqe.\n"
+                   "  -nf[format-string]\n"
+                   "        -->  Same as -n, but rename regardless of original name\n"
                    "  -cmd command\n"
                    "        -->  Apply 'command' to every file, then re-insert exif and command\n"
-                   "             sections into the image.  file name is always added to arguments\n"
-                   "             'command' (use quotes to supply arguments).  This is most useful\n"
-                   "             in conjunction with the free ImageMagic tool.  For example, with\n"
-                   "             My Cannon S100, which suboptimally compresses jpegs, I can specify\n"
+                   "             sections into the image.  &i will be substituted for the input file\n"
+                   "             name, and &o (if &o is used).  Use quotes around the command string\n"
+                   "             This is most useful in conjunction with the free ImageMagic tool.  \n"
+                   "             For example, with My Cannon S100, which suboptimally compresses\n"
+                   "             jpegs I can specify\n"
                    "                jhead -cmd \"mogrify -quality 80 %%i\" *.jpg\n"
                    "             to re-compress a lot of images using ImageMagic to half the size,\n" 
                    "             and no visible loss of quality while keeping the exif header\n"
-                   "             &i will be substituted for the input file name, and &o (if used)\n"
-                   "             for the output file name\n"
-                   "\n"
+                   "             Another invocation I like to use is jpegtran (hard to find for\n"
+                   "             windows).  I type:\n"
+                   "                jhead -cmd \"jepgtran -progressive &i &o\" *.jpg\n"
+                   "             to convert jpegs to progressive jpegs (Unix jpegtran syntax differs\n"
+                   "             slightly)\n"
 #ifdef _WIN32
-                   "  -r    -->  Descend subdirectories on wildcard file matching\n"
-                   "\n"
+                   "  -r    -->  No longer supported.  Use the ** wildcard to recurse directories\n"
+                   "             with instead.\n"
+                   "             examples:\n"
+                   "                 jhead **/*.jpg\n"
+                   "                 jhead \"c:\\my photos\\**\\*.jpg\"\n"
 #endif
                    " files  -->  path/filenames with or without widlcards\n"
            );
@@ -835,16 +846,19 @@ int main (int argc, char **argv)
         }else if (!strcmp(arg,"-dt")){
             remove_thumbnails = TRUE;
             DoAction = TRUE;
-#ifdef _WIN32
-        }else if (!strcmp(arg,"-r")){
-            DoSubdirs = TRUE;
-#endif
-        }else if (!strcmp(arg,"-n")){
+        }else if (!memcmp(arg,"-n",2)){
             RenameToDate = 1;
             DoAction = TRUE;
-        }else if (!strcmp(arg,"-nf")){
-            RenameToDate = 2;
-            DoAction = TRUE;
+            arg+=2;
+            if (*arg == 'f'){
+                RenameToDate = 2;
+                arg++;
+            }
+            if (*arg){
+                // A strftime format string is supplied.
+                strftime_args = arg;
+                //printf("strftime_args = %s\n",arg);
+            }
         }else if (!strcmp(arg,"-ft")){
             SetFileTime = TRUE;
             DoAction = TRUE;
@@ -865,17 +879,26 @@ int main (int argc, char **argv)
         }
     }
     if (argn == argc){
-        fprintf(stderr,"Error: Must supply a file name\n");
-        Usage();
+        fprintf(stderr,"Error: No files to process.  Use -h for help\n");
+        return 0;
     }
 
     for (;argn<argc;argn++){
         FilesMatched = FALSE;
 
         #ifdef _WIN32
+            {
+                int a;
+                for (a=0;;a++){
+                    if (argv[argn][a] == '\0') break;
+                    if (argv[argn][a] == '/') argv[argn][a] = '\\';
+                }
+            }
+
+
             // Use my globbing module to do fancier wildcard expansion with recursive
             // subdirectories under Windows.
-            MyGlob(argv[argn],DoSubdirs, ProcessFile);
+            MyGlob(argv[argn], ProcessFile);
             if (!FilesMatched){
                 fprintf(stderr, "Error: No files matched '%s'\n",argv[argn]);
             }

@@ -150,12 +150,6 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 list($y, $tcols) = explode(' ', $x);
             }
 
-            // Parse ImagesPerPage lines
-            if (eregi('^imagesperpage ', $line)) {
-                $x = trim($line);
-                list($y, $perpg) = explode(' ', $x);
-            }
-
             // Get next line
             $line = fgets($file, 4096);
 
@@ -166,7 +160,7 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
 
     $retval = array ($hidden, $presort_dir, $presort_img, $desc,
                      $bulletin, $ficons, $template, $pagetitle,
-                     $fcols, $tcols, $perpg);
+                     $fcols, $tcols);
     return $retval;
 
 }   //  -- End of parseMigCf()
@@ -430,8 +424,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $useThumbSubdir, $thumbSubdir, $noThumbs,
                          $thumbExt, $suppressAltTags, $language,
                          $mig_messages, $sortType, $hidden, $presorted,
-                         $description, $imagePopup, $imagePopType,
-                         $imagesPerPage, $offset )
+                         $description, $imagePopup, $imagePopType )
 {
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
@@ -507,48 +500,37 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 
     reset($presorted);          // reset array pointer
 
-    $currImgNum = 0;            // for "page" tracking
-
     while (list($file,$junk) = each($presorted)) {
 
         // Only look at valid image types
         $ext = getFileExtension($file);
         if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
 
-            // Make sure we're on the right "page"
-            if ($currImgNum >= $offset &&
-                $currImgNum < ($offset + $imagesPerPage)) {
+            // If this is a new row, start a new <TR>
+            if ($col == 0) {
+                $imageList .= '<tr>';
+            }
 
-                // If this is a new row, start a new <TR>
-                if ($col == 0) {
-                    $imageList .= '<tr>';
-                }
-
-                $fname = getFileName($file);
-                $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
+            $fname = getFileName($file);
+            $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
                                  $albumURLroot, $fname, $ext, $markerType,
                                  $markerLabel, $suppressImageInfo,
                                  $useThumbSubdir, $thumbSubdir, $noThumbs,
                                  $thumbExt, $suppressAltTags, $language,
                                  $mig_messages, $description, $imagePopup,
                                  $imagePopType);
-                $imageList .= $img;
+            $imageList .= $img;
 
-                // Keep track of what row and column we are on
-                if ($col == $maxColumns) {
-                    $imageList .= '</tr>';
-                    $row++;
-                    $col = 0;
-                } else {
-                    $col++;
-                }
+            // Keep track of what row and column we are on
+            if ($col == $maxColumns) {
+                $imageList .= '</tr>';
+                $row++;
+                $col = 0;
+            } else {
+                $col++;
             }
         }
-        $currImgNum++;      // increment for next time around
     }
-
-    list($prevpage,$nextpage) = buildNextPrevPageLinks($baseURL, $currDir,
-                                    $offset, $imagesPerPage);
 
     closedir($dir);
 
@@ -560,7 +542,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         $imageList .= '</tr>';
     }
 
-    return list($imageList,$prevpage,$nextpage);
+    return $imageList;
 
 }   // -- End of buildImageList()
 
@@ -937,28 +919,6 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
 
 
-// buildNextPrevPageLinks() - build "next page" and "prev page" links
-
-function buildNextPrevPageLinks( $baseURL, $currDir, $offset,
-                                 $imagesPerPage )
-{
-
-    // Figure out previous page's offset value
-    if ($offset == 0) {
-        $previous = FALSE;
-    } else {
-        $previous = $offset - $imagesPerPage;
-        if ($previous < 0) {
-            $previous = 0;
-        }
-    }
-
-
-
-}   // -- End of buildNextPrevPageLinks()
-
-
-
 // buildYouAreHere() - build the "You are here" line for the top
 // of each page
 
@@ -1069,7 +1029,7 @@ function getImageDescription( $image, $description )
 // Exif comments file (exif.inf)
 
 function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
-                             $mig_messages )
+                             $mig_messages, $mig_language )
 {
 
     $desc = array ();
@@ -1078,6 +1038,7 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
     $aperture = array ();
     $foclen = array ();
     $flash = array ();
+    $iso = array ();
 
     if (file_exists("$albumDir/$currDir/exif.inf")) {
 
@@ -1126,6 +1087,11 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
                     }
                     $foclen[$fname] = $x;
 
+                } elseif (ereg('^ISO equiv.   : ', $line)) {
+                    $x = ereg_replace('ISO equiv.   : ', '', $line);
+                    $x = chop($x);
+                    $iso[$fname] = $x;
+
                 } elseif (ereg('^Flash used   : Yes', $line)) {
                     $flash[$fname] = TRUE;
                 }
@@ -1143,17 +1109,15 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
         if ($viewCamInfo and $model[$image]) {
 
-            $return .= '<font size="-1">(';
-            $return .= $model[$image];
-            $return .= ', ';
-            $return .= $foclen[$image];
-            $return .= ' ';
-            $return .= $shutter[$image];
-            $return .= ' ';
+            $return .= '<font size="-1">(' . $model[$image] . ', ';
+            if ($iso[$image]) {
+                $return .= 'ISO ' . $iso[$image] . ', ';
+            }
+            $return .= $foclen[$image] . ' ';
+            $return .= $shutter[$image] . ' ';
             $return .= $aperture[$image];
             if ($flash[$image]) {
-                $return .= ', '
-                $return .= $mig_messages['flash_used'];
+                $return .= ', ' . $mig_messages[$mig_language]['flash_used'];
             }
             $return .= ')</font>';
         }

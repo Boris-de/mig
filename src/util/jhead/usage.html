@@ -1,4 +1,8 @@
-Jhead is a command line driven program for manipulating the non image parts of Exif files
+<html>
+<font size = 2 face="helvetica">
+
+<b>Jhead is a command line driven program for manipulating the non image parts of Exif flavour
+Jpeg files that most digital cameras produce.</b><p>
 <b>Jhead has no Graphical User Interface</b>.  Clicking on it with the mouse from Windows won't
 do anything for you - you have to <b>use it from the Command prompt</b> (or Dos prompt under Win95/98)
 
@@ -11,9 +15,10 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
 </ul>
 
 <h3>Command line options</h3>
-<table><tr valign=top>
-    <td><b>-dt
-    <td>Delete thumbnails.  Exif headers have a built-in thumbnail, which typically
+<table cellpadding=5><tr valign=top>
+    <td><font size = 2 face="helvetica"><b>-dt
+    <td><font size = 2 face="helvetica">
+        Delete thumbnails.  Exif headers have a built-in thumbnail, which typically
         occupies around 10k of space.  As far as I can tell, this thumbnail is only used
         by the digital cameras to display several really small thumbnails at a time.  The
         thumbnails are too small to use even full screen on the digicam's LCD.
@@ -23,25 +28,29 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         the interesting settings are still in the camera.<p>
          
 <tr valign=top>
-    <td><b>-h
-    <td>Displays summary of command line options.
+    <td><font size = 2 face="helvetica"><b>-h
+    <td><font size = 2 face="helvetica">
+        Displays summary of command line options.
 
 <tr valign=top>
-    <td><b>-v
-    <td>Makes the program even more verbose than it already is.  Like dos programs, and unlike
+    <td><font size = 2 face="helvetica"><b>-v
+    <td><font size = 2 face="helvetica">
+        Makes the program even more verbose than it already is.  Like dos programs, and unlike
         Unix programs, Jhead gives feedback as to what it is doing, even when nothing goes wrong.
-        Windows user that I am, when something doesn't't give me feedback for 20 seconds, I assume
+        Windows user that I am, when something doesn't give me feedback for 20 seconds, I assume
         its crashed.
 
 <tr valign=top>
-    <td><b>-c
-    <td>Concise output.  This causes picture info to be summarized on one line instead of several.
+    <td><font size = 2 face="helvetica"><b>-c
+    <td><font size = 2 face="helvetica">
+        Concise output.  This causes picture info to be summarized on one line instead of several.
         Useful for grep-ing through images, as well as importing into spread sheets (data is space
         delimited with quotes as text qualifier).
 
 <tr valign=top>
-    <td><b>-model
-    <td>Restricts processing of files to those whose camera model, as indicated by the exif image
+    <td><font size = 2 face="helvetica"><b>-model
+    <td><font size = 2 face="helvetica">
+        Restricts processing of files to those whose camera model, as indicated by the exif image
         information, contains the substring specified in the argument after '-model'.
         For example, the following command will list only images that are from an S100 camera:
         <p>
@@ -52,8 +61,9 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         <p>
 
 <tr valign=top>
-    <td><b>-n
-    <td>This option causes files with dates stored in the exif header to be renamed to the
+    <td><font size = 2 face="helvetica"><b>-n
+    <td><font size = 2 face="helvetica">
+        This option causes files with dates stored in the exif header to be renamed to the
         file date.  Renaming is restricted to files whose names consist largely of digits.
         This effectively restricts renaming to files that have not already been manually renamed.
         Use the -nf option to force renaming.<p>
@@ -68,13 +78,16 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         or ACDSee.
 
 <tr valign=top>
-    <td><b>-nf
-    <td>Same as '-n' but renames files regardless of original file name.
+    <td><font size = 2 face="helvetica"><b>-nf
+    <td><font size = 2 face="helvetica">
+        Same as '-n' but renames files regardless of original file name.
+        <p>
  
 
 <tr valign=top>
-    <td><b>-cmd
-    <td>Executes the specified command on each Jepg file to be processed.<p>
+    <td><font size = 2 face="helvetica"><b>-cmd
+    <td><font size = 2 face="helvetica">
+        Executes the specified command on each Jepg file to be processed.<p>
         The Exif section of each file is read before running the command, and re-inserted
         after the command finishes.<p>
         The specified command invoked separately for each Jpeg that is processed, even if
@@ -91,8 +104,8 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         Example use:<br>
         Having a whole directory tree of photos from my S100, I run the following commands:<p>
         <ul>
-          jhead -cmd "mogrify -quality 80 &&i" -model S100 -r *.jpg<br>
-          jhead -cmd "jpegtran -progressive &&i &&o" -r *.jpg<p>
+          jhead -cmd "mogrify -quality 80 &i" -model S100 -r *.jpg<br>
+          jhead -cmd "jpegtran -progressive &i &o" -r *.jpg<p>
         </ul>
         The first command mogrifies all jpegs in the tree that indicate that they are from a 
         Cannon S100 in their exif header to 80% quality at the same resolution.  This is a 'lossy'
@@ -106,21 +119,38 @@ do anything for you - you have to <b>use it from the Command prompt</b> (or Dos 
         <p>
 
 <tr valign=top>
-    <td><b>-r
-    <td>Does recursive directory searching, available under Windows only.  The syntax for 
-        this works roughly like the matching done by dir /s /b, but slightly fancier.
-        For example, you can specify:<p>
-        Jhead -r c:\web*\*.jpg<p>
-        This will descend any directory starting in "web" in c:\, and matches anything that
-        ends in .jpg in those directories.  In this regard, it is more flexible than dir /s /b.
-        The whole recursive subdirectory thing is hard to figure out what is 'right', but this 
-        program handles all the things that 'feel right' in the expected way.
-        <p>
-        Under unix, recursive directories is even more complicated by linking.  Plus Bash and other
-        unix shells do pretty good wildcard expansion already, and the code for descending directories
-        is fairly different under Unix and Windows that I decided to just rely on what the shell
-        provides under Unix.  That is, my program doesn't do anything extra.
+    <td><font size = 2 face="helvetica"><b>-r
+    <td><font size = 2 face="helvetica">
+        The recursive feature of version 1.0 never worked to my satisfaction, and I replaced it 
+        with my recursive file globbing code in the Windows version.  See below.
 </table>
+
+
+<h3>Name globbing and recursive directories under Windows</h3>
+<ul>
+    Name globbing means matching wildcard patterns to actual file names.  If you know what this
+    term means, you are probably annoyed at how programs on Windows typically handle this.
+    The Win32 version of this program goes beyond the pattern matching that Windows provides,
+    and allows you to specify fancy patterns such as:
+    <p>
+    <font size = 2 face="courier">&nbsp jhead c:\pix\199*\*\*.jpg<font size = 2 face="helvetica">
+    <p>
+    This program goes one step beyond beyond that in that "**" as a path component means any
+    level of subdirectories.  The invocation
+    <p>
+    <font size = 2 face="courier">&nbsp jhead c:\**\*.jpg<font size = 2 face="helvetica">
+    <p>
+    will find ALL Jpegs files on the c: drive, including those in the root directory.  The <font size = 2 face="courier">**<font size = 2 face="helvetica"> 
+    is only valid if it is the only path
+    component.  For The path <font size = 2 face="courier">'c:\a**\*.jpg'<font size = 2 face="helvetica"> 
+    will not recurse.
+    The <font size = 2 face="courier">'**'<font size = 2 face="helvetica"> 
+    recursive expansion is ONLY supportedd on the Windos version.   The code is in the module 'myglob.c',
+    if you want to reuse it (I certainly intend to reuse that code for other applications).
+    Under Unix, the shell's wildcard expansion is
+    pretty decent already, and dealing with the convoluted nature of some Unix file layouts,
+    doing better would have been much more of a challenge.
+</ul>
 
 <h3>Programs I use with Jhead</h3>
 <b>ImageMagic</b><br>
@@ -146,6 +176,7 @@ Visual C 5.0.
 <ul>
 I also use <a href="http://www.photodex.com"> CompuPic </a> to organize my photos.  This unfortunately
 is payware, but its a pretty good program.  It has a free two week evaluation period.  After
-this period, it is still semi-usable but annoying.  I ended up paying for it.  
-I don't know of a good free program for Windows to do the same thing.
+this period, it is still semi-usable but annoying.  I ended up paying for it.  Or you can then use ACDsee,
+which has a longer free evaluation period, but costs much more.  I don't know of a good free program for Windows 
+to do the same thing.
 </ul>

@@ -110,19 +110,6 @@ $viewCamInfo = FALSE;
 $viewFolderCount = FALSE;
 
 
-// Number of images per "page" to view.  This is used to split up large
-// folders (those with many images) into "pages" to make it easier on the
-// person viewing the gallery.
-//
-// To disable "pages", set to a huge number such as 100000.
-//
-// Otherwise, set to the maximum number of images on one "page".  Note that
-// if there are less than this number of images in a folder, it will be
-// ignored.
-//
-$imagesPerPage = 100000;
-
-
 // Boolean to define whether to suppress thumbnails altogether or not.
 // Defaults to FALSE.
 //

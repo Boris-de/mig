@@ -1,12 +1,14 @@
-//--------------------------------------------------------------------------
-// Module to do recursive directory file matching under windows, similar
-// to using dir /s /b <pattern> on Win32.
+//--------------------------------------------------------------------------------
+// Module to do recursive directory file matching under windows.
+//
+// Tries to do pattern matching to produce similar results as Unix, but using
+// the Windows _findfirst to do all the pattern matching.
+//
+// Also hadles recursive directories - "**" path component expands into
+// any levels of subdirectores (ie c:\**\*.c matches ALL .c files on drive c:)
 // 
-// Doesn't duplicate everything that I found when experimenting with dir /s,
-// but will behave similar with most common parameters
-// 
-// Matthias Wandel Sept 29 2000
-//--------------------------------------------------------------------------
+// Matthias Wandel Nov 5 2000
+//--------------------------------------------------------------------------------
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,25 +18,30 @@
 
 #include "jhead.h"
 
-
-// Internal storage...
-static void (*FileFunc)(const char * FileName); // Variable for function pointer.
+#define TRUE 1
+#define FALSE 0
 
 //#define DEBUGGING
 
+typedef struct {
+    char * Name;
+    int attrib;
+}FileEntry;
+
+
 #ifdef DEBUGGING
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 // Dummy function to show operation.
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 void ShowName(const char * FileName)
 {
     printf("     %s\n",FileName);
 }
 #endif
 
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 // Simple path splicing (assumes no '\' in either part)
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 static void CatPath(char * dest, const char * p1, const char * p2)
 {
     int l;
@@ -47,219 +54,192 @@ static void CatPath(char * dest, const char * p1, const char * p2)
             exit(-1);
         }
         memcpy(dest, p1, l+1);
-        if (dest[l-1] != '\\'){
+        if (dest[l-1] != '\\' && dest[l-1] != ':'){
             dest[l++] = '\\';
         }
         strcpy(dest+l, p2);
     }
 }
-//--------------------------------------------------------------------------
-// Match using findfirst - non recursive or at bottom of recursion.
-//--------------------------------------------------------------------------
-static void MatchFiles(const char * Path, const char * FilePattern)
+
+//--------------------------------------------------------------------------------
+// Qsort compare function
+//--------------------------------------------------------------------------------
+int CompareFunc(const void * f1, const void * f2)
 {
-    struct _finddata_t finddata;
-    struct _finddata_t * FileList = NULL;
-    int NumAllocated = 0;
-    int NumFiles = 0;
-    long find_handle;
-    char ThisPattern[200];
+    return strcmp(((FileEntry *)f1)->Name,((FileEntry *)f2)->Name);
+}
+
+//--------------------------------------------------------------------------------
+// Decide how a particular pattern should be handled, and call function for each.
+//--------------------------------------------------------------------------------
+void MyGlob(const char * Pattern , void (*FileFuncParm)(const char * FileName))
+{
+    char BasePattern[_MAX_PATH];
+    char MatchPattern[_MAX_PATH];
+    char PatCopy[_MAX_PATH*2];
+
     int a;
 
-    #ifdef DEBUGGING
-        printf("MatchFiles '%s' '%s'\n",Path,FilePattern);
-    #endif
+    int MatchFiles, MatchDirs;
+    int BaseEnd, PatternEnd;
+    int SawPat;
+    int RecurseAt;
 
-    CatPath(ThisPattern, Path, FilePattern);
-
-    
-    find_handle = _findfirst(ThisPattern, &finddata);
-
-    for (;;){
-        if (find_handle == -1) break;
-
-        if (finddata.attrib & _A_SUBDIR) goto next_file; // Just files.
-
-        // Got a matching file.
-
-        // Instead of processing the files right away, make a list of matching files
-        // for this directory.  That way, _findnext doesn't mess up, because it doesn't
-        // expect the directory it is scanning to get modified.
-
-        #ifdef DEBUGGING
-            printf("Match:%s\n",finddata.name);
-        #endif
-
-        if (NumFiles >= NumAllocated){
-            // Progressively allocate bigger chunks to store names.
-            // (simpler and more efficient than building a linked list)
-            NumAllocated = NumAllocated + 2 + NumAllocated / 4;
-            FileList = realloc(FileList, NumAllocated * sizeof(struct _finddata_t));
-            if (FileList == NULL){
-                ErrExit("malloc failed");
-            }
-        }
-        FileList[NumFiles++] = finddata;
-
-        next_file:
-        if (_findnext(find_handle, &finddata) != 0) break;
-    }
-
-    _findclose(find_handle);
-
-    for (a=0;a<NumFiles;a++){
-        static char CombinedPath[400];
-        CatPath(CombinedPath, Path, FileList[a].name);
-        FileFunc(CombinedPath);
-    }
-
-    free(FileList);    
-}
-
-//--------------------------------------------------------------------------
-// Recursive match directories.
-//--------------------------------------------------------------------------
-static void RecurseDirs(const char * Path, const char * DirPattern, const char * FilePattern)
-{
-    struct _finddata_t finddata;
-    long find_handle;
-    char ThisPattern[200];
+    strcpy(PatCopy, Pattern);
 
     #ifdef DEBUGGING
-        printf("RecurseDir '%s' '%s' '%s'\n",Path, DirPattern, FilePattern);
+        printf("Called with '%s'\n",Pattern);
     #endif
 
-    // First check files that might match.
-    if (strcmp(DirPattern, "*") == 0){
-        MatchFiles(Path, FilePattern);
-    }
+DoRecursion:
+    MatchFiles = FALSE;
+    MatchDirs = TRUE;
+    BaseEnd = 0;
+    PatternEnd = 0;
 
-    CatPath(ThisPattern, Path, DirPattern);
+    SawPat = FALSE;
+    RecurseAt = -1;
 
-    find_handle = _findfirst(ThisPattern, &finddata);
-
-    for (;;){
-        char CombinedPath[200];
-        if (find_handle == -1) break;
-
-        if (!(finddata.attrib & _A_SUBDIR)) goto next_file; // Just directories.
-        if (finddata.name[0] == '.'){
-            if (finddata.name[1] == '.' || finddata.name[1] == '\0') goto next_file;
+    // Split the path into base path and pattern to match agains using findfirst.
+    for (a=0;;a++){
+        if (PatCopy[a] == '*' || PatCopy[a] == '?'){
+            SawPat = TRUE;
         }
 
-        CatPath(CombinedPath, Path, finddata.name);
-
-        // Matched directory once, no need to match again.
-        RecurseDirs(CombinedPath, "*", FilePattern);
-
-        next_file:
-        if (_findnext(find_handle, &finddata) != 0) break;
-    }
-
-    _findclose(find_handle);
-}
-         
-//--------------------------------------------------------------------------
-// Decide how a particular pattern should be handled, and call function for each.
-//--------------------------------------------------------------------------
-void MyGlob(const char * Pattern , int DoSubdirs, void (*FileFuncParm)(const char * FileName))
-{
-    char DirPattern[200];
-    char FilePattern[200];
-    char Path[200];
-
-    int i,a,b;
-    int PrePat;
-
-    FileFunc = FileFuncParm;
-
-    PrePat = TRUE;
-
-    // Path splits into three components: Fixed/Dirpattern/Filepattern
-    // a = boundary between Fixed and Dirpattern
-    // b = boundary between DirPattern and FilePattern
-
-    b=a=-1;
-    for (i=0;;i++){
-        if (Pattern[i] == '?' || Pattern[i] == '*') PrePat = FALSE;
-        if (Pattern[i] == '\\' || Pattern[i] == '\0'){
-            if (Pattern[i] == '\\'){
-                b = i;
-            }
-            if (PrePat) a = i;
-        }
-        if (Pattern[i] == 0) break;
-    }
-
-    if (b == -1){
-        // No '\' in pattern.  Try to guess wether this means a directory or a file.
-        strcpy(DirPattern, "*");
-        strcpy(FilePattern, "*");
-        Path[0] = 0;
-
-        if (PrePat && DoSubdirs){
-            strcpy(DirPattern, Pattern);
-        }else{
-            strcpy(FilePattern, Pattern);
-        }
-    }else{
-        if (PrePat && !DoSubdirs){
-            // The plain and simple case.  No pattern, no recursive, 
-            // no guessing what this means.
-            memcpy(Path, Pattern, b);
-            Path[b] = 0;
-            DirPattern[0] = 0;
-            strcpy(FilePattern, Pattern+b+1);
-        }else{
-
-            if (b < a) b = a;
-
-            if (a >= 0){
-                memcpy(Path, Pattern, a);
-                Path[a] = '\\';
-                Path[a+1] = 0;
-            }else{
-                Path[a] = 0;
-            }
-
-            if (b > a){        
-                memcpy(DirPattern, Pattern+a+1, b-a-1);
-                DirPattern[b-a-1] = 0;
-            }else{
-                memcpy(DirPattern, "*", 2);
-            }
-
-            strcpy(FilePattern, Pattern+b+1);
-
-            // Empty means everything.
-            if (DirPattern[0] == '\0') memcpy(DirPattern, "*",2);
-            if (FilePattern[0] == '\0') memcpy(FilePattern, "*",2);
-
-            if (!DoSubdirs){
-                if (a != b){
-                    ErrExit("Illegal wildcard combo for non recursive");
+        if (PatCopy[a] == '*' && PatCopy[a+1] == '*'){
+            if (a == 0 || PatCopy[a-1] == '\\' || PatCopy[a-1] == ':'){
+                if (PatCopy[a+2] == '\\' || PatCopy[a+2] == '\0'){
+                    // x\**\y --> x\y x\*\**\y
+                    RecurseAt = a;
+                    if (PatCopy[a+2]){
+                        memcpy(PatCopy+a, PatCopy+a+3, strlen(PatCopy)-a-1);
+                    }else{
+                        PatCopy[a+1] = '\0';
+                    }
                 }
             }
         }
+
+        if (PatCopy[a] == '\\' || (PatCopy[a] == ':' && PatCopy[a+1] != '\\')){
+            PatternEnd = a;
+            if (SawPat) break; // Findfirst can only match one level of wildcard at a time.
+            BaseEnd = a+1;
+        }
+        if (PatCopy[a] == '\0'){
+            PatternEnd = a;
+            MatchFiles = TRUE;
+            MatchDirs = FALSE;
+            break;
+        }
     }
+
+    if (!SawPat){
+        // No pattern.  This should refer to a file.
+        FileFuncParm(PatCopy);
+        return;
+    }
+
+    strncpy(BasePattern, PatCopy, BaseEnd);
+    BasePattern[BaseEnd] = 0;
+
+    strncpy(MatchPattern, PatCopy, PatternEnd);
+    MatchPattern[PatternEnd] = 0;
+
     #ifdef DEBUGGING
-        printf("Path:%s\n",Path);
-        printf("Dir :%s\n",DirPattern);
-        printf("File:%s\n",FilePattern);
+        printf("Base:%s  Pattern:%s Files:%d dirs:%d\n",BasePattern, MatchPattern, MatchFiles, MatchDirs);
     #endif
 
-    if (DoSubdirs){
-        RecurseDirs(Path, DirPattern, FilePattern);
-    }else{
-        MatchFiles(Path, FilePattern);
+    {
+        FileEntry * FileList = NULL;
+        int NumAllocated = 0;
+        int NumHave = 0;
+        
+        struct _finddata_t finddata;
+        long find_handle;
+
+        find_handle = _findfirst(MatchPattern, &finddata);
+
+        for (;;){
+            if (find_handle == -1) break;
+
+            // Eliminate the obvious patterns.
+            if (!memcmp(finddata.name, ".",2)) goto next_file;
+            if (!memcmp(finddata.name, "..",3)) goto next_file;
+
+            if (finddata.attrib & _A_SUBDIR){
+                if (!MatchDirs) goto next_file;
+            }else{
+                if (!MatchFiles) goto next_file;
+            }
+
+            // Add it to the list.
+            if (NumAllocated <= NumHave){
+                NumAllocated = NumAllocated+10+NumAllocated/2;
+                FileList = realloc(FileList, NumAllocated * sizeof(FileEntry));
+                if (FileList == NULL) goto nomem;
+            }
+            a = strlen(finddata.name);
+            FileList[NumHave].Name = malloc(a+1);
+            if (FileList[NumHave].Name == NULL){
+                nomem:
+                printf("malloc failure\n");
+                exit(-1);
+            }
+            memcpy(FileList[NumHave].Name, finddata.name, a+1);
+            FileList[NumHave].attrib = finddata.attrib;
+            NumHave++;
+
+            next_file:
+            if (_findnext(find_handle, &finddata) != 0) break;
+        }
+        _findclose(find_handle);
+
+        // Sort the list...
+        qsort(FileList, NumHave, sizeof(FileEntry), CompareFunc);
+
+
+        // Use the list.
+        for (a=0;a<NumHave;a++){
+            char CombinedName[_MAX_PATH*2];
+            if (FileList[a].attrib & _A_SUBDIR){
+                if (MatchDirs){
+                    // Need more directories.
+                    CatPath(CombinedName, BasePattern, FileList[a].Name);
+                    strcat(CombinedName, PatCopy+PatternEnd);
+                    MyGlob(CombinedName,FileFuncParm);
+                }
+            }else{
+                if (MatchFiles){
+                    // We need files at this level.
+                    CatPath(CombinedName, BasePattern, FileList[a].Name);
+                    FileFuncParm(CombinedName);
+                }
+            }
+            free(FileList[a].Name);
+        }
+        free(FileList);
+    }
+
+    if(RecurseAt >= 0){
+        strcpy(MatchPattern, PatCopy+RecurseAt);
+        PatCopy[RecurseAt] = 0;
+        strcpy(PatCopy+RecurseAt, "*\\**\\");
+        strcat(PatCopy, MatchPattern);
+       
+        #ifdef DEBUGGING
+            printf("Recurse with '%s'\n",PatCopy);
+        #endif
+
+        // As this funciton context is no longer needed, we can just goto back
+        // to the top of it to avoid adding another context on the stack.
+        goto DoRecursion;
     }
 }
 
-/*
 #ifdef DEBUGGING
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 // The main program.
-//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
 int main (int argc, char **argv)
  {
     int argn;
@@ -281,9 +261,49 @@ int main (int argc, char **argv)
     }
 
     for (;argn<argc;argn++){
-        MyGlob(argv[argn], Subdirs, ShowName);
+        MyGlob(argv[argn], ShowName);
     }
     return EXIT_SUCCESS;
 }
 #endif
+
+/*
+
+non-recursive test cases:
+
+    e:\make*\*
+    \make*\*
+    e:*\*.c
+    \*\*.c
+    \*
+    c:*.c
+    c:\*
+    ..\*.c
+
+
+recursive test cases:
+    **
+    **\*.c
+    c:\**\*.c
+    c:**\*.c
+    .\**
+    ..\**
+
+*/
+
+/*
+
+Notes:
+Get results of findfirst
+Sort results
+
+
+Getting results:
+List of pointers
+List of strings
+
+Strings: Just keep adding it on the end of allocation.
+Pointers: Doublea array every time it runs out.
+Then sort them.
+
 */

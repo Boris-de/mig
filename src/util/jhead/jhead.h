@@ -14,12 +14,21 @@ typedef unsigned char uchar;
     #define FALSE 0
 #endif
 
+#define MAX_COMMENT 1000
+
+#ifndef _WIN32
+    // Don't know what the unix equivalent of _MAX_PATH is.
+    // I hope this is long enough.
+    #define _MAX_PATH 300
+#endif
+
+
 //--------------------------------------------------------------------------
 // This structure stores Exif header image elements in a simple manner
 // Used to store camera data as extracted from the various ways that it can be
-// stored in a nexif header
+// stored in an exif header
 typedef struct {
-    char  FileName     [120];
+    char  FileName     [_MAX_PATH+1];
     time_t FileDateTime;
     unsigned FileSize;
     char  CameraMake   [32];
@@ -34,7 +43,13 @@ typedef struct {
     float ApertureFNumber;
     float Distance;
     float CCDWidth;
-    char  Comments[200];
+    float ExposureBias;
+    int   Whitebalance;
+    int   MeteringMode;
+    int   ExposureProgram;
+    int   ISOequivalent;
+    int   CompressionLevel;
+    char  Comments[MAX_COMMENT];
 }ImageInfo_t;
 
 
@@ -52,7 +67,7 @@ extern void process_EXIF (char * CharBuf, unsigned int length);
 extern int GetExifNonThumbnailSize(void);
 
 // Prototype for myglob.c module
-extern void MyGlob(const char * Pattern , int DoSubdirsParm, void (*FileFuncParm)(const char * FileName));
+extern void MyGlob(const char * Pattern , void (*FileFuncParm)(const char * FileName));
 
 
 // Variables from jhead.c used by exif.c
