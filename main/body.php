@@ -14,8 +14,6 @@ if ($PATH_TRANSLATED) {   // if using register_glolals
 }
 
 $configFile = $baseDir . '/config.php';             // Configuration file
-$defaultConfigFile = $configFile . '.default';      // Default config file
-// (used if $configFile does not exist)
 
 // Collect the server name if possible
 if ($SERVER_SOFTWARE) {
@@ -46,15 +44,7 @@ if ($currDir == '') {
 
 // Read configuration file
 if (file_exists($configFile)) {
-    $realConfig = $configFile;
-} else {
-    $realConfig = $defaultConfigFile;
-}
-if (file_exists($realConfig)) {
-    include($realConfig);
-} else {
-    print "FATAL ERROR: Configuration file missing!";
-    exit;
+    include($configFile);
 }
 
 // Change $baseDir for PHP-Nuke compatibility mode

@@ -1,7 +1,7 @@
 <?php // $Revision$
 
 //
-// config.php.default - Default configuration file for Mig
+// config.php - Configuration file for Mig
 //
 // Copy this file to config.php before customizing it - the installer
 // will over-write config.php.default, but will not over-write config.php.
@@ -13,6 +13,7 @@
 // Lines starting with // are comments.
 //
 // Please see the files in the docs subdirectory, especially docs/INSTALL
+// (or docs/html/Install.html if you prefer HTML).
 //
 
 
@@ -21,8 +22,11 @@
 $pageTitle = 'Photo Album';
 
 
-// Email address of the person who runs this album
-// (correlates to template tag "%%maintAddr%%")
+// Email address of the person who runs this album (correlates to
+// template tag "%%maintAddr%%")
+//
+// This is the global setting.  You can define a different maintAddr
+// in a given folder using the MaintAddr keyword in the mig.cf file.
 //
 // Example:
 //     $maintAddr = 'webmaster@mydomain.com';
@@ -267,14 +271,15 @@ $phpNukeRoot = '';
 // Need more than one directory and/or user?  that's fine, just add more
 // than one line.
 //
-// THIS FEATURE IS NOT REALLY SECURE.  PLEASE DON'T RELY ON IT FOR YOUR
-// SECURITY NEEDS.
+// THIS FEATURE IS NOT REALLY SECURE.  Please don't rely on it for your
+// security needs unless they're fairly superficial.
 //
+
 
 // -----------------------------------------------------------------
 //
 // For people whose Apache or PHP doesn't support virtual() - you should
-// only bother with this if you get errors related to virtual()
+// only bother with this if you get errors related to virtual().
 //
 // If you do have errors like that, you can try setting this to FALSE
 // and see if they go away.

@@ -43,7 +43,8 @@
 # never have to modify actual code to use the software - everything is
 # taken care of either automatically, or using configuration files.
 #
-# Please report any bugs to <dan@tangledhelix.com>
+# Please report any bugs at the Sourceforge Bug Tracker:
+# http://sourceforge.net/tracker/?group_id=24365
 #
 
 use strict;
@@ -56,9 +57,9 @@ my $myself = File::Basename::basename($0);
 my $mydir  = File::Basename::dirname($0);
 my $myRoot = cwd;                           # stash value of '.'
 
-my $exifProg = $mydir . "/jhead/jhead";
-my $exifArgs = "-v";
-my $exifFile = "exif.inf";
+my $exifProg = $mydir . '/jhead';
+my $exifArgs = '-v';
+my $exifFile = 'exif.inf';
 
 my $allFlag         = 0;    # default
 my $exifFlag        = 0;    # default
@@ -72,17 +73,17 @@ my $thumbDirFlag    = 0;    # default
 
 my $defaultSize     = 100;      # default
 my $defaultQuality  = 50;       # default
-my $defaultMarker   = "th";     # default
-my $markerType      = "suffix"; # default
-my $defaultThumbDir = "thumbs"; # default
+my $defaultMarker   = 'th';     # default
+my $markerType      = 'suffix'; # default
+my $defaultThumbDir = 'thumbs'; # default
 my $thumbDirMode    = 0755;     # default
-my $defaultThumbExt = "";       # default
+my $defaultThumbExt = '';       # default
 
-my $pkgName = "Mig";
-my $url = "http://mig.sourceforge.net/";
-my $email = "dan\@tangledhelix.com";
-my $migConfig = "mig.cf";
-my $globalConfig = $mydir . "/../config.php";
+my $pkgName = 'Mig';
+my $url = 'http://mig.sourceforge.net/';
+my $email = 'dan@tangledhelix.com';
+my $migConfig = 'mig.cf';
+my $globalConfig = $mydir . '/../config.php';
 
 # Parse local config file, if it exists.
 if (-r $globalConfig) {
@@ -184,7 +185,7 @@ unless ($commentsFlag or $exifFlag or $thumbFlag) {
 }
 
 # If -M is an invalid type, bail out.
-if ($markerType ne "prefix" and $markerType ne "suffix") {
+if ($markerType ne 'prefix' and $markerType ne 'suffix') {
     print "ERROR: marker type \"$markerType\" is invalid.\n";
     print "Only \"prefix\" and \"suffix\" are valid.  This could\n";
     print "be specified as an argument for -M, or can be specifed\n";
@@ -199,12 +200,12 @@ if ($interactFlag and not $commentsFlag) {
 }
 
 # Set values based on the markerType.
-if ($markerType eq "prefix") {
-    $markerLabel .= "_";
-    $marktestpat = "^" . $markerLabel;
+if ($markerType eq 'prefix') {
+    $markerLabel .= '_';
+    $marktestpat = '^' . $markerLabel;
 }
-if ($markerType eq "suffix") {
-    $markerLabel = "_" . $markerLabel;
+if ($markerType eq 'suffix') {
+    $markerLabel = '_' . $markerLabel;
     $marktestpat = $markerLabel . '$';
 }
 
@@ -292,45 +293,45 @@ foreach (@processDirs) {
     # If -c was used, process comment file
     if ($commentsFlag) {
         print "Processing comments file \"$migConfig\"...\n";
-        &processComments($migConfig, ".", $interactFlag, @processFiles);
+        &processComments($migConfig, '.', $interactFlag, @processFiles);
     }
 
     foreach $item (@processFiles) {
 
         my ($orig_file, $new_file, $SIZE);
 
-        $orig_file = $FILE{$item} . "."    . $EXT{$item};
+        $orig_file = $FILE{$item} . '.'    . $EXT{$item};
 
         if ($thumbDirFlag) {
             if ($thumbExt) {
-                $new_file = "$thumbDir/" . $FILE{$item} . "." . $thumbExt;
+                $new_file = "$thumbDir/" . $FILE{$item} . '.' . $thumbExt;
             } else {
-                $new_file = "$thumbDir/" . $FILE{$item} . "." . $EXT{$item};
+                $new_file = "$thumbDir/" . $FILE{$item} . '.' . $EXT{$item};
             }
             if (not -d $thumbDir) {
                 mkdir $thumbDir, $thumbDirMode;
             }
         } else {
-            if ($markerType eq "prefix") {
+            if ($markerType eq 'prefix') {
                 if ($thumbExt) {
-                    $new_file  = $markerLabel . $FILE{$item} . ".";
+                    $new_file  = $markerLabel . $FILE{$item} . '.';
                     $new_file .= $thumbExt;
                 } else {
-                    $new_file  = $markerLabel . $FILE{$item} . ".";
+                    $new_file  = $markerLabel . $FILE{$item} . '.';
                     $new_file .= $EXT{$item};
                 }
             } else {
                 if ($thumbExt) {
-                    $new_file  = $FILE{$item} . $markerLabel . ".";
+                    $new_file  = $FILE{$item} . $markerLabel . '.';
                     $new_file .= $thumbExt;
                 } else {
-                    $new_file  = $FILE{$item} . $markerLabel . ".";
+                    $new_file  = $FILE{$item} . $markerLabel . '.';
                     $new_file .= $EXT{$item};
                 }
             }
         }
 
-        $SIZE = $size . "x" . $size;
+        $SIZE = $size . 'x' . $size;
 
         # Make a thumbnail, if -t was invoked
         if ($thumbFlag) {
@@ -459,16 +460,14 @@ sub helpMessage {
     print "           over-written.  Using \"-w\" indicates the file should\n";
     print "           be over-written instead.\n";
     print "      -t : Generate thumbnail images.\n";
-    print "      -e : Build \"$exifFile\" file.\n";
-    print "           See the file docs/Utilities.txt - you must build the jhead\n";
+    print "      -e : Build \"$exifFile\" file.  You must compile the jhead\n";
     print "           utility (included) before you can use the -e option.\n";
     print "      -c : Generate blank comments for uncommented images.\n";
-    print "      -i : \"Interactive\" mode for comments (see docs/Utilities.txt).\n";
-    print "      -s : Set pixel size for thumbnails.  See the file docs/Utilities.txt.\n";
-    print "      -q : Set quality level for thumbnails.  See the file docs/Utilities.txt.\n";
+    print "      -i : \"Interactive\" mode for comments.\n";
+    print "      -s : Set pixel size for thumbnails.\n";
+    print "      -q : Set quality level for thumbnails.\n";
     print "      -M : Define type of \"prefix\" or \"suffix\".\n";
-    print "      -m : thumbnail marker label (default \"th\").  See the file\n";
-    print "           docs/Utilities.txt for more information.\n";
+    print "      -m : thumbnail marker label (default \"th\").\n";
     print "      -n : Only process thumbnails that don't exist (new-only).\n";
     print "           Will also process thumbnails which are older than the\n";
     print "           full-size images they are associated with.\n";
@@ -477,11 +476,12 @@ sub helpMessage {
     print "      -d : Use thumbnail subdirectories (instead of using _th, etc)\n";
     print "      -D : Name of thumbnail subdirectory to use (default is \"thumbs\" or\n";
     print "           whatever is in your config.php file).\n";
-    print "      -E : File extension to use for thumbnails.  See docs/Utilities.txt.\n\n";
+    print "      -E : File extension to use for thumbnails.\n\n";
     print " * If creating thumbnails, \"convert\" must be in your \$PATH.\n";
     print " * This program supports JPEG, PNG and GIF formats.\n";
     print " * The \"-e\" feature only supports JPEG files.\n";
-    print "   $pkgName - $url - $email\n\n";
+    print " * See the \"utilities\" document for more information.\n\n";
+    print "   $pkgName - $url\n\n";
 
     return 1;
 
@@ -514,7 +514,7 @@ sub parseMyConfig {
         if (/^[\s]*\$markerType/) {
             s/^.*\$markerType[\s]*=[\s]*["']([^"']*)["'][\s]*;.*$/$1/i;
             $type = lc $_;          # just in case
-            if ($type eq "prefix" or $type eq "suffix") {
+            if ($type eq 'prefix' or $type eq 'suffix') {
                 $markerType = $type;
             }
         }
@@ -554,7 +554,7 @@ sub processComments {
     my $interactFlag = shift;
     my @process = @_;
 
-    my $tempConfig = $migConfig . ".tmp";
+    my $tempConfig = $migConfig . '.tmp';
     my $commIn = undef;
     my $saw_bulletin = undef;
     my $bulletin = undef;
@@ -581,7 +581,7 @@ sub processComments {
             chomp;
             if (/^<comment/i) {
                 s/^<comment[\s]+\"([^"]+)\"[\s]*>.*$/$1/i;
-                $noadd{$_} = 1 if $_ ne "";
+                $noadd{$_} = 1 if $_ ne '';
             }
             if (/^<bulletin/i) {
                 $saw_bulletin = 1;
@@ -602,7 +602,7 @@ sub processComments {
             print "Would you like to add a bulletin entry? (y/n) ";
             $bullIn = <STDIN>;
             if ($bullIn =~ /^[yY]/) {
-                print "Enter bulletin: ";
+                print 'Enter bulletin: ';
                 chomp($bulletin = <STDIN>);
                 print OUT "<Bulletin>\n$bulletin\n</Bulletin>\n\n";
             }
@@ -613,7 +613,7 @@ sub processComments {
 
     foreach (@process) {
         unless ($noadd{$_}) {
-            print OUT "<Comment \"", $_, "\">\n";
+            print OUT '<Comment "', $_, '">', "\n";
             if ($interactFlag) {
                 print "Enter comment for $_: ";
                 chomp($commIn = <STDIN>);

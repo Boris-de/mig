@@ -135,5 +135,5 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
 
     return $directoryList;
 
-} // -- End of buildDirList()
+}   // -- End of buildDirList()
 

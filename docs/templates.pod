@@ -20,8 +20,8 @@ them.  Mig expands these tags at runtime.
 Tags are surrounded by C<%%> marks, such as this example:
 
     <br>
-    Contact <a href="mailto:%%maintAddr%%">%%maintAddr%%</a> with any
-        comments or problems.
+    Contact <a href="mailto:%%maintAddr%%">%%maintAddr%%</a>
+    with any comments or problems.
     <br>
 
 In this case, C<%%maintAddr%%> is the relevant tag name.
@@ -162,44 +162,44 @@ Tags for use in any template
 
 =over 4
 
-=item %%baseURL%%
+=item baseURL
 
 Base URL to call this script (Mig) again.
 
-=item %%maintAddr%%
+=item maintAddr
 
 Email address of album maintainer (as defined in F<config.php>).
 This can be customized per-folder as well.
 
-=item %%version%%
+=item version
 
 Current version number of this Mig installation.
 
-=item %%backLink%%
+=item backLink
 
 This is the E<quot>up one levelE<quot> link on each page.
 
-=item %%currDir%%
+=item currDir
 
 Current directory, in URL-encoded format.
 
-=item %%newCurrDir%%
+=item newCurrDir
 
-Same as C<%%currDir%%> with leading E<quot>./E<quot> removed.
+Same as C<currDir> with leading E<quot>./E<quot> removed.
 
-=item %%pageTitle%%
+=item pageTitle
 
 E<lt>TITLEE<gt> tag for this page.
 
-=item %%youAreHere%%
+=item youAreHere
 
 This is the E<quot>you are hereE<quot> path at the top of each page.
 
-=item %%distURL%%
+=item distURL
 
 URL of Mig home page (value is hard-coded into F<index.php>).
 
-=item %%description%%
+=item description
 
 Description of the image, taken from the comments
 file(s).  For folders, this is E<lt>BulletinE<gt>.
@@ -212,12 +212,12 @@ Tags used only in F<folder.html> (or F<mig_folder.php> in phpNuke mode)
 
 =over 4
 
-=item %%folderList%%
+=item folderList
 
 Expands to a section of E<lt>TABLEE<gt> code which
 displays a list of folders in the current folder.
 
-=item %%imageList%%
+=item imageList
 
 Expands to a section of E<lt>TABLEE<gt> code which
 displays a list of images in the current folder.
@@ -230,33 +230,33 @@ Tags used only in F<image.html> (or F<mig_image.php> in phpNuke mode)
 
 =over 4
 
-=item %%image%%
+=item image
 
 The current image being shown.
 
-=item %%albumURLroot%%
+=item albumURLroot
 
 Root URL of the actual album where images live
 (used in E<lt>IMG SRC=E<quot>...E<quot>E<gt> HTML tags).
 
-=item %%nextLink%%
+=item nextLink
 
 A link to the next item in the sequence.
 
-=item %%prevLink%%
+=item prevLink
 
 A link to the previous item in the sequence.
 
-=item %%currPos%%
+=item currPos
 
 Current position in the list (i.e. #5 of 7)
 
-=item %%encodedImageURL%%
+=item encodedImageURL
 
 Image filename run through rawurlencode() in case
 there's a space embedded in it or something.
 
-=item %%imageSize%%
+=item imageSize
 
 HTML that gives WIDTH=nnn and HEIGHT=nnn tags
 for the image being displayed.
