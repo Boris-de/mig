@@ -23,6 +23,7 @@
 //  da      Danish
 //  it      Italian
 //  es      Spanish
+//  sk      Slovak
 //
 
 // English (default)
@@ -251,6 +252,21 @@ $mig_messages['es'] = array (
      'previmage'     => 'anterior&nbsp;im&#225;gen',
      'thumbview'     => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
      'up_one'        => 'subir&nbsp;un&nbsp;nivel'
+);
+
+// Slovak - courtesy of Juro Polak <polak@axon.sk>
+$mig_messages['sk'] = array (
+    'backhome'      => 'sp&#228;?&nbsp;na',
+    'bytes'         => '&nbsp;bytov',
+    'main'          => 'Hlavn&#225;&nbsp;str&#225;nka',
+    'must_auth'     => 'Mus&#237;te uvies? u?&#237;vate&#190;sk&#233; meno'
+                     . ' a heslo na vstup',
+    'nextimage'     => '&#239;al?&#237;&nbsp;obr&#225;zok',
+    'no_contents'   => 'Pr&#225;zdny&nbsp;adres&#225;r.',
+    'previmage'     => 'predch&#225;dzaj&#250;ci&nbsp;obr&#225;zok',
+    'thumbview'     => 'sp&#228;?&nbsp;na&nbsp;zmen?eniny&nbsp;obr&#225;zkov'
+                     . '(thumbnail)',
+    'up_one'        => 'o&nbsp;&#250;rove&#242;&nbsp;vy??ie'
 );
 
 ?>
