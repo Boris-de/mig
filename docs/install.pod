@@ -50,7 +50,7 @@ Wandel's site at http://www.sentex.net/~mwandel/jhead/
 See the E<quot>utilitiesE<quot> document for more information about
 F<mkGallery.pl> and F<jhead>.
 
-PHP-Nuke users: see the F<phpnuke> document.
+PHP-Nuke, PostNuke and phpWebThings users: see the F<phpnuke> document.
 
 =head2 New Installation
 

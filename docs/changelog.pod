@@ -13,6 +13,10 @@ unix, FTP, shell prompt, whatever).  Eliminated F<FTPinstall> and
 F<Windows> documents since they are now redundant.  New installation
 procedure is documented in the F<install> document.
 
+PHP-Nuke mode was no longer working, so I fixed it.  While I was at it,
+added PostNuke and phpWebThings compatibility.  See the F<phpnuke>
+document.  Tested with PHP-Nuke 5.5, PostNuke 0.714 and phpWebThings 0.41.
+
 Changed language designation for Danish to E<quot>dkE<quot> instead of
 E<quot>daE<quot> (I don't know what E<quot>daE<quot> is, but it's not
 Denmark).
@@ -30,10 +34,6 @@ Fixed regex bug that caused the exposure time (from EXIF data) to be
 incorrectly reported in some circumstances.
 
 General cleanup of documentation.
-
-If F<config.php> is missing, Mig will move on and just use default values
-instead.  Why anyone would want to do that is beyond me, but I think it's
-simpler this way.
 
 Modified F<mkGallery.pl> to look for F<jhead> in E<quot>.E<quot> - simplifies
 the task of finding it.
@@ -57,9 +57,6 @@ Deprecated the C<$viewCamInfo> and C<$viewDateInfo> options.  Everything
 related to EXIF formatting is now controlled by the C<$exifFormatString>
 variable found in F<config.php>.  Information on how to use it can be found
 in F<config.php.default>.
-
-Deprecated C<$phpNukeRoot>.  Apparently at some point it disappeared from
-the code and I forgot to take it out of config.php.
 
 =head2 Version 1.3.1 (Tue, 07 May 2002)
 

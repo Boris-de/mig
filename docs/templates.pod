@@ -113,23 +113,11 @@ markup.
 
 =back
 
-In PHP-Nuke compatibility mode (see the E<quot>phpnukeE<quot> document)
-then these three files are not used.  In their place will be:
-
-=over 4
-
-=item *
-
-F<templates/mig_folder.php> - Used for folder/thumbnail views
-
-=item *
-
-F<templates/mig_image.php> - Used for E<quot>single imageE<quot> views
-
-=back
-
-(The CSS style sheet is not used in PHP-Nuke mode because PHP-Nuke uses its
-own CSS style system and Mig aims not to interfere with that.)
+If you are using PHP-Nuke or PostNuke mode, these three will not exist.
+In their place you'll find F<mig_folder.php> and F<mig_image.php> which
+are the same basically as F<folder.html> and F<image.html> respectively.
+In Nuke mode the CSS file is not used (Nuke systems have their own CSS
+already).
 
 =head2 Defined Tags
 
@@ -190,7 +178,7 @@ this is E<lt>BulletinE<gt>.
 
 =item 2.
 
-Tags used only in F<folder.html> (or F<mig_folder.php> in PHP-Nuke mode)
+Tags used only in F<folder.html> (or F<mig_folder.php> in Nuke mode)
 
 =over 4
 
@@ -208,7 +196,7 @@ displays a list of images in the current folder.
 
 =item 3.
 
-Tags used only in F<image.html> (or F<mig_image.php> in PHP-Nuke mode)
+Tags used only in F<image.html> (or F<mig_image.php> in Nuke mode)
 
 =over 4
 
@@ -258,9 +246,6 @@ document.
 Mig uses a Cascading Style Sheet (CSS) file to manage all of its element
 colorization.  Things like the page background, background colors for table
 cells, all are managed by the CSS file F<templates/style.css>.
-
-(Because PHP-Nuke uses its own CSS, F<templates/style.css> is not used in
-PHP-Nuke compatibility mode.)
 
 I don't have the inclination or time to write a tutorial on how CSS works,
 so please see http://www.htmlhelp.com/reference/css/ or whatever else you

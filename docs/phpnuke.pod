@@ -1,0 +1,51 @@
+=pod
+
+$Id$
+
+=head2 PHP-Nuke, PostNuke and phpWebThings compatibility
+
+Mig can be configured to try to fit into PHP-Nuke, PostNuke and
+phpWebThings sites.
+
+Find your PHP-Nuke, PostNuke or phpWebThings directory.  For example we'll
+say this is F</www/mysite.com/nuke>
+
+Create a subdirectory called F<mig> (i.e. F</www/mysite.com/nuke/mig>).
+Put all the files into that folder as described in the F<install> document,
+except for the following changes.
+
+=over 4
+
+=item 1.
+
+Instead of the templates that the F<install> document mentions, copy over
+the two files in F<templates/phpnuke>.  The HTML and CSS files Mig normally
+uses are not used in Nuke mode.
+
+=item 2.
+
+Copy F<index.php> to your Nuke directory, not to the mig subdirectory.
+And call it F<mig.php>, not F<index.php>.  Make sure you rename it before
+you move it, so you do not over-write your Nuke's F<index.php> file.
+
+=item 3.
+
+Copy F<config.php.default> to F<config.php> in your Mig subdirectory,
+if you don't already have one there.  Make sure you do not copy
+F<config.php> into your Nuke directory, since Nuke has its own file called
+F<config.php> and you must be careful not to destroy it.
+
+=item 4.
+
+Edit Mig's F<config.php> and set C<$phpNukeCompatible> to TRUE.
+Change C<$phpNukeRoot> to your Nuke directory (i.e.
+F</www/mysite.com/nuke>) - not the Mig directory, but your Nuke directory.
+
+(If you're using phpWebThings, you want instead to set
+C<$phpWebThingsCompatible> and C<$phpWebThingsRoot>).
+
+=back
+
+That should be it - http://yournukesite.com/mig.php should work.
+
+=cut
