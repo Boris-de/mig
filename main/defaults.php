@@ -1,4 +1,4 @@
-
+<?
 
 // Defaults - these values can be over-ridden using config.php
 //
@@ -7,6 +7,9 @@ $commentFilePerImage        = FALSE;
 $commentFileShortComments   = FALSE;
 $distURL                    = 'http://mig.sourceforge.net/';
 $exifFormatString           = '|%c|';
+$fileInfoFormatString['image'] = "%n<br>(%i, %s)";
+$fileInfoFormatString['audio'] = "%n<br>(%s)";
+$fileInfoFormatString['video'] = "%n<br>(%s)";
 $folderNameLength           = 15;
 $folderSortType             = 'default';
 $ignoreDotDirectories       = FALSE;
@@ -47,11 +50,13 @@ $showShortOnThumbPage       = FALSE;
 $sortType                   = 'default';
 $suppressAltTags            = FALSE;
 $suppressImageInfo          = FALSE;
-$FileInfoFormatString		= '%n<br>(%i, %s)';
 $thumbSubdir                = 'thumbs';
 $useLargeImages             = FALSE;
 $useRealRandThumbs          = TRUE;
 $useThumbSubdir             = TRUE;
 $viewFolderCount            = FALSE;
 
+//for old compatibility: remove in mig 2.0:
+if ($suppressImageInfo = 'true') $fileInfoFormatString="";
+?>
 

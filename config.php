@@ -383,6 +383,10 @@ $suppressAltTags = FALSE;
 // Example:
 //     $suppressImageInfo = FALSE;
 //
+// NOTE: $suppressImageInfo is now replaced by $fileFormatString and will
+//            be removed in Mig 2.0. If you don't want image information in
+//            thumbnail pages just make $fileFormatString=""
+//
 
 $suppressImageInfo = FALSE;
 
@@ -401,9 +405,10 @@ $suppressImageInfo = FALSE;
 //
 // Default to %n<br>(%i, %s)
 //
-// FIXME: is $suppressImageInfo needed any more? just set $ImageInfoFormatString to ""...
 
-$FileInfoFormatString = "[%i, %s]";
+$fileInfoFormatString['image'] = "%n<br>(%i, %s)";
+$fileInfoFormatString['audio'] = "%n<br>(%s)";
+$fileInfoFormatString['video'] = "%n<br>(%s)";
 
 //
 // $showShortOnThumbPage

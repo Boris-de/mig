@@ -77,6 +77,7 @@ if ($usePortal > 1) {
 // Fetch some settings into $mig_config
 $mig_config['commentfileperimage']		= $commentFilePerImage;
 $mig_config['commentfileshortcomments']		= $commentFileShortComments;
+$mig_config['fileinfoformatstring']			= $fileInfoFormatString;
 $mig_config['foldernamelength']			= $folderNameLength;
 $mig_config['foldersorttype']			= $folderSortType;
 $mig_config['homelabel']			= $homeLabel;
@@ -96,7 +97,6 @@ $mig_config['showshortonthumbpage']		= $showShortOnThumbPage;
 $mig_config['sorttype']				= $sortType;
 $mig_config['suppressalttags']			= $suppressAltTags;
 $mig_config['suppressimageinfo']		= $suppressImageInfo;
-$mig_config['fileinfoformatstring']			= $FileInfoFormatString;
 $mig_config['thumbext']				= $thumbExt;
 $mig_config['thumbsubdir']			= $thumbSubdir;
 $mig_config['uselargeimages']			= $useLargeImages;
@@ -319,6 +319,7 @@ if ($mig_dl && $mig_config['lang_lib'][$mig_dl]) {
     unset ($mig_dl);        // destroy it so it isn't used in URLs
 }
 $mig_config['mig_dl'] = $mig_dl;
+
 
 // Grab appropriate language from library
 $mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
