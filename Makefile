@@ -1,7 +1,7 @@
 #
 # $Revision$
 #
-# Makefile to build MiG distributions
+# Makefile to build Mig distributions
 #
 
 # Location of tar binary (should be GNU tar)
@@ -16,11 +16,8 @@ DIR=	mig-$(ver)
 # What to call the distro file
 DIST=	$(DIR).tar.gz
 
-# Exclusions (used by tar to avoid including crap like
-# .AppleDouble or Vim .swp files)
-EXCEPT=	--exclude=".CFUserTextEncoding" --exclude=".DS_Store" \
-	--exclude="CVS" --exclude=".FBC*" --exclude=".Apple*" \
-	--exclude=".*.swp"
+# Don't include CVS directories or Vim swap files in the bundle
+EXCEPT=	--exclude="CVS" --exclude=".*.swp"
 
 # Arguments to pass to find for cleantree
 FINDARGS=	-exec rm {} \; -print
@@ -28,10 +25,12 @@ FINDARGS=	-exec rm {} \; -print
 default: help
 
 help:
-	@echo "To build a distribution bundle:"
-	@echo "    make mig ver={version}"
-	@echo "To clean cruft out of the tree"
-	@echo "    make cleantree"
+	@echo "make cleantree           Get rid of garbage"
+	@echo "make docs                Rebuild documentation from POD"
+	@echo "make mig ver={version}   Build distro bundle for {version}"
+	@echo " "
+	@echo "   (Note that building a distro bundle rebuilds docs and"
+	@echo "    cleans the tree also)"
 
 mig: docs cleantree
 	@/bin/rm -f $(BUN)/$(DIST)
