@@ -5,9 +5,7 @@
 function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
                              $viewDateInfo)
 {
-    // Use global language settings
-    global $mig_messages;
-    global $mig_language;
+    global $mig_config;
 
     $desc = array ();
     $model = array ();
@@ -113,7 +111,7 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
             $return .= $aperture[$image];
             if ($flash[$image]) {
                 $return .= ' ('
-                        . $mig_messages[$mig_language]['flash_used']
+                        . $mig_config['lang']['flash_used']
                         . ')';
             }
         }

@@ -1,6 +1,6 @@
 
 // Danish - courtesy of Mikkel Mondrup Kristensen <hh00d-mmk@uv.horshs.dk>
-$mig_config['lang']['dk'] = array (
+$mig_config['lang_lib']['dk'] = array (
     'backhome'      => 'tilbage&nbsp;til',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',

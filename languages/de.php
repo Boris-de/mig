@@ -1,6 +1,6 @@
 
 // German - courtesy of "Burckhard Loeh" <lb@loeh.cx>
-$mig_config['lang']['de'] = array (
+$mig_config['lang_lib']['de'] = array (
     'backhome'      => 'zurueck&nbsp;zu',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'blitz benutzt',

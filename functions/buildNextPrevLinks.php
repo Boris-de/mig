@@ -6,8 +6,7 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
                              $markerType, $markerLabel, $hidden,
                              $presorted, $sortType )
 {
-    global $mig_language;
-    global $mig_messages;
+    global $mig_config;
 
     // newCurrDir is currDir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -127,27 +126,27 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     // If there is no previous image, show a greyed-out link
     if ($prev == 'NA') {
         $pLink = '<font size="-1">[&nbsp;<font color="#999999">'
-               . $mig_messages[$mig_language]['previmage']
+               . $mig_config['lang']['previmage']
                . '</font>&nbsp;]</font>';
 
     // else show a real link
     } else {
         $pLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
-               . $prev . '">' . $mig_messages[$mig_language]['previmage']
+               . $prev . '">' . $mig_config['lang']['previmage']
                . '</a>&nbsp;]</font>';
     }
 
     // If there is no next image, show a greyed-out link
     if ($next == 'NA') {
         $nLink = '<font size="-1">[&nbsp;<font color="#999999">'
-               . $mig_messages[$mig_language]['nextimage']
+               . $mig_config['lang']['nextimage']
                . '</font>&nbsp;]</font>';
     // else show a real link
     } else {
         $nLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
-               . $next . '">' . $mig_messages[$mig_language]['nextimage']
+               . $next . '">' . $mig_config['lang']['nextimage']
                . '</a>&nbsp;]</font>';
     }
 

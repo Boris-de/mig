@@ -4,16 +4,15 @@
 function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
                         $noThumbs)
 {
-    global $mig_language;
-    global $mig_messages;
+    global $mig_config;
 
     // $type notes whether we want a "back" link or "up one level" link.
     if ($type == 'back' or $noThumbs) {
         //$label = 'up&nbsp;one&nbsp;level';
-        $label = $mig_messages[$mig_language]['up_one'];
+        $label = $mig_config['lang']['up_one'];
     } elseif ($type == 'up') {
         //$label = 'back&nbsp;to&nbsp;thumbnail&nbsp;view';
-        $label = $mig_messages[$mig_language]['thumbview'];
+        $label = $mig_config['lang']['thumbview'];
     }
 
     // don't send a link back if we're a the root of the tree
@@ -31,7 +30,7 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
             $retval  = '<font size="-1">[&nbsp;<a href="'
                      . $homeLink
                      . '">'
-                     . $mig_messages[$mig_language]['backhome']
+                     . $mig_config['lang']['backhome']
                      . '&nbsp;'
                      . $homeLabel
                      . '</a>&nbsp;]</font><br><br>';

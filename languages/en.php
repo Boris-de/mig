@@ -1,6 +1,6 @@
 
 // English (default)
-$mig_config['lang']['en'] = array (
+$mig_config['lang_lib']['en'] = array (
     'backhome'      => 'back&nbsp;to',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',

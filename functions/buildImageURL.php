@@ -8,8 +8,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
                         $description, $imagePopup, $imagePopType,
                         $commentFilePerImage )
 {
-    global $mig_language;
-    global $mig_messages;
+    global $mig_config;
 
     // newCurrDir is currDir without leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -117,7 +116,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     } elseif ($imageSize > 1024) {
         $imageSize = sprintf('%01.1f', $imageSize / 1024) . 'KB';
     } else {
-        $imageSize = $imageSize . $mig_messages[$mig_language]['bytes'];
+        $imageSize = $imageSize . $mig_config['lang']['bytes'];
     }
 
     // Figure out thumbnail geometry

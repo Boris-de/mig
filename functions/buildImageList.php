@@ -9,9 +9,6 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $presorted, $description, $imagePopup,
                          $imagePopType, $commentFilePerImage )
 {
-    global $mig_language;
-    global $mig_messages;
-
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
 
     $row = 0;               // Counters for the table formatting

@@ -4,9 +4,7 @@
 
 function parseExifDate ($stamp)
 {
-    // Use global language settings
-    global $mig_messages;
-    global $mig_language;
+    global $mig_config;
 
     // Separate into a date and a time
     list($date,$time) = split(' ', $stamp);
@@ -14,7 +12,7 @@ function parseExifDate ($stamp)
     // Parse date
     list($year, $month, $day) = split(':', $date);
     // Turn numeric month into a 3-character month string
-    $month = $mig_messages[$mig_language]['month'][$month];
+    $month = $mig_config['lang']['month'][$month];
     $date = $month .' '. $day .' '. $year;
 
     // Parse time

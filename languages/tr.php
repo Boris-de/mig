@@ -1,6 +1,6 @@
 
 // Turkish - courtesy of Dogan Sariguzel <dogan@procam.com.tr>
-$mig_config['lang']['tr'] = array (
+$mig_config['lang_lib']['tr'] = array (
     'backhome'      => 'geri&nbsp;d&#246;n:',
     'bytes'         => '&nbsp;bit',
     'flash_used'    => 'flash used',

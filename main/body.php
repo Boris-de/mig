@@ -47,6 +47,9 @@ if (file_exists($configFile)) {
     include($configFile);
 }
 
+// Set up language parameters
+$mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
+
 // Change $baseDir for PHP-Nuke compatibility mode
 if ($phpNukeCompatible) {
     $baseDir .= '/mig';
@@ -89,7 +92,7 @@ while ($workCopy) {
         if (! $PHP_AUTH_USER) {
             header('WWW-Authenticate: Basic realm="protected"');
             header('HTTP/1.0 401 Unauthorized');
-            print $mig_messages[$mig_language]['must_auth'];
+            print $mig_config['lang']['must_auth'];
             exit;
 
         } else {
@@ -101,7 +104,7 @@ while ($workCopy) {
             {
                 header('WWW-Authenticate: Basic realm="protected"');
                 header('HTTP/1.0 401 Unauthorized');
-                print $mig_messages[$mig_language]['must_auth'];
+                print $mig_config['lang']['must_auth'];
                 exit;
             }
         }
@@ -257,7 +260,7 @@ if ($pageType == 'folder' or $pageType == '') {
 
     // no folders or images - print the "no contents" line
     if ($folderList == 'NULL' and $imageList == 'NULL') {
-        $folderList = $mig_messages[$mig_language]['no_contents'];
+        $folderList = $mig_config['lang']['no_contents'];
         $folderList = folderFrame($folderList);
         $imageList = '';
 

@@ -1,6 +1,6 @@
 
 // Romanian - courtesy of Eugen Dedu <dedu@ese-metz.fr>
-$mig_config['lang']['ro'] = array (
+$mig_config['lang_lib']['ro'] = array (
     'backhome'      => '&#238;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
     'flash_used'    => 'flash used',

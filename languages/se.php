@@ -1,6 +1,6 @@
 
 // Swedish - courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
-$mig_config['lang']['se'] = array (
+$mig_config['lang_lib']['se'] = array (
     'backhome'      => 'tillbaka',
     'bytes'         => '&nbsp;byte',
     'flash_used'    => 'flash used',

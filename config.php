@@ -1,4 +1,4 @@
-<?php // $Revision$
+<?php // $Id$
 
 //
 // config.php - Configuration file for Mig
@@ -212,7 +212,7 @@ $commentFilePerImage = FALSE;
 //   koi8r  Russian KOI8-R
 //   tr     Turkish
 //   se     Swedish
-//   da     Danish
+//   dk     Danish
 //   it     Italian
 //   es     Spanish
 //   sk     Slovak

@@ -1,6 +1,6 @@
 
 // Portugese - courtesy of Fadel <fadel@fee.unicamp.br>
-$mig_config['lang']['br'] = array (
+$mig_config['lang_lib']['br'] = array (
     'backhome'      => 'voltar&nbsp;para',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash usado',

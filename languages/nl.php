@@ -1,6 +1,6 @@
 
 // Dutch - courtesy of Erik@Braindisorder.org
-$mig_config['nl'] = array (
+$mig_config['lang_lib']['nl'] = array (
     'backhome'      => 'Terug&nbsp;naar',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',

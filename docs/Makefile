@@ -1,5 +1,5 @@
 #
-# $Revision$
+# $Id$
 #
 # Makefile for Mig documentation
 #
@@ -22,17 +22,15 @@ text=	changelog.txt credits.txt install.txt license.txt \
 docs: $(html) $(text) sort clean
 
 $(html): %.html: %.pod
-	@echo "+ $@"
-	@$(hcmd) $(hargs) --infile=$< --outfile=$@
+	$(hcmd) $(hargs) --infile=$< --outfile=$@
 
 $(text): %.txt: %.pod
-	@echo "+ $@"
-	@$(tcmd) $< $@
+	$(tcmd) $< $@
 
 sort:
-	@mkdir -p html text
-	@mv *.html html
-	@mv *.txt text
+	mkdir -p html text
+	mv *.html html
+	mv *.txt text
 
 clean:
-	@/bin/rm -f pod2htm*
+	/bin/rm -f pod2htm*

@@ -1,6 +1,6 @@
 
 // Polish - courtesy of martvin@box43.pl
-$mig_config['lang']['pl'] = array (
+$mig_config['lang_lib']['pl'] = array (
     'backhome'      => 'powr&#243;t&nbsp;do',
     'bytes'         => '&nbsp;bajt&#243;w',
     'flash_used'    => 'u&#191;yto&nbsp;Flash',

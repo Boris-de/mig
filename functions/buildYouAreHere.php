@@ -4,8 +4,7 @@
 
 function buildYouAreHere( $baseURL, $currDir, $image )
 {
-    global $mig_language;
-    global $mig_messages;
+    global $mig_config;
 
     // Use $workingCopy so we don't trash value of $currDir
     $workingCopy = $currDir;
@@ -39,14 +38,14 @@ function buildYouAreHere( $baseURL, $currDir, $image )
 
     // If we're down to '.' as our currDir then this is 'Main'
     if ($currDir == '.') {
-        $url = '<b>' . $mig_messages[$mig_language]['main'] . '</b>';
+        $url = '<b>' . $mig_config['lang']['main'] . '</b>';
         $x = $hereString;
         $hereString = $url . $x;
 
     // Or if we're not, then Main should be a link instead of just text
     } else {
         $url = '<a href="' . $baseURL . '?currDir=' . $workingCopy
-             . '">' . $mig_messages[$mig_language]['main'] . '</a>';
+             . '">' . $mig_config['lang']['main'] . '</a>';
         $x = $hereString;
         $hereString = $url . $x;
     }

@@ -1,56 +1,53 @@
 #
-# $Revision$
+# $Id$
 #
 # Makefile to build Mig distributions
 #
 
-# Location of tar binary (should be GNU tar)
-TAR=	/sw/bin/tar
+# Path to (GNU) tar
+TAR=/usr/bin/gnutar
 
-# Where bundles go
-BUN=	bundles
+# Where to keep distributions (directory)
+DISTDIR=../bundles/mig
 
-# Mig directory
-DIR=	mig-$(ver)
+# Temporary directory to build a Mig install in (this gets tarred up)
+SPOOLDIR=mig-$(ver)
 
-# What to call the distro file
-DIST=	$(DIR).tar.gz
+# Archive name (output file)
+ARCHIVE=$(DISTDIR)/$(SPOOLDIR).tar.gz
 
-# Don't include CVS directories or Vim swap files in the bundle
-EXCEPT=	--exclude="CVS" --exclude=".*.swp"
+default:
+	@echo "make dist ver={version}"
 
-# Arguments to pass to find for clean
-FINDARGS=	-exec rm {} \; -print
+dist: index
+	cd docs; make; cd ..
+	rm -rf $(SPOOLDIR) $(ARCHIVE)
+	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
+	cd $(SPOOLDIR); mkdir -m 0755 -p images templates/phpnuke \
+		docs/text docs/html utilities/jhead
+	mv index.php $(SPOOLDIR)
+	cp config.php $(SPOOLDIR)/config.php.default
+	cp utilities/mkGallery.pl $(SPOOLDIR)/utilities
+	cd $(SPOOLDIR)/utilities; tar xfz ../../utilities/jhead.tar.gz; cd ..
+	cp images/*.gif          $(SPOOLDIR)/images
+	cp templates/*.[hc]*     $(SPOOLDIR)/templates
+	cp templates/*.php       $(SPOOLDIR)/templates/phpnuke
+	cp docs/html/*.html      $(SPOOLDIR)/docs/html
+	cp docs/text/*.txt       $(SPOOLDIR)/docs/text
+	find $(SPOOLDIR) -type d -exec chmod 0755 {} \;
+	find $(SPOOLDIR) -type f -exec chmod 0644 {} \;
+	chmod 0755 $(SPOOLDIR)/utilities/mkGallery.pl
+	tar cfz $(ARCHIVE) $(SPOOLDIR)
+	rm -rf $(SPOOLDIR)
+	chmod 0644 $(ARCHIVE)
 
-default: help
+index:
+	( echo '<?php'; sed "s/VeRsIoN/$(ver)/" main/preamble.php ;    \
+	  cat main/defaults.php;                                       \
+	  echo '//'; echo '// Function library'; echo '//';            \
+	  cat functions/*.php;                                         \
+	  echo '//'; echo '// Language library'; echo '//';            \
+	  cat languages/*.php;                                         \
+	  echo '//'; echo '// Main logic'; echo '//';                  \
+	  cat main/body.php; echo '?>' ) > index.php
 
-help:
-	@echo "make clean               Get rid of garbage"
-	@echo "make docs                Rebuild documentation from POD"
-	@echo "make dist ver={version}  Build distro bundle for {version}"
-	@echo " "
-	@echo "   (Note that building a distro bundle rebuilds docs and"
-	@echo "    cleans the tree also)"
-
-dist: docs clean
-	@echo "Creating distribution bundle..."
-	@/bin/mkdir -m 0755 -p $(BUN)
-	@/bin/rm -f $(BUN)/$(DIST)
-	@/bin/mv src $(DIR)
-	@$(TAR) --gzip $(EXCEPT) -cf $(BUN)/$(DIST) $(DIR)
-	@/bin/mv $(DIR) src
-	@/bin/chmod 0644 $(BUN)/$(DIST)
-	@/bin/ls -l $(BUN)/$(DIST)
-
-docs:
-	@echo "Rebuilding documentation tree..."
-	@cd doc ; make ; cd ..
-
-clean:
-	@echo "Cleaning up garbage files..."
-	@find . -name '.CFUserTextEncoding' $(FINDARGS)
-	@find . -name '.DS_Store' $(FINDARGS)
-	@find . -name '.FBCIndex' $(FINDARGS)
-	@find . -name '.FBCLockFolder' $(FINDARGS)
-	@find . -name '.AppleDouble' $(FINDARGS)
-	@find . -name '.*.swp' -exec echo "WARNING: found {}" \;
