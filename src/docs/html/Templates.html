@@ -1,0 +1,293 @@
+<HTML>
+<HEAD>
+<TITLE>MiG Documentation</TITLE>
+<LINK REV="made" HREF="mailto:perl-bugs@sun.com">
+</HEAD>
+
+<BODY>
+
+<!-- INDEX BEGIN -->
+<!--
+
+<UL>
+
+	<LI><A HREF="#MIG_TEMPLATES">MIG TEMPLATES</A>
+	<UL>
+
+		<LI><A HREF="#OVERVIEW">OVERVIEW</A>
+		<LI><A HREF="#ABOUT_TAGS">ABOUT TAGS</A>
+		<LI><A HREF="#INCLUDING_FILES">INCLUDING FILES</A>
+		<LI><A HREF="#SPECIAL_FILES">SPECIAL FILES</A>
+		<LI><A HREF="#DEFINED_TAGS">DEFINED TAGS</A>
+		<LI><A HREF="#MANAGING_COLORS">MANAGING COLORS</A>
+	</UL>
+
+</UL>
+-->
+<!-- INDEX END -->
+
+<P>
+
+
+
+
+<P>
+<HR>
+<H1><A NAME="MIG_TEMPLATES">MIG TEMPLATES</A></H1>
+<P>
+
+
+
+
+<P>
+<HR>
+<H2><A NAME="OVERVIEW">OVERVIEW</A></H2>
+<P>
+Template files give you some control of the layout of output pages. Colors
+are also handled by the template files (see later in this file).
+
+<P>
+Note that if you like the way the layout of pages are already, you do not
+need to touch the template files at all. You should only modify a template
+file if you have something in the page layout you wish to change or if you
+have a need to change the colorization of different elements of MiG.
+
+<P>
+<HR>
+<H2><A NAME="ABOUT_TAGS">ABOUT TAGS</A></H2>
+<P>
+Template files are simply HTML files with some special tags embedded in
+them, which are expanded by MiG at runtime.
+
+<P>
+Tags are surrounded by <CODE>%%</CODE> marks, such as this example:
+
+<P>
+<PRE>    &lt;br&gt;
+    Contact &lt;a href=&quot;<A HREF="mailto:%%maintAddr%%&quot">mailto:%%maintAddr%%&quot</A>;&gt;%%maintAddr%%&lt;/a&gt; with any
+        comments or problems.
+    &lt;br&gt;
+</PRE>
+<P>
+In this case, <CODE>%%maintAddr%%</CODE> is the relevant tag name.
+
+<P>
+You can control how the page layout looks by modifying and/or moving HTML
+elements and/or MiG tag elements in the template file. It is assumed you
+have an understanding of HTML - modify the templates at your own risk, and
+always make a backup copy beforehand in case your changes don't work out
+the way you wanted them to.
+
+<P>
+There is a glossary of tags later in this document.
+
+<P>
+If you don't know anything about HTML you can try checking out <A
+HREF="http://www.htmlhelp.com/">http://www.htmlhelp.com/</A> or looking for
+some other online help sites by using a search engine such as Yahoo.
+
+<P>
+<HR>
+<H2><A NAME="INCLUDING_FILES">INCLUDING FILES</A></H2>
+<P>
+An ``include'' function is also provided. To include a file, place a
+directive like this one, on a line by itself:
+
+<P>
+<PRE>    #include &quot;filename&quot;;
+</PRE>
+<P>
+Such as:
+
+<P>
+<PRE>    #include &quot;custom.html&quot;;
+</PRE>
+<P>
+The contents of the file you specify will be inserted in place of the
+<CODE>#include</CODE> placeholder.
+
+<P>
+If the file mentioned by <CODE>#include</CODE> is a CGI file then it will be executed, and its output will be placed there
+instead. NOTE: CGI can only be used if you are using an Apache server (and
+not even every installation of Apache will do this correctly). Sorry, it's
+a limitation in PHP that I can't work around.
+
+<P>
+If you are including a CGI make sure it prints appropriate HTTP headers
+before anything else (just like any other situation where you use CGI).
+
+<P>
+Please note some things about <CODE>#include</CODE>:
+
+<P>
+1. All files you wish to include must live in the <EM>templates</EM> subdirectory of your MiG installation.
+
+<P>
+2. However, if you really don't want to do that (because it means you have
+to maintain two copies of the same file in different locations, etc), a
+symbolic link will also work. For example:
+
+<P>
+<PRE>    ln -s /www/htdocs/includes/custom.html /www/htdocs/mig/templates
+</PRE>
+<P>
+In this case you would have <EM>/www/htdocs/includes/custom.html</EM> which is the real file, and a symbolic link called <EM>custom.html</EM> in
+<EM>/www/htdocs/mig/templates</EM> which would point to the real file, leaving you with only one copy to
+maintain.
+
+<P>
+3. The <CODE>#include</CODE> directive must be on a line by itself. It will not function if anything
+else is on that line. Also, the filename must be in quotation marks, and
+the command must be terminated with a semicolon. Here are some examples:
+
+<P>
+<PRE>    #include &quot;custom.html&quot;;           # RIGHT
+    #include &quot;custom.html&quot;            # WRONG - no semicolon
+    #include custom.html;             # WRONG - no quotes
+    &lt;p&gt;#include &quot;custom.html&quot;;&lt;/p&gt;    # WRONG - not alone on line
+</PRE>
+<P>
+Look at either <EM>image.html</EM> or <EM>folder.html</EM> for an example (<CODE>#include</CODE>
+is used to embed the CSS style sheet file <CODE>style.css</CODE>).
+
+<P>
+<HR>
+<H2><A NAME="SPECIAL_FILES">SPECIAL FILES</A></H2>
+<P>
+There are three special files that MiG uses for its own purposes.
+
+<P>
+<EM>templates/folder.html</EM> - used for any view where folders and/or thumbnail images are shown.
+
+<P>
+<EM>templates/image.html</EM> - used for any view where an image is shown by itself.
+
+<P>
+<EM>templates/style.css</EM> - Contains <CODE>text/css</CODE> markup.
+
+<P>
+If you are running MiG in PHP-Nuke Compatible mode (see
+<EM>docs/phpNuke.txt</EM>) then these three files are not used. In their place you will instead
+find:
+
+<P>
+<EM>templates/mig_folder.php</EM> - Used for folder/thumbnail views
+
+<P>
+<EM>templates/mig_image.php</EM> - Used for ``single image'' views
+
+<P>
+(The CSS style sheet is not used in PHP-Nuke mode because PHP-Nuke uses its
+own CSS style system and MiG aims not to interfere with that.)
+
+<P>
+<HR>
+<H2><A NAME="DEFINED_TAGS">DEFINED TAGS</A></H2>
+<P>
+The following is a glossary of recognized MiG template tags, and what they
+are expanded to.
+
+<P>
+1. Tags for use in any template:
+
+<P>
+<PRE>    %%baseURL%%         Base URL to call this script (MiG) again.
+    %%maintAddr%%       Email address of album maintainer (as defined
+                        in mig.cfg).
+    %%version%%         Current version number of this MiG installation.
+    %%backLink%%        This is the &quot;up one level&quot; link on each page.
+    %%currDir%%         Current directory, in URL-encoded format.
+    %%newCurrDir%%      Same as %%currDir%% with leading &quot;./&quot; removed.
+    %%pageTitle%%       &lt;TITLE&gt; tag for this page.
+    %%youAreHere%%      This is the &quot;you are here&quot; path at the top of
+                        each page.
+    %%distURL%%         URL of MiG home page (value is hard-coded into
+                        index.php).
+    %%description%%     Description of the image, taken from the comments
+                        file(s).  For folders, this is &lt;Bulletin&gt;.
+</PRE>
+<P>
+2. Tags used only in <EM>folder.html</EM> (or <EM>mig_folder.php</EM> in phpNuke mode):
+
+<P>
+<PRE>    %%folderList%%      Expands to a section of &lt;TABLE&gt; code which
+                        displays a list of folders in the current folder.
+    %%imageList%%       Expands to a section of &lt;TABLE&gt; code which
+                        displays a list of images in the current folder.
+</PRE>
+<P>
+3. Tags used only in <EM>image.html</EM> (or <EM>mig_image.php</EM> in phpNuke mode):
+
+<P>
+<PRE>    %%image%%           The current image being shown.
+    %%albumURLroot%%    Root URL of the actual album where images live
+                        (used in &lt;IMG SRC=&quot;...&quot;&gt; HTML tags).
+    %%nextLink%%        A link to the &quot;next&quot; item in the sequence.
+    %%prevLink%%        A link to the &quot;previous&quot; item in the sequence.
+    %%currPos%%         Current position in the list (i.e. #5 of 7)
+    %%encodedImageURL%% Image filename run through rawurlencode() in case
+                        there's a space embedded in it or something.
+    %%imageSize%%       HTML that gives WIDTH=nnn and HEIGHT=nnn tags
+                        for the image being displayed.
+</PRE>
+<P>
+<HR>
+<H2><A NAME="MANAGING_COLORS">MANAGING COLORS</A></H2>
+<P>
+MiG uses a Cascading Style Sheet (CSS) file to manage all of its element
+colorization. Things like the page background, background colors for table
+cells, all are managed by the CSS file <EM>templates/style.css</EM>.
+
+<P>
+(Note that if you are using ``PHP-Nuke Compatible'' mode, CSS is ignored
+because PHP-Nuke uses its own CSS styles. See <EM>docs/phpNuke.txt</EM>.)
+
+<P>
+I don't have the inclination or time to give a tutorial on how CSS works,
+so please see <A
+HREF="http://www.htmlhelp.com/reference/css/">http://www.htmlhelp.com/reference/css/</A>
+or whatever else you come across to figure out how CSS works. There are
+some books on this topic available as well (try searching for ``CSS'' at
+Amazon.com).
+
+<P>
+A basic example or two follow, though.
+
+<P>
+To change color of HREF links from <CODE>#0000FF</CODE> (blue) to <CODE>#00FF00</CODE> (green):
+
+<P>
+<PRE>    Before:      A:link    { color: #0000FF }
+    After:       A:link    { color: #00FF00 }
+</PRE>
+<P>
+To change background color of description tables from <CODE>#CCCCFF</CODE> (grey) to <CODE>#FF0000</CODE> (red):
+
+<P>
+<PRE>    Before:
+        TD.desc {
+            color: #000000;
+            background: #CCCCFF;
+            text-align: justify;
+        }
+</PRE>
+<P>
+<PRE>    After:
+        TD.desc {
+            color: #000000;
+            background: #FF0000;
+            text-align: justify;
+        }
+</PRE>
+<P>
+The ``BODY'' element controls the main background / text color for the
+pages overall. However, Netscape seems to have forgotten the BODY element
+when implementing their CSS engine, so Netscape doesn't handle this
+correctly. For that reason, a default coloration of white background /
+black text is hard-coded into the HTML templates in the BODY element. If
+you want to use another colorization for BODY, feel free to do so, but be
+aware you'll need to update both <EM>templates/style.css</EM> and <EM>templates/*.html</EM> to do it correctly.
+
+</BODY>
+
+</HTML>

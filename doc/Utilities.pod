@@ -1,0 +1,238 @@
+$Id$
+
+=pod
+
+Z<>
+
+=head1 BUNDLED UTILITIES
+
+Z<>
+
+F<mkGallery> - Create a gallery from images in the current directory.
+
+F<jhead> - Extracts EXIF header information from JPEG files.
+(Note that F<jhead> is not for direct use - it is called by F<mkGallery>
+when F<mkGallery> is invoked with the C<-e> flag).
+
+F<convert-metafiles> and F<mf_conv.pl> are deprecated - they can be found
+in the Mig-contrib package in the download section on the MiG site:
+
+    http://mig.sourceforge.net/
+
+=head1 mkGallery
+
+Z<>
+
+F<mkGallery> can do three things:
+
+1. Take a directory full of images and create thumbnails for them.
+
+2. Read EXIF header information from image files and cache it in
+a text file for MiG to use.
+
+3. Create blank comment templates in F<mig.cf> files.
+
+It can do all of them at the same time, too, if you want.  You can specify
+which image(s) to work with, or just tell it to process every image in the
+current directory.
+
+    Note that mkGallery requires ImageMagick and Perl.  Neither of
+    those is required for MiG itself - they are required only if
+    you want to use the mkGallery utility.
+
+F<mkGallery> uses the following Perl modules.  On my system, using Perl
+5.005_03, these are all included.  You probably will not have to install
+any of them.  If you find any of them are missing, and you are not running
+with at least Perl 5.005_03 you might want to upgrade your Perl install.
+
+    strict
+    Cwd
+    File::Basename
+    File::Find
+    Getopt::Std
+
+F<mkGallery> has NOT been tested under Microsoft Windows.
+
+  Usage:
+    mkGallery [ -h ] [ -a ] [ -w ] [ -t ] [ -e ] [ -c ] [ -i ]
+        [ -s <size> ] [ -q <quality> ] [ -M <type> ] [ -m <label> ]
+        [ -n ] [ -r ] [ -d ] [ -D <dir> ] [ -E <ext> ]
+        [ <file1> <file2> <...> ]
+
+      -h : Prints this help message.
+      -a : Process all image files in current directory.
+      -w : Turn over-write on.  By default, files written such
+           as the EXIF file will be appended to rather than
+           over-written.  Using "-w" indicates the file should
+           be over-written instead.
+      -t : Generate thumbnail images.
+      -e : Build "exif.inf" file.
+           See the file docs/Utilities.txt - you must build the jhead
+           utility (included) before you can use the -e option.
+      -c : Generate blank comments for uncommented images.
+      -i : "Interactive" mode for comments (see docs/Utilities.txt).
+      -s : Set pixel size for thumbnails.  See the file docs/Utilities.txt.
+      -q : Set quality level for thumbnails.  See the file docs/Utilities.txt.
+      -M : Define type of "prefix" or "suffix".
+      -m : thumbnail marker label (default "th").  See the file
+           docs/Utilities.txt for more information.
+      -n : Only process thumbnails that don't exist (new-only).
+           Will also process thumbnails which are older than the
+           full-size images they are associated with.
+      -r : Recursive mode - process this folder as well as any
+           folders and subfolders beneath it.
+      -d : Use thumbnail subdirectories (instead of using _th, etc).
+           See docs/Utilities.txt for more.
+      -D : Name of thumbnail subdirectory to use (default is "thumbs" or
+           whatever is in your mig.cfg file).  See docs/Utilities.txt.
+      -E : File extension to use for thumbnails.  See docs/Utilities.txt.
+
+
+    * If creating thumbnails, "convert" must be in your $PATH.
+    * This program supports JPEG, PNG and GIF formats.
+    * The "-e" feature only supports JPEG files.
+      MiG - http://mig.sourceforge.net/
+
+=head2 A note about pixel sizes
+
+If you specify C<-s 250> for instance, ImageMagick will be handed a geometry
+size of C<250x250>.  This means it will create a thumbnail image where the
+maximum value of height (or the maximum value of width) is 250 pixels.  It
+will not exceed that value for either width or height.  However, it will
+maintain the aspect ratio of your image, so you will not end up with a
+250x250 pixel image (well, not usually).
+
+Here are some examples I got from testing using the default setting which
+is '100'.
+
+  Original size     Thumbnail size
+
+    1280 x 960        100 x  75
+     505 x 250        100 x  49
+     347 x 202        100 x  58
+     160 x 205         78 x 100
+
+=head2 A note about quality levels
+
+Some image formats such as JPEG can have varying quality levels.  The
+default level is 50 but you can use any number from 1 to 100.  The
+higher the number, the better the quality of the thumbnail.  I have found
+that 50 is a good number and produces a fairly clear thumbnail from even
+large detailed photographs yet still keeping a very good file size
+(usually below 2.5K).
+
+You can specify a quality level with C<-q number>.
+
+=head2 Labels, prefixes, and suffixes
+
+The C<-M> and C<-m> options are new in 0.90.  In previous versions, all
+thumbnails were built with the pattern F<filename_th.ext> so that an image
+named F<myHouse.JPG> would have a thumbnail called F<myHouse_th.JPG>.
+
+That's been changed.  You can now use any text you want for the label,
+not just C<th>.  So you could have C<mkGallery -m mini> create thumbnails for
+you like F<myHouse_mini.JPG> and F<myGarden_mini.JPG> instead.
+
+Also, you can use a prefix rather than the default (a suffix).  So you
+could use C<mkGallery -M prefix> to create thumbnails like
+F<th_myHouse.JPG> and F<th_myGarden.JPG> instead.
+
+If you choose to use prefixes and not suffixes, and/or a different label name,
+you must make the associated changes to F<mig.cfg>.  Otherwise MiG will not
+know what to look for.  Changing F<mig.cfg> has a side effect, too -
+F<mkGallery> reads it to set defaults for C<-m> and C<-M>, so if your
+F<mig.cfg> is set to what you want, you shouldn't have to worry about C<-m>
+or C<-M> when running F<mkGallery>.
+
+Look at C<$markerType> and C<$markerLabel> in F<mig.cfg.default> or
+F<mig.cfg>.  C<$markerType> equates to C<-M> and C<$markerLabel> equates to
+C<-m>.
+
+Values in F<mig.cfg> are used, but if you invoke command-line options to
+F<mkGallery>, C<-m> and C<-M> will override the values in F<mig.cfg>.
+
+As of version 1.1, you can also use a thumbnail extension type.  This is
+basically in case you have mutiple types of images such as JPGs, GIFs, etc,
+but you want all thumbnails to be a particular type (say, all GIFs).
+
+See both the C<$thumbExt> option in F<mig.cfg>, and the C<-E> option to
+F<mkGallery>.  If you define C<$thumbExt> in F<mig.cfg>, F<mkGallery> will
+use that value as the default.
+
+(You can also use subdirectories for thumbnails and avoid all this prefix
+and suffix nonsense altogether... see the next section).
+
+=head2 Using thumbnail subdirectories
+
+Not all users want their thumbnails littering up their folders.  As such,
+MiG has an option which lets you put thumbnails into a subdirectory
+instead.  To do this, set the C<$useThumbSubdir> and C<$thumbSubdir>
+options in the F<mig.cfg> file.  You can also use the C<-d> and C<-D>
+options to F<mkGallery> to override what F<mig.cfg> has configured.
+
+Then you might have files like F<AUT_1015.JPG>, F<AUT_1019.JPG> and in a
+subdirectory F<thumbs/AUT_1015.JPG>, F<thumbs/AUT_1019.JPG> ... so they are
+the same filename for both, just in different directories.  Many people
+view this as cleaner (I've converted my own gallery over to this method).
+
+You don't have to create the directories ahead of time - F<mkGallery> will
+create any directories which are not already there.
+
+=head2 "Interactive" mode
+
+If using the C<-c> option to generate comment fields in F<mig.cf>, you can
+also optionally specify C<-i> or Interactive mode.  Basically all this will
+do is prompt you for each image which does not already have a comment, and
+you can (optionally) type in a comment for that image.  If you don't want
+to do so, just hit C<Enter> and that image will be skipped - F<mkGallery>
+will move along to the next one in the list.
+
+=head2 New-only mode
+
+The new-only mode (C<-n>) basically follows this set of rules.
+
+1. If an image file exists without a thumbnail associated with it,
+generate a thumbnail for it.
+
+2. If an image file exists, has a thumbnail, but is newer than its
+thumbnail file, re-generate the thumbnail.
+
+If you do not specify C<-n> then all images will get new thumbnails.
+
+=head2 Recursive mode
+
+Recursive mode makes it simpler to do big chunks of an album.  You can just
+load up a bunch of folders and pass F<mkGallery> the C<-r> flag and it will
+go to every folder from the point you are currently at, and do all of the
+subfolders too.  New users can simply go to the F<albums> directory and let
+loose a C<mkGallery -art> and it will generate thumbnails for everything it
+finds.  Personally I find C<mkGallery -rant> the most useful combination
+for general purposes, as well as C<rant> being easy to remember :-)
+
+Recursive mode works with all of the action modes (C<-c>, C<-e>, C<-t>).
+
+=head1 jhead
+
+Z<>
+
+F<jhead> was written by Matthias Wandel and can be found at:
+
+    http://www.sentex.net/~mwandel/jhead/index.html
+
+It is included here but I take no credit for the code.  Matthias however
+deserves lots of credit for it, as it's incredibly useful!  Feel free to
+drop Matthias a line and let him know his code is appreciated.  His email
+address is available at the URL listed above.
+
+You will need to build F<jhead> in order to use it.  To build on most systems
+just type C<make> in the F<util/jhead> subdirectory.  If you don't have gcc
+you'll need to edit F<Makefile> to point to your compiler.
+
+This should work as-is on most Unix or Unix-like platforms.  I can attest
+to its working with Linux.
+
+F<jhead> is not something you need to run directly - it is used by
+F<mkGallery> if you invoke F<mkGallery> with the C<-e> flag. 
+
+=cut
+

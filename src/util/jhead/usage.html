@@ -1,0 +1,151 @@
+Jhead is a command line driven program for manipulating the non image parts of Exif files
+<b>Jhead has no Graphical User Interface</b>.  Clicking on it with the mouse from Windows won't
+do anything for you - you have to <b>use it from the Command prompt</b> (or Dos prompt under Win95/98)
+
+<h3>Jhead program Features</h3>
+<ul>
+<li>Extracting camera settings from exif image files
+<li>Removing of integral exif thumbnails for compacting Jpegs without loss of image info
+<li>Able to manage running programs on large batches of Jpegs and restoring exif header
+    information afterwards.
+</ul>
+
+<h3>Command line options</h3>
+<table><tr valign=top>
+    <td><b>-dt
+    <td>Delete thumbnails.  Exif headers have a built-in thumbnail, which typically
+        occupies around 10k of space.  As far as I can tell, this thumbnail is only used
+        by the digital cameras to display several really small thumbnails at a time.  The
+        thumbnails are too small to use even full screen on the digicam's LCD.
+        I have not encountered any adverse side effects of deleting the thumbnails, even from the
+        software provided with the digicams.<p>
+        This command line option simply shortens the exif segment of the jpeg file so that
+        the interesting settings are still in the camera.<p>
+         
+<tr valign=top>
+    <td><b>-h
+    <td>Displays summary of command line options.
+
+<tr valign=top>
+    <td><b>-v
+    <td>Makes the program even more verbose than it already is.  Like dos programs, and unlike
+        Unix programs, Jhead gives feedback as to what it is doing, even when nothing goes wrong.
+        Windows user that I am, when something doesn't't give me feedback for 20 seconds, I assume
+        its crashed.
+
+<tr valign=top>
+    <td><b>-c
+    <td>Concise output.  This causes picture info to be summarized on one line instead of several.
+        Useful for grep-ing through images, as well as importing into spread sheets (data is space
+        delimited with quotes as text qualifier).
+
+<tr valign=top>
+    <td><b>-model
+    <td>Restricts processing of files to those whose camera model, as indicated by the exif image
+        information, contains the substring specified in the argument after '-model'.
+        For example, the following command will list only images that are from an S100 camera:
+        <p>
+        jhead -model S100 *.jpg<p>
+        <p>
+        I use this option to restrict my JPEG re-compressing to those images that came from my digicam,
+        see the -cmd option.
+        <p>
+
+<tr valign=top>
+    <td><b>-n
+    <td>This option causes files with dates stored in the exif header to be renamed to the
+        file date.  Renaming is restricted to files whose names consist largely of digits.
+        This effectively restricts renaming to files that have not already been manually renamed.
+        Use the -nf option to force renaming.<p>
+        The file will be renamed to MMDD-HHMMSS.  The year is not used for the
+        file name (if you have images from that many different years together, you probably
+        don't care enough about organizing your images to use this program.  If you don't like
+        it, you can always change the program.<p>
+        If the destination name is already in use (if another photo was taken at the exact same
+        time by another camera), the times for next subsequent seconds are tried.<p>
+        This option is useful for naming jpegs of the same event taken from two cameras in
+        such a way that they will appear in order in file managers and programs like Compupic
+        or ACDSee.
+
+<tr valign=top>
+    <td><b>-nf
+    <td>Same as '-n' but renames files regardless of original file name.
+ 
+
+<tr valign=top>
+    <td><b>-cmd
+    <td>Executes the specified command on each Jepg file to be processed.<p>
+        The Exif section of each file is read before running the command, and re-inserted
+        after the command finishes.<p>
+        The specified command invoked separately for each Jpeg that is processed, even if
+        multiple files are specified (explicitly or by wild card).
+        I use this option to process whole directory trees of Jpegs from my digital camera
+        with JPEGTRAN (Independent Jpeg group) and Image-Magic's 'MOGRIFY' command without 
+        loosing the camera settings and other info stored in the Exif headers.<p>
+        JPEGTRAN is useful for lossless rotation, as well as for converting Jpegs to
+        progressive Jpegs (also a lossless process, but results in typically 5% smaller files)
+        I use mogrify for re-compressing the images I get from my Canon PowerShot S100 to
+        80% quality.  The cannon Jpegs are either way too 'high quality' for the resolution, or
+        are suboptimally encoded.  Using mogrify to 80% produces no detectable loss in quality,
+        with files about half the size.<p>
+        Example use:<br>
+        Having a whole directory tree of photos from my S100, I run the following commands:<p>
+        <ul>
+          jhead -cmd "mogrify -quality 80 &&i" -model S100 -r *.jpg<br>
+          jhead -cmd "jpegtran -progressive &&i &&o" -r *.jpg<p>
+        </ul>
+        The first command mogrifies all jpegs in the tree that indicate that they are from a 
+        Cannon S100 in their exif header to 80% quality at the same resolution.  This is a 'lossy'
+        process, so I only run it on files that are from the Canon, and only run it once.
+        The next command then takes all jpegs and converts them to progressive Jpegs.  The result
+        is the same images, with no discernible differences, stored in half the space.
+        <p>
+        Keeping the Exif header information is important to me, as I like to check things like the
+        shutter speed for some of my photos, and my HTML index generting program uses the exif tags
+        to display the Jpeg images in order of taking.
+        <p>
+
+<tr valign=top>
+    <td><b>-r
+    <td>Does recursive directory searching, available under Windows only.  The syntax for 
+        this works roughly like the matching done by dir /s /b, but slightly fancier.
+        For example, you can specify:<p>
+        Jhead -r c:\web*\*.jpg<p>
+        This will descend any directory starting in "web" in c:\, and matches anything that
+        ends in .jpg in those directories.  In this regard, it is more flexible than dir /s /b.
+        The whole recursive subdirectory thing is hard to figure out what is 'right', but this 
+        program handles all the things that 'feel right' in the expected way.
+        <p>
+        Under unix, recursive directories is even more complicated by linking.  Plus Bash and other
+        unix shells do pretty good wildcard expansion already, and the code for descending directories
+        is fairly different under Unix and Windows that I decided to just rely on what the shell
+        provides under Unix.  That is, my program doesn't do anything extra.
+</table>
+
+<h3>Programs I use with Jhead</h3>
+<b>ImageMagic</b><br>
+<ul>
+I use the MOGIRIFY command from image magic to do batch conversions and re-compresses of images.
+If you use Linux, you probably already have ImageMagic on your system (just type 'mogrify' at the
+command prompt to see if you have it).  For Windows users, you have to download it from:
+<a href="http://www.imagemagick.org"> http://www.imagemagick.org</a><p>
+</ul>
+<b>JPEGTRAN</b><br>
+<ul>
+If you use Linux you probably also already have this program.  For windows, its hard to find a 
+pre-built binary on the web.  The <a href="http://www.ijg.org"> Independent Jpeg
+Group</a>'s website only has the source code.<p>
+There's a fancier version, with pre-built Windows binaries and a lossless cropping feature added at:
+<a href="http://sylvana.net/jpegcrop"> http://sylvana.net/jpegcrop</a>.
+I have a <a href="http://www.sentex.net/~mwandel/jhead/jpegtran.zip">
+Compiled Windows Binary of Jpegtran</a> on my website.  I got this one by taking the source 
+code for Jpegtran out of the RedHat 6.1 Linux distribution, and compiling it with Microsoft
+Visual C 5.0.
+</ul>
+<b>CompuPic</b><br>
+<ul>
+I also use <a href="http://www.photodex.com"> CompuPic </a> to organize my photos.  This unfortunately
+is payware, but its a pretty good program.  It has a free two week evaluation period.  After
+this period, it is still semi-usable but annoying.  I ended up paying for it.  
+I don't know of a good free program for Windows to do the same thing.
+</ul>

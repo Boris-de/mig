@@ -1,0 +1,797 @@
+<HTML>
+<HEAD>
+<TITLE>MiG Documentation</TITLE>
+<LINK REV="made" HREF="mailto:perl-bugs@sun.com">
+</HEAD>
+
+<BODY>
+
+<!-- INDEX BEGIN -->
+<!--
+
+<UL>
+
+	<LI><A HREF="#MIG_CHANGE_LOG">MIG CHANGE LOG</A>
+	<UL>
+
+		<LI><A HREF="#Version_1_2_3_">Version 1.2.3 ()</A>
+		<LI><A HREF="#Version_1_2_2_Sun_Apr_08_2001_">Version 1.2.2 (Sun Apr 08 2001)</A>
+		<LI><A HREF="#Version_1_2_1_Fri_Apr_06_2001_">Version 1.2.1 (Fri Apr 06 2001)</A>
+		<LI><A HREF="#Version_1_2_Fri_Apr_06_2001_">Version 1.2 (Fri Apr 06 2001)</A>
+		<LI><A HREF="#Version_1_1_Thu_Dec_28_2000_">Version 1.1 (Thu Dec 28 2000)</A>
+		<LI><A HREF="#Version_1_0_Wed_Dec_06_2000_">Version 1.0 (Wed Dec 06 2000)</A>
+		<LI><A HREF="#Version_0_99_Thu_Nov_16_2000_">Version 0.99 (Thu Nov 16 2000)</A>
+		<LI><A HREF="#Version_0_98_Sun_Nov_05_2000_">Version 0.98 (Sun Nov 05 2000)</A>
+		<LI><A HREF="#Version_0_97_Sat_Nov_04_2000_">Version 0.97 (Sat Nov 04 2000)</A>
+		<LI><A HREF="#Version_0_96_Thu_Nov_02_2000_">Version 0.96 (Thu Nov 02 2000)</A>
+		<LI><A HREF="#Version_0_95_Tue_Oct_31_2000_">Version 0.95 (Tue Oct 31 2000)</A>
+		<LI><A HREF="#Version_0_94_Sat_Oct_28_2000_">Version 0.94 (Sat Oct 28 2000)</A>
+		<LI><A HREF="#Version_0_93_Tue_17_Oct_2000_">Version 0.93 (Tue 17 Oct 2000)</A>
+		<LI><A HREF="#Version_0_92_Mon_02_Oct_2000_">Version 0.92 (Mon 02 Oct 2000)</A>
+		<LI><A HREF="#Version_0_91_Sat_30_Sep_2000_">Version 0.91 (Sat 30 Sep 2000)</A>
+		<LI><A HREF="#Version_0_90_Sat_30_Sep_2000_">Version 0.90 (Sat 30 Sep 2000)</A>
+		<LI><A HREF="#Version_0_83_Thu_24_Aug_2000_">Version 0.83 (Thu 24 Aug 2000)</A>
+		<LI><A HREF="#Version_0_82_Thu_24_Aug_2000_">Version 0.82 (Thu 24 Aug 2000)</A>
+		<LI><A HREF="#Version_0_81_Sat_12_Aug_2000_">Version 0.81 (Sat 12 Aug 2000)</A>
+		<LI><A HREF="#Version_0_80_Sat_12_Aug_2000_">Version 0.80 (Sat 12 Aug 2000)</A>
+		<LI><A HREF="#Version_0_77_Sat_12_Aug_2000_">Version 0.77 (Sat 12 Aug 2000)</A>
+		<LI><A HREF="#Version_0_76_Fri_11_Aug_2000_">Version 0.76 (Fri 11 Aug 2000)</A>
+		<LI><A HREF="#Version_0_75_Tue_08_Aug_2000_">Version 0.75 (Tue 08 Aug 2000)</A>
+		<LI><A HREF="#Version_0_74_Mon_07_Aug_2000_">Version 0.74 (Mon 07 Aug 2000)</A>
+		<LI><A HREF="#Version_0_73_Mon_07_Aug_2000_">Version 0.73 (Mon 07 Aug 2000)</A>
+		<LI><A HREF="#Version_0_72_Mon_07_Aug_2000_">Version 0.72 (Mon 07 Aug 2000)</A>
+		<LI><A HREF="#Version_0_71_Mon_07_Aug_2000_">Version 0.71 (Mon 07 Aug 2000)</A>
+		<LI><A HREF="#Version_0_70_Mon_07_Aug_2000_">Version 0.70 (Mon 07 Aug 2000)</A>
+		<LI><A HREF="#Version_0_61_Sun_06_Aug_2000_">Version 0.61 (Sun 06 Aug 2000)</A>
+		<LI><A HREF="#Version_0_60_Sun_06_Aug_2000_">Version 0.60 (Sun 06 Aug 2000)</A>
+		<LI><A HREF="#Version_0_51_Sun_06_Aug_2000_">Version 0.51 (Sun 06 Aug 2000)</A>
+		<LI><A HREF="#Version_0_50_Sat_05_Aug_2000_">Version 0.50 (Sat 05 Aug 2000)</A>
+		<LI><A HREF="#Version_0_41_Fri_04_Aug_2000_">Version 0.41 (Fri 04 Aug 2000)</A>
+		<LI><A HREF="#Version_0_40_Fri_04_Aug_2000_">Version 0.40 (Fri 04 Aug 2000)</A>
+		<LI><A HREF="#Version_0_36_Tue_01_Aug_2000_">Version 0.36 (Tue 01 Aug 2000)</A>
+		<LI><A HREF="#Version_0_35_Tue_01_Aug_2000_">Version 0.35 (Tue 01 Aug 2000)</A>
+		<LI><A HREF="#Version_0_34_Mon_31_Jul_2000_">Version 0.34 (Mon 31 Jul 2000)</A>
+		<LI><A HREF="#Version_0_33_Mon_31_Jul_2000_">Version 0.33 (Mon 31 Jul 2000)</A>
+		<LI><A HREF="#Version_0_32_Mon_31_Jul_2000_">Version 0.32 (Mon 31 Jul 2000)</A>
+		<LI><A HREF="#Version_0_31_Mon_31_Jul_2000_">Version 0.31 (Mon 31 Jul 2000)</A>
+		<LI><A HREF="#Version_0_3_Mon_31_Jul_2000_">Version 0.3 (Mon 31 Jul 2000)</A>
+		<LI><A HREF="#Version_0_2_Sun_30_Jul_2000_">Version 0.2 (Sun 30 Jul 2000)</A>
+		<LI><A HREF="#Version_0_1_Fri_28_Jul_2000_">Version 0.1 (Fri 28 Jul 2000)</A>
+	</UL>
+
+</UL>
+-->
+<!-- INDEX END -->
+
+<P>
+
+
+
+
+<P>
+<HR>
+<H1><A NAME="MIG_CHANGE_LOG">MIG CHANGE LOG</A></H1>
+<P>
+
+
+
+
+<P>
+<HR>
+<H2><A NAME="Version_1_2_3_">Version 1.2.3 ()</A></H2>
+<P>
+Removed install.bat, rewrote docs/Windows.txt to match.
+
+<P>
+Rewrote install.sh for new directory layout (which was a side-effect of
+making Windows installs easier).
+
+<P>
+<HR>
+<H2><A NAME="Version_1_2_2_Sun_Apr_08_2001_">Version 1.2.2 (Sun Apr 08 2001)</A></H2>
+<P>
+Added language definition for Turkish
+
+<P>
+Changed all occurrences of <CODE>$language</CODE> to <CODE>$mig_language</CODE> because of a suspected conflict with a variable name in PHP-Nuke.
+
+<P>
+<HR>
+<H2><A NAME="Version_1_2_1_Fri_Apr_06_2001_">Version 1.2.1 (Fri Apr 06 2001)</A></H2>
+<P>
+Fixed a bug where folks with <CODE>track_vars = Off</CODE> would break.
+
+<P>
+Added definitions for Russian Windows-1251 and Russian KOI8-R
+
+<P>
+<HR>
+<H2><A NAME="Version_1_2_Fri_Apr_06_2001_">Version 1.2 (Fri Apr 06 2001)</A></H2>
+<P>
+Added <CODE>$suppressAltTags</CODE> to <EM>mig.cfg</EM> - when set to <CODE>TRUE</CODE>, ALT tags are not added in thumbnail lists.
+
+<P>
+Added <CODE>$useVirtual</CODE> in <EM>mig.cfg</EM> - when set to <CODE>FALSE</CODE>, <CODE>virtual()</CODE> is not tried. This is for people who for some reason don't have <CODE>virtual()</CODE>
+support in their PHP installation.
+
+<P>
+Fixed <CODE>printTemplate()</CODE> so it only fetches the image size if there's an image to fetch the size
+for. This had been causing a problem under some conditions.
+
+<P>
+Added multi-language support (so far English and French translations). See
+the <CODE>$language</CODE> variable in <EM>mig.cfg.default</EM>. (Note this variable is known as <CODE>$mig_language</CODE> as of version 1.2.2)
+
+<P>
+Added <CODE>$sortType</CODE> to <EM>mig.cfg.default</EM>.
+
+<P>
+Fixed bug that caused trouble with folks not using <CODE>register_globals</CODE>.
+
+<P>
+Added definitions for German, Norwegian, Portugese, Finnish, Romanian.
+
+<P>
+<HR>
+<H2><A NAME="Version_1_1_Thu_Dec_28_2000_">Version 1.1 (Thu Dec 28 2000)</A></H2>
+<P>
+Added <EM>docs/Apache.txt</EM> with useful tips and tricks for Apache users.
+
+<P>
+Added support for password-protected folders. See <EM>docs/Passwords.txt</EM>.
+
+<P>
+Added support for thumbnail subdirectories. See <EM>docs/Install.txt</EM>,
+<EM>docs/Utilities.txt</EM>, and <EM>mig.cfg.default</EM>.
+
+<P>
+Added code to accomodate sites using <CODE>magic_quotes_gpc</CODE>.
+
+<P>
+Fixed bug with <CODE>PATH_INFO</CODE> jump tags.
+
+<P>
+Added <CODE>$noThumbs</CODE> boolean to <EM>mig.cfg.default</EM>. See <EM>docs/Install.txt</EM>.
+
+<P>
+Added <CODE>$thumbExt</CODE> to <EM>mig.cfg.default</EM>. See <EM>docs/Install.txt</EM>.
+
+<P>
+Fixed bug in <CODE>parseMyConfig()</CODE> in <EM>mkGallery</EM> which caused a bad data set to be returned if the config file couldn't be
+read.
+
+<P>
+Rewrote <EM>mkGallery</EM> to accomodate <CODE>$thumbExt</CODE>.
+
+<P>
+Upgraded the bundled <EM>jhead</EM> distribution to 1.0. Updated <EM>install.sh</EM>
+and <EM>mkGallery</EM> to accomodate. No action on the part of users should be needed since the
+command-line syntax and output format of <EM>jhead</EM> is the same.
+
+<P>
+(Duh!) Added Matthias Wendel (author of <EM>jhead</EM>) to <EM>docs/Credits.txt</EM>.
+
+<P>
+Turned <CODE>magic_quotes_runtime</CODE> off by default - we don't do anything in a write mode and I don't see any
+advantage or safety offered by
+<CODE>magic_quotes</CODE> for this application.
+
+<P>
+Using <CODE>$HTTP_GET_VARS</CODE> array now for people using <CODE>register_globals = Off</CODE>.
+
+<P>
+Will start distributing .ZIP and .tar.gz formats from now on.
+
+<P>
+Added <CODE>$maxThumbColumns</CODE> and <CODE>$maxFolderColumns</CODE> to <EM>mig.cfg.default</EM>.
+<CODE>$maxColumns</CODE>, if present, will be used as the default value of
+<CODE>$maxThumbColumns</CODE>. This lets people use something other than a single column for folder
+listings.
+
+<P>
+<HR>
+<H2><A NAME="Version_1_0_Wed_Dec_06_2000_">Version 1.0 (Wed Dec 06 2000)</A></H2>
+<P>
+You can now type ``quit'' at any prompt during <EM>install.sh</EM> to abort.
+
+<P>
+<EM>install.sh</EM> and PHP code revamped and retested for PHP-Nuke compatible mode. Now the
+MiG install (except for <EM>mig.php</EM> and <EM>mig.cfg</EM>) are sandboxed into the <EM>mig</EM> subdirectory rather than being right in the base PHP-Nuke directory.
+
+<P>
+Changed <EM>mig.cfg.default</EM> to use <CODE>TRUE</CODE> &amp; <CODE>FALSE</CODE> rather than 1 and 0 for boolean options.
+
+<P>
+Added <CODE>$suppressImageInfo</CODE> to <EM>mig.cfg.default</EM> - boolean option which controls whether to suppress the information printed
+below thumbnail images on thumbnail view pages.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_99_Thu_Nov_16_2000_">Version 0.99 (Thu Nov 16 2000)</A></H2>
+<P>
+Not an enhancement, but I finally got around to trying out symlinks. Put a
+bit about this in <EM>docs/Install.txt</EM>.
+
+<P>
+Added a new file <EM>docs/Credits.txt</EM> where I will credit folks who have contributed bits of code, found bugs,
+etc.
+
+<P>
+Added PHP-Nuke compatibility mode (see <EM>docs/phpNuke.txt</EM>). Only of interest to folks using, or interested in using, PHP-Nuke.
+
+<P>
+Updated <EM>install.sh</EM> for phpNuke mode, and tried to make it a little smarter about some things.
+
+<P>
+Removed <EM>convert-metafiles</EM> from the main distribution and make it a contrib script instead.  <EM>mf_conv.pl</EM>, too.
+
+<P>
+Added the <CODE>PATH_INFO</CODE> method for Jump URLs. See <EM>docs/Jump.txt</EM>.
+
+<P>
+Added -n and -r switches to <EM>mkGallery</EM>. See <EM>docs/Utilities.txt</EM>.
+
+<P>
+Revamped <CODE>#include</CODE> for Apache users so it can execute CGI's too. See
+<EM>docs/Templates.txt</EM>.
+
+<P>
+Fixed <CODE>buildNextPrevLinks()</CODE> to use an array as its return value instead of the (uglier) string
+concatenation method.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_98_Sun_Nov_05_2000_">Version 0.98 (Sun Nov 05 2000)</A></H2>
+<P>
+Added jump URL tags. See <EM>docs/Jump.txt</EM> for more information.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_97_Sat_Nov_04_2000_">Version 0.97 (Sat Nov 04 2000)</A></H2>
+<P>
+Fixed table formatting problem in <CODE>imageFrame()</CODE> which caused an extra cell to be printed which was visible as a small line
+in IE browsers.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_96_Thu_Nov_02_2000_">Version 0.96 (Thu Nov 02 2000)</A></H2>
+<P>
+Updated <EM>docs/Install.txt</EM> with notes about file permissions.
+
+<P>
+Fixed bug in <CODE>buildNextPrevLinks()</CODE> - it was ignoring &lt;Sort&gt;
+lists.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_95_Tue_Oct_31_2000_">Version 0.95 (Tue Oct 31 2000)</A></H2>
+<P>
+Ran the example gallery through a <CODE>mogrify -quality 40</CODE> to reduce the size of the download tarball. Went from just over 600KB to
+about 340KB. Amazingly, I can't even tell the difference viewing the
+images.
+
+<P>
+Removed a hard-coded value from <CODE>buildImageURL()</CODE> which broke things for folks who had changed the value of <CODE>$albumDir</CODE>. It was found in three places inside that function.
+
+<P>
+Made the terms of the licensing clearer according to the FSF GNU guidelines
+at <A
+HREF="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</A>
+.
+
+<P>
+Did a code review looking for potential problems, made minor adjustments.
+
+<P>
+Added interactive (-i) mode to <EM>util/mkGallery</EM>. See
+<EM>docs/Utilities.txt</EM>.
+
+<P>
+Happy Halloween!
+
+<P>
+<HR>
+<H2><A NAME="Version_0_94_Sat_Oct_28_2000_">Version 0.94 (Sat Oct 28 2000)</A></H2>
+<P>
+<EM>mkGallery</EM> will now sort items before handling them, so output files like the comment
+file will have items alphabetically (for simplicity).
+
+<P>
+Fixed bug in <CODE>buildDirList()</CODE> that didn't do the rendering of spaces and underscores correctly (they
+should be rendered as <CODE>&amp;nbsp;</CODE>).
+
+<P>
+Fixed rather large bug in <CODE>buildDirList()</CODE> which caused cascading links in the output HTML. This was not very
+noticeable until one had a large list of folders (where large is just a few
+tens of directories). A string was not being properly reset at the
+beginning of each loop iteration.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_93_Tue_17_Oct_2000_">Version 0.93 (Tue 17 Oct 2000)</A></H2>
+<P>
+Added a question to <EM>install.sh</EM> which asks the user if they are upgrading from 0.83 or earlier (so not
+everyone for the rest of time has to run
+<EM>convert-metafiles</EM> anytime they upgrade).
+
+<P>
+<EM>install.sh</EM> will no longer try to guess what directory to install into.
+
+<P>
+Discovered that when moving from one page to the next, the
+<CODE>text-decoration</CODE> CSS property for anchors (&lt;A&gt; elements) was not reset. So if you set <CODE>text-decoration=none</CODE> it would memorize that and not go back to using underlines. So I defined <CODE>A:*</CODE> as having
+<CODE>text-decoration=underline</CODE> in <EM>templates/style.css</EM> (which is what you'd expect to see becaues most browsers underline links by
+default).
+
+<P>
+Changed link on image view pages that goes back to read ``back to thumbnail
+view''. Previously it read ``back to folder view'' but it has been pointed
+out to me that the wording was confusing.
+
+<P>
+Discovered the amazing function <CODE>GetImageSize()</CODE>. Now all thumbnail views will use <CODE>width= height=</CODE> for the thumbnails (this helps speed up the browser's rendering of tables),
+and thumbnail views now show the image size in both pixels and bytes.
+Single image views will use <CODE>width= height=</CODE> as well, to help the browser in its rendering task.
+
+<P>
+Added new tag <CODE>%%imageSize%%</CODE> to the <EM>image.html</EM> template.
+
+<P>
+Switched from using <CODE>$SCRIPT_NAME</CODE> to using <CODE>$PHP_SELF</CODE>. This basically means MiG should work for people using PHP's CGI mode now.
+
+<P>
+Implemented &lt;Sort&gt; element in <EM>mig.cf</EM> - see <EM>docs/mig_cf.txt</EM>.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_92_Mon_02_Oct_2000_">Version 0.92 (Mon 02 Oct 2000)</A></H2>
+<P>
+Plugged a security hole (<CODE>$currDir</CODE> wasn't being checked for '..') which let viewers see the entire directory
+stucture of a system. Anyone using anything prior to 0.92 should upgrade
+immediately!
+
+<P>
+<HR>
+<H2><A NAME="Version_0_91_Sat_30_Sep_2000_">Version 0.91 (Sat 30 Sep 2000)</A></H2>
+<P>
+Fixed a bug in <EM>mf_conv.pl</EM> which caused the comment conversion process to cascade itself... it stored
+a list of images and comments in memory, but when it entered a new
+directory it was not cleaning that out, so every
+<EM>mig.cf</EM> had comments for all the files in all the directories it had seen before.
+Not particularly dangerous but it litters your <EM>mig.cf</EM> files badly. This is only a problem for folks who upgraded from a release
+of MiG version 0.83 or earlier to MiG 0.90.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_90_Sat_30_Sep_2000_">Version 0.90 (Sat 30 Sep 2000)</A></H2>
+<P>
+Created <EM>install.sh</EM> to act as an installer script. Reorganized the directory structure somewhat
+while doing this.
+
+<P>
+Updated all documentation.
+
+<P>
+Added the <CODE>#include</CODE> directive to the template processor. See the file
+<EM>docs/Templates.txt</EM> for information.
+
+<P>
+Added Windows doc <EM>docs/Windows.txt</EM> for Windows users. Working on .EXE automatic-style installation program.
+
+<P>
+Changed name of EXIF header cache file to <EM>exif.inf</EM>.
+
+<P>
+Because <EM>install.sh</EM> checks for existing template files and tries to figure out the proper thing
+to do (asking for input if needed), hopefully the risk of the installation
+process blowing away customized templates has been eliminated (or at least
+reduced greatly). Well, unless you happen to use Windows, where I have less
+versatility with installation processes. See <EM>docs/Windows.txt</EM> for notes on that topic.
+
+<P>
+Devised Apache-like format for meta file <EM>mig.cf</EM> which will hold comments, hidden file lists, etc. This will replace <EM>.comments.txt</EM>,
+<EM>.hidden.txt</EM>, etc. EXIF header info will still live in <EM>exif.inf</EM>
+(formerly known as <EM>.exif_comments.txt</EM>). Documentation is in
+<EM>docs/mig_cf.txt</EM>.
+
+<P>
+Updated all files to reflect new domain ``tangledhelix.com''.
+
+<P>
+Converted all colorization to use CSS stylesheets. However, Netscape
+doesn't behave regarding the <CODE>BODY</CODE> element and CSS, based on my tests. So there's a default color set in the <CODE>BODY</CODE> tag in the HTML templates. See the file <EM>docs/Templates.txt</EM> for more information.
+
+<P>
+Added tag <CODE>%%distURL%%</CODE> for templates. Removed ``MiG'' from &lt;TITLE&gt;
+in the default templates.
+
+<P>
+Added script <EM>convert-metafiles</EM> to convert metafiles to new format. It calls a Perl child process, <EM>mf_conv.pl</EM>.
+
+<P>
+Installer tries to find Perl and if so, sets the #! line for Perl-based
+utility scripts. This is because folks have Perl installed in places that
+are hard to predict but which are probably in their <CODE>$PATH</CODE>.
+
+<P>
+Added &lt;Bulletin&gt; feature to <EM>mig.cf</EM>. See <EM>docs/mig_cf.txt</EM> for info.
+
+<P>
+``_'' (underscore) is now rendered as a space character in the YouAreHere
+line as well as in the folder-list boxes.
+
+<P>
+Got &lt;Comment&gt; working, got EXIF parsing working.
+
+<P>
+Now in folder / thumbnail views, image comments are loaded as ALT tags, so
+they will pop-up as text when you hover over a link.
+
+<P>
+Fixed bug which caused images with spaces in their filename to be handled
+improperly.
+
+<P>
+Added <CODE>$markerType</CODE> and <CODE>$markerText</CODE> to <EM>mig.cfg.default</EM>. Added <CODE>-m</CODE>
+and <CODE>-M</CODE> flags to <EM>mkGallery</EM>. These were added to support customizable thumbnail naming conventions.
+You can now decide what thumbnail marker name to use (previously was forced
+to be ``th''. Also now you can declare it to be a prefix (as in
+``th_filename.JPG'') or a suffix (as in ``filename_th.JPG''). Default will
+be as previous, suffix mode using ``th'' for filename_th.JPG. See <EM>docs/Utilities.txt</EM> and <EM>docs/Install.txt</EM> and
+<EM>mig.cfg.default</EM> for more information.
+
+<P>
+Updated <EM>mkGallery</EM> to read <CODE>$markerType</CODE> and <CODE>$markerLabel</CODE> from
+<EM>mig.cfg</EM>, so you don't have to worry about the <CODE>-M</CODE> and <CODE>-m</CODE> flags as long as your <EM>mig.cfg</EM> has the right options set.
+
+<P>
+Changed <CODE>slashFixedURLencode()</CODE> to <CODE>migURLencode()</CODE>.
+
+<P>
+Fixed bug in <CODE>migURLencode()</CODE> where it would re-encode something which was already encoded resulting in a
+comma becoming <CODE>%252C</CODE> instead of say,
+<CODE>%2C</CODE>. It now runs input through <CODE>rawurldecode()</CODE> prior to doing a
+<CODE>rawurlencode()</CODE> on it.
+
+<P>
+Added <CODE>-c</CODE> option to <EM>mkGallery</EM> - this will populate the <EM>mig.cf</EM> file with blank &lt;Comment&gt; elements. It was adapted from <EM>mkComments</EM>, which was contributed by André Fadel (fadel <EM>at</EM> fee.unicamp.br). See
+<EM>docs/Utilities.txt</EM> for information.
+
+<P>
+Fixed bug in <CODE>getExifDescription()</CODE> which was returning incorrect values.
+
+<P>
+Found bug in the <EM>convert-metafiles</EM> script which caused directories with spaces in the filename to wig the
+script out. Fixed.
+
+<P>
+Fixed bug in regex used to find comment lines in <CODE>getExifDescription()</CODE>
+which would cause extremely long execution times when dealing with large
+<EM>exif.inf</EM> files.
+
+<P>
+Fixed bug which caused improper display of filesizes in thumbnail views.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_83_Thu_24_Aug_2000_">Version 0.83 (Thu 24 Aug 2000)</A></H2>
+<P>
+Images and folders are now sorted alphabetically, to make the sorting
+consistent, if not (yet) completely customizable.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_82_Thu_24_Aug_2000_">Version 0.82 (Thu 24 Aug 2000)</A></H2>
+<P>
+Fixed bug in <EM>mkGallery</EM> that caused problems parsing filenames with embedded spaces.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_81_Sat_12_Aug_2000_">Version 0.81 (Sat 12 Aug 2000)</A></H2>
+<P>
+Changed the behavior of <CODE>buildYouAreHere()</CODE> so the browser can't click on the current item - that is, the current
+folder or the current image. It just seemed silly to recreate the browser's
+reload button.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_80_Sat_12_Aug_2000_">Version 0.80 (Sat 12 Aug 2000)</A></H2>
+<P>
+The pieces of the ``you are here'' headline are now clickable for simpler
+navigation between levels.
+
+<P>
+Changed the style sheet so the links are underlined again. People aren't
+used to having it any other way, it was causing confusion.
+
+<P>
+Got <CODE>newCurrDir</CODE> out of the URI string which makes the URL about 50% as long as before. This
+entailed adding <CODE>getNewCurrDir()</CODE> calls.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_77_Sat_12_Aug_2000_">Version 0.77 (Sat 12 Aug 2000)</A></H2>
+<P>
+Added style sheet support. See the file <EM>templates/style.css</EM>.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_76_Fri_11_Aug_2000_">Version 0.76 (Fri 11 Aug 2000)</A></H2>
+<P>
+Rearranged the layout in <EM>image.html</EM> to make it friendlier for small screens.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_75_Tue_08_Aug_2000_">Version 0.75 (Tue 08 Aug 2000)</A></H2>
+<P>
+Fixed overpadded image tables.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_74_Mon_07_Aug_2000_">Version 0.74 (Mon 07 Aug 2000)</A></H2>
+<P>
+Cleaned up the HTML layout (mostly shuffling, adding, deleting
+&lt;BR&gt;).
+
+<P>
+<HR>
+<H2><A NAME="Version_0_73_Mon_07_Aug_2000_">Version 0.73 (Mon 07 Aug 2000)</A></H2>
+<P>
+Added a ``now viewing #x of y'' in image views, so the browser can easily
+tell how many images are left in either direction without returning to the
+thumbnail view.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_72_Mon_07_Aug_2000_">Version 0.72 (Mon 07 Aug 2000)</A></H2>
+<P>
+Using colored table cells for comments now. Embedded comments are seperated
+from file-based comments with an &lt;HR&gt; element.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_71_Mon_07_Aug_2000_">Version 0.71 (Mon 07 Aug 2000)</A></H2>
+<P>
+Descriptions are centered now.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_70_Mon_07_Aug_2000_">Version 0.70 (Mon 07 Aug 2000)</A></H2>
+<P>
+Bundled <EM>jhead</EM> from Matthias Wandel in order to parse EXIF headers.
+<EM>jhead</EM> will be a child process of <EM>mkGallery</EM> when invoked with <CODE>-e</CODE>.
+
+<P>
+Updated <EM>mkGallery</EM> with new options and code to handle parsing of EXIF headers using the <EM>jhead</EM> program. See the <CODE>-e</CODE> and <CODE>-w</CODE> options. Also added a <CODE>-t</CODE> option to specify if you should make thumbnails or not (since that's not
+the only action possible anymore).
+
+<P>
+Added function <CODE>getExifDescription()</CODE> which parses the
+<EM>.exif_comments.txt</EM> files for embedded comments and displays them in image views. (This file is
+known as <EM>exif.inf</EM> as of the 0.90 release)
+
+<P>
+<HR>
+<H2><A NAME="Version_0_61_Sun_06_Aug_2000_">Version 0.61 (Sun 06 Aug 2000)</A></H2>
+<P>
+Added ``you are here'' line, but it's not clickable yet.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_60_Sun_06_Aug_2000_">Version 0.60 (Sun 06 Aug 2000)</A></H2>
+<P>
+Added ``hidden'' feature. Anything put into <EM>.hidden.txt</EM> in a directory will cause the listed items (one per line) to be rendered
+invisible. This is, of course, optional.
+
+<P>
+Cleaned up places where <CODE>eregi()</CODE> or <CODE>eregi_replace()</CODE> were used when the proper call was <CODE>ereg()</CODE> or <CODE>ereg_replace()</CODE>.
+
+<P>
+Added ``comment'' feature. Comments are stored in <EM>.comments.txt</EM>. See
+<EM>INSTALL</EM> for more information.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_51_Sun_06_Aug_2000_">Version 0.51 (Sun 06 Aug 2000)</A></H2>
+<P>
+Added <CODE>$homeLink</CODE> and <CODE>$homeLabel</CODE> to config, to print a ``back to {home}'' link at the ``root'' folder level.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_50_Sat_05_Aug_2000_">Version 0.50 (Sat 05 Aug 2000)</A></H2>
+<P>
+Set default colors so if <CODE>$imageBGcolor</CODE> and/or <CODE>$folderBGcolor</CODE> are missing in the config, it won't default to black.
+
+<P>
+Set default <CODE>$maxColumns</CODE> in case that is omitted from config file.
+
+<P>
+Set default <CODE>$title</CODE> in case that is omitted from config file.
+
+<P>
+Set default <CODE>$maintAddr</CODE> in case that is omitted from config file.
+
+<P>
+Got next/previous links working in image views
+
+<P>
+Removed ``back'' link from ``main'' or ``root'' of album.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_41_Fri_04_Aug_2000_">Version 0.41 (Fri 04 Aug 2000)</A></H2>
+<P>
+Fixed font size bug with back link on ``main'' page.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_40_Fri_04_Aug_2000_">Version 0.40 (Fri 04 Aug 2000)</A></H2>
+<P>
+Rewrote <EM>mkGallery</EM> with <CODE>use strict</CODE> and <CODE>-w</CODE>
+
+
+
+<P>
+Symlinked <EM>index.php3</EM> to <EM>index.php</EM> for simplicity.
+
+<P>
+Replaced ``&lt;&lt;`` in <CODE>buildBackLink()</CODE> with <CODE>&amp;lt;&amp;lt;</CODE> and cleaned up other such bits throughout the code.
+
+<P>
+Replaced most spaces in templates &amp; PHP with <CODE>&amp;nbsp;</CODE> due to odd formatting problems with MSIE.
+
+<P>
+Wrote table generation code into PHP and took it out of the template files
+due to MSIE's stupid insistence on displaying empty tables with a tiny
+colored square.
+
+<P>
+Cleaned up (simplified) templates a little.
+
+<P>
+Added variables <CODE>$imageBGcolor</CODE> and <CODE>$folderBGcolor</CODE>, which are background colors for the table backgrounds for the image and
+folder tables, respectively. They can be found in <EM>mig.cfg.default</EM>.
+
+<P>
+Documented templates in <EM>templates/README.templates</EM>. (This can now be found in <EM>docs/Templates.txt</EM> as of 0.90)
+
+<P>
+<HR>
+<H2><A NAME="Version_0_36_Tue_01_Aug_2000_">Version 0.36 (Tue 01 Aug 2000)</A></H2>
+<P>
+Got rid of <CODE>$phpExt</CODE> - include files aren't seen by the web server anyway, so the extension
+wasn't relevant.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_35_Tue_01_Aug_2000_">Version 0.35 (Tue 01 Aug 2000)</A></H2>
+<P>
+Reworked page formatting. Now if there are no folders and no images
+present, the browser gets ``No contents''. If no folders, the folder table
+isn't printed. If no images, the images table isn't printed. If there are
+both, you see both tables. The result is less confusing.
+
+<P>
+If <EM>mig.cfg</EM> is missing, <EM>mig.cfg.default</EM> will be read instead, to avoid any errors popping up. 
+
+<P>
+<HR>
+<H2><A NAME="Version_0_34_Mon_31_Jul_2000_">Version 0.34 (Mon 31 Jul 2000)</A></H2>
+<P>
+Added a second back link to each page since pages can grow long enough that
+having one at the top and one at the bottom is desirable.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_33_Mon_31_Jul_2000_">Version 0.33 (Mon 31 Jul 2000)</A></H2>
+<P>
+Added filesize to the thumbnails page
+
+<P>
+<HR>
+<H2><A NAME="Version_0_32_Mon_31_Jul_2000_">Version 0.32 (Mon 31 Jul 2000)</A></H2>
+<P>
+Fixed a stupid bug (<CODE>$maxColumns</CODE> was being ignored). Table layouts on thumbnail pages should work now.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_31_Mon_31_Jul_2000_">Version 0.31 (Mon 31 Jul 2000)</A></H2>
+<P>
+If a thumbnail is missing, a generic image will be used in its place.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_3_Mon_31_Jul_2000_">Version 0.3 (Mon 31 Jul 2000)</A></H2>
+<P>
+The ``back'' link is now grayed out when at the ``main'' page.
+
+<P>
+Fixed bug in <EM>mkGallery</EM> that would cause it to create thumbnails of already-existing thumbnail
+images.
+
+<P>
+Viewing a folder will now show the thumbnail images correctly.
+
+<P>
+Added template <EM>image.html</EM> to view individual images.
+
+<P>
+Removed the ``you are at'' headline, the help function, and the ``exit''
+button. The latter two were never too useful, and the former is a real pain
+to get working. I'll save it for some future release.
+
+<P>
+Added <CODE>$phpExt</CODE> variable for PHP3 users who might need filenames with
+<CODE>.php3</CODE> extensions instead of <CODE>.php</CODE>.
+
+<P>
+Added <CODE>$pageTitle</CODE> to insert into the &lt;TITLE&gt; element of each template.
+
+<P>
+Removed <CODE>*currLocation</CODE> routines
+
+<P>
+Started using <EM>mig.cfg.default</EM> for dist bundles to avoid over-writing old config files.
+
+<P>
+Fixed a bug which caused image view ``back'' links to go not to the
+previous page, but literally to ``../''
+
+<P>
+Fixed URL pointer in the HTML templates to reflect correct MiG distribution
+URL.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_2_Sun_30_Jul_2000_">Version 0.2 (Sun 30 Jul 2000)</A></H2>
+<P>
+The <EM>mkGallery</EM> utility script is complete. Requires Perl and ImageMagick. No other
+significant changes in 0.2.
+
+<P>
+<HR>
+<H2><A NAME="Version_0_1_Fri_28_Jul_2000_">Version 0.1 (Fri 28 Jul 2000)</A></H2>
+<P>
+Got ``any directory anywhere'' directory browsing working correctly. An
+album can have any number of directories and subdirectories now. This is
+much better than the old 2-level directory model.
+
+<P>
+Changed direction on the topic of thumbnail generation. It's better to
+pre-generate them instead of having the PHP code do it on the fly. Having
+the script get reliable write access to the filesystem proved to be a bit
+more sloppy than I originally thought.
+
+<P>
+The old method of using numeric filenames is gone now (thank god).
+
+<P>
+Support for JPEG/GIF/PNG formats should be good enough. Old model of
+supporting only one file type sucked.
+
+<P>
+Nailed down an HTML layout finally, simpler than others I have seen, more
+attractive than the previous ones used in <EM>album.php3</EM>.
+
+<P>
+Got HTML templates working.
+
+<P>
+Added a help link, back link, and a mailto: link to each page. Each page
+also has a link back to the distribution URL.
+
+<P>
+Got the ``you are here'' path to display, but no links yet.
+
+<P>
+Got rid of the old problem from <EM>album.php3</EM> where the path had to be statically set in the code ahead of time (and the
+fact that tilde-URLs like
+<CODE>/~dan/</CODE> didn't work). This time around the script figures out where it is in the
+filesystem and bases everything else on that path.
+
+<P>
+Added the ``exit'' link to take browser to an outside URL.
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,95 @@
+$Id$
+
+=pod
+
+Z<>
+
+=head1 MIG AND THE APACHE SERVER
+
+Z<>
+
+=head2 SECURITY CONSIDERATIONS
+
+There are always security considerations when dealing with anonymous
+external users accessing your system and data.
+
+MiG itself mitigates these concerns where it can (for instance, a
+C<currDir> variable containing '..' causes MiG to panic and immediately
+exit), but it can't do everything in itself.
+
+The main thing MiG does to help with the security problem is that it never,
+ever, writes anything to the disk.  It only reads.  This minimizes the
+amount of damage potential that exists.
+
+An example: MiG's PHP code can't control whether or not a web user fetches
+your F<mig.cf> or F<exif.inf> files and so forth by simply using direct
+URLs.  Users of Apache can use the following in their configuration to get
+around this limitation:
+
+    <Directory /path/to/your/mig/gallery>
+        # Protect against anyone trying to view mig.cf or mig.cfg
+        <Files ~ "^mig.cfg?$">
+            order allow,deny
+            deny from all
+        </Files>
+        # Protect against anyone trying to view exif.inf files
+        <Files ~ "^exif.inf$">
+            order allow,deny
+            deny from all
+        </Files>
+    </Directory>
+
+With these rules in place, someone can't for example go to a URL like:
+
+    http://tangledhelix.com/gallery/albums/Miscellaneous/mig.cf
+
+to see that file.  It would be met with an access denial from the server.
+
+(If you want to look at password protection ideas, see
+F<docs/Passwords.txt>.
+
+=head2 USEFUL REWRITE IDEAS
+
+You can use Apache's C<mod_rewrite> module to make MiG URLs more simplified
+and easier to remember.  Here's what I do on my own site:
+
+First, define simple shortcut names using the jumpMap (see
+F<docs/Jump.txt>).
+
+Then, add a rule or two like this to F<httpd.conf>:
+
+  RewriteRule ^/go/([^/]+)        /gallery/index.php?jump=$1    [R]
+  RewriteRule ^/photo/([^/]+)     /gallery/index.php?jump=$1    [R]
+
+That way you can use URLs like this:
+
+  http://tangledhelix.com/photo/kate
+  http://tangledhelix.com/go/kate
+
+And it will automatically go to the right place.  You can also do your own
+custom shortcuts of course, like these:
+
+  RewriteRule ^/kate           /gallery/index.php?jump=kate     [R]
+  RewriteRule ^/house          /gallery/index.php?jump=house    [R]
+  RewriteRule ^/europe         /gallery/index.php?jump=europe   [R]
+
+So you can have even simpler URLs if you want for certain galleries, like
+http://tangledhelix.com/kate/
+
+Naturally you will need to put C<RewriteEngine on> in the config prior to
+these rules, and have C<mod_rewrite> built into your installation of
+Apache, for this to work.
+
+=head2 IF YOU'RE USING WINDOWS
+
+I tried installing MiG on my laptop running Windows ME and PHPTriad (PHP &
+Apache & MySQL all in one bundle).  I had all sorts of trouble.
+
+Pat Moore has reported success using PHPTriad under Windows 98.  I don't
+know what the difference is, if anything, or perhaps I am simply doing
+something grossly wrong on my system.
+
+So in short, YMMV  :-)
+
+=cut
+

@@ -1,0 +1,203 @@
+
+The mig.cf file
+
+  GENERAL
+
+    This file aims to explain how mig.cf works and what it is.
+
+    Each folder under the album subdirectory can optionally have a
+    mig.cf file in it. This file contains things like image
+    comments, a list of hidden items (if any) and so on.
+
+    The format is borrowed from the config file format of Apache,
+    and is sort of similar to HTML. Hopefully this means that it
+    will be simple for most folks to figure out and use.
+
+    An example mig.cf could look like this:
+
+        # Beginning of example mig.cf
+        #
+        <Bulletin>
+        We spent four days in Rome.  Even with four whole days to tour
+        the area, we found we couldn't cover everything.  The Vatican
+        alone took most of the second day, and we only saw half of it.
+        </Bulletin>
+
+        <Comment "AUT_2323.JPG">
+        Massive mosaic found in the Basilica of Saint Peter in the Vatican.
+        </Comment>
+
+        <Comment "AUT_2406.JPG">
+        The Colloseum of Rome.
+        </Comment>
+        #
+        # End of example mig.cf
+
+    An element is opened by a tag (such as <Bulletin>), and closed
+    by the associated close-tag (the tag with its name preceded by a
+    slash) as in </Bulletin>.
+
+    An element can have an argument, as in <Comment "AUT_2406.JPG">.
+
+    These tags MUST be at the beginning of a line.
+
+    If you installed the example gallery, look for mig.cf files in
+    there for some useful examples.
+
+    (Below you'll find a table defining valid tags and what they do)
+
+  UPGRADING
+
+    If you are upgrading from 0.83 or earlier to 0.90 or later,
+    you'll need to update the meta-files. See the script convert-
+    metafiles which is on the MiG home page in the contrib section.
+    You'll also need the mf_conv script available from the same
+    location.
+
+        http://tangledhelix.com/software/mig/downloads/contrib
+
+  COMMENT LINES
+
+    Any line starting with `#' is a comment line and is ignored by
+    MiG. Blank lines are also ignored. You should avoid having
+    either one inside any of the element blocks because they are not
+    ignored inside element blocks such as <Comment>.
+
+  BULLETINS
+
+        <Bulletin>
+        [some text]
+        </Bulletin>
+
+    A bulletin is displayed for the current folder. So if you have a
+    bulletin definition in albums/Trips/Rome/mig.cf, then when the
+    browser navigates to Trips, then Rome, they will see not only
+    the folder view of what is in the folder, they will also see the
+    bulletin for that folder. It's basically like an image comment,
+    only it is attached to a folder rather than an image. An example
+    can be found near the top of this file.
+
+  IMAGE COMMENTS
+
+        <Comment "image_file">
+        [some text]
+        </Comment>
+
+    A comment is attached to an image. When viewing that image, the
+    comment text associated with it will be displayed in a box below
+    the image. An example can be found near the top of this file.
+
+    The argument to `Comment' must be enclosed in quotes. This is
+    because of things like files with embedded spaces in the
+    filename, etc.
+
+    As of 0.90, comments are also loaded into the ALT tag of
+    thumbnail images, so you can hover over an image and view its
+    description. I've had problems when using hover links that
+    contain HTML elements... so you might want to keep HTML elements
+    out of your <Comment> structures - especially <A HREF> tags
+    which don't fit into ALT tags especially well. (You can suppress
+    ALT tags entirely by setting `$suppressAltTags' to `TRUE' in
+    mig.cfg).
+
+  HIDDEN ITEMS
+
+        <Hidden>
+        [item]
+        [item]
+        </Hidden>
+
+    Hidden elements are lists of items which are invisible to the
+    browser. Sometimes you might want to hide something from the
+    general public, maybe because you just don't want anyone to view
+    it, or maybe you are working on it and don't want to let anyone
+    see it until it is finished. Either way you can do this with the
+    Hidden element. One item per line between the tags, as in:
+
+        <Hidden>
+        New folder
+        England
+        </Hidden>
+
+    You should note that Hidden is not considered a security
+    feature. It isn't very difficult for someone to get into a
+    hidden folder if they know much about MiG. You should look into
+    your web server's security features such as password protection
+    if you are looking for real security. MiG also has its own
+    password protection scheme - see docs/Passwords.txt.
+
+  SORT ORDER
+
+        <Sort>
+        [item]
+        [item]
+        </Sort>
+
+    By default, items are sorted by their ASCII value (for the
+    purpose of most discussions, you can call this alphabetically).
+    However, it can be desirable to control the order in which items
+    (either images or folders) appear on your pages. The <Sort>
+    element gives you that control.
+
+    For example, let's say you have a directory which contains this
+    list of items:
+
+        Ceremony/     Cut the Cake/  Home/         Reception/    Cigars/
+        AUT_3706.JPG  AUT_3712.JPG   AUT_3714.JPG  AUT_3716.JPG
+        AUT_3707.JPG  AUT_3713.JPG   AUT_3715.JPG  AUT_3717.JPG
+
+    Note that the first five are directories, and the other eight
+    are files. This will display by default as a list of folders,
+    then a list of images, each in alphabetical (ASCII) order.
+
+    But let's say you wanted to move Home to the top of the list,
+    and Cigars to just above the Reception folder.
+
+    To do that, you would create this <Sort> list:
+
+        <Sort>
+        Home
+        Ceremony
+        Cutting the Cake
+        Cigars
+        Reception
+        </Sort>
+
+    Let's say that you wanted to change the image sort order such
+    that 3716 and 3717 were higher up, say the 3rd & 4th photos. You
+    could do that with:
+
+        <Sort>
+        AUT_3706.JPG
+        AUT_3707.JPG
+        AUT_3716.JPG
+        AUT_3717.JPG
+        </Sort>
+
+    But wait a minute! There's another 4 images I didn't even touch!
+    That's OK - the items you put in a <Sort> show up, in the order
+    you define, at the top of the stack. Anything you leave out will
+    be sorted independently (alphabetically) and just tacked on
+    after the pre-sorted items.
+
+    What if you want to sort both folders and images? That's OK,
+    just put two <Sort> tags in, one for each of them. MiG will
+    figure it out on its own.
+
+    (Those who read over the source will note that you can, if you
+    want, stuff all sorted items into a single <Sort> element.
+    That's true, but I don't recommend doing it - it tends to get
+    confusing that way. It's best to just define multiple <Sort>
+    elements and have one for files, one for folders.)
+
+  SECURITY
+
+    Some folks feel more comfortable knowing their meta-files such
+    as mig.cf or exif.inf can't be viewed raw by a browser. If you
+    are one of those folks, see docs/Apache.txt for some tips and
+    tricks including how to protect those files from visibility. The
+    tips in that file will only work if you're using Apache.
+
+    Another security topic is password protection - see
+    docs/Passwords.txt.
+

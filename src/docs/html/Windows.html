@@ -1,0 +1,148 @@
+<HTML>
+<HEAD>
+<TITLE>MiG Documentation</TITLE>
+<LINK REV="made" HREF="mailto:perl-bugs@sun.com">
+</HEAD>
+
+<BODY>
+
+<!-- INDEX BEGIN -->
+<!--
+
+<UL>
+
+	<UL>
+
+		<LI><A HREF="#Using_MiG_under_Windows">Using MiG under Windows</A>
+		<LI><A HREF="#Windows_Installation">Windows Installation</A>
+		<LI><A HREF="#Miscellaneous_Notes">Miscellaneous Notes</A>
+	</UL>
+
+</UL>
+-->
+<!-- INDEX END -->
+
+<P>
+
+
+
+
+<P>
+<HR>
+<H2><A NAME="Using_MiG_under_Windows">Using MiG under Windows</A></H2>
+<P>
+I haven't tested MiG using an IIS system. I don't have an NT box handy, and
+don't want to :-) But I have tested it using Personal Web Server under
+Windows98 on my laptop. It worked out of the box using PWS 4.0 with PHP4.
+
+<P>
+I installed PWS 4.0 using all of the default settings.
+
+<P>
+I installed PHP based on these directions:
+
+<P>
+<PRE>    <A HREF="http://www.php.net/manual/install-windows95-nt.php">http://www.php.net/manual/install-windows95-nt.php</A>
+</PRE>
+<P>
+After the PHP install, I dropped MiG onto the system and it worked with no
+changes whatsoever. You will need to tell your web server that the folder
+you stick MiG into has ``execute'' permission, though. See the
+documentation for your web server on how to do this. You may also have to
+tell the web server to use <EM>index.php</EM> as one of the default document names for a given directory.
+
+<P>
+Apache for Windows is a different story - MiG just doesn't seem to work in
+that environment at all. At least not for me (Apache + PHP from the
+PHPTriad package under Windows ME).
+
+<P>
+Another user, Pat Moore, reported success using PHPTriad under Windows 98.
+So I don't know what the difference between those two installs is, but try
+it for yourself and see how you fare.
+
+<P>
+If you find your results are different, please drop an email to let me know
+at <A
+HREF="mailto:mig-bugs@tangledhelix.com.">mig-bugs@tangledhelix.com.</A>
+
+<P>
+(I know of at least one person using MiG in a Win2000/IIS5 environment.
+They had problems until they upgraded to PHP 4.0.2, so my recommendation is
+that you should use PHP 4.0.2 or the latest verion of PHP if you are trying
+to use MiG under Windows.)
+
+<P>
+<HR>
+<H2><A NAME="Windows_Installation">Windows Installation</A></H2>
+<P>
+Windows users will need to modify the install directions a bit. Read over
+<EM>docs/INSTALL</EM> to get the general idea. However, instead of using the
+<EM>install.sh</EM> script, you will want to do this:
+
+<P>
+1. Instead of using gzip and tar, unpack the archive using Winzip or
+similar. Winzip should know how to handle .tar.gz files. You can find
+Winzip at <A HREF="http://www.winzip.com/">http://www.winzip.com/</A>
+
+<P>
+2. Create a directory to place your MiG installation in (or if you are
+upgrading, just know where the current installation is). I'll use
+<EM>C:\Mig</EM> as an example in this document, but you can put it anywhere you want as
+long as you know how to make your web server look there for the files.
+
+<P>
+3. Copy the <EM>index.php</EM>, <EM>funcs.php</EM> and <EM>lang.php</EM> file to your Mig directory. This document assumes .php as the extension
+your web server uses to recognize PHP files. If that isn't the case then
+rename
+<EM>index.php</EM> to <EM>index.php3</EM> (or whatever extension is appropriate). Do NOT rename the other PHP files
+(their names are hardcoded into the program)!
+
+<P>
+4. Create the subdirectories <CODE>images</CODE> and <CODE>templates</CODE> (i.e.
+<EM>C:\Mig\Images</EM> and <EM>C:\Mig\Templates</EM>), and copy the files in the
+<EM>images</EM> and <EM>templates</EM> subdirectories to those directories, respectively.
+
+<P>
+5. Create subdirectory <CODE>albums</CODE> (i.e. <EM>C:\Mig\Albums</EM>). This is where your albums will live. If you want to install the example
+gallery, drag the <EM>Example_Gallery</EM> folder into the albums folder you just created. Installing the example
+gallery is optional.
+
+<P>
+6. Make sure you don't copy over your photo files, please. I can't warrant
+that won't happen, because I've seen some really odd things happen when
+dragging files and folders around in Windows Explorer. Please be careful,
+and doing a backup first wouldn't hurt either.
+
+<P>
+7. Copy the <EM>mig.cfg.default</EM> file to <EM>mig.cfg</EM> in your Mig directory. Edit it to taste. If you are upgrading, you may not
+need to do this (just see if there's anything new in <EM>mig.cfg.default</EM> and update your existing
+<EM>mig.cfg</EM>).
+
+<P>
+8. Start putting your images in the <EM>albums</EM> subdirectory (i.e.
+<EM>C:\Mig\Albums</EM>) and there you have it.
+
+<P>
+<HR>
+<H2><A NAME="Miscellaneous_Notes">Miscellaneous Notes</A></H2>
+<P>
+I'm told by a user in Germany that MiG works under Windows NT and IIS. It
+seems that you'd be well served to upgrade to the latest version of PHP
+though, so if you're using Windows, please upgrade to the most recent
+version of PHP. You can find it at <A
+HREF="http://www.php.net/">http://www.php.net/</A>
+
+<P>
+I'm also told by this same user that having a comma in a filename or
+directory name causes trouble on their Windows platform (although I have
+had no problems with same under Linux, FreeBSD or Solaris). So be aware of
+that. Other special characters may not work either. It might be safest to
+just use alphabetics, numbers and things like underscore and hyphen.
+Remember that an underscore will be shown as a space in folder names, so as
+far as the folder names go, an underscore is equivalent to a space as far
+as MiG is concerned (in folder names, anyway).
+
+</BODY>
+
+</HTML>
