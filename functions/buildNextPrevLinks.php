@@ -1,4 +1,31 @@
 <?
+// buildNextPrevLinks() - Build links to the "next" and "previous" images.
+
+/**
+/* is used by buildNextPrevLinks()
+*/
+function _greyLink($text)
+{
+    return '<font color="#999999">'.$text.'</font>';
+}
+
+function _prevNextLink($text,$currDir,$imgNr)
+{
+    global $mig_config;
+    
+        $link = '<a href="' . $mig_config['baseurl']
+               . '?pageType=' . $mig_config['pagetype'] . '&amp;currDir=' . $currDir
+               . '&amp;image=' . $imgNr;
+        if ($mig_config['startfrom']) {
+            $link .= '&amp;startFrom=' . $mig_config['startfrom'];
+        }
+        if ($mig_config['mig_dl']) {
+            $link .= '&amp;mig_dl=' . $mig_config['mig_dl'];
+        }
+        $link .= '">' .$text. '</a>';
+
+    return $link;
+}
 
 // buildNextPrevLinks() - Build links to the "next" and "previous" images.
 
@@ -135,47 +162,29 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
     // newCurrDir is currDir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
+    
+    //build the links:
+    
+    //first parse the prev/nextFormatStrings...
+    
+    $fileinfotable = array ( 'l' => $mig_config['lang']['previmage']
+                           );
+    $prevtext = replaceString($mig_config['prevformatstring'],$fileinfotable);
+    
+    $fileinfotable = array ( 'l' => $mig_config['lang']['nextimage']
+                           );
+    $nexttext = replaceString($mig_config['nextformatstring'],$fileinfotable);
 
     // If there is no previous image, show a greyed-out link
-    if ($prev == 'NA') {
-        $pLink = '&nbsp;[&nbsp;<font color="#999999">'
-               . $mig_config['lang']['previmage']
-               . '</font>&nbsp;]&nbsp;';
-
+    if ($prev == 'NA') $pLink = _greyLink($prevtext);
     // else show a real link
-    } else {
-        $pLink = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl']
-               . '?pageType=' . $mig_config['pagetype'] . '&amp;currDir=' . $currDir
-               . '&amp;image=' . $prev;
-        if ($mig_config['startfrom']) {
-            $pLink .= '&amp;startFrom=' . $mig_config['startfrom'];
-        }
-        if ($mig_config['mig_dl']) {
-            $pLink .= '&amp;mig_dl=' . $mig_config['mig_dl'];
-        }
-        $pLink .= '">' . $mig_config['lang']['previmage']
-                . '</a>&nbsp;]&nbsp;';
-    }
+    else $pLink = _prevNextLink($prevtext,$currDir,$prev);
+ 
 
     // If there is no next image, show a greyed-out link
-    if ($next == 'NA') {
-        $nLink = '&nbsp;[&nbsp;<font color="#999999">'
-               . $mig_config['lang']['nextimage']
-               . '</font>&nbsp;]&nbsp;';
+    if ($next == 'NA') $nLink = _greyLink($nexttext);
     // else show a real link
-    } else {
-        $nLink = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl']
-               . '?pageType=' . $mig_config['pagetype'] . '&amp;currDir=' . $currDir
-               . '&amp;image=' . $next;
-        if ($mig_config['startfrom']) {
-            $nLink .= '&amp;startFrom=' . $mig_config['startfrom'];
-        }
-        if ($mig_config['mig_dl']) {
-            $nLink .= '&amp;mig_dl=' . $mig_config['mig_dl'];
-        }
-        $nLink .= '">' . $mig_config['lang']['nextimage']
-                . '</a>&nbsp;]&nbsp;';
-    }
+    else $nLink = _prevNextLink($nexttext,$currDir,$next);
 
     // Current position in the list
     $currPos = '#' . $ThisImagePos . '&nbsp;of&nbsp;' . $i;

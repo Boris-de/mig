@@ -391,7 +391,7 @@ $suppressAltTags = FALSE;
 $suppressImageInfo = FALSE;
 
 //
-// $FileInfoFormatString
+// $fileInfoFormatString
 //     Defines the format of the ImageInfo:
 //
 //     Valid items are:
@@ -401,7 +401,7 @@ $suppressImageInfo = FALSE;
 //
 // Examples:
 //   Everything is shown (old mig behaviour)
-//   $FileInfoFormatString = "%n<br>(%i, %s)";
+//   $fileInfoFormatString = "%n<br>(%i, %s)";
 //
 // Default to %n<br>(%i, %s)
 //
@@ -409,6 +409,35 @@ $suppressImageInfo = FALSE;
 $fileInfoFormatString['image'] = "%n<br>(%i, %s)";
 $fileInfoFormatString['audio'] = "%n<br>(%s)";
 $fileInfoFormatString['video'] = "%n<br>(%s)";
+
+
+//
+// $prevFormatString
+// $nextFormatString
+//     Defines the format of the "previous" and 
+//     "next image" links in the image-view.
+//
+//     Valid items are:
+//       %l = "previous image" and "next image" text defined
+//            in the language-section
+//
+//     Note:
+//       The whole String is clickable. If you don't want all
+//       to click on, please edit the templates/image.html-file.
+//
+// Examples:
+//   Show something like "<<< Previous"
+//   $prevFormatString = "&lt;&lt;&lt;&nbsp;%l";
+//
+//   Show just an image
+//   $prevFormatString = "<img src=\"path/to/prev.gif\" width=\"20\" height=\"20\" alt=\"%l\">";
+//
+//
+// Default to "%l"
+
+$prevFormatString ="%l";
+$nextFormatString ="%l";
+
 
 //
 // $showShortOnThumbPage

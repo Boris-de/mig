@@ -43,7 +43,7 @@ function buildBackLink ( $currDir, $type )
     $junk = ereg_replace('/[^/]+$', '', $currDir);
     $newCurrDir = migURLencode($junk);
 
-    $retval = '&nbsp;[&nbsp;<a href="'
+    $retval = '<a href="'
             . $mig_config['baseurl'] . '?currDir=' . $newCurrDir;
     if ($mig_config['startfrom']) {
         $retval .= '&amp;startFrom=' . $mig_config['startfrom'];
@@ -54,7 +54,7 @@ function buildBackLink ( $currDir, $type )
     if ($mig_config['pagetype'] == 'large') {
         $retval .= '&amp;pageType=image&amp;image=' . $mig_config['image'];
     }
-    $retval .= '">' . $label . '</a>&nbsp;]&nbsp;';
+    $retval .= '">' . $label . '</a>';
 
     return $retval;
 

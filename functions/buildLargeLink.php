@@ -8,7 +8,7 @@ function buildLargeLink( $currDir )
 
     $newCurrDir = migURLencode($currDir);
 
-    $retval = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl'] . '?currDir='
+    $retval = '<a href="' . $mig_config['baseurl'] . '?currDir='
             . $newCurrDir . '&amp;pageType=large&amp;image=' . $mig_config['image'];
     if ($mig_config['startfrom']) {
         $retval .= '&amp;startFrom=' . $mig_config['startfrom'];
@@ -17,7 +17,7 @@ function buildLargeLink( $currDir )
         $retval .= '&amp;mig_dl=' . $mig_config['mig_dl'];
     }
     $retval .= '">' . $mig_config['lang']['largelink']
-             . '</a>&nbsp;]&nbsp;';
+             . '</a>';
 
     return $retval;
 
