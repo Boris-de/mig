@@ -18,6 +18,11 @@ actually be out of order as far as the next/previous links were
 concerned.  Turns out the sorting had made it into C<buildImageList()>
 but not C<buildNextPrevLinks()>.
 
+[Sourceforge bug report #512980] -
+Removed two extraneous arguments in a call to C<printTemplate()>.
+This hadn't caused me any trouble, but if C<error_reporting> was set
+to include C<E_NOTICE>, errors would be generated.
+
 =head2 Version 1.3.0 (Tue 23 Apr 2002)
 
 Added TITLE tags in thumbnail views so when hovering over a thumbnail,

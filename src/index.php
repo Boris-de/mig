@@ -455,8 +455,8 @@ if ($pageType == 'folder' or $pageType == '') {
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir, '', '',
-                  $server, $useVirtual);
+                  $description, $youAreHere, $distURL, $albumDir, $server,
+                  $useVirtual);
 }
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke
