@@ -7,6 +7,12 @@ if ($_SERVER['PHP_SELF']) {
     $mig_config['baseurl'] = $HTTP_SERVER_VARS['PHP_SELF'];
 } elseif ($PHP_SELF) {
     $mig_config['baseurl'] = $PHP_SELF;
+} elseif ($_SERVER['SCRIPT_NAME']) {
+    $mig_config['baseurl'] = $_SERVER['SCRIPT_NAME'];
+} elseif ($HTTP_SERVER_VARS['SCRIPT_NAME']) {
+    $mig_config['baseurl'] = $HTTP_SERVER_VARS['SCRIPT_NAME'];
+} elseif ($SCRIPT_NAME) {
+    $mig_config['baseurl'] = $SCRIPT_NAME;
 } else {
     print 'FATAL ERROR: Could not set baseurl';
     exit;
@@ -32,6 +38,12 @@ if ($_SERVER['PATH_TRANSLATED']) {
 
 // Strip down to just directory name
 $mig_config['basedir'] = dirname($mig_config['basedir']);
+
+// Strip extra slashes out of basedir if appropriate
+// This is basically for Windows SMB shares
+if (eregi('^[\\]{2}', $mig_config['basedir'])) {
+    $mig_config['basedir'] = stripslashes($mig_config['basedir']);
+}    
 
 // Locate and load configuration
 if (file_exists($mig_config['basedir'].'/mig/config.php')) {

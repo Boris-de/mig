@@ -5,6 +5,22 @@
 	};
 	objectVersion = 38;
 	objects = {
+		37EB300D03ED158600010203 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = crypt.php;
+			refType = 4;
+		};
+//370
+//371
+//372
+//373
+//374
+//F50
+//F51
+//F52
+//F53
+//F54
 		F50CD43F039F739201010203 = {
 			buildArgumentsString = cms;
 			buildPhases = (
@@ -19,7 +35,7 @@
 				ver = "local-test";
 			};
 			buildToolPath = /usr/bin/gnumake;
-			buildWorkingDirectory = "~/projects/mig";
+			buildWorkingDirectory = "~/Projects/mig";
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
@@ -43,7 +59,7 @@
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 			};
 			buildToolPath = /usr/bin/gnumake;
-			buildWorkingDirectory = "~/projects/mig/extras";
+			buildWorkingDirectory = "~/Projects/mig/extras";
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
@@ -67,7 +83,7 @@
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 			};
 			buildToolPath = /usr/bin/gnumake;
-			buildWorkingDirectory = "~/projects/mig/extras";
+			buildWorkingDirectory = "~/Projects/mig/extras";
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
@@ -92,7 +108,7 @@
 				ver = 1.4.0rc4;
 			};
 			buildToolPath = /usr/bin/gnumake;
-			buildWorkingDirectory = "~/projects/mig";
+			buildWorkingDirectory = "~/Projects/mig";
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
@@ -116,7 +132,7 @@
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 			};
 			buildToolPath = /usr/bin/gnumake;
-			buildWorkingDirectory = "~/projects/mig";
+			buildWorkingDirectory = "~/Projects/mig";
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
@@ -355,18 +371,19 @@
 		};
 		F5A3272B039CC13201010203 = {
 			children = (
+				F5A32732039CC13201010203,
+				F5A32738039CC13201010203,
 				F5A3272D039CC13201010203,
+				37EB300D03ED158600010203,
 				F5A3272E039CC13201010203,
 				F5A3272F039CC13201010203,
 				F5A32730039CC13201010203,
 				F5A32731039CC13201010203,
-				F5A32732039CC13201010203,
 				F5A32733039CC13201010203,
 				F5A32734039CC13201010203,
 				F5A32735039CC13201010203,
 				F5A32736039CC13201010203,
 				F5A32737039CC13201010203,
-				F5A32738039CC13201010203,
 			);
 			isa = PBXGroup;
 			path = "mig-contrib";
@@ -1144,7 +1161,7 @@
 				ver = "local-test";
 			};
 			buildToolPath = /usr/bin/gnumake;
-			buildWorkingDirectory = "~/projects/mig";
+			buildWorkingDirectory = "~/Projects/mig";
 			dependencies = (
 			);
 			isa = PBXLegacyTarget;
