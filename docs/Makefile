@@ -11,12 +11,12 @@ hargs=	--noindex --title="Mig Documentation"
 # HTML files
 html=	changelog.html credits.html install.html license.html \
 	passwords.html jump.html apache.html phpnuke.html \
-	utilities.html mig_cf.html
+	utilities.html mig_cf.html templates.html
 
 # Text files
 text=	changelog.txt credits.txt install.txt license.txt \
 	passwords.txt jump.txt apache.txt phpnuke.txt \
-	utilities.txt mig_cf.txt
+	utilities.txt mig_cf.txt templates.txt
 
 # Default is to rebuild doc files
 docs: $(html) $(text) sort clean

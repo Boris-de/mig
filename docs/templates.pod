@@ -1,0 +1,323 @@
+=pod
+
+$Id$
+
+=head2 Templates
+
+Template files give you control of the layout of output pages.
+Colors are also handled by the template files (see later in this document).
+
+Note that if you like the page layout already, you do not
+need to touch the template files at all.  You should only modify a template
+file if you have something in the page layout you wish to change or if you
+have a need to change the colorization of different elements in Mig.
+
+=head2 About Tags
+
+Template files are simply HTML files with special tags embedded in
+them.  Mig expands these tags at runtime.
+
+Tags are surrounded by C<%%> marks, such as this example:
+
+    <br>
+    Contact <a href="mailto:%%maintAddr%%">%%maintAddr%%</a> with any
+        comments or problems.
+    <br>
+
+In this case, C<%%maintAddr%%> is the relevant tag name.
+
+You can control the page layout by modifying and/or moving HTML
+elements and/or Mig tag elements in the template file.  It is assumed you
+have an understanding of HTML - modify the templates at your own risk, and
+always make a backup copy beforehand in case your changes don't work out
+the way you wanted them to.
+
+There is a glossary of tags later in this document.
+
+If you don't know anything about HTML you can try checking out
+http://www.htmlhelp.com/ or looking for some other online help sites by
+using a search engine such as Google [ http://www.google.com ].
+
+=head2 Including Files
+
+An E<quot>includeE<quot> function is also provided.  To include a file,
+place a directive like this one, on a line by itself:
+
+    #include "filename";
+
+Such as:
+
+    #include "custom.html";
+
+The contents of the file you specify will be inserted in place of the
+C<#include> placeholder.
+
+If the file mentioned by C<#include> is a CGI file then it will be
+executed, and its output will be placed there instead.  NOTE: CGI can only
+be used if you are using an Apache server (and not even every installation
+of Apache will do this correctly).  Sorry, it's a limitation in PHP
+that I can't work around.
+
+If you are including a CGI make sure it prints appropriate HTTP headers
+before anything else (just like any other situation where you use CGI).
+
+Please note some things about C<#include>:
+
+=over 4
+
+=item 1.
+
+All files you wish to include must live in the F<templates> subdirectory
+of your Mig installation.
+
+=item 2.
+
+However, if you really don't want to do that (because it means you
+have to maintain two copies of the same file in different locations,
+etc), a symbolic link will also work.  For example:
+
+    ln -s /www/htdocs/includes/custom.html /www/htdocs/mig/templates
+
+In this case you would have F</www/htdocs/includes/custom.html> which
+is the real file, and a symbolic link called F<custom.html> in
+F</www/htdocs/mig/templates> which would point to the real file,
+leaving you with only one copy to maintain.
+
+=item 3.
+
+The C<#include> directive must be on a line by itself.  It will not
+function if anything else is on that line.  Also, the filename
+must be in quotation marks, and the command must be terminated with
+a semicolon.  Here are some examples:
+
+    #include "custom.html";           # RIGHT
+    #include "custom.html"            # WRONG - no semicolon
+    #include custom.html;             # WRONG - no quotes
+    <p>#include "custom.html";</p>    # WRONG - not alone on line
+
+=item 4.
+
+As of version 1.2.5 you can include PHP files as well as other types of
+files.  The one difference is that for PHP files you have to make sure the
+filename has an extension of either E<quot>.phpE<quot> or
+E<quot>.php3E<quot>.
+
+Look at either F<image.html> or F<folder.html> for an example (C<#include>
+is used to embed the CSS style sheet file C<style.css>).
+
+=back
+
+=head2 Special Files
+
+There are three special files that Mig uses for its own purposes.
+
+=over 4
+
+=item *
+
+F<templates/folder.html> - used for any view where folders and/or
+thumbnail images are shown.
+
+=item *
+
+F<templates/image.html> - used for any view where an image is shown
+by itself.
+
+=item *
+
+F<templates/style.css> - Contains C<text/css> (Cascading Style Sheet)
+markup.
+
+=back
+
+If you are running Mig in PHP-Nuke Compatible mode (see
+the E<quot>phpnukeE<quot> document) then these three files are not used.
+In their place you will instead find:
+
+=over 4
+
+=item *
+
+F<templates/mig_folder.php> - Used for folder/thumbnail views
+
+=item *
+
+F<templates/mig_image.php> - Used for E<quot>single imageE<quot> views
+
+=back
+
+(The CSS style sheet is not used in PHP-Nuke mode because PHP-Nuke uses its
+own CSS style system and Mig aims not to interfere with that.)
+
+=head2 Defined Tags
+
+The following is a glossary of recognized Mig template tags, and what they
+are expanded to.
+
+=over 4
+
+=item 1.
+
+Tags for use in any template
+
+=over 4
+
+=item %%baseURL%%
+
+Base URL to call this script (Mig) again.
+
+=item %%maintAddr%%
+
+Email address of album maintainer (as defined in F<config.php>).
+This can be customized per-folder as well.
+
+=item %%version%%
+
+Current version number of this Mig installation.
+
+=item %%backLink%%
+
+This is the E<quot>up one levelE<quot> link on each page.
+
+=item %%currDir%%
+
+Current directory, in URL-encoded format.
+
+=item %%newCurrDir%%
+
+Same as C<%%currDir%%> with leading E<quot>./E<quot> removed.
+
+=item %%pageTitle%%
+
+E<lt>TITLEE<gt> tag for this page.
+
+=item %%youAreHere%%
+
+This is the E<quot>you are hereE<quot> path at the top of each page.
+
+=item %%distURL%%
+
+URL of Mig home page (value is hard-coded into F<index.php>).
+
+=item %%description%%
+
+Description of the image, taken from the comments
+file(s).  For folders, this is E<lt>BulletinE<gt>.
+
+=back
+
+=item 2.
+
+Tags used only in F<folder.html> (or F<mig_folder.php> in phpNuke mode)
+
+=over 4
+
+=item %%folderList%%
+
+Expands to a section of E<lt>TABLEE<gt> code which
+displays a list of folders in the current folder.
+
+=item %%imageList%%
+
+Expands to a section of E<lt>TABLEE<gt> code which
+displays a list of images in the current folder.
+
+=back
+
+=item 3.
+
+Tags used only in F<image.html> (or F<mig_image.php> in phpNuke mode)
+
+=over 4
+
+=item %%image%%
+
+The current image being shown.
+
+=item %%albumURLroot%%
+
+Root URL of the actual album where images live
+(used in E<lt>IMG SRC=E<quot>...E<quot>E<gt> HTML tags).
+
+=item %%nextLink%%
+
+A link to the next item in the sequence.
+
+=item %%prevLink%%
+
+A link to the previous item in the sequence.
+
+=item %%currPos%%
+
+Current position in the list (i.e. #5 of 7)
+
+=item %%encodedImageURL%%
+
+Image filename run through rawurlencode() in case
+there's a space embedded in it or something.
+
+=item %%imageSize%%
+
+HTML that gives WIDTH=nnn and HEIGHT=nnn tags
+for the image being displayed.
+
+=back
+
+=back
+
+=head2 Custom Per-folder Templates
+
+If desired, one can define a per-folder template file.  This can be done
+with the C<FolderTemplate> entity, as discussed in the E<quot>mig_cfE<quot>
+document.
+
+=head2 Managing Colors
+
+Mig uses a Cascading Style Sheet (CSS) file to manage all of its element
+colorization.  Things like the page background, background colors for table
+cells, all are managed by the CSS file F<templates/style.css>.
+
+(Note that if you are using E<quot>PHP-Nuke compatibleE<quot> mode, CSS is
+ignored because PHP-Nuke uses its own CSS styles.  See the
+E<quot>phpnukeE<quot> document).
+
+I don't have the inclination or time to give a tutorial on how CSS works,
+so please see http://www.htmlhelp.com/reference/css/ or whatever else you
+come across to figure out how CSS works.  There are some books on this
+topic available as well (try searching for E<quot>CSSE<quot> at Amazon.com).
+
+A basic example or two follow, though.
+
+To change color of HREF links from C<#0000FF> (blue) to C<#00FF00> (green):
+
+    Before:      A:link    { color: #0000FF }
+    After:       A:link    { color: #00FF00 }
+
+To change background color of description tables from C<#CCCCFF> (grey)
+to C<#FF0000> (red):
+
+    Before:
+        TD.desc {
+            color: #000000;
+            background: #CCCCFF;
+            text-align: justify;
+        }
+
+    After:
+        TD.desc {
+            color: #000000;
+            background: #FF0000;
+            text-align: justify;
+        }
+
+The E<quot>BODYE<quot> element controls the main background / text color
+for the pages overall.  However, Netscape seems to have forgotten the BODY
+element when implementing their CSS engine, so Netscape doesn't handle this
+correctly.  For that reason, a default coloration of white background /
+black text is hard-coded into the HTML templates in the BODY element.  If
+you want to use another colorization for BODY, feel free to do so, but be
+aware you'll need to update both F<templates/style.css> and
+F<templates/*.html> to do it correctly.
+
+=cut
+

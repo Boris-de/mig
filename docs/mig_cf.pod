@@ -89,7 +89,7 @@ E<lt>A HREFE<gt> tags which don't fit into ALT tags especially well.  (You
 can suppress ALT tags entirely by setting C<$suppressAltTags> to C<TRUE> in
 F<config.php>).
 
-=head2 FOLDER ICONS
+=head2 Folder Icons
 
     FolderIcon folder_name icon_file.gif
 
@@ -107,7 +107,7 @@ found in the root directory of your Mig installation.
 If you do not define a C<FolderIcon> the default of F<folder.gif> will be
 used.
 
-=head2 PER-FOLDER TEMPLATE
+=head2 Per-folder Template
 
     FolderTemplate /path/to/file.tmpl
     FolderTemplate file.tmpl
