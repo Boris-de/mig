@@ -13,7 +13,12 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 {
     global $mig_config;
 
-    $dir = opendir("$albumDir/$currDir");       // Open directory handle
+    if (is_dir("$albumDir/$currDir")) {
+        $dir = opendir("$albumDir/$currDir"); // Open directory handle
+    } else {
+        print "ERROR: no such currDir '$currDir'<br>";
+        exit;
+    }
 
     $row = 0;               // Counters for the table formatting
     $col = 0;

@@ -28,6 +28,8 @@ Added new F<config.php> options C<$imagePopLocationBar>,
 C<$imagePopMenuBar>, and C<$imagePopToolBar> to control various toolbars
 being visible or hidden in pop-up windows.
 
+Added C<is_dir()> checks before all calls to C<opendir()>.
+
 =head2 Version 1.3.3 (Mon, 27 May 2002)
 
 Apparently I didn't document it in the changelog, but at some point I added

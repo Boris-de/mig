@@ -11,23 +11,24 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
     if ($useThumbSubdir) {
         $myThumbDir = $folder . '/' . $thumbSubdir;
 
-        if (file_exists($myThumbDir)) {
-            if (is_dir($myThumbDir)) {
-                $readSample = opendir($myThumbDir);
-                while ($sample = readdir($readSample)) {
-                    if ($sample != '.' && $sample != '..') {
-                        if (validFileType($sample)) {
-                            $mySample = $albumURLroot . '/' . $currDir
-                                      . '/' . $file . '/' .$thumbSubdir
-                                      . '/' . $sample;
-                            return($mySample);
-                        }
+        if (is_dir($myThumbDir)) {
+            $readSample = opendir($myThumbDir);
+            while ($sample = readdir($readSample)) {
+                if ($sample != '.' && $sample != '..') {
+                    if (validFileType($sample)) {
+                        $mySample = $albumURLroot . '/' . $currDir
+                                  . '/' . $file . '/' .$thumbSubdir
+                                  . '/' . $sample;
+                        return($mySample);
                     }
                 }
-                closedir($readSample);
             }
-        } else {
+            closedir($readSample);
+
+        } elseif (is_dir($folder)) {
+
             $dirlist = opendir($folder);
+
             while ($item = readdir($dirlist)) {
                 if (is_dir("$folder/$item") && $item != '.'
                             && $item != '..')
@@ -51,7 +52,11 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
 
     } else {
 
-        $readSample = opendir($folder);
+        if (is_dir($folder)) {
+            $readSample = opendir($folder);
+        } else {
+            return FALSE;
+        }
 
         while ($sample = readdir($readSample)) {
             if ($markerType == 'prefix') {

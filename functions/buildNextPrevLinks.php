@@ -11,7 +11,12 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
     // newCurrDir is currDir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
-    $dir = opendir("$albumDir/$currDir");// Open directory handle
+    if (is_dir("$albumDir/$currDir")) {
+        $dir = opendir("$albumDir/$currDir");  // Open directory handle
+    } else {
+        print "ERROR: no such currDir '$currDir'<br>";
+        exit;
+    }
 
     // Gather all files into an array
     $fileList = array ();

@@ -4,7 +4,12 @@
 function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
                              $markerLabel )
 {
-    $dir = opendir($folder);    // Open directory handle
+    if (is_dir($folder)) {
+        $dir = opendir($folder);    // Open directory handle
+    } else {
+        return 0;
+    }
+
     $count = 0;
 
     while ($file = readdir($dir)) {
