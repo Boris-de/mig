@@ -373,7 +373,7 @@ if [ -f ${installdir}/mig.cfg -a ! -f ${installdir}/config.php ]; then
         if [ "${yn}" = "quit" ]; then
             exit
         fi
-        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'
+        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'`
     done
     if [ "${answer}" = "y" ]; then
         mv ${installdir}/mig.cfg ${installdir}/config.php
@@ -395,7 +395,7 @@ if [ -f ${installdir}/mig.cfg -a -f ${installdir}/config.php ];  then
         if [ "${yn}" = "quit" ]; then
             exit
         fi
-        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'
+        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'`
     done
     if [ "${answer}" = "y" ]; then
         /bin/rm -f ${installdir}/mig.cfg
@@ -572,7 +572,7 @@ echo "appropriate for your system.)"
 
 echo " "
 echo "Installation complete.  Please report any bugs to"
-echo "<mig-bugs@tangledhelix.com>."
+echo "<dan@tangledhelix.com>."
 
 if [ "${phpNuke}" = "ON" ]; then
     echo " "
