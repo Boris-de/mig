@@ -7,10 +7,10 @@ $mig_config["lang_lib"]["cz"] = array (
        "am"            => "AM",
        "pm"            => "PM",
        "backhome"      => "zpìt&nbsp;domù",
-       "bytes"         => "&nbsp;bytù1",
+       "bytes"         => "&nbsp;bytù",
        "flash_used"    => "flash&nbsp;pou¾it",
        "largelink"     => "zobrazit&nbsp;velký&nbsp;obrázek",
-       "largeview"     => "zpìt&nbsp;na&nbsp;zobrazení&nbsp;malý‹5ch&nbs;obrázkù",      
+       "largeview"     => "zpìt&nbsp;na&nbsp;zobrazení&nbsp;malých&nbs;obrázkù",
        "main"          => "Hlavní",
        "must_auth"     => "Musíte&nbsp;vlo¾it&nbsp;správné&nbsp;jméno&nbsp;a"
                         . "&nbsp;heslo&nbsp;pro&nbsp;vstup",
