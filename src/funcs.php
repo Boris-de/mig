@@ -150,6 +150,12 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 list($y, $tcols) = explode(' ', $x);
             }
 
+            // Parse ImagesPerPage lines
+            if (eregi('^imagesperpage ', $line)) {
+                $x = trim($line);
+                list($y, $perpg) = explode(' ', $x);
+            }
+
             // Get next line
             $line = fgets($file, 4096);
 
@@ -160,7 +166,7 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
 
     $retval = array ($hidden, $presort_dir, $presort_img, $desc,
                      $bulletin, $ficons, $template, $pagetitle,
-                     $fcols, $tcols);
+                     $fcols, $tcols, $perpg);
     return $retval;
 
 }   //  -- End of parseMigCf()
@@ -295,6 +301,16 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     $directories = array ();                    // prototypes
     $counts = array ();
 
+    if ($viewFolderCount) {
+        while(list($file,$x) = each($presorted)) {
+            $folder = "$albumDir/$currDir/$file";
+            $counts[$file] = getNumberOfImages($folder,
+                                $useThumbSubdir, $markerType,
+                                $markerLabel);
+        }
+        reset($presorted);
+    }
+
     while ($file = readdir($dir)) {
 
         // Ignore . and .. and make sure it's a directory
@@ -414,7 +430,8 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $useThumbSubdir, $thumbSubdir, $noThumbs,
                          $thumbExt, $suppressAltTags, $language,
                          $mig_messages, $sortType, $hidden, $presorted,
-                         $description, $imagePopup, $imagePopType )
+                         $description, $imagePopup, $imagePopType,
+                         $imagesPerPage, $offset )
 {
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
@@ -490,37 +507,48 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 
     reset($presorted);          // reset array pointer
 
+    $currImgNum = 0;            // for "page" tracking
+
     while (list($file,$junk) = each($presorted)) {
 
         // Only look at valid image types
         $ext = getFileExtension($file);
         if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
 
-            // If this is a new row, start a new <TR>
-            if ($col == 0) {
-                $imageList .= '<tr>';
-            }
+            // Make sure we're on the right "page"
+            if ($currImgNum >= $offset &&
+                $currImgNum < ($offset + $imagesPerPage)) {
 
-            $fname = getFileName($file);
-            $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
+                // If this is a new row, start a new <TR>
+                if ($col == 0) {
+                    $imageList .= '<tr>';
+                }
+
+                $fname = getFileName($file);
+                $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
                                  $albumURLroot, $fname, $ext, $markerType,
                                  $markerLabel, $suppressImageInfo,
                                  $useThumbSubdir, $thumbSubdir, $noThumbs,
                                  $thumbExt, $suppressAltTags, $language,
                                  $mig_messages, $description, $imagePopup,
                                  $imagePopType);
-            $imageList .= $img;
+                $imageList .= $img;
 
-            // Keep track of what row and column we are on
-            if ($col == $maxColumns) {
-                $imageList .= '</tr>';
-                $row++;
-                $col = 0;
-            } else {
-                $col++;
+                // Keep track of what row and column we are on
+                if ($col == $maxColumns) {
+                    $imageList .= '</tr>';
+                    $row++;
+                    $col = 0;
+                } else {
+                    $col++;
+                }
             }
         }
+        $currImgNum++;      // increment for next time around
     }
+
+    list($prevpage,$nextpage) = buildNextPrevPageLinks($baseURL, $currDir,
+                                    $offset, $imagesPerPage);
 
     closedir($dir);
 
@@ -532,7 +560,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         $imageList .= '</tr>';
     }
 
-    return $imageList;
+    return list($imageList,$prevpage,$nextpage);
 
 }   // -- End of buildImageList()
 
@@ -909,6 +937,28 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
 
 
+// buildNextPrevPageLinks() - build "next page" and "prev page" links
+
+function buildNextPrevPageLinks( $baseURL, $currDir, $offset,
+                                 $imagesPerPage )
+{
+
+    // Figure out previous page's offset value
+    if ($offset == 0) {
+        $previous = FALSE;
+    } else {
+        $previous = $offset - $imagesPerPage;
+        if ($previous < 0) {
+            $previous = 0;
+        }
+    }
+
+
+
+}   // -- End of buildNextPrevPageLinks()
+
+
+
 // buildYouAreHere() - build the "You are here" line for the top
 // of each page
 
@@ -1018,7 +1068,8 @@ function getImageDescription( $image, $description )
 // getExifDescription() - Fetches a comment if available from the
 // Exif comments file (exif.inf)
 
-function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo )
+function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
+                             $mig_messages )
 {
 
     $desc = array ();
@@ -1101,7 +1152,8 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo )
             $return .= ' ';
             $return .= $aperture[$image];
             if ($flash[$image]) {
-                $return .= ', flash used';
+                $return .= ', '
+                $return .= $mig_messages['flash_used'];
             }
             $return .= ')</font>';
         }

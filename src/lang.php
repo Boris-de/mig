@@ -31,6 +31,7 @@
 $mig_messages['en'] = array (
     'backhome'      => 'back&nbsp;to',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'flash used',
     'main'          => 'Main',
     'must_auth'     => 'You must enter a valid username and password to'
                      . ' enter',
@@ -45,6 +46,7 @@ $mig_messages['en'] = array (
 $mig_messages['fr'] = array (
     'backhome'      => 'Retour&nbsp;vers',
     'bytes'         => '&nbsp;octets',
+    'flash_used'    => 'flash utilis&#233;',
     'main'          => 'Liste&nbsp;des&nbsp;albums&nbsp;par&nbsp;classements'
                      . '&nbsp;(r&#233;pertoires)',
     'must_auth'     => 'Vous devez entrer un username et un mot de passe'
@@ -60,6 +62,7 @@ $mig_messages['fr'] = array (
 $mig_messages['de'] = array (
     'backhome'      => 'zurueck&nbsp;zu',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'blitz benutzt',
     'main'          => 'Hauptverzeichnis',
     'must_auth'     => 'Fuer den Zugang muessen Sie eine gueltige'
                      . ' Benutzerkennung und Passwort eingeben',
@@ -76,6 +79,7 @@ $mig_messages['de'] = array (
 $mig_messages['no'] = array (
     'backhome'      => 'tilbake',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'flash used',
     'main'          => 'Galleriet',
     'must_auth'     => 'Du m&#229; oppgi gyldig brukernavn og passord',
     'nextimage'     => 'neste&nbsp;bilde',
@@ -89,6 +93,7 @@ $mig_messages['no'] = array (
 $mig_messages['br'] = array (
     'backhome'      => 'voltar&nbsp;para',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'flash usado',
     'main'          => 'Principal',
     'must_auth'     => 'Voc&#234; deve entrar com um login e senha'
                      . ' v&#225;lido para acessar este conte&#250;do',
@@ -103,6 +108,7 @@ $mig_messages['br'] = array (
 $mig_messages['fi'] = array (
     'backhome'      => 'takaisin',
     'bytes'         => '&nbsp;byte&#228;',
+    'flash_used'    => 'flash used',
     'main'          => 'Etusivu',
     'must_auth'     => 'Sinun pit&#228;&#228; antaa oikea tunnus ja salasana'
                      . ' jatkaasesi eteenp &#228;in',
@@ -117,6 +123,7 @@ $mig_messages['fi'] = array (
 $mig_messages['ro'] = array (
     'backhome'      => '&#238;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
+    'flash_used'    => 'flash_used',
     'main'          => 'Principal',
     'must_auth'     => 'Pentru a intra, trebuie sa introduceti un nume de'
                      . ' utilizator si o parola valide',
@@ -133,6 +140,7 @@ $mig_messages['ru'] = array (
     'backhome'      => '&#226;&229;&#240;&#237;&#243;&#242;&#252;&#241;'
                      . '&#255;&nbsp;&#234;',
     'bytes'         => '&nbsp;&#225;&#224;&#233;&#242;',
+    'flash_used'    => 'flash used',
     'main'          => '&#203;&#232;&#246;&#229;&#226;&#224;&#255;',
     'must_auth'     => '&#194;&#251; &#228;&#238;&#235;&#230;&#237;&#251;'
                      . ' &#226;&#226;&#229;&#241;&#242;&#232; &#234;&#238;'
@@ -160,6 +168,7 @@ $mig_messages['koi8r'] = array (
     'backhome'      => '&#215;&#197;&#210;&#206;&#213;&#212;&#216;&#211;'
                      . '&#209;&nbsp;&#203;',
     'bytes'         => '&nbsp;&#194;&#193;&#202;&#212;',
+    'flash_used'    => 'flash used',
     'main'          => '&#236;&#201;&#195;&#197;&#215;&#193;&#209;',
     'must_auth'     => '&#247;&#217; &#196;&#207;&#204;&#214;&#206;&#217;'
                      . ' &#215;&#215;&#197;&#211;&#212;&#201; &#203;&#207;'
@@ -186,6 +195,7 @@ $mig_messages['koi8r'] = array (
 $mig_messages['tr'] = array (
     'backhome'      => 'geri&nbsp;d&#246;n:',
     'bytes'         => '&nbsp;bit',
+    'flash_used'    => 'flash used',
     'main'          => 'Ana',
     'must_auth'     => 'Ge&#231;erli bir kullan&#253;c&#253; ad&#253; ve'
                      . ' &#254;ifre girmelisiniz.',
@@ -201,6 +211,7 @@ $mig_messages['tr'] = array (
 $mig_messages['se'] = array (
     'backhome'      => 'tillbaka',
     'bytes'         => '&nbsp;byte',
+    'flash_used'    => 'flash used',
     'main'          => 'F&ouml;rsta&nbsp;sidan',
     'must_auth'     => 'Du m&aring;ste ange korrekt anv&auml;ndarnamn och'
                      . ' l&ouml;senord f&ouml;r att komma vidare',
@@ -217,6 +228,7 @@ $mig_messages['se'] = array (
 $mig_messages['da'] = array (
     'backhome'      => 'tilbage&nbsp;til',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'flash used',
     'main'          => 'Main',
     'must_auth'     => 'Du skal skrive et gyldigt brugernavn og password'
                      . ' for at komme ind',
@@ -231,6 +243,7 @@ $mig_messages['da'] = array (
 $mig_messages['it'] = array (
     'backhome'      => 'indietro&nbsp;a',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'flash usato',
     'main'          => 'Principale',
     'must_auth'     => 'Devi inserire uno user e una password validi'
                      . ' per entrare',
@@ -244,22 +257,24 @@ $mig_messages['it'] = array (
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
 // with some adjustments from JMN <umjumasa@terra.es>
 $mig_messages['es'] = array (
-     'backhome'      => 'regresar&nbsp;inicio',
-     'bytes'         => '&nbsp;bytes',
-     'main'          => 'Principal',
-     'must_auth'     => 'Debes introducir un usuario y clave v&#225;lidas'
-                      . ' para acceder',
-     'nextimage'     => 'siguiente&nbsp;im&#225;gen',
-     'no_contents'   => 'Sin&nbsp;contenidos.',
-     'previmage'     => 'anterior&nbsp;im&#225;gen',
-     'thumbview'     => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
-     'up_one'        => 'subir&nbsp;un&nbsp;nivel'
+     'backhome'     => 'regresar&nbsp;inicio',
+     'bytes'        => '&nbsp;bytes',
+     'flash_used'   => 'flash usado',
+     'main'         => 'Principal',
+     'must_auth'    => 'Debes introducir un usuario y clave v&#225;lidas'
+                     . ' para acceder',
+     'nextimage'    => 'siguiente&nbsp;im&#225;gen',
+     'no_contents'  => 'Sin&nbsp;contenidos.',
+     'previmage'    => 'anterior&nbsp;im&#225;gen',
+     'thumbview'    => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
+     'up_one'       => 'subir&nbsp;un&nbsp;nivel'
 );
 
 // Slovak - courtesy of Juro Polak <polak@axon.sk>
 $mig_messages['sk'] = array (
     'backhome'      => 'sp&#228;?&nbsp;na',
     'bytes'         => '&nbsp;bytov',
+    'flash_used'    => 'flash used',
     'main'          => 'Hlavn&#225;&nbsp;str&#225;nka',
     'must_auth'     => 'Mus&#237;te uvies? u?&#237;vate&#190;sk&#233; meno'
                      . ' a heslo na vstup',
@@ -275,6 +290,7 @@ $mig_messages['sk'] = array (
 $mig_messages['nl'] = array (
     'backhome'      => 'Terug&nbsp;naar',
     'bytes'         => '&nbsp;bytes',
+    'flash_used'    => 'flash used',
     'main'          => 'Hoofdmenu',
     'must_auth'     => 'Je moet een geldige naam en wachtwoord invoeren'
                      . 'om hier naar binnen te gaan',

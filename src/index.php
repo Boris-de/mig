@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.9';
+$version = '1.2.9-beta3';
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
@@ -93,6 +93,7 @@ $viewCamInfo            = FALSE;
 $viewFolderCount        = FALSE;
 $imagePopup             = FALSE;
 $imagePopType           = 'reuse';
+$imagesPerPage          = 100000;
 
 // Fetch variables from the URI
 //
@@ -101,9 +102,13 @@ if (! $currDir) {       // not using register_globals, so the assumption
     $currDir        = $HTTP_GET_VARS['currDir'];
     $image          = $HTTP_GET_VARS['image'];
     $pageType       = $HTTP_GET_VARS['pageType'];
+    $offset         = $HTTP_GET_VARS['offset'];
 }
 if (! $jump) {
     $jump           = $HTTP_GET_VARS['jump'];       // for track_vars
+}
+if (! $offset) {
+    $offset = 0;
 }
 
 if ($currDir == '') {
@@ -296,7 +301,8 @@ $image = rawurldecode($image);
 
 // Fetch mig.cf information
 list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
-     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols)
+     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
+     $folderImagesPerPage)
     = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
 // if $pageType is null, or "folder") generate a folder view
@@ -325,6 +331,11 @@ if ($pageType == 'folder' or $pageType == '') {
         $maxThumbColumns = $folderThumbCols;
     }
 
+    // Determine images per page
+    if ($folderImagesPerPage) {
+        $imagesPerPage = $folderImagesPerPage;
+    }
+
     // Generate some HTML to pass to the template printer
 
     // list of available folders
@@ -334,14 +345,13 @@ if ($pageType == 'folder' or $pageType == '') {
                                $viewFolderCount, $markerType, $markerLabel,
                                $ficons);
     // list of available images
-    $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
-                                $albumURLroot, $maxThumbColumns, $folderList,
-                                $markerType, $markerLabel, $suppressImageInfo,
-                                $useThumbSubdir, $thumbSubdir, $noThumbs,
-                                $thumbExt, $suppressAltTags, $mig_language,
-                                $mig_messages, $sortType, $hidden,
-                                $presort_img, $desc, $imagePopup,
-                                $imagePopType);
+    list($imageList,$prevpage,$nextpage) = buildImageList($baseURL, $baseDir,
+                       $albumDir, $currDir, $albumURLroot, $maxThumbColumns,
+                       $folderList, $markerType, $markerLabel,
+                       $suppressImageInfo, $useThumbSubdir, $thumbSubdir,
+                       $noThumbs, $thumbExt, $suppressAltTags, $mig_language,
+                       $mig_messages, $sortType, $hidden, $presort_img, $desc,
+                       $imagePopup, $imagePopType, $imagesPerPage, $offset);
 
     // Only frame the lists in table code when appropriate
 
@@ -415,7 +425,7 @@ if ($pageType == 'folder' or $pageType == '') {
     // Get image description
     $description  = getImageDescription($image, $desc);
     $exifDescription = getExifDescription($albumDir, $currDir, $image,
-                                          $viewCamInfo);
+                                          $viewCamInfo, $mig_messages);
 
     // If there's a description but no exifDescription, just make the
     // exifDescription the description

@@ -9,10 +9,21 @@ Z<>
 
 Z<>
 
-=head2 Version 1.2.9 ()
+=head2 Version 1.2.9 (NOT YET RELEASED)
 
 Added C<$imagePopup> and C<$imagePopType> to F<mig.cfg.default>.  Using these
 one can have pop-up windows enabled.  See F<docs/INSTALL>.
+
+[Sourceforge bug report #441188] -
+Fixed a bug in the handling of C<$viewFolderCount>.  Previously, if a
+folder was mentioned in a E<lt>sortE<gt> block, it would be ignored when
+C<$viewFolderCount> was evaluated.  Now C<$viewFolderCount> is properly
+applied to all folders that contain images, whether they are sorted or
+not.
+
+[Sourceforge bug report #442760] -
+Fixed a bug in getExifDescription.  The string &quot;flash used&quot;
+was hard-coded rather than being included in the language library.
 
 =head2 Version 1.2.8 (Fri 29 Jun 2001)
 
