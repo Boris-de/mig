@@ -31,6 +31,9 @@ F<templates/style.css> - since Mig is using E<lt>LINKE<gt> to refer to the
 style sheet now it was no longer necessary (and the W3C validator didn't
 like it).  Fixed other minor HTML/CSS bugs.
 
+Modified C<printTemplate()> to recognize SMB shares in Windows when
+determining whether or not to prepend full path.
+
 =head2 Version 1.3.5 (Sun, 07 Jul 2002)
 
 Fixed bug in F<config.php> - the C<$pathConvert*> variables were

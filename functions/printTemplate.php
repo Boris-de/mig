@@ -11,8 +11,8 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
 {
     // Only prepend a path if one isn't there.  For unix-like systems this
     // checks for a leading slash, for Windows-like system it checks for
-    // a leading drive letter.
-    if (! ereg('^/', $templateFile) && ! eregi("^[a-z]:", $templateFile)) {
+    // a leading drive letter or an SMB share.
+    if (! eregi('^(/|[a-z]:|[\\]{2})', $templateFile)) {
         $templateFile = $albumDir . '/' . $newCurrDir . '/' . $templateFile;
     }
 
