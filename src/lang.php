@@ -240,19 +240,19 @@ $mig_messages['da'] = array (
     'up_one'        => 'tilbage'
 );
 
-// Italian - courtesy of Alessandro Polett <pollok@toth.it>
+// Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
 $mig_messages['it'] = array (
-    'backhome'      => 'indietro&nbsp;a',
-    'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'flash usato',
-    'main'          => 'Principale',
-    'must_auth'     => 'Devi inserire uno user e una password validi'
-                     . ' per entrare',
-    'nextimage'     => 'prossima&nbsp;immagine',
-    'no_contents'   => 'Vuoto.',
-    'previmage'     => 'immagine&nbsp;precedente',
-    'thumbview'     => 'indietro&nbsp;al&nbsp;thumbnail',
-    'up_one'        => 'su&nbsp;di&nbsp;un&nbsp;livello'
+     'backhome'     => 'torna&nbsp;a',
+     'bytes'        => '&nbsp;bytes',
+     'flash_used'   => 'usato flash',
+     'main'         => 'Principale',
+     'must_auth'    => 'Devi inserire un nome utente ed una password validi'
+                     . ' per accedere',
+     'nextimage'    => 'prossima&nbsp;immagine',
+     'no_contents'  => 'Vuoto.',
+     'previmage'    => 'immagine&nbsp;precedente',
+     'thumbview'    => 'torna&nbsp;alla&nbsp;vista&nbsp;per&nbsp;icone',
+     'up_one'       => 'torna&nbsp;al&nbsp;livello&nbsp;superiore'
 );
 
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
