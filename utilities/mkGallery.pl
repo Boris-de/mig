@@ -375,12 +375,14 @@ foreach (@processDirs) {
             # 1) -n wasn't used.
             if (not $newOnlyFlag) {
                 print "Generating thumbnail \"$new_file\" ...\n";
-                system($cmd);
+                system($cmd) == 0 or
+                    print STDERR "Warning: external command failed\n$cmd\n\n";
 
             # 2) -n was used, but thumbnail does not exist.
             } elsif ($newOnlyFlag and not -f $new_file) {
                 print "Generating thumbnail \"$new_file\" ...\n";
-                system($cmd);
+                system($cmd) == 0 or
+                    print STDERR "Warning: external command failed\n$cmd\n\n";
 
             } else {
                 @origfile = stat($orig_file);
@@ -388,7 +390,8 @@ foreach (@processDirs) {
                 # 3) -n was used but thumbnail is older than image file
                 if ($origfile[9] > $newfile[9]) {
                     print "Generating thumbnail \"$new_file\" ...\n";
-                    system($cmd);
+                    system($cmd) == 0 or
+                        print STDERR "Warning: external command failed\n$cmd\n\n";
                 }
             }
         }
