@@ -4,9 +4,8 @@
 # Makefile for Mig documentation
 #
 
-hcmd=	pod2html
+hcmd=	pod2html --noindex
 tcmd=	pod2text
-hargs=	--noindex --title="Mig Documentation"
 
 # HTML files
 html=	changelog.html credits.html install.html license.html \
@@ -22,7 +21,7 @@ text=	changelog.txt credits.txt install.txt license.txt \
 docs: $(html) $(text) sort clean
 
 $(html): %.html: %.pod
-	$(hcmd) $(hargs) \
+	$(hcmd) --title="Mig Documentation - $@" \
 		--infile=$< --outfile=$@
 
 $(text): %.txt: %.pod
@@ -34,4 +33,4 @@ sort:
 	mv *.txt text
 
 clean:
-	/bin/rm -f pod2htm*
+	rm -f pod2htm*

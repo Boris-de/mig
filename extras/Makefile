@@ -5,6 +5,13 @@
 # Where to store bundles
 DISTDIR=../../bundles/mig
 
+# path to (GNU) tar
+TAR=/usr/bin/gnutar
+
+# What to ignore when tarring
+EXCEPT= --exclude='CVS' --exclude='.DS_Store' --exclude='.FBC*' \
+	--exclude='.Apple*' --exclude='.*.swp'
+
 # Contrib archive
 CONTRIB=$(DISTDIR)/mig-contrib.tar.gz
 
@@ -17,8 +24,8 @@ default:
 
 contrib:
 	rm -f $(CONTRIB)
-	tar cfz $(CONTRIB) mig-contrib
+	$(TAR) --gzip $(EXCEPT) -cf $(CONTRIB) mig-contrib
 
 gallery:
 	rm -f $(GALLERY)
-	tar cfz $(GALLERY) Mig_Example_Gallery
+	$(TAR) --gzip $(EXCEPT) -cf $(GALLERY) Mig_Example_Gallery

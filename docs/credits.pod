@@ -7,35 +7,34 @@ $Id$
 This is where I thank people who have contributed things to Mig.  I hope I
 haven't left anyone out, but if I have, please let me know.
 
-Fadel (fadel at fee.unicamp.br), for contributing code which eventually
-turned into the C<-c> option of the F<mkGallery> script, and for the
-Portugese translation.
+Fadel (fadel at fee.unicamp.br), for contributing code which was the
+basis for the C<-c> option of F<mkGallery.pl>, and for the Portugese
+translation.
 
 Jeff Lambert (jeffx at ican.net), for contributing code to make a
-E<quot>phpNuke CompatibleE<quot> mode for folks wanting to merge Mig into a
-phpNuke site [ http://www.phpnuke.org/ ].  Jeff also found a number of
+PHP-Nuke compatibility mode for people wanting to merge Mig into
+a PHP-Nuke site [ http://www.phpnuke.org/ ].  Jeff also found a number of
 nagging little bugs in Mig which have been fixed.
 
-Russ McClay (mcclay at taolodge.com.tw), for finding the strange table
-format problem where you would see a horizontal line above and to the left
-side of the screen.  Fixing this fixed another strange bug where sometimes
-things weren't centered.
+Russ McClay (mcclay at taolodge.com.tw), for finding a strange table format
+problem where a horizontal line above and to the left side of the table would
+appear.  Fixing this fixed another strange bug where sometimes things
+weren't centered.
 
-Adam Monsen (meonkeys at hotmail.com), for noticing and reporting the
-E<quot>..E<quot> security hole.
+Adam Monsen (meonkeys at hotmail.com), for reporting the E<quot>..E<quot>
+security hole.
 
-BUL (burckhard at loeh.cx), for going through lots of headache working
-out the kinks for Mig users who are running on a Windows platform, and for
-the German translation.
+BUL (burckhard at loeh.cx), for working out the kinks for Mig users who are
+on a Windows platform, and for the German translation.
 
 Jevin Maltais (jevin at techie.com) and Brian Palik (bpalik at elitepub.com),
-for inspiring the eminently useful C<#include> feature of templates.
+for inspiring the C<#include> feature in the template parser.
 
 Artem G. Abanov (aga at andrey.physics.wisc.edu), for writing the
-contrib script F<migPutCommentInFile>.
+script F<migPutCommentInFile> (available in the F<mig-contrib> package).
 
-Jaap Geurts (j.geurts at tech.nhl.nl), for contributing a change to make
-F<mkGallery> do things in sorted order.
+Jaap Geurts (j.geurts at tech.nhl.nl), for contributing a patch to make
+F<mkGallery.pl> do things in a sorted order.
 
 Jon Anhold (jon at snoopy.net), for contributing code which turned into
 the C<$suppressImageInfo> option.
@@ -64,7 +63,7 @@ Alessandro Poletto (pollok at toth.it) and Marco Ermini
 
 Juro Polak (polak at axon.sk) for the Slovak translation.
 
-Erik at Braindisorder.org for the Dutch translation.
+(erik at braindisorder.org) for the Dutch translation.
 
 JMN (umjumasa at terra.es) for an update to the Spanish translation.
 
@@ -73,7 +72,7 @@ pop-up window feature is based.
 
 Martin (martvin at box43.pl) for the Polish translation.
 
-Simon Wood (simon at mungewell.org) for contributing the patch to create the
+Simon Wood (simon at mungewell.org) for contributing a patch to parse the
 C<MaintAddr> keyword in F<mig.cf> files.
 
 A special note to recognize Matthias Wendel, author of the F<jhead>

@@ -15,41 +15,41 @@ example:
 http://tangledhelix.com/gallery/index.php?pageType=folder&currDir=./Our%20House/Before%20We%20Redecorated
 
 At 105 characters long, and having tons of URL-encoded C<%xx> entities
-in it, it's not a pretty URL to have to send someone.  But here's what you
-can do.  Add a line to your F<config.php> that adds to the jump map.
+in it, it's an ugly URL to send someone.  But the pain can be alleviated.
+The jump map defines shortcuts for long URLs.
+
+Add a line to F<config.php> that adds to the jump map.
 
     $jumpMap['me'] = 'currdir=./Pictures_of_me';
 
-That one goes to a folder at the root of your album called E<quot>Pictures
-of meE<quot>.  To go to the above URL is a little more like this:
+Now E<quot>meE<quot> is defined as a shortcut for a folder at the root of
+the album called E<quot>Pictures of meE<quot>.  The long URL above
+would look like this:
 
     $jumpMap['house'] = 'currDir=./Our%20House/Before%20We%20Redecorated';
 
-See, all I did here was copy the value of C<currDir>.  Then you can give out
-this URL instead:
+All that is needed is the value of C<currDir> (which can be copied from the
+address bar in most web browsers).  Now this URL will go to the same place:
 
     http://tangledhelix.com/gallery/?jump=house
 
-Much smaller and nicer.  Imaging if you have albums four or five levels
-deep (I know I do) and the URL gets pretty long.  Hopefully this will
-address that trouble.
+Much shorter and nicer.  If an album has four or five levels deep (such as
+some of the albums I maintain), the URLs can be very long.
 
-You can do this in one of two ways, too.  You can also use a URL like this:
+There are two ways to do this, too.  The first is shown above.  Another way
+is a URL like this:
 
     http://tangledhelix.com/gallery/index.php/house
 
-Which avoids clumsy stuff like the ? in the URL and such.  It's a matter of
-preference which one you use.  Note that with the second method you can't
-shorten it like this, though:
+Which avoids clumsy stuff like the ? in the URL.  It's a matter of
+preference which one to use.  Note that with the second method it can't
+be shortened like this:
 
     http://tangledhelix.com/gallery/house
 
 Because the web server will look for that directory, not find it, and
-return an error.  So you have that F<index.php> or F<index.php3> stuck in
+return an error.  So that F<index.php> or F<index.php3> has to be in
 there.
-
-Granted, you have to maintain this mapping manually.  But, no one is
-forcing you to use it, either...
 
 This works with Apache web servers.  I don't know if it works with
 anything else.  If you're running something other than Apache, let me
@@ -57,7 +57,7 @@ know how you fare with this feature.
 
 =head2 Tips for Apache Users
 
-Also see the E<quot>apacheE<quot> document which has some nifty
+Also see the F<apache> document which has some nifty
 C<mod_rewrite> ideas to utilize shorter, simpler URLs.
 
 =cut

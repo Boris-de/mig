@@ -4,42 +4,40 @@ $Id$
 
 =head2 Using Mig With PHP-Nuke
 
-Mig has a E<quot>PHP-Nuke compatibleE<quot> mode which you can use to merge
-Mig into your PHP-Nuke-based site.  If you don't know what PHP-Nuke is, you
-probably don't need to continue reading this document.
-
-PHP-Nuke information can be found at http://www.phpnuke.org/
+Mig has a PHP-Nuke compatibility mode which can be used to merge Mig into a
+PHP-Nuke-based site.  If you don't know what PHP-Nuke is, you probably
+don't need to continue reading this document.  More about PHP-Nuke can be
+found at http://www.phpnuke.org/
 
 (PHP-Nuke mode has not been tested with PHP-Nuke 5.x.  I have no idea if it
-will work - use at you own risk.  It was last tested with PHP-Nuke 4.2.)
+will work - use at your own risk.  It was last tested with PHP-Nuke 4.2.)
 
-Please read the E<quot>installE<quot> document and then apply the following
-changes.
+To install Mig on a PHP-Nuke site, read the F<install> document and then
+apply the following changes.
 
 =over 4
 
 =item 1.
 
-Instead of F<index.php>, name the main file mig.php and put it in the root
-directory where your PHP-Nuke is installed.
+Instead of F<index.php>, name the main file F<mig.php> and put it in the
+root directory of the PHP-Nuke installation.
 
 =item 2.
 
-Copy F<config.php> to the same place.  Edit it and change
-C<$phpNukeCompatible> to C<TRUE>.  Change C<$phpNukeRoot> to point to the
-root directory of your PHP-Nuke installation.
+Copy F<config.php> to the same directory.  Edit it and change
+C<$phpNukeCompatible> to C<TRUE>.  Change C<$phpNukeRoot> to the root
+directory of the PHP-Nuke installation.
 
 =item 3.
 
-Create a subdirectory E<quot>migE<quot> in your PHP-Nuke root directory.
-Put all other Mig files there, as described in the E<quot>installE<quot>
-document.
+Create a subdirectory called F<mig> in the PHP-Nuke root directory.  Put
+all other Mig files there, as described in the F<install> document.
 
 =item 4.
 
 Ignore the F<templates> files that the F<install> document specifies.
 Instead, copy over the files from the F<templates/phpnuke> directory into
-your Mig F<templates> directory.  PHP-Nuke doesn't use the HTML templates
+the Mig F<templates> directory.  PHP-Nuke doesn't use the HTML templates
 Mig normally uses, and it does not use the CSS file either.
 
 =back

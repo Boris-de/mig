@@ -33,9 +33,9 @@ General cleanup of documentation.
 
 If F<config.php> is missing, Mig will move on and just use default values
 instead.  Why anyone would want to do that is beyond me, but I think it's
-simpler this way (one less file to worry about looking at).
+simpler this way.
 
-Modified F<mkGallery> to look for F<jhead> in E<quot>.E<quot> - simplifies
+Modified F<mkGallery.pl> to look for F<jhead> in E<quot>.E<quot> - simplifies
 the task of finding it.
 
 Entirely restructured the CVS tree.  When the smoke cleared, F<funcs.php>
@@ -43,9 +43,7 @@ and F<lang.php> had vanished (merged into F<index.php>).  Mig is just one
 file (well, the PHP code is anyway), plus a config file written in PHP.
 Perhaps not as nice and neat for people to look at, but people wanting nice
 and neat are welcome to check out a CVS copy which is quite neat and tidy
-and modular.  (If you check out CVS you can probably build a Mig tarball by
-typing E<quot>C<make dist ver=x.y.z>E<quot> although you may have to change
-the path to tar in F<Makefile>).
+and modular.
 
 =head2 Version 1.3.1 (Tue, 07 May 2002)
 

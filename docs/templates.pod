@@ -132,7 +132,7 @@ markup.
 
 If you are running Mig in PHP-Nuke Compatible mode (see
 the E<quot>phpnukeE<quot> document) then these three files are not used.
-In their place you will instead find:
+In their place you will instead have:
 
 =over 4
 
@@ -164,16 +164,16 @@ Tags for use in any template
 
 =item baseURL
 
-Base URL to call this script (Mig) again.
+URL to call this script (Mig) again.
 
 =item maintAddr
 
 Email address of album maintainer (as defined in F<config.php>).
-This can be customized per-folder as well.
+This can be customized per-folder using a F<mig.cf> file.
 
 =item version
 
-Current version number of this Mig installation.
+Version number of this Mig installation.
 
 =item backLink
 
@@ -197,7 +197,7 @@ This is the E<quot>you are hereE<quot> path at the top of each page.
 
 =item distURL
 
-URL of Mig home page (value is hard-coded into F<index.php>).
+URL of Mig home page
 
 =item description
 
@@ -281,7 +281,7 @@ cells, all are managed by the CSS file F<templates/style.css>.
 ignored because PHP-Nuke uses its own CSS styles.  See the
 E<quot>phpnukeE<quot> document).
 
-I don't have the inclination or time to give a tutorial on how CSS works,
+I don't have the inclination or time to write a tutorial on how CSS works,
 so please see http://www.htmlhelp.com/reference/css/ or whatever else you
 come across to figure out how CSS works.  There are some books on this
 topic available as well (try searching for E<quot>CSSE<quot> at Amazon.com).

@@ -6,7 +6,7 @@
 #
 # Convert meta-files from old Mig (0.83 and before) to new Mig (0.90 and
 # later).  This does the current directory, but you can grab
-# "convert-metafiles" too which does it recursively for all subfolders.
+# "convert-metafiles.sh" too which does it recursively for all subfolders.
 #
 
 use strict;

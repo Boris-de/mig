@@ -5,7 +5,7 @@
 # I use this when uploading my images.  My digital camera outputs every
 # picture the same size, so I just call this with something like
 #
-#   for i in *JPG; do gallery $i; done
+#   for i in *jpg; do gallery.sh $i; done
 #
 # After that I use "mkGallery" to create the thumbnails.
 #
