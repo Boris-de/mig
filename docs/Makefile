@@ -38,4 +38,6 @@ clean:
 	rm -f pod2htm*
 
 publish:
-	scp html/*.html mig.sf.net:web/docs
+	cp html/*.html $(HOME)/Projects/mig.sf.net/docs
+	cd $(HOME)/Projects/mig.sf.net
+	make
