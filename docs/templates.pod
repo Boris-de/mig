@@ -4,13 +4,7 @@ $Id$
 
 =head2 Templates
 
-Template files give you control of the layout of output pages.
-Colors are also handled by the template files (see later in this document).
-
-Note that if you like the page layout already, you do not
-need to touch the template files at all.  You should only modify a template
-file if you have something in the page layout you wish to change or if you
-have a need to change the colorization of different elements in Mig.
+Page layout is handled using template files wherever possible.
 
 =head2 About Tags
 
@@ -19,18 +13,9 @@ them.  Mig expands these tags at runtime.
 
 Tags are surrounded by C<%%> marks, such as this example:
 
-    <br>
-    Contact <a href="mailto:%%maintAddr%%">%%maintAddr%%</a>
-    with any comments or problems.
-    <br>
+    <title>%%pageTitle%%</title>
 
-In this case, C<%%maintAddr%%> is the relevant tag name.
-
-You can control the page layout by modifying and/or moving HTML
-elements and/or Mig tag elements in the template file.  It is assumed you
-have an understanding of HTML - modify the templates at your own risk, and
-always make a backup copy beforehand in case your changes don't work out
-the way you wanted them to.
+In this case, E<quot>pageTitleE<quot> is the relevant tag name.
 
 There is a glossary of tags later in this document.
 
@@ -38,10 +23,13 @@ If you don't know anything about HTML you can try checking out
 http://www.htmlhelp.com/ or looking for some other online help sites by
 using a search engine such as Google [ http://www.google.com ].
 
+Make backups of template files before modifying them in case things don't
+work out as expected.
+
 =head2 Including Files
 
-An E<quot>includeE<quot> function is also provided.  To include a file,
-place a directive like this one, on a line by itself:
+An E<quot>includeE<quot> function is provided.  To include a file,
+place a directive like this one on a line by itself:
 
     #include "filename";
 
@@ -49,17 +37,17 @@ Such as:
 
     #include "custom.html";
 
-The contents of the file you specify will be inserted in place of the
+The contents of the specified file will be inserted in place of the
 C<#include> placeholder.
 
 If the file mentioned by C<#include> is a CGI file then it will be
 executed, and its output will be placed there instead.  NOTE: CGI can only
-be used if you are using an Apache server (and not even every installation
+be used with Apache servers (and not even every installation
 of Apache will do this correctly).  Sorry, it's a limitation in PHP
 that I can't work around.
 
-If you are including a CGI make sure it prints appropriate HTTP headers
-before anything else (just like any other situation where you use CGI).
+If including a CGI make sure it prints appropriate HTTP headers
+before anything else (just like any other situation where CGI is used).
 
 Please note some things about C<#include>:
 
@@ -67,21 +55,17 @@ Please note some things about C<#include>:
 
 =item 1.
 
-All files you wish to include must live in the F<templates> subdirectory
-of your Mig installation.
+Included files must be located in the F<templates> directory.
 
 =item 2.
 
-However, if you really don't want to do that (because it means you
-have to maintain two copies of the same file in different locations,
-etc), a symbolic link will also work.  For example:
+If that's undesirable, a symbolic link will also work.  For example:
 
     ln -s /www/htdocs/includes/custom.html /www/htdocs/mig/templates
 
-In this case you would have F</www/htdocs/includes/custom.html> which
-is the real file, and a symbolic link called F<custom.html> in
-F</www/htdocs/mig/templates> which would point to the real file,
-leaving you with only one copy to maintain.
+This would create a symbolic link F</www/htdocs/mig/templates/custom.html>
+which would point to the real file F</www/htdocs/includes/custom.html>.
+Thus, there's only one copy to maintain.
 
 =item 3.
 
@@ -97,10 +81,9 @@ a semicolon.  Here are some examples:
 
 =item 4.
 
-As of version 1.2.5 you can include PHP files as well as other types of
-files.  The one difference is that for PHP files you have to make sure the
-filename has an extension of either E<quot>.phpE<quot> or
-E<quot>.php3E<quot>.
+As of version 1.2.5 it is possible to include PHP files as well as other
+types of files.  The one difference is that for PHP files the filename must
+have an extension of either E<quot>.phpE<quot> or E<quot>.php3E<quot>.
 
 Look at either F<image.html> or F<folder.html> for an example (C<#include>
 is used to embed the CSS style sheet file C<style.css>).
@@ -130,9 +113,8 @@ markup.
 
 =back
 
-If you are running Mig in PHP-Nuke Compatible mode (see
-the E<quot>phpnukeE<quot> document) then these three files are not used.
-In their place you will instead have:
+In PHP-Nuke compatibility mode (see the E<quot>phpnukeE<quot> document)
+then these three files are not used.  In their place will be:
 
 =over 4
 
@@ -185,7 +167,7 @@ Current directory, in URL-encoded format.
 
 =item newCurrDir
 
-Same as C<currDir> with leading E<quot>./E<quot> removed.
+Same as E<quot>currDirE<quot> with leading E<quot>./E<quot> removed.
 
 =item pageTitle
 
@@ -201,14 +183,14 @@ URL of Mig home page
 
 =item description
 
-Description of the image, taken from the comments
-file(s).  For folders, this is E<lt>BulletinE<gt>.
+Description of the image, taken from the comments file(s).  For folders,
+this is E<lt>BulletinE<gt>.
 
 =back
 
 =item 2.
 
-Tags used only in F<folder.html> (or F<mig_folder.php> in phpNuke mode)
+Tags used only in F<folder.html> (or F<mig_folder.php> in PHP-Nuke mode)
 
 =over 4
 
@@ -226,7 +208,7 @@ displays a list of images in the current folder.
 
 =item 3.
 
-Tags used only in F<image.html> (or F<mig_image.php> in phpNuke mode)
+Tags used only in F<image.html> (or F<mig_image.php> in PHP-Nuke mode)
 
 =over 4
 
@@ -277,9 +259,8 @@ Mig uses a Cascading Style Sheet (CSS) file to manage all of its element
 colorization.  Things like the page background, background colors for table
 cells, all are managed by the CSS file F<templates/style.css>.
 
-(Note that if you are using E<quot>PHP-Nuke compatibleE<quot> mode, CSS is
-ignored because PHP-Nuke uses its own CSS styles.  See the
-E<quot>phpnukeE<quot> document).
+(Because PHP-Nuke uses its own CSS, F<templates/style.css> is not used in
+PHP-Nuke compatibility mode.)
 
 I don't have the inclination or time to write a tutorial on how CSS works,
 so please see http://www.htmlhelp.com/reference/css/ or whatever else you

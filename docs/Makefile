@@ -18,7 +18,7 @@ text=	changelog.txt credits.txt install.txt license.txt \
 	utilities.txt mig_cf.txt templates.txt
 
 # Default is to rebuild doc files
-docs: $(html) $(text) sort clean
+docs: mkdirs $(html) $(text) sort clean
 
 $(html): %.html: %.pod
 	$(hcmd) --title="Mig Documentation - $@" \
@@ -27,8 +27,10 @@ $(html): %.html: %.pod
 $(text): %.txt: %.pod
 	$(tcmd) $< $@
 
-sort:
+mkdirs:
 	mkdir -p html text
+
+sort:
 	mv *.html html
 	mv *.txt text
 

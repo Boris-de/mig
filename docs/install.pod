@@ -28,33 +28,29 @@ A copy of the GPL can be found at http://www.gnu.org/copyleft/gpl.html
 
 Mig requires a web server which supports PHP [ http://www.php.net/ ].
 The development platform is Apple OSX, so the code tends to assume
-a Unix-like environment.  As such it may or may not work (and has not
-been tested by the author) on non-unix-like platforms.
+a unix-like environment.  As such it may or may not work (and has not
+been tested by the author) on non-unix-like platforms.  Mig has been tested
+with Apache (and reportedly it works with Microsoft's IIS server).
 
 Windows users, please see the section labeled
 E<quot>Running Mig Under WindowsE<quot> below.
 
-The F<mkGallery> utility (used to generate thumbnail images) requires Perl
-[ http://www.perl.com ].  If you want to generate thumbnail images, it also
-requires ImageMagick [ http://www.imagemagick.org/ ].  Neither are required
-to use Mig itself.
+The F<mkGallery.pl> utility requires Perl [ http://www.perl.com ].  To
+generate thumbnail images, it also requires ImageMagick
+[ http://www.imagemagick.org/ ].  Neither are required to use Mig itself.
 
-The F<jhead> utility which is called by F<mkGallery> for EXIF header
-parsing is a C source code file - you will need to compile it before using
-it.  On most systems you can just type E<quot>makeE<quot> in the F<jhead>
-directory to build it and you will end up with an executable named
-F<jhead>.
+The F<jhead> utility which is called by F<mkGallery.pl> for EXIF header
+parsing is a C source code file - it must be compiled before use.  On most
+unix-like systems this is as easy as going into the F<jhead> directory and
+typing E<quot>makeE<quot>.
 
-Since most Windows systems do not come with a C compiler, and my
-understanding is that you have to buy one if you want one, I'd advise
-Windows users to get the pre-built F<jhead> program from Mathias Wandel's
-jhead home page: http://www.sentex.net/~mwandel/jhead/
+Windows users can download the pre-built F<jhead> program from Mathias
+Wandel's site at http://www.sentex.net/~mwandel/jhead/
 
 See the E<quot>utilitiesE<quot> document for more information about
-F<mkGallery> and F<jhead>.
+F<mkGallery.pl> and F<jhead>.
 
-If you are looking for information on the PHP-Nuke mode, see the F<phpnuke>
-document.
+PHP-Nuke users: see the F<phpnuke> document.
 
 =head2 New Installation
 
@@ -65,42 +61,42 @@ are upgrading, skip to the next section which deals with upgrading.
 
 =item 1.
 
-Create a directory to install Mig into, somewhere your web server can read
+Create a directory for Mig to live in, somewhere the web server can read
 the files and serve them as web pages.
 
 =item 2.
 
-Copy the file F<index.php> to your Mig directory.
+Copy the file F<index.php> to the new Mig directory.
 
 =item 3.
 
-Copy the file F<config.php.default> to your Mig directory and call it
-F<config.php>.  This is where you can change settings to customize Mig.
+Copy the file F<config.php.default> to the new Mig directory and call it
+F<config.php>.  Any customization of Mig (except layout and colors) can be
+done by editing F<config.php>.
 
 =item 4.
 
 Create three subdirectories called F<images>, F<templates> and F<albums>
-under your Mig directory.
+under the new Mig directory.
 
 =item 5.
 
 Copy the files F<image.gif> and F<no_thumb.gif> from the F<images>
-subdirectory to the F<images> subdirectory you just made.
+subdirectory to the new F<images> subdirectory.
 
 =item 6.
 
 Copy the files F<image.html>, F<folder.html> and F<style.css> from the
-F<templates> subdirectory to the F<templates> subdirectory you just made.
+F<templates> subdirectory to the new F<templates> subdirectory.
 
 =item 7.
 
-Put image files (your photos, etc) into the F<albums> subdirectory.
-You can make subdirectories to contain different categories of images,
-and those subdirectories can contain subdirectories, and so on.  Mig
-doesn't place any restriction on how many levels deep your subdirectories
-go.  Arrange the album any way you want.  The name of each album is the
-name of the directory, so keep that in mind as you create subdirectories.
-For example:
+Put image files (photos, etc) into the F<albums> subdirectory.  You can
+make subdirectories to contain different categories of images, and those
+subdirectories can contain subdirectories, and so on.  Mig doesn't place
+any restriction on how many levels deep subdirectories go.  Arrange the
+album any way you wish.  The name of each album is the name of the
+directory, so keep that in mind.  For example:
 
     People
         Family
@@ -134,23 +130,22 @@ extensions will be recognized:
 
 =item 8.
 
-You're all set - point your browser wherever you installed Mig and you
-should be ready to go!
+Point your web browser to the newly-installed Mig and browse away!
 
 =item 9.
 
-If you wish to create thumbnails, use the included F<mkGallery> script if
-you have shell access to your server, and you have Perl and ImageMagick
-available.  Otherwise you'll need to make your own thumbnails some other
-way, or just not use thumbnails.
+If you can run Perl scripts on the commandline on your server, and you have
+Perl and ImageMagick available, use F<mkGallery.pl> to create thumbnail
+images.  See the F<utilities> document for more information on how.
 
-To install your own thumbnails, create a F<thumbs> subdirectory in each of
-your album directories.  Put the thumbnail images into the F<thumbs>
-subdirectory.  The filename of each thumbnail should be identical to the
-filename of the full-size picture it represents.
+If you can't run Perl scripts, you can make your own thumbnail images in
+whatever way is handy for you (an image editing program, for example).
+In each album folder, create a subdirectory called F<thumbs>, and put
+thumbnail images inside.  A thumbnail should have the same filename as the
+full-size image it represents.
 
-You can change the name of the thumbnail directory - see the
-C<$thumbSubdir> option in F<config.php>.
+The thumbnail subdirectory is F<thumbs> by default, but this can be
+customized (see the C<$thumbSubdir> option in F<config.php>).
 
 =back
 
@@ -162,66 +157,63 @@ If you are upgrading from a previous version of Mig, follow these steps:
 
 =item 1.
 
-Copy the F<index.php> file to your Mig directory.  This should replace the
-F<index.php> you already had there.
+Copy the F<index.php> file to the Mig directory.  This should replace the
+F<index.php> which was already there.  If the existing file was called
+F<index.php3>, then the new file should also be called F<index.php3>.
 
 =item 2.
 
 Starting with version 1.3.1, F<mig.cfg> is now called F<config.php>.
-If you have a F<mig.cfg>, rename it to F<config.php>.  The distribution
-comes with F<config.php.default>, which is the new default config file
-(mostly used as an example - you don't need config.php.default in your
-actual Mig directory).
-
-If you don't copy over F<config.php> and use Mig without it, Mig will use
-the default value for each setting.
+If F<mig.cfg> is present, rename it to F<config.php>.  The distribution
+comes with F<config.php.default>, which is the new default config file.
+F<config.php.default> is just an example.  There is no need to copy it over
+to the Mig directory.
 
 =item 3.
 
 Starting with version 1.3.2, the F<funcs.php> and F<lang.php> files are no
-longer used.  If you have them, delete them.  All code is now contained in
+longer used.  If they are prsent, delete them.  All code is now contained in
 F<index.php>.  Mig will not fail if F<funcs.php> or F<lang.php> are
 present, but it's sloppy to leave them laying around.
 
 =item 4.
 
-If you use F<mkGallery>, copy mkGallery from the F<utilities> directory
-to someplace on your system that makes sense to you.
+If you wish to use F<mkGallery.pl>, copy mkGallery.pl from the F<utilities>
+directory to someplace on your system that makes sense to you.
 
 =item 5.
 
-If you use F<jhead> (note that using the EXIF functions of F<mkGallery>
-implies using F<jhead>), you may wish to compile a new copy of F<jhead>
-if it's a newer version than you're using now (to find out when F<jhead>
-was last updated, check the E<quot>changelogE<quot> document).
+If you wish to use F<jhead> (note that using the EXIF functions of
+F<mkGallery.pl> implies using F<jhead>), you may wish to compile a new copy
+of F<jhead> if it's a newer version than you're using now (to find out when
+F<jhead> was last updated, check the E<quot>changelogE<quot> document).
 
-If you want F<mkGallery> to be able to use F<jhead>, put F<jhead> in the
-same directory as F<mkGallery>.
+If you want F<mkGallery.pl> to be able to use F<jhead>, put F<jhead> in the
+same directory as F<mkGallery.pl>.
 
 =back
 
 =head2 Running Mig Under Windows
 
-Mig can run fine under Windows (so I'm told) as long as you have a web
-server that supports PHP.  You can find the Windows version of PHP at
-http://www.php.net/
+Mig can run under Windows (so I'm told) as long as the web server supports
+PHP.  The Windows version of PHP is available from http://www.php.net/
 
 Mig is reported to work with IIS, Personal Web Server, and the Windows port
-of Apache.  One user noted that you needed a fairly recent version of PHP
+of Apache.  One user noted that a fairly recent version of PHP is needed
 for it to work, so if you're having trouble, make sure you're using the
 most recent release of PHP.
 
-Another user reported that having a comma in the directory name of any
-album would cause problems, so you should avoid doing that.
+Another user reported that having a comma (,) in the directory name of any
+album would cause problems, so avoid using commas.
 
 =head2 The Example Gallery
 
 If you want to see an example gallery (that is, install one on your system
 and examine the files that it contains), you can download one from the Mig
-project page at http://sf.net/projects/mig/ (look in the 'mig-extras'
-section in the project files listing).  After you download the file, unpack
-it in your albums directory and you should be able to view it in your web
-browser.
+project page at http://sf.net/projects/mig/ (look in the
+E<quot>mig-extrasE<quot> section in the project files listing).  After
+downloading the file, unpack it in the albums sub directory and it should
+appear as E<quot>Mig Example GalleryE<quot>.
 
 =head2 Optional Customization
 
@@ -229,26 +221,26 @@ browser.
 
 =item 1. HTML templates (and colors)
 
-You can edit the HTML templates found in the F<templates> subdirectory.
-See the E<quot>templatesE<quot> document for more information.  You can
-also use a custom per-folder template file in each folder if desired - see
-the E<quot>mig_cfE<quot> document for more information.
+Mig is template-based.  Any change to layout or colors can be achieved by
+modifying the template files in the F<templates> subdirectory.  See the
+F<templates> document for more information.
+
+A per-folder custom template can be used in any given folder.  See the
+C<FolderTemplate> section of the F<mig_cf> document for more information.
 
 =item 2. Comments
 
-You can add a comment for any image you wish.  Comments are stored in a
+A comment can be attached to any image.  Comments are stored in a
 file called F<mig.cf> in the same directory as the image.  See the
-E<quot>mig_cfE<quot> document for information about the format of
-F<mig.cf>.
+F<mig_cf> document for information about the format of F<mig.cf> files.
 
 Comments are shown in a box below the image in image views.  In
-thumbnail views, they are shown as the ALT tag text.  (You can suppress
-ALT tags by setting C<$suppressAltTags> to C<TRUE> in F<config.php>).
+thumbnail views, they are shown as the ALT tag text.  (That behavior can
+be suppressed by setting C<$suppressAltTags> to C<TRUE> in F<config.php>).
 
-As an example, let's say you had files F<house.jpg>, F<car.gif> and
+As an example, let's say you have files F<house.jpg>, F<car.gif> and
 F<dog.jpg>.  Let's say you wanted a comment on the house and the dog,
-but nothing in particular to say about the car.  You would add
-this to F<mig.cf>:
+but nothing in particular to say about the car.  Add this to F<mig.cf>:
 
     <Comment "house.jpg">
     This is my house, which I bought in the fall of 1998.
@@ -260,95 +252,68 @@ this to F<mig.cf>:
     We had other dogs afterward, but none of them were as much fun.
     </Comment>
 
-(If you are using F<mkGallery>, you should look at the C<-c> option
-which handles comments.)
+(F<mkGallery.pl> users, see the C<-c> option which handles comments.)
 
-You can have as many lines as you want for the description.  The key is
-that the description must be enclosed inside the
-E<lt>CommentE<gt>...E<lt>/CommentE<gt> structure.  The tags such as
-E<lt>CommentE<gt> and E<lt>/CommentE<gt> MUST be at the start of a new
-line.
+The description can be multiple lines, as long as it's enclosed inside the
+E<lt>commentE<gt>...E<lt>/commentE<gt> structure.  Tags such as
+E<lt>commentE<gt> must be at the start of a new line.
 
 =item 3. EXIF data
 
-You can build EXIF data files (F<exif.inf>) using F<mkGallery> and the
-C<-e> option.  See the E<quot>utilitiesE<quot> document.  Note that you
-must have the F<jhead> utility in place before the C<-e> option will
-function.  (See above during the install procedure.) Since only JPEG files
-support EXIF headers, F<mkGallery> will only look at JPEG files when
-building the EXIF files.
+Many images contain EXIF header data.  F<mkGallery.pl> can extract this
+data using F<jhead>.  See the F<utilities> document for details.
 
 EXIF data generally contains information such as shutter speed, aperture,
 ISO rating, the original shooting date and time, and sometimes comments.
 Mig can read some, but not all, of this data.  Future versions of Mig may
 understand more of the data than it currently does.
 
-NOTE that most graphic editors destroy EXIF blocks!  They don't know how to
+Note that most graphic editors destroy EXIF blocks!  They don't know how to
 write them so when they save images, they are simply not written back into
-the file.  You can get around this by building the EXIF data using your raw
-images, and then editing them afterward.  This may not be an option for
-everybody, but there's nothing I can do about it.
+the file.
 
 =item 4. Item sorting
 
-You can define your own sort order (rather than relying on alphabetical
-sorting).  Just define a E<lt>sortE<gt> block in the folder's F<mig.cf>
-file and put items in the order you want them to be in.  For example:
-
-    <sort>
-    img_0436.jpg
-    img_4938.jpg
-    img_4812.jpg
-    </sort>
-
-What happens if there are files present other than the ones you listed?
-They'll appear after those first three, sorted alphabetically.
-
-You can sort folders, too, if your folder has subfolders.  Just define
-another sort block with folders instead of images.  Mig will figure out
-which is which automatically.
+Items can be sorted in a custom order if desired (rather than relying on
+the default alphabetical order).  To do this define a E<lt>sortE<gt> block
+in F<mig.cf>.  See the F<mig_cf> document for details.
 
 =item 5. Languages other than English
 
 Mig has support for other languages - however, it only supports those
-languages someone has supplied translations for.  As I write this,
-that means English and French.  If you want to translate it to another
-language, please get in touch with me and I'll be glad to add your
-translations to the available list of languages.
+languages someone has supplied translations for.  If you want to translate
+it to another language, please get in touch with me and I'll be glad to add
+your translations to the available list of languages.
 
 (see F<config.php.default> for more information - Mig now supports English,
 French, German, Norwegian, Portugese, Finnish, Romanian, Russian
 Windows-1251, Russian KOI8-R, Turkish, Swedish, Danish, Italian, Spanish,
 Slovak, Dutch and Polish).
 
-If you are interested in translating Mig to another language, please
-contact me by email at I<dan at tangledhelix.com>.
-
 =item 6. Pop-up windows
 
-If you want to use Pop-up windows for your images, see the C<$imagePopup>
-and C<$imagePopType> variables in F<config.php>.
+Pop-up windows can be used (see the C<$imagePopup> option in
+F<config.php>).
 
 =back
 
 =head2 Bug Reporting
 
-If you think you've found a bug in Mig, please report it using the Bug
-Tracker at Sourceforge.
+To report a bug, or view existing bug reports, go to:
 
     http://sourceforge.net/tracker/?group_id=24365
 
 =head2 Feature Requests
 
-If there's a feature you'd like to see in Mig, submit it using the Feature
-Request Tracker at Sourceforge.
+To request a feature, or view existing feature requests, go to:
 
     http://sourceforge.net/tracker/?group_id=24365
 
 =head2 Email Lists
 
-There are three mailing lists related to Mig.  Visit the URLs below if
-you wish to subscribe.  All lists are currently fairly low-traffic.
+=over 4
+
+=item 1. mig-announce
 
 mig-announce is an announcements-only list.  Generally speaking that
 means the only traffic it gets are announcements of new versions posted
@@ -356,16 +321,20 @@ by the author.
 
     http://lists.sourceforge.net/lists/listinfo/mig-announce
 
+=item 2. mig-users
+
 mig-users is a general discussion list.  Any Mig-related topic can be
-discussed on this list.  Note also that I typically send announcements
-here, so if you subscribe to mig-users you don't necessarily have to
-subscribe to mig-announce as well (but you can if you want to).
+discussed on this list.
 
     http://lists.sourceforge.net/lists/listinfo/mig-users
+
+=item 3. mig-devel
 
 mig-devel is for people interested in development work related to Mig.
 
     http://lists.sourceforge.net/lists/listinfo/mig-devel
+
+=back
 
 =cut
 
