@@ -24,8 +24,6 @@ default:
 	@echo "    make docpublish            Publishes docs to mig.sf.net"
 	@echo "    make clean"
 	@echo " "
-	@echo "    make test                  index to local test galleries"
-	@echo "    make cms                   index to phpnuke, etc"
 	@echo "    make mig.sf.net ver=X      index & templates to mig.sf.net"
 
 mig: dist
@@ -60,14 +58,9 @@ dist: index
 
 index:
 	rm -f index.php
-	( echo "<?php" ; sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
-	  cat main/pathConvert.php; cat main/defaults.php; \
-	  echo "//"; echo "// Function library"; echo "//?>"; \
-	  cat functions/*.php; \
-	  echo "<?//"; echo "// Language library"; echo "//?>"; \
-	  cat languages/*.php; \
-	  echo "<?//"; echo "// Main logic"; echo "//?>"; \
-	  cat main/body.php;  \
+	( sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
+	  cat main/pathConvert.php main/defaults.php \
+	      functions/*.php languages/*.php main/body.php \
 	) > index.php
 
 docpublish:
@@ -77,29 +70,6 @@ mig.sf.net: index
 	scp index.php mig.sf.net:web/gallery
 	scp templates/*html templates/*.css mig.sf.net:web/gallery/templates
 	@echo "URL: http://mig.sf.net/gallery/"
-
-test: local_gallery gallery_subdir gallery_th
-
-local_gallery: index
-	cp index.php $(WTEST)/gallery
-
-gallery_subdir: index
-	cp index.php $(WTEST)/gallery_subdir
-	cp templates/*.html $(WTEST)/gallery_subdir/templates
-	cp templates/*.css $(WTEST)/gallery_subdir/templates
-
-gallery_th: index
-	cp index.php $(WTEST)/gallery_th
-	cp templates/*.html $(WTEST)/gallery_th/templates
-	cp templates/*.css $(WTEST)/gallery_th/templates
-
-cms: index
-	cp index.php $(WPORT)/phpnuke/mig.php
-	cp index.php $(WPORT)/postnuke/mig.php
-	cp index.php $(WPORT)/phpwebsite/mig.php
-	cp index.php $(WPORT)/phpwebthings/mig.php
-	cp index.php $(WPORT)/xoops/modules/mig/index.php
-	cp index.php $(WPORT)/geeklog/public_html/mig/index.php
 
 clean:
 	rm -rf docs/html docs/text index.php

@@ -2,7 +2,7 @@
 
 =head2 MIG Change Log
 
-=head2 Version 1.4.0 (NOT YET RELEASED)
+=head2 Version 1.4.0 (Mon, 01 Mar 2004)
 
 Fixed variable name resolution bug related to markerlabel.  Patch courtesy
 of Mattias Ahnberg.  (Dan)
