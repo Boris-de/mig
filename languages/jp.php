@@ -1,42 +1,40 @@
 <?
 
-// Japanese - courtesy of Masaru Onozawa <masy@webmasters.gr.jp>
+// Japanese (UTF-8) - courtesy of Masaru Onozawa <masy@webmasters.gr.jp>
 $mig_config['lang_lib']['jp'] = array (
-    'am'            => '\$B8aA0(B',
-    'pm'            => '\$B8a8e(B',
-    'backhome'      => '\$B%[!<%`\$KLa\$k(B&nbsp;-',
-    'bytes'         => '&nbsp;\$B%P%\$%H(B',
-    'flash_used'    => 'Flush&nbsp;Used',
-    'largelink'     => 'view&nbsp;full-size&nbsp;image',
-    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
-    'main'          => '\$B%a%\$%s%Z!<%8(B',
-    'must_auth'     => '\$B%f!<%6L>\$H%Q%9%o!<%I\$rF~NO\$7\$F\$/\$@\$5\$\$(B'
-                     . '&nbsp;Enter&nbsp;\$B\$r2!\$7\$F\$/\$@\$5\$\$(B',
-    'nextimage'     => '\$B<!\$N2hA|(B',
-    'no_contents'   => '\$B2hA|\$,\$\'\$j\$^\$;\$s(B',
-    'previmage'     => '\$BA0\$N2hA|(B',
-    'thumbview'     => '\$B0lMw\$KLa\$k(B',
+    'am'            => '午前',
+    'pm'            => '午後',
+    'backhome'      => 'ホームに戻る&nbsp;-&nbsp;',
+    'bytes'         => '&nbsp;バイト',
+    'flash_used'    => 'フラッシュ使用',
+    'largelink'     => '最大サイズの画像を見る',
+    'largeview'     => '大きいサイズの画像を見る',
+    'main'          => 'メインページ',
+    'must_auth'     => 'この画像を見るためには ID とパスワードの入力が必要です。',
+    'nextimage'     => '次の画像',
+    'no_contents'   => '画像がありません',
+    'previmage'     => '前の画像',
+    'thumbview'     => '一覧に戻る',
     // total_images is special.  It has three elements you can use:
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
-    'total_images'  => '\$BI=<(Cf(B&nbsp;%s&nbsp;\$BKgL\(B&nbsp;'
-                     . '-&nbsp;%e&nbsp;\$BKgL\(B&nbsp;/&nbsp;'
-                     . '\$BA42hA|?t(B&nbsp;%t&nbsp;\$BKg(B<br />',
-    'up_one'        => '\$B0l\$D>e\$K9T\$/(B',
-    'month'         => array ( '01' => '1&nbsp;\$B7n(B',
-                               '02' => '2&nbsp;\$B7n(B',
-                               '03' => '3&nbsp;\$B7n(B',
-                               '04' => '4&nbsp;\$B7n(B',
-                               '05' => '5&nbsp;\$B7n(B',
-                               '06' => '6&nbsp;\$B7n(B',
-                               '07' => '7&nbsp;\$B7n(B',
-                               '08' => '8&nbsp;\$B7n(B',
-                               '09' => '9&nbsp;\$B7n(B',
-                               '10' => '10&nbsp;\$B7n(B',
-                               '11' => '11&nbsp;\$B7n(B',
-                               '12' => '12&nbsp;\$B7n(B' )
+    'total_images'  => '表示中&nbsp;%s&nbsp;枚目&nbsp;'
+                     . '-&nbsp;%e&nbsp;枚目&nbsp;/&nbsp;'
+                     . '全画像数&nbsp;%t&nbsp;枚<br />',
+    'up_one'        => '一つ上に行く',
+    'month'         => array ( '01' => '1&nbsp;月',
+                               '02' => '2&nbsp;月',
+                               '03' => '3&nbsp;月',
+                               '04' => '4&nbsp;月',
+                               '05' => '5&nbsp;月',
+                               '06' => '6&nbsp;月',
+                               '07' => '7&nbsp;月',
+                               '08' => '8&nbsp;月',
+                               '09' => '9&nbsp;月',
+                               '10' => '10&nbsp;月',
+                               '11' => '11&nbsp;月',
+                               '12' => '12&nbsp;月' )
 );
-
 
 ?>
