@@ -255,7 +255,10 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
 
             if ($image) {
                 // Get image pixel size for <IMG> element
-                $imageProps = GetImageSize("$albumDir/$currDir/$image");
+                // Suppress error output - if this ends up being
+                // a directory, newer PHP releases will complain
+                // but this is not useful information so we ignore it.
+                $imageProps = @GetImageSize("$albumDir/$currDir/$image");
                 $imageSize = $imageProps[3];
             }
 
