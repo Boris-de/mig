@@ -4,15 +4,29 @@
 # Makefile for Mig documentation
 #
 
-compile= pod2html --noindex --title="Mig Documentation"
+hcmd=	pod2html
+tcmd=	pod2text
+hargs=	--noindex --title="Mig Documentation"
 
-objects= install.html changelog.html
+# HTML files
+html=	install.html
 
-all: $(objects)
+# Text files
+text=	install.txt
 
-$(objects): %.html: %.pod
-	$(compile) --infile=$< --outfile=$@
+# Default is to rebuild doc files
+docs: $(html) $(text) sort clean
+
+$(html): %.html: %.pod
+	$(hcmd) $(hargs) --infile=$< --outfile=$@
+
+$(text): %.txt: %.pod
+	$(tcmd) $< $@
+
+sort:
+	mkdir -p html text
+	mv *.html html
+	mv *.txt text
 
 clean:
-	/bin/rm -f pod2htm* *html
-
+	/bin/rm -f pod2htm*
