@@ -4,7 +4,7 @@ $Id$
 
 =head2 MIG Change Log
 
-=head2 Version 1.3.5 (NOT YET RELEASED)
+=head2 Version 1.3.5 (Sun, 07 Jul 2002)
 
 Fixed bug in F<config.php> - the C<$pathConvert*> variables were
 incorrectly named as C<$convertPath*> - Doh!
