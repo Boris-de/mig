@@ -1,0 +1,107 @@
+$Revision$
+
+
+=pod
+
+Z<>
+
+=head1 Mig - A general purpose photo gallery management system
+
+Z<>
+
+Copyright 2000-2002 Daniel M. Lowe (dan@tangledhelix.com)
+
+=head2 LICENSE INFORMATION
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+A copy of the GPL can be found at http://www.gnu.org/copyleft/gpl.html
+or in the file F<docs/LICENSE>.
+
+=head2 REQUIREMENTS
+
+A web server which supports PHP.  PHP3 or PHP4 should work.  Windows users
+will be better off upgrading to the latest version of PHP4.
+
+The F<mkGallery> utility requires Perl (and, if you want it to handle
+thumbnails, ImageMagick also).  These are not required for Mig - only
+for F<mkGallery>.  See F<docs/Utilities.txt> for more information.
+
+If you wish to extract embedded comments from JPEG files, you will also
+need a C compiler (such as gcc) in order to build the (included) F<jhead>
+utility.  (see F<docs/Utilites.txt>)
+
+=head2 INSTALLATION
+
+Note: there are a lot of files in the F<docs> subdirectory.  For a basic
+installation, all you really have to read is F<INSTALL>.  The others are
+informative and you ought to read them to learn more about what you can do,
+but they're not required reading just to install Mig and get it working.
+You do need to read at least F<INSTALL>.
+
+For those who prefer HTML, there are HTML versions of all of the documents
+in the F<docs/html> directory.
+
+Windows users should additionally refer to F<docs/Windows.txt> for
+installation information.
+
+PHP-Nuke users should read F<docs/phpNuke.txt> for more information.
+
+It's also a good idea to read F<docs/CHANGELOG> to see what has changed
+recently, or just to get an idea of what Mig can do and what its pitfalls
+might be.
+
+=head2 MAILING LISTS
+
+There are three mailing lists related to Mig.  Visit the URLs below if
+you wish to subscribe.  All lists are currently fairly low-traffic.
+
+mig-announce is an announcements-only list.  New versions and so forth are
+announced on this list.
+
+    http://lists.sourceforge.net/lists/listinfo/mig-announce
+
+mig-users is a general discussion list.  Any mig-related topic can be
+discussed on this list.  Note also that I typically send announcements
+here, so if you subscribe to mig-users you don't necessarily have to
+subscribe to mig-announce as well (but you can if you want to).
+
+    http://lists.sourceforge.net/lists/listinfo/mig-users
+
+mig-devel is a development discussion list.  Anyone wanting to get into
+technical detail about Mig and the code within can join here.
+
+    http://lists.sourceforge.net/lists/listinfo/mig-devel
+
+=head2 REPORTING BUGS
+
+You can report bugs in one of two ways.  The first way is to submit a bug
+report on the Mig project page at:
+
+    http://sourceforge.net/projects/mig/
+
+The second is to send an email to dan@tangledhelix.com .
+
+=head2 WISH LIST
+
+You can submit items to the wish list in one of two ways.  The first way is
+to submit a Feature Request on the Mig project page at:
+
+    http://sourceforge.net/projects/mig/
+
+The second is to send an email to dan@tangledhelix.com .
+
+=cut
+
