@@ -301,7 +301,8 @@ if ($pageType == 'folder') {
                                $maxFolderColumns, $hidden, $presort_dir,
                                $viewFolderCount, $markerType,
                                $markerLabel, $ficons, $randomFolderThumbs,
-                               $folderNameLength, $useThumbFile);
+                               $folderNameLength, $useThumbFile,
+                               $ignoreDotDirectories);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,

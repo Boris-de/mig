@@ -461,6 +461,21 @@ $commentFileShortComments = FALSE;
 
 
 //
+// $ignoreDotDirectories
+//      If $ignoreDotDirectories is set to TRUE, any directory with a
+//      name starting with '.' (dot or period) will be ignored while
+//      looking at building folder lists.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $ignoreDotDirectories = FALSE;
+//
+
+$ignoreDotDirectories = FALSE;
+
+
+//
 // $exifFormatString
 //     Defines the display format for EXIF data blocks.  Sections are
 //     separated by | characters.  For example:

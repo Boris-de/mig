@@ -64,9 +64,9 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
         }
 
-        // We'll look at this one only if it's a file, it's not hidden,
+        // We'll look at this one only if it's a file
         // and it matches our list of approved extensions
-        if (is_file("$albumDir/$currDir/$file") && ! $hidden[$file]
+        if (is_file("$albumDir/$currDir/$file")
                         && ! $presorted[$file] && validFileType($file))
         {
             // Increase thumb counter
@@ -108,6 +108,10 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
             $presorted[$file] = TRUE;
         }
     }
+
+    // Make sure hidden items don't show up
+    while (list($file,$junk) = each($hidden))
+        unset ($presorted[$file]);
 
     reset($presorted);          // reset array pointer
 

@@ -76,6 +76,15 @@ F<mkGallery.pl> has not been tested under Microsoft Windows to my knowledge.
     * The "-e" feature only supports JPEG files.
       Mig - http://mig.sourceforge.net/
 
+=head2 Generating EXIF files
+
+You can generate EXIF cache files (exif.inf) in each album directory.  Just
+use the C<-e> flag.
+
+B<NOTE>: If you use C<-e> without C<-w>, your EXIF files will be appended
+to, instead of overwritten.  In some circumstances this ends up making your
+EXIF files grow and grow by appending the same data over and over again.
+
 =head2 A note about pixel sizes
 
 ImageMagick will be given a geometry of C<SIZExSIZE> where C<SIZE> is the

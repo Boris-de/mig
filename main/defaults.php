@@ -7,6 +7,7 @@ $commentFileShortComments   = FALSE;
 $distURL                    = 'http://mig.sourceforge.net/';
 $exifFormatString           = '|%c|';
 $folderNameLength           = 15;
+$ignoreDotDirectories       = FALSE;
 $imagePopLocationBar        = FALSE;
 $imagePopMenuBar            = FALSE;
 $imagePopToolBar            = FALSE;

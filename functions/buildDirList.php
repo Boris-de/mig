@@ -6,7 +6,7 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                         $maxColumns, $hidden, $presorted, $viewFolderCount,
                         $markerType, $markerLabel, $ficons,
                         $randomFolderThumbs, $folderNameLength,
-                        $useThumbFile )
+                        $useThumbFile, $ignoreDotDirectories )
 {
     global $mig_config;
 
@@ -30,16 +30,25 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
     while ($file = readdir($dir)) {
 
-        // Ignore . and .. and make sure it's a directory
-        if ($file != '.' && $file != '..'
-            && is_dir("$albumDir/$currDir/$file")) {
+        // Only pay attention to directories
+        if (! is_dir("$albumDir/$currDir/$file"))
+            continue;
 
-            // Ignore anything that's hidden or was already sorted.
-            if (! $hidden[$file] && ! $presorted[$file]) {
-                // Stash file in an array
-                $directories[$file] = TRUE;
-            }
-        }
+        // Ignore . and ..
+        if ($file == '.' || $file == '..')
+            continue;
+
+        // Ignore presorted items
+        if ($presorted[$file])
+            continue;
+
+        // Ignore directories whose name begins with '.' if the
+        // appropriate option is set
+        if ($ignoreDotDirectories && ereg('^\.', $file))
+            continue;
+
+        // If we got here, store it as a valid directory
+        $directories[$file] = TRUE;
     }
 
     closedir($dir);
@@ -58,6 +67,10 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
     while (list($file,$junk) = each($directories)) {
         $presorted[$file] = TRUE;
     }
+
+    // Make sure hidden items aren't displayed
+    while (list($file,$junk) = each($hidden))
+        unset ($presorted[$file]);
 
     reset($presorted);          // reset array pointer
 
@@ -147,8 +160,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                 $fext = getFileExtension($useThumbFile[$file]);
             }
 
-            $directoryList .= $albumURLroot . '/' . $currDir . '/'
-                            . $file . '/';
+            $directoryList .= $albumURLroot . '/' . $currDir
+                            . '/' . $file . '/';
             if ($useThumbSubdir) {
                 $directoryList .= $thumbSubdir . '/' . $fname . '.' . $fext;
             } else {

@@ -16,9 +16,10 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
             while ($sample = readdir($readSample)) {
                 if ($sample != '.' && $sample != '..') {
                     if (validFileType($sample)) {
-                        $mySample = $albumURLroot . '/' . $currDir
-                                  . '/' . $file . '/' .$thumbSubdir
-                                  . '/' . $sample;
+                        $mySample = $albumURLroot . '/'
+                                  . migURLencode($currDir)
+                                  . '/' . migURLencode($file)
+                                  . '/' .$thumbSubdir . '/' . $sample;
                         return $mySample;
                     }
                 }

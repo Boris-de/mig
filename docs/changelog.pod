@@ -4,16 +4,32 @@
 
 =head2 Version 1.3.6 (NOT YET RELEASED)
 
-Updated Danish translation.
+Updated Danish, Italian and German translations.
+
+Added Polish ISO-8859-2 translation (pliso).
 
 Added E<lt>acronymE<gt> tag to files/folders counts.
 
 Changed numeric character entities (i.e. E<amp>#225;) to alphabetic
 references (i.e. E<amp>aacute;).
 
-Updated Italian translation.
+Upgraded included jhead distribution to version 1.8.
 
-Added Polish ISO-8859-2 translation (pliso).
+Added C<$ignoreDotDirectories> option to F<config.php>.
+
+[Sourceforge bug report #589652] -
+Fixed URL encoding bug in getRandomThumb()
+
+[Sourceforge bug report #591337] -
+Fixed bug in handling of E<lt>SortE<gt> and E<lt>HiddenE<gt>.  Previously
+if an object was in a E<lt>SortE<gt> block, its status as a hidden item
+would be ignored.  Objects marked as hidden are now hidden regardless of
+how they are sorted.
+
+Removed leading and trailing E<lt>STYLEE<gt> tags from
+F<templates/style.css> - since Mig is using E<lt>LINKE<gt> to refer to the
+style sheet now it was no longer necessary (and the W3C validator didn't
+like it).  Fixed other minor HTML/CSS bugs.
 
 =head2 Version 1.3.5 (Sun, 07 Jul 2002)
 

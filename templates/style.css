@@ -1,48 +1,48 @@
-<style type="text/css">
-<!--
-    /* Default typeface */
-    A, B, P, TABLE, SMALL, BODY, TD, OL, UL, MENU, BLOCKQUOTE, DIV {
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    PRE, TT, INPUT, TEXTAREA {
-        font-family: Courier, fixed;
-    }
-    
-    /* Link appearance */
-    A:link, A:visited { text-decoration: none }
-    A:active, A:hover { text-decoration: underline }
-    A:hover { color: blue }
+/* Default typeface */
+A, B, P, TABLE, SMALL, BODY, TD, OL, UL, MENU, BLOCKQUOTE, DIV {
+    font-family: Arial, Helvetica, sans-serif;
+}
+PRE, TT, INPUT, TEXTAREA {
+    font-family: Courier, fixed;
+}
 
-    /* Folder table (text) */
-    TD.foldertext {
-        color: #000000;        padding-top: 0px;
-        background: #f0f0f0;   padding-bottom: 1px;
-        font-size: .75em;      padding-left: 3px;
-        text-align: left;      padding-right: 8px;
-    }
+body {
+    margin: 0px;
+}
 
-    /* Folder table (thumbnails) */
-    TD.folderthumbs {
-        color: #000000;        padding-top: 2px;
-        background: #f0f0f0;   padding-bottom: 2px;
-        font-size: .7em;       padding-left: 4px;
-        text-align: center;    padding-right: 8px;
-    }
+/* Link appearance */
+A:link, A:visited { text-decoration: none }
+A:active, A:hover { text-decoration: underline }
+A:hover { color: blue }
 
-    /* Image table */
-    TD.image {
-        color: #000000;          padding-top: 2px;
-        background: #f0f0f0;     padding-bottom: 2px;
-        font-size: .8em;         padding-left: 4px;
-        text-align: center;      padding-right: 8px;
-    }
+/* Folder table (text) */
+TD.foldertext {
+    color: #000000;        padding-top: 0px;
+    background: #f0f0f0;   padding-bottom: 1px;
+    font-size: .75em;      padding-left: 3px;
+    text-align: left;      padding-right: 8px;
+}
 
-    /* Description table */
-    TD.desc {
-        color: #333333;          padding-top: 4px;
-        background: #f0f0f0;     padding-bottom: 3px;
-        font-size: .9em;         padding-left: 4px;
-        text-align: center;      padding-right: 6px;
-    }
--->
-</style>
+/* Folder table (thumbnails) */
+TD.folderthumbs {
+    color: #000000;        padding-top: 2px;
+    background: #f0f0f0;   padding-bottom: 2px;
+    font-size: .7em;       padding-left: 4px;
+    text-align: center;    padding-right: 8px;
+}
+
+/* Image table */
+TD.image {
+    color: #000000;          padding-top: 2px;
+    background: #f0f0f0;     padding-bottom: 2px;
+    font-size: .8em;         padding-left: 4px;
+    text-align: center;      padding-right: 8px;
+}
+
+/* Description table */
+TD.desc {
+    color: #333333;          padding-top: 4px;
+    background: #f0f0f0;     padding-bottom: 3px;
+    font-size: .9em;         padding-left: 4px;
+    text-align: center;      padding-right: 6px;
+}
