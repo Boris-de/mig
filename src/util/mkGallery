@@ -82,7 +82,7 @@ my $pkgName = "Mig";
 my $url = "http://mig.sourceforge.net/";
 my $email = "dan\@tangledhelix.com";
 my $migConfig = "mig.cf";
-my $globalConfig = $mydir . "/../mig.cfg";
+my $globalConfig = $mydir . "/../config.php";
 
 # Parse local config file, if it exists.
 if (-r $globalConfig) {
@@ -188,7 +188,7 @@ if ($markerType ne "prefix" and $markerType ne "suffix") {
     print "ERROR: marker type \"$markerType\" is invalid.\n";
     print "Only \"prefix\" and \"suffix\" are valid.  This could\n";
     print "be specified as an argument for -M, or can be specifed\n";
-    print "in your mig.cfg file (see \$markerType)\n\n";
+    print "in your config.php file (see \$markerType)\n\n";
     exit(1);
 }
 
@@ -476,7 +476,7 @@ sub helpMessage {
     print "           folders and subfolders beneath it.\n";
     print "      -d : Use thumbnail subdirectories (instead of using _th, etc)\n";
     print "      -D : Name of thumbnail subdirectory to use (default is \"thumbs\" or\n";
-    print "           whatever is in your mig.cfg file).\n";
+    print "           whatever is in your config.php file).\n";
     print "      -E : File extension to use for thumbnails.  See docs/Utilities.txt.\n\n";
     print " * If creating thumbnails, \"convert\" must be in your \$PATH.\n";
     print " * This program supports JPEG, PNG and GIF formats.\n";

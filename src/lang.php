@@ -1,10 +1,10 @@
 <?php // $Revision$
 
 //
-// lang.php - Language library for MiG
+// lang.php - Language library for Mig
 //
-// Copyright (c) 2000-2001 Dan Lowe <dan@tangledhelix.com>
-//     http://mig.sourceforge.net/
+// Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
+// Mig is available at http://mig.sourceforge.net/
 //
 //
 // Currently available:

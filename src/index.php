@@ -33,7 +33,7 @@
 // Do not modify this file directly.  Please see the file docs/INSTALL
 // for installation directions.  The code is written in such a way that
 // all of your customization needs should be taken care of by the config
-// file "mig.cfg".
+// file "config.php".
 //
 // If you find that is not the case, and you hack in support for some
 // feature you want to see in MiG, please contact me with a code diff
@@ -62,7 +62,7 @@ if ($PATH_TRANSLATED) {   // if using register_glolals
     $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
 }
 
-$configFile = $baseDir . '/mig.cfg';                // Configuration file
+$configFile = $baseDir . '/config.php';             // Configuration file
 $defaultConfigFile = $configFile . '.default';      // Default config file
 // (used if $configFile does not exist)
 
@@ -73,7 +73,7 @@ if ($SERVER_SOFTWARE) {
     $server = $HTTP_SERVER_VARS['SERVER_SOFTWARE'];
 }
 
-// Default settings (probably over-ridden by mig.cfg or mig.cfg.default)
+// Default settings (probably over-ridden by config.php or config.php.default)
 $maxFolderColumns       = 2;
 $maxThumbColumns        = 4;
 $pageTitle              = 'My Photo Album';
@@ -151,7 +151,7 @@ if (file_exists($langFile)) {
     print "FATAL ERROR: Language library missing!";
 }
 
-// Backward compatibility with older mig.cfg versions
+// Backward compatibility with older config.php/mig.cfg versions
 if ($maxColumns) {
     $maxThumbColumns = $maxColumns;
 }

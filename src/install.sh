@@ -349,16 +349,65 @@ else
 fi
 cd ${mypwd}
 
-echo "  => default config file (mig.cfg.default)"
+echo "  => default config file (config.php.default)"
 if [ "${phpNuke}" = "ON" ]; then
-    cat mig.cfg.default |\
+    cat config.php.default |\
         sed "s,phpNukeCompatible = FALSE,phpNukeCompatible = TRUE," |\
         sed "s,phpNukeRoot = '',phpNukeRoot = '${phpnukeroot}'," |\
-        > ${installdir}/mig.cfg.default
+        > ${installdir}/config.php.default
 else
-    cp mig.cfg.default ${installdir}/mig.cfg.default
+    cp config.php.default ${installdir}/config.php.default
 fi
-chmod 0644 ${installdir}/mig.cfg.default
+chmod 0644 ${installdir}/config.php.default
+
+# Get rid of old default, mig.cfg.default...
+/bin/rm -f ${installdir}/mig.cfg.default
+
+# Change over to new file if it seems necessary
+if [ -f ${installdir}/mig.cfg -a ! -f ${installdir}/config.php ]; then
+    echo "You have a mig.cfg file. The new config file name is config.php."
+    answer=x
+    while [ "${answer}" != "n" -a "${answer}" != "y" ]; do
+        ${echo} -n "Should I change it for you? (y/n) "
+        read yn
+        if [ "${yn}" = "quit" ]; then
+            exit
+        fi
+        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'
+    done
+    if [ "${answer}" = "y" ]; then
+        mv ${installdir}/mig.cfg ${installdir}/config.php
+        chmod 0644 ${installdir}/config.php
+    else
+        echo "Okay, but without config.php, Mig will use config.php.default"
+        echo "for its settings.  You've been warned."
+    fi
+fi
+
+# Get rid of mig.cfg if it seems necessary
+if [ -f ${installdir}/mig.cfg -a -f ${installdir}/config.php ];  then
+    echo "You have a mig.cfg file, but you also have a config.php."
+    echo "mig.cfg is outdated - the proper config file is config.php."
+    answer=x
+    while [ "${answer}" != "n" -a "${answer}" != "y" ]; do
+        ${echo} -n "Should I remove mig.cfg? (y/n) "
+        read yn
+        if [ "${yn}" = "quit" ]; then
+            exit
+        fi
+        answer=`echo "${yn}" | tr '[A-Z]' '[a-z]'
+    done
+    if [ "${answer}" = "y" ]; then
+        /bin/rm -f ${installdir}/mig.cfg
+        /bin/rm -f ${installdir}/mig.cfg.default
+    else
+        echo "Okay, but you should get rid of mig.cfg and mig.cfg.default"
+        echo "at some point."
+    fi
+fi
+
+# If mig.cfg.default still exists, kill it
+/bin/rm -f ${installdir}/mig.cfg.default
 
 echo "  => album directory"
 echo "     (${installdir}/albums)"
@@ -529,9 +578,9 @@ if [ "${phpNuke}" = "ON" ]; then
     echo " "
     echo "If this is your first time installing Mig on your PHP-Nuke site,"
     echo "you will need to copy over the config file:"
-    echo "   ${installdir}/mig.cfg.default"
+    echo "   ${installdir}/config.php.default"
     echo "to:"
-    echo "   ${phpnukeroot}/mig.cfg"
+    echo "   ${phpnukeroot}/config.php"
     echo "and customize it to your needs."
 fi
 

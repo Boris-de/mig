@@ -1,14 +1,15 @@
 <?php // $Revision$
 
 //
-// mig.cfg - Configuration file for Mig
+// config.php.default - Default configuration file for Mig
+//
+// Copy this file to config.php before customizing it - the installer
+// will over-write config.php.default, but will not over-write config.php.
 //
 // Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
 // Mig is available at http://mig.sourceforge.net/
 //
 // Lines starting with // are comments.
-// You can also use the C style of comments, i.e.
-//     /* this is a comment */
 //
 // Please see the files in the docs subdirectory, especially docs/INSTALL
 //
@@ -58,6 +59,21 @@ $maxFolderColumns = 1;
 // screen in a single row) in thumbnail lists
 //
 $maxThumbColumns = 4;
+
+
+// Boolean to turn thumbnail subdirectories on or off.
+// Defaults to FALSE.
+//
+// To use a subdirectory for thumbnails, set this to TRUE.
+// When this is set to true, $markerType and $markerLabel are ignored.
+//
+$useThumbSubdir = TRUE;
+
+
+// What subdirectory to use for thumbnails.  This is ignored if
+// $useThumbSubdir is set to FALSE.
+//
+$thumbSubdir = 'thumbs';
 
 
 // Should I use a prefix or a suffix for thumbnails?
@@ -128,21 +144,6 @@ $viewFolderCount = FALSE;
 $noThumbs = FALSE;
 
 
-// Boolean to turn thumbnail subdirectories on or off.
-// Defaults to FALSE.
-//
-// To use a subdirectory for thumbnails, set this to TRUE.
-// When this is set to true, $markerType and $markerLabel are ignored.
-//
-$useThumbSubdir = TRUE;
-
-
-// What subdirectory to use for thumbnails.  This is ignored if
-// $useThumbnailSubdirectory is set to FALSE.
-//
-$thumbSubdir = 'thumbs';
-
-
 // If you wish you can define a filetype for all thumbnails.  For
 // example, all thumbnails could be GIF files.  Define the extension
 // here (without the leading ".").  Case matters, so don't define
@@ -152,6 +153,7 @@ $thumbSubdir = 'thumbs';
 //     $thumbExt = 'gif';
 //
 $thumbExt = '';
+
 
 // Sorting type (defaults to 'default')
 //
@@ -171,6 +173,7 @@ $sortType = 'default';
 // a pop-up window will be opened.  Defaults to FALSE.
 //
 $imagePopup = FALSE;
+
 
 // If $imagePopType is set to 'reuse' then the same window will be used
 // for every image.  Otherwise you'll get a new window for every image.
@@ -211,7 +214,7 @@ $commentFilePerImage = FALSE;
 //   nl     Dutch
 //   pl     Polish
 //
-// If you want to translate MiG into another language, please contact
+// If you want to translate Mig into another language, please contact
 // dan@tangledhelix.com.
 //
 // (Note: this variable used to be called $language, but that is deprecated
@@ -222,7 +225,7 @@ $mig_language = 'en';
 
 // You can add things to your "jump" map - see docs/Jump.txt
 //
-$jumpMap['example'] = 'currDir=./Example_Gallery';
+//$jumpMap['example'] = 'currDir=./Example_Gallery';
 
 
 // -----------------------------------------------------------------
@@ -230,8 +233,10 @@ $jumpMap['example'] = 'currDir=./Example_Gallery';
 // phpNuke compatibility mode (www.phpnuke.org)
 // For more information, see docs/phpNuke.txt
 //
-
-//     Set this to either TRUE or FALSE (without quotes!)
+// This was last tested with PHPNuke 4.2 - I have no idea if this
+// works with anything newer than that!
+//
+//     Set this to either TRUE or FALSE (without quotes)
 //     Examples:
 //         $phpNukeCompatible = TRUE;
 //         $phpNukeCompatible = FALSE;
@@ -244,6 +249,7 @@ $phpNukeCompatible = FALSE;
 //
 $phpNukeRoot = '';
 
+
 // -----------------------------------------------------------------
 //
 // Password protection configuration
@@ -255,10 +261,12 @@ $phpNukeRoot = '';
 //     $protect['./Example_Gallery']['joe'] = 'IBDXWbkBirMfU';
 //
 // Passwords are in crypt() format.  See docs/Passwords.txt for more.
+// Need more than one directory and/or user?  that's fine, just add more
+// than one line.
 //
 
 // -----------------------------------------------------------------
-
+//
 // For people whose Apache or PHP doesn't support virtual() - you should
 // only bother with this if you get errors related to virtual()
 //

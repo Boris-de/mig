@@ -35,7 +35,7 @@
 // Do not modify this file directly.  Please see the file docs/INSTALL
 // for installation directions.  The code is written in such a way that
 // all of your customization needs should be taken care of by the config
-// file "mig.cfg".
+// file "config.php".
 //
 // If you find that is not the case, and you hack in support for some
 // feature you want to see in MiG, please contact me with a code diff
