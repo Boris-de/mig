@@ -18,6 +18,8 @@ Modified the ALT tag code such that HTML entities within <comment>
 blocks should be OK now even if hover-over comments are being used
 in thumbnail views.
 
+Added Slovak translation
+
 =head2 Version 1.2.7p1 (Sun Apr 15 2001)
 
 Fixed bug from 1.2.7 which caused images to show up as folders when both
