@@ -6,7 +6,7 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $albumURLroot, $image, $currDir, $newCurrDir,
                          $pageTitle, $prevLink, $nextLink, $currPos,
                          $description, $youAreHere, $distURL, $albumDir,
-                         $server, $useVirtual )
+                         $server )
 {
 
     if (! ereg('^/', $templateFile)) {
@@ -41,25 +41,6 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
             } else {
                 $incl_file = $line;
                 if (file_exists("$templateDir/$incl_file")) {
-
-                    // Is this a PHP file?
-//                    if (eregi('.php3?',  $incl_file)) {
-//                        // include as php
-//                        include("$templateDir/$incl_file");
-//
-//                    } else {        // Not PHP, either CGI or just text
-//
-//                        // virtual() only works for Apache
-//                        if (ereg('^Apache', $server) and $useVirtual) { 
-//                            // virtual() doesn't like absolute paths,
-//                            // apparently, so just pass it a relative one.
-//                            $tmplDir = ereg_replace("^.*/", "", $templateDir);
-//                            virtual("$tmplDir/$incl_file");
-//                        } else {
-//                            // readfile() just spits a file to stdout
-//                            readfile("$templateDir/$incl_file");
-//                        }
-//                    }
 
                     if (function_exists('virtual')) {
                         // virtual() doesn't like absolute paths,

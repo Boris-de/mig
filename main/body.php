@@ -299,7 +299,7 @@ if ($pageType == 'folder' or $pageType == '') {
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
                   $folderList, $imageList, $backLink, '', '', '', $newCurrDir,
                   $pageTitle, '', '', '', $bulletin, $youAreHere, $distURL,
-                  $albumDir, $server, $useVirtual);
+                  $albumDir, $server);
 
 
 // If $pageType is "image", show an image
@@ -373,8 +373,7 @@ if ($pageType == 'folder' or $pageType == '') {
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir, $server,
-                  $useVirtual);
+                  $description, $youAreHere, $distURL, $albumDir, $server);
 }
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke
