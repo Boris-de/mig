@@ -9,24 +9,26 @@ tcmd=	pod2text
 hargs=	--noindex --title="Mig Documentation"
 
 # HTML files
-html=	install.html
+html=	changelog.html credits.html license.html
 
 # Text files
-text=	install.txt
+text=	changelog.txt credits.txt license.txt
 
 # Default is to rebuild doc files
 docs: $(html) $(text) sort clean
 
 $(html): %.html: %.pod
-	$(hcmd) $(hargs) --infile=$< --outfile=$@
+	@echo "+ $@"
+	@$(hcmd) $(hargs) --infile=$< --outfile=$@
 
 $(text): %.txt: %.pod
-	$(tcmd) $< $@
+	@echo "+ $@"
+	@$(tcmd) $< $@
 
 sort:
-	mkdir -p html text
-	mv *.html html
-	mv *.txt text
+	@mkdir -p html text
+	@mv *.html html
+	@mv *.txt text
 
 clean:
-	/bin/rm -f pod2htm*
+	@/bin/rm -f pod2htm*

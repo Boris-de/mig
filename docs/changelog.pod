@@ -1,27 +1,23 @@
 =pod
 
-Z<>
-
-=head1 MIG CHANGE LOG
+=head2 MIG Change Log
 
 $Id$
-
-Z<>
 
 =head2 Version 1.3.2 (NOT YET RELEASED)
 
 Eliminated install.sh - all installs are now done the same way (Windows,
-unix, FTP, shell prompt, whatever).  Eliminated FTPinstall document since
-it is no longer necessary.
+unix, FTP, shell prompt, whatever).  Eliminated F<FTPinstall> document
+since it is no longer necessary.
 
-Changed language designation for Danish to 'dk' instead of 'da' (I don't
-know what da is, but it's not Denmark).
+Changed language designation for Danish to E<quot>dkE<quot> instead of
+E<quot>daE<quot> (I don't know what da is, but it's not Denmark).
 
-Removed Example Gallery from main distribution.  It will be available from
-this point forward as a separate package on the site.  There's no reason
-for every Mig download to be almost half a meg.
+Removed F<Example Gallery> from main distribution.  It will be available
+from this point forward as a separate package on the site.  There's no
+reason for every Mig download to be almost half a meg.
 
-Added C<MaintAddr> object to mig.cf parser (thanks to Simon Wood for
+Added C<MaintAddr> object to F<mig.cf> parser (thanks to Simon Wood for
 supplying this code!).  This permits you to change the value of
 C<$maintAddr> on a per-folder basis if desired.
 
