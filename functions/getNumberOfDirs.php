@@ -2,9 +2,7 @@
 
 // getNumberOfDirs() - Counts subdirectories in a given folder
 
-function getNumberOfDirs ( $folder,
-                           $markerType, $markerLabel,
-                           $currDir )
+function getNumberOfDirs ( $folder, $markerType, $markerLabel, $currDir )
 {
     global $mig_config;
     

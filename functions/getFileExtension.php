@@ -4,7 +4,7 @@
 
 function getFileExtension ( $file )
 {
-    // Strip off the extension part of the filename
+    // Strip off the extension part of filename
     return ereg_replace("^.*\.", "", $file);
 
 }   // -- End of getFileExtension()

@@ -2,8 +2,7 @@
 
 // getNumberOfImages() - counts images in a given folder
 
-function getNumberOfImages ( $folder, $markerType,
-                             $markerLabel )
+function getNumberOfImages ( $folder, $markerType, $markerLabel )
 {
     global $mig_config;
     

@@ -1,11 +1,9 @@
 <?php
 
-// buildYouAreHere() - build the "You are here" line for the top
-//                     of each page
+// buildYouAreHere() - build the "You are here" line for the top of each page
 
 function buildYouAreHere ( $currDir, $image, $omitImageName )
 {
-
     global $mig_config;
     global $mig_dl;
 

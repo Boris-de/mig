@@ -2,8 +2,7 @@
 
 // buildDirList() - creates list of directories available
 
-function buildDirList ( $albumURLroot, $currDir,
-                        $imageDir,
+function buildDirList ( $albumURLroot, $currDir, $imageDir,
                         $maxColumns, $hidden, $presorted, $viewFolderCount,
                         $markerType, $markerLabel, $ficons,
                         $randomFolderThumbs, $folderNameLength,

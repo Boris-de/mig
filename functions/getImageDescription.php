@@ -1,7 +1,7 @@
 <?php
 
 // getImageDescription() - Fetches an image description from the
-//                         comments file (mig.cf)
+//                         comment file (mig.cf)
 
 function getImageDescription ( $image, $description, $short_desc )
 {

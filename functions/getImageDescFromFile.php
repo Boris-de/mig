@@ -14,7 +14,7 @@ function getImageDescFromFile ( $image, $currDir, $short_flag )
     if (file_exists($mig_config["albumdir"]."/$currDir/$fname.txt")) {
 
         $file = fopen($mig_config["albumdir"]."/$currDir/$fname.txt", "r");
-        $line = fgets($file, 4096);     // get first line
+        $line = fgets($file, 4096);     	// get first line
 
         // This double-check exists so that files ending without
         // a proper newline character are not truncated.

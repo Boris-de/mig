@@ -2,7 +2,7 @@
 
 // getExifDescription() - Fetches a comment if available from the
 //                        Exif comments file (exif.inf) as well as
-//                        fetching EXIF data
+//                        fetching EXIF data.
 
 function getExifDescription ( $currDir, $image, $formatString )
 {

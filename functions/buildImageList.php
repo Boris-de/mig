@@ -2,8 +2,7 @@
 
 // buildImageList() - creates a list of images available
 
-function buildImageList ( $currDir,
-                          $albumURLroot, $maxColumns, $maxRows, $markerType,
+function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $markerType,
                           $markerLabel, $directoryList, $suppressImageInfo,
                           $noThumbs, $thumbExt,
                           $suppressAltTags, $sortType, $hidden, $presorted,
@@ -226,10 +225,8 @@ function buildImageList ( $currDir,
                     $imageList .= "\n   <tr>";
                 }
 
-                $img = buildImageURL($currDir,
-                                     $albumURLroot, $file, $suppressImageInfo,
-                                     $markerType, $markerLabel,
-                                     $noThumbs,
+                $img = buildImageURL($currDir, $albumURLroot, $file, $suppressImageInfo,
+                                     $markerType, $markerLabel, $noThumbs,
                                      $thumbExt, $suppressAltTags, $description,
                                      $short_desc, $imagePopup, $imagePopType,
                                      $imagePopLocationBar, $imagePopMenuBar,

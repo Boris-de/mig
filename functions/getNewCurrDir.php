@@ -1,7 +1,7 @@
 <?php
 
 // getNewCurrDir() - replaces the silly old $newCurrDir being all
-//                   over the place.  Especially in the URI string itself.
+//                   over the place.  Especially in the URI string.
 
 function getNewCurrDir ( $currDir )
 {

@@ -3,10 +3,8 @@
 // buildNextPrevLinks() - Build a link to the "next" and "previous"
 //                        images.
 
-function buildNextPrevLinks ( $currDir, $image,
-                              $markerType, $markerLabel,
-                              $hidden, $presorted, $sortType, $startFrom,
-                              $pageType )
+function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel,
+                              $hidden, $presorted, $sortType, $startFrom, $pageType )
 {
     global $mig_config;
     global $mig_dl;

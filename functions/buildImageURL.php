@@ -2,10 +2,8 @@
 
 // buildImageURL() - spit out HTML for a particular image
 
-function buildImageURL ( $currDir,
-                         $albumURLroot, $filename, $suppressImageInfo,
-                         $markerType, $markerLabel,
-                         $noThumbs, $thumbExt,
+function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
+                         $markerType, $markerLabel, $noThumbs, $thumbExt,
                          $suppressAltTags, $description, $short_desc,
                          $imagePopup, $imagePopType, $imagePopLocationBar,
                          $imagePopMenuBar, $imagePopToolBar,

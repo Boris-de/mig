@@ -24,17 +24,17 @@ function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $ima
         if ($mig_config["homelink"] != "") {
 
             if ($mig_config["homelabel"] == "") {
-                $mig_config["homelabel"] = $mig_config["homelink"];
+                $homeLabel = $mig_config["homelink"];
             } else {
                 // Get rid of spaces due to silly formatting in MSIE
-                $mig_config["homelabel"] = str_replace(" ", "&nbsp;", $mig_config["homelabel"]);
+                $homeLabel = str_replace(" ", "&nbsp;", $mig_config["homelabel"]);
             }
 
             // Build a link to the "home" page
             $retval  = "&nbsp;[&nbsp;<a href=\""
                      . $mig_config["homelink"] . "\">"
                      . $mig_config["lang"]["backhome"] . "&nbsp;"
-                     . $mig_config["homelabel"] . "</a>&nbsp;]&nbsp;";
+                     . $homeLabel . "</a>&nbsp;]&nbsp;";
         } else {
             $retval = "<!-- no backLink in root tree -->";
         }

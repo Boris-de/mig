@@ -30,7 +30,7 @@ function parseMigCf ( $directory )
 
     if (file_exists("$directory/$cfgfile")) {
         $file = fopen("$directory/$cfgfile", "r");
-        $line = fgets($file, 4096);     // get first line
+        $line = fgets($file, 4096);     		// get first line
 
         while (! feof($file)) {
 

@@ -4,7 +4,6 @@
 
 function buildLargeLink( $currDir, $image, $startFrom )
 {
-
     global $mig_config;
     global $mig_dl;
 

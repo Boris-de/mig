@@ -23,7 +23,7 @@ function getFileType ( $filename )
         case "avi":             // Microsoft AVI
         case "mpg":             // MPEG video
         case "mpeg":            // Alternate MPEG video
-        case "wmv":             // Windows Media Video
+        case "wmv":             // Windows Media video
         case "mp4":             // MPEG-4 video
 
             return "video";

@@ -72,8 +72,9 @@ function printTemplate ( $templateDir, $templateFile, $version,
                         virtual("$tmplDir/$incl_file");
                     } else {
                         include( convertIncludePath($pathConvertFlag,
-                                   "$templateDir/$incl_file",
-                                   $pathConvertRegex, $pathConvertTarget));
+                                                    "$templateDir/$incl_file",
+                                                    $pathConvertRegex,
+                                                    $pathConvertTarget));
                     }
 
                 } else {
