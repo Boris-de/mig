@@ -9,7 +9,7 @@ function convertIncludePath ( $flag, $path='', $regex, $new )
         $path = ereg_replace($regex, $new, $path);
     }
 
-    return($path);
+    return $path;
 
 }   // -- End of convertIncludePath()
 

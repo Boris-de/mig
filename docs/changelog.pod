@@ -4,7 +4,7 @@ $Id$
 
 =head2 MIG Change Log
 
-=head2 Version 1.3.4 (NOT YET RELEASED)
+=head2 Version 1.3.4 (Tue, 11 Jun 2002)
 
 Added Estonian and Japanese translations.
 
@@ -29,6 +29,10 @@ C<$imagePopMenuBar>, and C<$imagePopToolBar> to control various toolbars
 being visible or hidden in pop-up windows.
 
 Added C<is_dir()> checks before all calls to C<opendir()>.
+
+Modified comment behavior when using C<$commentFilePerImage = TRUE> so that
+if a comment file is not present, the comment from F<mig.cf> will be used
+(if one is present).
 
 =head2 Version 1.3.3 (Mon, 27 May 2002)
 

@@ -384,6 +384,11 @@ if ($pageType == 'folder') {
     // Get image description
     if ($commentFilePerImage) {
         $description  = getImageDescFromFile($image, $albumDir, $currDir);
+        // If getImageDescFromFile() returned false, get the normal
+        // comment if there is one.
+        if (! $description) {
+            $description  = getImageDescription($image, $desc);
+        }
     } else {
         $description  = getImageDescription($image, $desc);
     }

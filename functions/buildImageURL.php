@@ -101,6 +101,10 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
     // Get description, if any
     if ($commentFilePerImage) {
         $alt_desc = getImageDescFromFile("$fname.$ext", $albumDir, $currDir);
+        // Get a conventional comment if there isn't one here.
+        if (! $alt_desc) {
+            $alt_desc = getImageDescription("$fname.$ext", $description);
+        }
     } else {
         $alt_desc = getImageDescription("$fname.$ext", $description);
     }

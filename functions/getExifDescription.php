@@ -109,7 +109,7 @@ function getExifDescription ( $albumDir, $currDir, $image, $formatString )
 
         $retval = formatExifData($formatString, $exifData);
 
-        return($retval);
+        return $retval;
 
     } else {
         return '';

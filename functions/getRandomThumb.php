@@ -19,7 +19,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                         $mySample = $albumURLroot . '/' . $currDir
                                   . '/' . $file . '/' .$thumbSubdir
                                   . '/' . $sample;
-                        return($mySample);
+                        return $mySample;
                     }
                 }
             }
@@ -40,7 +40,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                                      $markerType, $markerLabel);
 
                     if ($mySample) {
-                        return($mySample);
+                        return $mySample;
                     }
                 }
             }
@@ -80,7 +80,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
             if ($mySample) {
                 $mySample = $albumURLroot . '/' . $currDir . '/' . $file
                           . '/' . $mySample;
-                return($mySample);
+                return $mySample;
             } else {
                 $dirlist = opendir($folder);
                 while ($item = readdir($dirlist)) {
@@ -94,7 +94,7 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                                         $markerType, $markerLabel);
 
                         if ($mySample) {
-                            return($mySample);
+                            return $mySample;
                         }
                     }
                 }

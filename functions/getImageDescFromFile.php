@@ -24,6 +24,10 @@ function getImageDescFromFile ( $image, $albumDir, $currDir )
         }
 
         fclose($file);
+
+    } else {
+        // File doesn't exist?  Okay, return false.
+        return FALSE;
     }
 
     return $imageDesc;

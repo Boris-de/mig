@@ -84,7 +84,7 @@ function formatExifData ( $formatString, $exifData )
         }
     }
 
-    return($newstr);
+    return $newstr;
 
 }   // -- End of formatExifData()
 
