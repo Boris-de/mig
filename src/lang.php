@@ -25,6 +25,7 @@
 //  es      Spanish
 //  sk      Slovak
 //  nl      Dutch
+//  pl      Polish
 //
 
 // English (default)
@@ -299,6 +300,21 @@ $mig_messages['nl'] = array (
     'previmage'     => 'vorige&nbsp;foto',
     'thumbview'     => 'terug&nbsp;naar&nbsp;overzicht',
     'up_one'        => 'een&nbsp;niveau&nbsp;omhoog'
+);
+
+// Polish - courtesy of martvin@box43.pl
+$mig_messages['pl'] = array (
+    'backhome'      => 'powr&#243;t&nbsp;do',
+    'bytes'         => '&nbsp;bajt&#243;w',
+    'flash_used'    => 'u&#191;yto&nbsp;Flash',
+    'main'          => 'G&#179;&#243;wna',
+    'must_auth'     => 'Musisz wpisa&#230; prawid&#179;ow&#185; nazw&#234;'
+                     . 'u&#191;ytkownika i has&#179;o by wejœ&#230;',
+    'nextimage'     => 'nast&#234;pny&nbsp;obrazek',
+    'no_contents'   => 'nie&nbsp;ma zawartoœci.',
+    'previmage'     => 'poprzedni&nbsp;obrazek',
+    'thumbview'     => 'powr&#243;t&nbsp;do&nbsp;widoku&nbsp;miniatur',
+    'up_one'        => 'powr&#243;t&nbsp;&nbsp;'
 );
 
 ?>

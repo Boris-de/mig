@@ -15,6 +15,8 @@ Added TITLE tags in thumbnail views so when hovering over a thumbnail,
 you get the comment whether using Mozilla/Gecko/Netscape or Internet
 Explorer.  C<$suppressAltTags> will also suppress the TITLE tags.
 
+Added Polish translation.
+
 =head2 Version 1.2.9 (Thu 16 Aug 2001)
 
 Added C<$imagePopup> and C<$imagePopType> to F<mig.cfg.default>.  Using these
