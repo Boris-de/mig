@@ -211,22 +211,31 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                 if (file_exists("$templateDir/$incl_file")) {
 
                     // Is this a PHP file?
-                    if (eregi('.php3?',  $incl_file)) {
-                        // include as php
+//                    if (eregi('.php3?',  $incl_file)) {
+//                        // include as php
+//                        include("$templateDir/$incl_file");
+//
+//                    } else {        // Not PHP, either CGI or just text
+//
+//                        // virtual() only works for Apache
+//                        if (ereg('^Apache', $server) and $useVirtual) { 
+//                            // virtual() doesn't like absolute paths,
+//                            // apparently, so just pass it a relative one.
+//                            $tmplDir = ereg_replace("^.*/", "", $templateDir);
+//                            virtual("$tmplDir/$incl_file");
+//                        } else {
+//                            // readfile() just spits a file to stdout
+//                            readfile("$templateDir/$incl_file");
+//                        }
+//                    }
+
+                    if (function_exists('virtual')) {
+                        // virtual() doesn't like absolute paths,
+                        // apparently, so just pass it a relative one.
+                        $tmplDir = ereg_replace("^.*/", "", $templateDir);
+                        virtual("$tmplDir/$incl_file");
+                    } else {
                         include("$templateDir/$incl_file");
-
-                    } else {        // Not PHP, either CGI or just text
-
-                        // virtual() only works for Apache
-                        if (ereg('^Apache', $server) and $useVirtual) { 
-                            // virtual() doesn't like absolute paths,
-                            // apparently, so just pass it a relative one.
-                            $tmplDir = ereg_replace("^.*/", "", $templateDir);
-                            virtual("$tmplDir/$incl_file");
-                        } else {
-                            // readfile() just spits a file to stdout
-                            readfile("$templateDir/$incl_file");
-                        }
                     }
 
                 } else {
