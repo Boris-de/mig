@@ -6,7 +6,7 @@
 function getImageDescription ( $image, $description, $short_desc )
 {
 
-    $imageDesc = '';
+    $imageDesc = "";
 
     // "Long" description
     if ($description[$image]) {

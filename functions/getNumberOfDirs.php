@@ -21,16 +21,16 @@ function getNumberOfDirs ( $folder,
         list($hidden, $x) = parseMigCf($folder);
 
         // Must be a directory, and can't be . or ..
-        if ($file != '.' && $file != '..' && is_dir("$folder/$file"))
+        if ($file != "." && $file != ".." && is_dir("$folder/$file"))
         {
             // Ignore thumbnail subdirectories if in use
-            if ($mig_config['usethumbsubdir']
-                && $file == $mig_config['thumbsubdir'])
+            if ($mig_config["usethumbsubdir"]
+                && $file == $mig_config["thumbsubdir"])
                 continue;
 
             // And full-size directories too
-            if ($mig_config['uselargeimages']
-                && $file == $mig_config['largesubdir'])
+            if ($mig_config["uselargeimages"]
+                && $file == $mig_config["largesubdir"])
                 continue;
 
             // Ignore hidden items

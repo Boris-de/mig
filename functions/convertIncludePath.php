@@ -4,7 +4,7 @@
 //                        (Not normally needed, but some installs of PHP
 //                        demand this).
 
-function convertIncludePath ( $flag, $path='', $regex, $new )
+function convertIncludePath ( $flag, $path="", $regex, $new )
 {
     if ($flag) {
         $path = ereg_replace($regex, $new, $path);

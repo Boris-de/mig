@@ -21,7 +21,7 @@ function buildImageURL ( $currDir,
     $ext    = getFileExtension($filename);
     $type   = getFileType($filename);
 
-    // newCurrDir is currDir without leading './'
+    // newCurrDir is currDir without leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
     // URL-encode currDir, keeping an old copy too
@@ -34,23 +34,23 @@ function buildImageURL ( $currDir,
     // Only show a thumbnail if one exists.  Otherwise use a default
     // "generic" thumbnail image.
 
-    if ($type == 'image') {
-        if ($mig_config['usethumbsubdir']) {
+    if ($type == "image") {
+        if ($mig_config["usethumbsubdir"]) {
 
             if ($thumbExt) {
-                $thumbFile = $mig_config['albumdir']."/$oldCurrDir/"
-                           . $mig_config['thumbsubdir']
+                $thumbFile = $mig_config["albumdir"]."/$oldCurrDir/"
+                           . $mig_config["thumbsubdir"]
                            . "/$fname.$thumbExt";
             } else {
-                $thumbFile = $mig_config['albumdir']."/$oldCurrDir/"
-                           . $mig_config['thumbsubdir']
+                $thumbFile = $mig_config["albumdir"]."/$oldCurrDir/"
+                           . $mig_config["thumbsubdir"]
                            . "/$fname.$ext";
             }
 
         } else {
 
-            if ($markerType == 'prefix') {
-                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$markerLabel";
+            if ($markerType == "prefix") {
+                $thumbFile  = $mig_config["albumdir"]."/$oldCurrDir/$markerLabel";
 
                 if ($thumbExt) {
                     $thumbFile .= "_$fname.$thumbExt";
@@ -59,8 +59,8 @@ function buildImageURL ( $currDir,
                 }
             }
 
-            if ($markerType == 'suffix') {
-                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname";
+            if ($markerType == "suffix") {
+                $thumbFile  = $mig_config["albumdir"]."/$oldCurrDir/$fname";
 
                 if ($thumbExt) {
                     $thumbFile .= "_$markerLabel.$thumbExt";
@@ -72,9 +72,9 @@ function buildImageURL ( $currDir,
     }
 
     if (file_exists($thumbFile)) {
-        if ($mig_config['usethumbsubdir']) {
+        if ($mig_config["usethumbsubdir"]) {
             $thumbImage  = "$albumURLroot/$currDir/"
-                         . $mig_config['thumbSubdir'];
+                         . $mig_config["thumbSubdir"];
 
             if ($thumbExt) {
                 $thumbImage .= "/$fname.$thumbExt";
@@ -84,7 +84,7 @@ function buildImageURL ( $currDir,
 
         } else {
 
-            if ($markerType == 'prefix') {
+            if ($markerType == "prefix") {
                 $thumbImage  = "$albumURLroot/$currDir/$markerLabel";
 
                 if ($thumbExt) {
@@ -94,7 +94,7 @@ function buildImageURL ( $currDir,
                 }
             }
 
-            if ($markerType == 'suffix') {
+            if ($markerType == "suffix") {
                 $thumbImage  = "$albumURLroot/$currDir/$fname";
 
                 if ($thumbExt) {
@@ -107,16 +107,16 @@ function buildImageURL ( $currDir,
         $thumbImage = migURLencode($thumbImage);
 
     } else {
-        $newRoot = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
+        $newRoot = ereg_replace("/[^/]+$", "", $mig_config["baseurl"]);
         switch ($type) {
-            case 'image':
-                $thumbImage = $newRoot . '/images/no_thumb.gif';
+            case "image":
+                $thumbImage = $newRoot . "/images/no_thumb.gif";
                 break;
-            case 'audio':
-                $thumbImage = $newRoot . '/images/music.gif';
+            case "audio":
+                $thumbImage = $newRoot . "/images/music.gif";
                 break;
-            case 'video':
-                $thumbImage = $newRoot . '/images/movie.gif';
+            case "video":
+                $thumbImage = $newRoot . "/images/movie.gif";
                 break;
         }
     }
@@ -142,9 +142,9 @@ function buildImageURL ( $currDir,
 
     $alt_desc = strip_tags($alt_desc);
 
-    if ($type == 'image') {
+    if ($type == "image") {
         // Figure out the image's size (in bytes and pixels) for display
-        $imageFile = $mig_config['albumdir']."/$oldCurrDir/$fname.$ext";
+        $imageFile = $mig_config["albumdir"]."/$oldCurrDir/$fname.$ext";
 
         // Figure out the pixels
         $imageProps = GetImageSize($imageFile);
@@ -155,16 +155,16 @@ function buildImageURL ( $currDir,
         $imageSize = filesize($imageFile);
 
         if ($imageSize > 1048576) {
-            $imageSize = sprintf('%01.1f', $imageSize / 1024 / 1024) . 'MB';
+            $imageSize = sprintf("%01.1f", $imageSize / 1024 / 1024) . "MB";
         } elseif ($imageSize > 1024) {
-            $imageSize = sprintf('%01.1f', $imageSize / 1024) . 'KB';
+            $imageSize = sprintf("%01.1f", $imageSize / 1024) . "KB";
         } else {
-            $imageSize = $imageSize . $mig_config['lang']['bytes'];
+            $imageSize = $imageSize . $mig_config["lang"]["bytes"];
         }
     }
 
     // Figure out thumbnail geometry
-    $thumbHTML = '';
+    $thumbHTML = "";
     if (file_exists($thumbFile)) {
         $thumbProps = GetImageSize($thumbFile);
         $thumbHTML = $thumbProps[3];
@@ -172,27 +172,27 @@ function buildImageURL ( $currDir,
 
     // If not an image, just print a URL to the object
     // with a few extra trimmings.
-    if ($type != 'image') {
+    if ($type != "image") {
 
-        $url = "\n    " . '<td align="center" class="image"><a';
+        $url = "\n    <td align=\"center\" class=\"image\"><a";
         if (!$suppressAltTags) { 
-            $url .= ' title="' . $alt_desc . '"';
+            $url .= " title=\"" . $alt_desc . "\"";
         }
 
-        $url .= ' href="' . $albumURLroot . '/' . $currDir . '/'
-              . $fname . '.' . $ext . '">'
-              . '<img src="' . $thumbImage . '"></a>';
+        $url .= " href=\"" . $albumURLroot . "/" . $currDir . "/"
+              . $fname . "." . $ext . "\">"
+              . "<img src=\"" . $thumbImage . "\"></a>";
 
         // If $suppressImageInfo is FALSE, show the file info
         if (!$suppressImageInfo) {
-            $url .= '<br />';
+            $url .= "<br />";
             if (!$noThumbs) {
-                $url .= $fname . '.' . $ext . '<br />'
-                      . '(' . $type . ')<br />';
+                $url .= $fname . "." . $ext . "<br />"
+                      . "(" . $type . ")<br />";
             }
         }
 
-        $url .= '</td>';
+        $url .= "</td>";
 
         return $url;
 
@@ -200,13 +200,13 @@ function buildImageURL ( $currDir,
     } else {
 
         // beginning of the table cell
-        $url = "\n    " . '<td align="center" class="image"><a';
+        $url = "\n    <td align=\"center\" class=\"image\"><a";
 
         if (!$suppressAltTags) {
-            $url .= ' title="' . $alt_desc . '"';
+            $url .= " title=\"" . $alt_desc . "\"";
         }
 
-        $url .= ' href="';
+        $url .= " href=\"";
 
         // set up the image pop-up if appropriate to do so
         if ($imagePopup) {
@@ -220,28 +220,28 @@ function buildImageURL ( $currDir,
             if ($popup_height > $imagePopMaxHeight) {
                 $popup_height = $imagePopMaxHeight;
             }
-            $url .= '#" onClick="window.open(\'';
+            $url .= "#\" onClick=\"window.open('";
         }
 
-        $url .= $mig_config['baseurl'] . '?currDir='
-             . $currDir . '&amp;pageType=image&amp;image=' . $newFname
-             . '.' . $ext;
+        $url .= $mig_config["baseurl"] . "?currDir="
+             . $currDir . "&amp;pageType=image&amp;image=" . $newFname
+             . "." . $ext;
 
         if ($startFrom) {
-            $url .= '&amp;startFrom=' . $startFrom;
+            $url .= "&amp;startFrom=" . $startFrom;
         }
 
         if ($mig_dl) {
-            $url .= '&amp;mig_dl=' . $mig_dl;
+            $url .= "&amp;mig_dl=" . $mig_dl;
         }
 
         if ($imagePopup) {
             $url .= "','";
 
-            if ($imagePopType == 'reuse') {
-                $url .= 'mig_window_11190874';
+            if ($imagePopType == "reuse") {
+                $url .= "mig_window_11190874";
             } else {
-                $url .= 'mig_window_' . time() . '_' . $newFname;
+                $url .= "mig_window_" . time() . "_" . $newFname;
             }
 
             $url .= "','width=$popup_width,height=$popup_height,"
@@ -262,42 +262,42 @@ function buildImageURL ( $currDir,
             $url .= "');";
         }
 
-        $url .= '">';
+        $url .= "\">";
 
         // If $noThumbs is true, just print the image filename rather
         // than the <IMG> tag pointing to a thumbnail.
         if ($noThumbs) {
             $url .= "$newFname.$ext";
         } else {
-            $url .= '<img src="' . $thumbImage . '"';
+            $url .= "<img src=\"" . $thumbImage . "\"";
                 // Only print the ALT tag if it's wanted.
                 if (! $suppressAltTags) {
-                    $url .= ' alt="' . $alt_desc . '"';
+                    $url .= " alt=\"" . $alt_desc . "\"";
                 }
 
-            $url .= ' border="0" ' . $thumbHTML . '/>';
+            $url .= " border=\"0\" " . $thumbHTML . "/>";
         }
 
-        $url .= '</a>';     // End the <A> element
+        $url .= "</a>";     // End the <A> element
 
         // If $suppressImageInfo is FALSE, show the image info
         if (!$suppressImageInfo) {
-            $url .= '<br />';
+            $url .= "<br />";
             if (!$noThumbs) {
-                $url .= $fname . '.' . $ext . '<br />';
+                $url .= $fname . "." . $ext . "<br />";
             }
 
-            $url .= '(' . $imageWidth . 'x' . $imageHeight . ', '
-                  . $imageSize . ')';
+            $url .= "(" . $imageWidth . "x" . $imageHeight . ", "
+                  . $imageSize . ")";
         }
 
         // If $showShortOnThumbPage is TRUE, show short comment
         if ($showShortOnThumbPage) {
-            $url .= '<br />';
+            $url .= "<br />";
             $url .= $alt_desc;
         }
 
-        $url .= '</td>';        // Close table cell
+        $url .= "</td>";        // Close table cell
         return $url;
     }
 

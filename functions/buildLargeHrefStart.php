@@ -9,15 +9,15 @@ function buildLargeHrefStart ( $currDir, $image, $startFrom )
 
     $newCurrDir = migURLencode($currDir);
 
-    $retval = '<a href="' . $mig_config['baseurl'] . '?currDir='
-            . $newCurrDir . '&amp;pageType=large&amp;image=' . $image;
+    $retval = "<a href=\"" . $mig_config["baseurl"] . "?currDir="
+            . $newCurrDir . "&amp;pageType=large&amp;image=" . $image;
     if ($startFrom) {
-        $retval .= '&amp;startFrom=' . $startFrom;
+        $retval .= "&amp;startFrom=" . $startFrom;
     }
     if ($mig_dl) {
-        $retval .= '&amp;mig_dl=' . $mig_dl;
+        $retval .= "&amp;mig_dl=" . $mig_dl;
     }
-    $retval .= '">';
+    $retval .= "\">";
 
     return $retval;
 

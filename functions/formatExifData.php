@@ -18,20 +18,20 @@ function formatExifData ( $formatString, $exifData )
     // %D   Day
     // %T   Time
 
-    $table = array ( 'c' => $exifData['comment'],
-                     'a' => $exifData['aperture'],
-                     'f' => $exifData['flash'],
-                     'i' => $exifData['iso'],
-                     'l' => $exifData['foclen'],
-                     'm' => $exifData['model'],
-                     's' => $exifData['shutter'],
-                     'Y' => $exifData['year'],
-                     'M' => $exifData['month'],
-                     'D' => $exifData['day'],
-                     'T' => $exifData['time']           );
+    $table = array ( "c" => $exifData["comment"],
+                     "a" => $exifData["aperture"],
+                     "f" => $exifData["flash"],
+                     "i" => $exifData["iso"],
+                     "l" => $exifData["foclen"],
+                     "m" => $exifData["model"],
+                     "s" => $exifData["shutter"],
+                     "Y" => $exifData["year"],
+                     "M" => $exifData["month"],
+                     "D" => $exifData["day"],
+                     "T" => $exifData["time"]           );
 
     // get rid of trailing | character if there is one
-    $formatString = ereg_replace('\|$', '', $formatString);
+    $formatString = ereg_replace("\|$", "", $formatString);
 
     // Nibble away at format string until it is empty
     while ($formatString) {
@@ -39,13 +39,13 @@ function formatExifData ( $formatString, $exifData )
         // Try to match a block (a block is a pipe followed by a format
         // atom (such as %c) surrounded by optional text)
 
-        if (ereg('^\|[^|]*%[a-zA-Z][^|]*', $formatString, $matches)) {
+        if (ereg("^\|[^|]*%[a-zA-Z][^|]*", $formatString, $matches)) {
 
             $x = $matches[0];               // entire match (this is the
                                             // block pattern, which we
                                             // can work on as a whole now)
 
-            $x = str_replace('|','', $x);   // get rid of leading | char
+            $x = str_replace("|","", $x);   // get rid of leading | char
 
             // $changeflag is used to tell us if we should bother
             // printing this block at all.  If none of the format
@@ -57,7 +57,7 @@ function formatExifData ( $formatString, $exifData )
             // Keep on going until every %X atom has been examined and
             // expanded.
 
-            while (ereg('%([a-zA-Z])', $x, $lettermatch)) {
+            while (ereg("%([a-zA-Z])", $x, $lettermatch)) {
 
                 // which letter matched?
                 $letter = $lettermatch[1];
@@ -81,7 +81,7 @@ function formatExifData ( $formatString, $exifData )
             }
 
             // shrink format string by one block.
-            $formatString = ereg_replace('^\|[^|]+', '', $formatString);
+            $formatString = ereg_replace("^\|[^|]+", "", $formatString);
         }
     }
 

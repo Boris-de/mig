@@ -7,13 +7,13 @@
 function getImageDescFromFile ( $image, $currDir, $short_flag )
 {
 
-    $imageDesc = '';
+    $imageDesc = "";
     $fname = getFileName($image);
     $fname = rawurldecode($fname);
 
-    if (file_exists($mig_config['albumdir']."/$currDir/$fname.txt")) {
+    if (file_exists($mig_config["albumdir"]."/$currDir/$fname.txt")) {
 
-        $file = fopen($mig_config['albumdir']."/$currDir/$fname.txt", 'r');
+        $file = fopen($mig_config["albumdir"]."/$currDir/$fname.txt", "r");
         $line = fgets($file, 4096);     // get first line
 
         // This double-check exists so that files ending without
@@ -51,7 +51,7 @@ function getImageDescFromFile ( $image, $currDir, $short_flag )
         }
 
     } else {
-        // File doesn't exist?  Okay, return false.
+        // File doesn't exist? Okay, return false.
         return FALSE;
     }
 

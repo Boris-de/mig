@@ -17,8 +17,8 @@ function buildImageList ( $currDir,
     global $mig_config;
     global $mig_dl;
 
-    if (is_dir($mig_config['albumdir']."/".$currDir)) {
-        $dir = opendir($mig_config['albumdir']."/".$currDir);
+    if (is_dir($mig_config["albumdir"]."/".$currDir)) {
+        $dir = opendir($mig_config["albumdir"]."/".$currDir);
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
         exit;
@@ -53,16 +53,16 @@ function buildImageList ( $currDir,
 
     while ($file = readdir($dir)) {
         // Skip over thumbnails
-        if (!$mig_config['usethumbsubdir']) {
+        if (!$mig_config["usethumbsubdir"]) {
                          // unless $useThumbSubdir is set,
                          // then don't waste time on this check
 
-            if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
+            if ($markerType == "suffix" && ereg("_$markerLabel\.[^.]+$", $file)
                 && getFileType($file)) {
                     continue;
             }
 
-            if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
+            if ($markerType == "prefix" && ereg("^$markerLabel\_", $file)) {
                 continue;
             }
 
@@ -70,7 +70,7 @@ function buildImageList ( $currDir,
 
         // We'll look at this one only if it's a file
         // and it matches our list of approved extensions
-        if (is_file($mig_config['albumdir']."/".$currDir."/".$file)
+        if (is_file($mig_config["albumdir"]."/".$currDir."/".$file)
                         && ! $presorted[$file] && getFileType($file))
         {
             // Increase thumb counter
@@ -81,7 +81,7 @@ function buildImageList ( $currDir,
 
             // and stash a timestamp as well if needed
             if (ereg("bydate.*", $sortType)) {
-                $timestamp = filemtime($mig_config['albumdir']
+                $timestamp = filemtime($mig_config["albumdir"]
                                        . "/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
             }
@@ -93,11 +93,11 @@ function buildImageList ( $currDir,
 
     reset($imagefiles); // reset array pointer
 
-    if ($sortType == 'bydate-ascend') {
+    if ($sortType == "bydate-ascend") {
         ksort($filedates);
         reset($filedates);
 
-    } elseif ($sortType == 'bydate-descend') {
+    } elseif ($sortType == "bydate-descend") {
         krsort($filedates);
         reset($filedates);
     }
@@ -122,8 +122,8 @@ function buildImageList ( $currDir,
 
     // If there are images, start the table
     if ($thumbsInFolder) {
-        $imageList .= "\n  " . '<table summary="Image Links" border="0"'
-                    . ' cellspacing="0"><tbody>';
+        $imageList .= "\n  " . "<table summary=\"Image Links\" border=\"0\""
+                    . " cellspacing=\"0\"><tbody>";
     }
 
     // Set up pagination environment
@@ -155,56 +155,56 @@ function buildImageList ( $currDir,
         }
 
         // Fetch template phrase to work with.
-        $phrase = $mig_config['lang']['total_images'];
+        $phrase = $mig_config["lang"]["total_images"];
         // %t is total images in folder
-        $phrase = str_replace('%t', $thumbsInFolder, $phrase);
+        $phrase = str_replace("%t", $thumbsInFolder, $phrase);
         // %s is start image
-        $phrase = str_replace('%s', $start_img, $phrase);
+        $phrase = str_replace("%s", $start_img, $phrase);
         // %e is end image
-        $phrase = str_replace('%e', $end_img, $phrase);
+        $phrase = str_replace("%e", $end_img, $phrase);
 
-        $imageList .= "\n   " . '<tr>' . "\n    " . '<td colspan="'
-                    . $max_col . '" align="center"><small>' . $phrase;
+        $imageList .= "\n   <tr>\n    <td colspan=\""
+                    . $max_col . "\" align=\"center\"><small>" . $phrase;
 
         if ($startFrom) {
             $prevPage = $startFrom - 1;
 
-            $imageList .= '<a href="' . $mig_config['baseurl']
-                        . '?pageType=folder&amp;currDir=' . $urlCurrDir
-                        . '&amp;startFrom=' . $prevPage;
+            $imageList .= "<a href=\"" . $mig_config["baseurl"]
+                        . "?pageType=folder&amp;currDir=" . $urlCurrDir
+                        . "&amp;startFrom=" . $prevPage;
             if ($mig_dl) {
-                $imageList .= '&amp;mig_dl=' . $mig_dl;
+                $imageList .= "&amp;mig_dl=" . $mig_dl;
             }
-            $imageList .= '">&laquo;</A>&nbsp;&nbsp;';
+            $imageList .= "\">&laquo;</A>&nbsp;&nbsp;";
         }
 
         for ($i = 1; $i <= $pages; ++$i) {
             if (floor(($i - 11) / 20) == (($i - 11) / 20)) {
-                $imageList .= '<br />';
+                $imageList .= "<br />";
             }
             if ($i == ($startFrom + 1)) {
-                $imageList .= '<b>' . $i . '</b>&nbsp;&nbsp;';
+                $imageList .= "<b>" . $i . "</b>&nbsp;&nbsp;";
             } else {
                 $ib = $i - 1;
-                $imageList .= '<a href="' . $mig_config['baseurl']
-                            . '?pageType=folder&amp;currDir=' . $urlCurrDir
-                            . '&amp;startFrom=' . $ib;
+                $imageList .= "<a href=\"" . $mig_config["baseurl"]
+                            . "?pageType=folder&amp;currDir=" . $urlCurrDir
+                            . "&amp;startFrom=" . $ib;
                 if ($mig_dl) {
-                    $imageList .= '&amp;mig_dl=' . $mig_dl;
+                    $imageList .= "&amp;mig_dl=" . $mig_dl;
                 }
-                $imageList .= '">' . $i . '</a>&nbsp;&nbsp;';
+                $imageList .= "\">" . $i . "</a>&nbsp;&nbsp;";
             }
         }
 
         if (($startFrom + 1) < $pages) {
             $nextPage = $startFrom + 1;
-            $imageList .= '<a href="' . $mig_config['baseurl']
-                        . '?pageType=folder&amp;currDir=' . $urlCurrDir
-                        . '&amp;startFrom=' . $nextPage;
+            $imageList .= "<a href=\"" . $mig_config["baseurl"]
+                        . "?pageType=folder&amp;currDir=" . $urlCurrDir
+                        . "&amp;startFrom=" . $nextPage;
             if ($mig_dl) {
-                $imageList .= '&amp;mig_dl=' . $mig_dl;
+                $imageList .= "&amp;mig_dl=" . $mig_dl;
             }
-            $imageList .= '">&raquo;</A>';
+            $imageList .= "\">&raquo;</A>";
         }
 
         $imageList .= "</small></td>\n   </tr>";
@@ -254,9 +254,9 @@ function buildImageList ( $currDir,
     closedir($dir);
 
     // If there aren't any images to work with, just say so.
-    if ($imageList == '') {
-        $imageList = 'NULL';
-    } elseif (!eregi('</tr>$', $imageList)) {
+    if ($imageList == "") {
+        $imageList = "NULL";
+    } elseif (!eregi("</tr>$", $imageList)) {
         // Stick a </tr> on the end if it isn't there already and close
         // the table
         $imageList .= "\n  </tr>\n  </tbody></table>";

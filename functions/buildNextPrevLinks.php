@@ -11,14 +11,14 @@ function buildNextPrevLinks ( $currDir, $image,
     global $mig_config;
     global $mig_dl;
 
-    // newCurrDir is currDir without the leading './'
+    // newCurrDir is currDir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
-    if (is_dir($mig_config['albumdir']."/$currDir")) {
-        if ($pageType == 'large') {
-            $dir = opendir($mig_config['albumdir']."/$currDir/".$mig_config['largesubdir']);
+    if (is_dir($mig_config["albumdir"]."/$currDir")) {
+        if ($pageType == "large") {
+            $dir = opendir($mig_config["albumdir"]."/$currDir/".$mig_config["largesubdir"]);
         } else {
-            $dir = opendir($mig_config['albumdir']."/$currDir");
+            $dir = opendir($mig_config["albumdir"]."/$currDir");
         }
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
@@ -30,11 +30,11 @@ function buildNextPrevLinks ( $currDir, $image,
     while ($file = readdir($dir)) {
 
         // Ignore thumbnails
-        if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
+        if ($markerType == "prefix" && ereg("^$markerLabel\_", $file)) {
             continue;
         }
 
-        if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
+        if ($markerType == "suffix" && ereg("_$markerLabel\.[^.]+$", $file)
             && getFileType($file)) {
                 continue;
         }
@@ -51,11 +51,11 @@ function buildNextPrevLinks ( $currDir, $image,
 
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
-        if (is_file($mig_config['albumdir']."/$currDir/$file") && ! $presorted[$file]) {
+        if (is_file($mig_config["albumdir"]."/$currDir/$file") && ! $presorted[$file]) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
             if (ereg("bydate.*", $sortType)) {
-                $timestamp = filemtime($mig_config['albumdir']."/$currDir/$file");
+                $timestamp = filemtime($mig_config["albumdir"]."/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
             }
         }
@@ -99,7 +99,7 @@ function buildNextPrevLinks ( $currDir, $image,
     $i = 1;                 // iteration counter, etc
 
     // Yes, position 0 is garbage.  Makes the math easier later.
-    $fList = array ( 'blah' ); 
+    $fList = array ( "blah" ); 
 
     while (list($file, $junk) = each($presorted)) {
     
@@ -120,7 +120,7 @@ function buildNextPrevLinks ( $currDir, $image,
     if ($fList[$ThisImagePos+1]) {
         $next = migURLencode($fList[$ThisImagePos+1]);
     } else {
-        $next = 'NA';
+        $next = "NA";
     }
 
     // Previous must always be one less than the current index.  If
@@ -128,7 +128,7 @@ function buildNextPrevLinks ( $currDir, $image,
     // which case we know there is no previous.
     
     if ($ThisImagePos == 1) {
-        $prev = 'NA';
+        $prev = "NA";
     } elseif ($fList[$ThisImagePos-1]) {
         $prev = migURLencode($fList[$ThisImagePos-1]); 
     }
@@ -136,52 +136,52 @@ function buildNextPrevLinks ( $currDir, $image,
     // URL-encode currDir
     $currDir = migURLencode($currDir);
 
-    // newCurrDir is currDir without the leading './'
+    // newCurrDir is currDir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
     // If there is no previous image, show a greyed-out link
-    if ($prev == 'NA') {
-        $pLink = '&nbsp;[&nbsp;<font color="#999999">'
-               . $mig_config['lang']['previmage']
-               . '</font>&nbsp;]&nbsp;';
+    if ($prev == "NA") {
+        $pLink = "&nbsp;[&nbsp;<font color=\"#999999\">"
+               . $mig_config["lang"]["previmage"]
+               . "</font>&nbsp;]&nbsp;";
 
     // else show a real link
     } else {
-        $pLink = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl']
-               . '?pageType=' . $pageType . '&amp;currDir=' . $currDir
-               . '&amp;image=' . $prev;
+        $pLink = "&nbsp;[&nbsp;<a href=\"" . $mig_config["baseurl"]
+               . "?pageType=" . $pageType . "&amp;currDir=" . $currDir
+               . "&amp;image=" . $prev;
         if ($startFrom) {
-            $pLink .= '&amp;startFrom=' . $startFrom;
+            $pLink .= "&amp;startFrom=" . $startFrom;
         }
         if ($mig_dl) {
-            $pLink .= '&amp;mig_dl=' . $mig_dl;
+            $pLink .= "&amp;mig_dl=" . $mig_dl;
         }
-        $pLink .= '">' . $mig_config['lang']['previmage']
-                . '</a>&nbsp;]&nbsp;';
+        $pLink .= "\">" . $mig_config["lang"]["previmage"]
+                . "</a>&nbsp;]&nbsp;";
     }
 
     // If there is no next image, show a greyed-out link
-    if ($next == 'NA') {
-        $nLink = '&nbsp;[&nbsp;<font color="#999999">'
-               . $mig_config['lang']['nextimage']
-               . '</font>&nbsp;]&nbsp;';
+    if ($next == "NA") {
+        $nLink = "&nbsp;[&nbsp;<font color=\"#999999\">"
+               . $mig_config["lang"]["nextimage"]
+               . "</font>&nbsp;]&nbsp;";
     // else show a real link
     } else {
-        $nLink = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl']
-               . '?pageType=' . $pageType . '&amp;currDir=' . $currDir
-               . '&amp;image=' . $next;
+        $nLink = "&nbsp;[&nbsp;<a href=\"" . $mig_config["baseurl"]
+               . "?pageType=" . $pageType . "&amp;currDir=" . $currDir
+               . "&amp;image=" . $next;
         if ($startFrom) {
-            $nLink .= '&amp;startFrom=' . $startFrom;
+            $nLink .= "&amp;startFrom=" . $startFrom;
         }
         if ($mig_dl) {
-            $nLink .= '&amp;mig_dl=' . $mig_dl;
+            $nLink .= "&amp;mig_dl=" . $mig_dl;
         }
-        $nLink .= '">' . $mig_config['lang']['nextimage']
-                . '</a>&nbsp;]&nbsp;';
+        $nLink .= "\">" . $mig_config["lang"]["nextimage"]
+                . "</a>&nbsp;]&nbsp;";
     }
 
     // Current position in the list
-    $currPos = '#' . $ThisImagePos . '&nbsp;of&nbsp;' . $i;
+    $currPos = "#" . $ThisImagePos . "&nbsp;of&nbsp;" . $i;
 
     return array( $nLink, $pLink, $currPos );
 

@@ -25,9 +25,9 @@ function buildDirList ( $albumURLroot, $currDir,
     $samples = array ();
     $filedates = array ();
 
-    if (is_dir($mig_config['albumdir']."/".$currDir)) {
+    if (is_dir($mig_config["albumdir"]."/".$currDir)) {
         // Open directory handle
-        $dir = opendir($mig_config['albumir']."/".$currDir);
+        $dir = opendir($mig_config["albumir"]."/".$currDir);
     } else {
         print "ERROR: no such currDir '$currDir'<br>";
         exit;
@@ -36,20 +36,20 @@ function buildDirList ( $albumURLroot, $currDir,
     while ($file = readdir($dir)) {
 
         // Only pay attention to directories
-        if (! is_dir($mig_config['albumdir']."/".$currDir."/".$file))
+        if (! is_dir($mig_config["albumdir"]."/".$currDir."/".$file))
             continue;
 
         // Ignore . and ..
-        if ($file == '.' || $file == '..')
+        if ($file == "." || $file == "..")
             continue;
 
         // Ignore presorted items
         if ($presorted[$file])
             continue;
 
-        // Ignore directories whose name begins with '.' if the
+        // Ignore directories whose name begins with "." if the
         // appropriate option is set
-        if ($ignoreDotDirectories && ereg('^\.', $file))
+        if ($ignoreDotDirectories && ereg("^\.", $file))
             continue;
 
         // If we got here, store it as a valid directory
@@ -57,7 +57,7 @@ function buildDirList ( $albumURLroot, $currDir,
 
         // And stash a timestamp
         if (ereg("bydate.*", $sortType)) {
-            $timestamp = filemtime($mig_config['albumdir']."/".$currDir
+            $timestamp = filemtime($mig_config["albumdir"]."/".$currDir
                                    ."/"$file);
             $filedates["$timestamp-$file"] = $file;
         }
@@ -67,18 +67,18 @@ function buildDirList ( $albumURLroot, $currDir,
 
     // If we have directories, start a table
     if ($directories) {
-        $directoryList .= "\n" . '   <table summary="Folder Links"'
-                        . ' border="0" cellspacing="0"><tbody>';
+        $directoryList .= "\n" . "   <table summary=\"Folder Links\""
+                        . " border=\"0\" cellspacing=\"0\"><tbody>";
     }
 
     ksort($directories);    // sort so we can yank them in sorted order
     reset($directories);    // reset array pointer to beginning
 
-    if ($sortType == 'bydate-ascend') {
+    if ($sortType == "bydate-ascend") {
         ksort($filedates);
         reset($filedates);
 
-    } elseif ($sortType == 'bydate-descend') {
+    } elseif ($sortType == "bydate-descend") {
         krsort($filedates);
         reset($filedates);
     }
@@ -104,7 +104,7 @@ function buildDirList ( $albumURLroot, $currDir,
     // Iterate through all folders now that we have our final list.
     while (list($file,$junk) = each($presorted)) {
 
-        $folder = $mig_config['albumdir']."/".$currDir."/".$file;
+        $folder = $mig_config["albumdir"]."/".$currDir."/".$file;
 
         // Calculate how many images in the folder if desired
         if ($viewFolderCount) {
@@ -139,20 +139,20 @@ function buildDirList ( $albumURLroot, $currDir,
         }
 
         // Surmise the full path to work with
-        $newCurrDir = $oldCurrDir . '/' . $file;
+        $newCurrDir = $oldCurrDir . "/" . $file;
 
         // URL-encode the directory name in case it contains spaces
         // or other weirdness.
         $enc_file = migURLencode($newCurrDir);
 
         // Build the link itself for re-use below
-        $linkURL = '<a href="'							//"
-                 . $mig_config['baseurl']
-                 . '?pageType=folder&amp;currDir=' . $enc_file;
+        $linkURL = "<a href=\""
+                 . $mig_config["baseurl"]
+                 . "?pageType=folder&amp;currDir=" . $enc_file;
         if ($mig_dl) {
-            $linkURL .= '&amp;mig_dl=' . $mig_dl;
+            $linkURL .= "&amp;mig_dl=" . $mig_dl;
         }
-        $linkURL .= '">';							//"
+        $linkURL .= "\">";
 
         // Reword $file so it doesn't allow wrapping of the label
         // (fixes odd formatting bug in MSIE).
@@ -161,26 +161,26 @@ function buildDirList ( $albumURLroot, $currDir,
         // to make the table cleaner
         $nbspfile = $file;
         if ($randomFolderThumbs && strlen($nbspfile) > $folderNameLength) {
-            $nbspfile = substr($nbspfile,0,$folderNameLength-1) . '(..)';
+            $nbspfile = substr($nbspfile,0,$folderNameLength-1) . "(..)";
         }
-        $nbspfile = str_replace(' ', '&nbsp;', $nbspfile);
-        $nbspfile = str_replace('_', '&nbsp;', $nbspfile);
+        $nbspfile = str_replace(" ", "&nbsp;", $nbspfile);
+        $nbspfile = str_replace("_", "&nbsp;", $nbspfile);
 
         if ($randomFolderThumbs) {
-            $folderTableClass = 'folderthumbs';
-            $folderTableAlign = 'center';
+            $folderTableClass = "folderthumbs";
+            $folderTableAlign = "center";
         } else {
-            $folderTableClass = 'foldertext';
-            $folderTableAlign = 'left';
+            $folderTableClass = "foldertext";
+            $folderTableAlign = "left";
         }
 
         // Build the full link (icon plus folder name) and tack it on
         // the end of the list.
-        $directoryList .= "\n     " . '<td valign="middle" class="'		//"
-                        . $folderTableClass . '" align="'
-                        . $folderTableAlign . '">'				//"
+        $directoryList .= "\n     <td valign=\"middle\" class=\""
+                        . $folderTableClass . "\" align=\""
+                        . $folderTableAlign . "\">"
                         . $linkURL
-                        . '<img src="';						//"
+                        . "<img src=\"";
 
         if ($useThumbFile[$file]) {
             // Found a UseThumb line in mig.cf - process as such
@@ -192,29 +192,29 @@ function buildDirList ( $albumURLroot, $currDir,
                 $fext = getFileExtension($useThumbFile[$file]);
             }
 
-            $directoryList .= $albumURLroot . '/' . $currDir
-                            . '/' . $file . '/';
-            if ($mig_config['usethumbsubdir']) {
-                $directoryList .= $mig_config['thumbsubdir'] . '/'
-                                . $fname . '.' . $fext;
+            $directoryList .= $albumURLroot . "/" . $currDir
+                            . "/" . $file . "/";
+            if ($mig_config["usethumbsubdir"]) {
+                $directoryList .= $mig_config["thumbsubdir"] . "/"
+                                . $fname . "." . $fext;
             } else {
-                if ($markerType == 'prefix') {
-                    $directoryList .= $markerLabel . '_' . $fname;
+                if ($markerType == "prefix") {
+                    $directoryList .= $markerLabel . "_" . $fname;
                 } else {
-                    $directoryList .= $fname . '_' . $markerLabel;
+                    $directoryList .= $fname . "_" . $markerLabel;
                 }
-                $directoryList .= '.' . $fext;
+                $directoryList .= "." . $fext;
             }
         } elseif ($ficons[$file]) {
             // Found a FolderIcon line in mig.cf - process as such
-            $directoryList .= $imageDir . '/' . $ficons[$file];
+            $directoryList .= $imageDir . "/" . $ficons[$file];
         } elseif ($samples[$file]) {
             // Using a random thumbnail as the folder icon
             $directoryList .= $samples[$file];
         } else {
             // Otherwise, we're out a thumbnail; use the generic
             // folder icon as a last resort
-            $directoryList .= $imageDir . '/folder.gif';
+            $directoryList .= $imageDir . "/folder.gif";
         }
 
         // Define a separator of either a space or a line break,
@@ -223,30 +223,30 @@ function buildDirList ( $albumURLroot, $currDir,
         // appears underneath it - also use a line break if the thumbnail
         // was specified).
         if ($samples[$file] || $useThumbFile[$file]) {
-            $sep = '<br />';
+            $sep = "<br />";
         } else {
-            $sep = '&nbsp;';
+            $sep = "&nbsp;";
         }
 
         // Display _ as space
-        $altlabel = str_replace('_', ' ', $file);
+        $altlabel = str_replace("_", " ", $file);
 
         // Output the rest of the link, label, etc.
-        $directoryList .= '" '							//"
-                       . border="0" alt="' . $altlabel . '"/></a>' . $sep
-                       . $linkURL . $nbspfile . '</a>';
+        $directoryList .= "\" "
+                       . "border=\"0\" alt=\"" . $altlabel . "\"/></a>" . $sep
+                       . $linkURL . $nbspfile . "</a>";
 
         // Display counts if appropriate
         if ($viewFolderCount &&
                 (($counts[$file] > 0) || ($countdir[$file] > 0)) )
         {
-            $directoryList .= $sep . '<acronym title="(folders/files)">('
-                            . $countdir[$file] . '/' . $counts[$file]
-                            . ')</acronym>';
+            $directoryList .= $sep . "<acronym title=\"(folders/files)\">("
+                            . $countdir[$file] . "/" . $counts[$file]
+                            . ")</acronym>";
         }
 
         // Don't forget to close the table cell
-        $directoryList .= '</td>';
+        $directoryList .= "</td>";
 
         // Keep track of what row/column we're on
         if ($col == $maxColumns) {
@@ -259,9 +259,9 @@ function buildDirList ( $albumURLroot, $currDir,
     }
 
     // If there aren't any subfolders to look at, then just say so.
-    if ($directoryList == '' || ereg('<tbody>$', $directoryList)) {
-        return 'NULL';
-    } elseif (!eregi('</tr>$', $directoryList)) {
+    if ($directoryList == "" || ereg("<tbody>$", $directoryList)) {
+        return "NULL";
+    } elseif (!eregi("</tr>$", $directoryList)) {
         // Stick a </tr> on the end if it isn't there already, and close
         // the table.
         $directoryList .= "\n   </tr>\n  </tbody></table>";

@@ -21,15 +21,15 @@ function getNumberOfImages ( $folder, $markerType,
     while ($file = readdir($dir)) {
 
         // Skip over thumbnails
-        if (!$mig_config['usethumbsubdir']) {
+        if (!$mig_config["usethumbsubdir"]) {
                                  // unless $useThumbSubdir is set,
                                  // then don't waste time on this check
 
-            if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$",$file)
+            if ($markerType == "suffix" && ereg("_$markerLabel\.[^.]+$",$file)
                 && getFileType($file)) {
                     continue;
             }
-            if ($markerType == 'prefix' && ereg("^$markerLabel\_", $file)) {
+            if ($markerType == "prefix" && ereg("^$markerLabel\_", $file)) {
                 continue;
             }
 

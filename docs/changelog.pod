@@ -214,7 +214,7 @@ Added Estonian and Japanese translations.
 Fixed formatting issue in C<folderFrame()> (fix provided by Jan Jasinski).
 
 Changed all occurrences of C<NULL> to empty strings.  Apparently C<NULL>
-was not introduces until PHP4, so using C<NULL> was breaking PHP3
+was not introduced until PHP4, so using C<NULL> was breaking PHP3
 compatibility.
 
 Added number of folders in addition to number of images when
