@@ -141,6 +141,16 @@ if (strstr($currDir, '..')) {
     exit;
 }
 
+// Try to validate currDir
+//     Must be either '.' (root) or,
+//     must begin with './' and dot or slash can't follow that
+//     for at least two positions.
+//
+if ( $currDir != '.' && ! ereg('^./[^./][^./]*', $currDir) ) {
+    print "ERROR: \$currDir is invalid.  Exiting.";
+    exit;
+}
+
 // Strip URL encoding
 $currDir = rawurldecode($currDir);
 
