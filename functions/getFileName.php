@@ -1,6 +1,6 @@
-<?php
 
-// getFileName() - figure out a file's name sans extension.
+
+// getFileName() - Figure out a file's name sans extension.
 
 function getFileName ( $file )
 {
@@ -9,4 +9,3 @@ function getFileName ( $file )
 
 }   // -- End of getFileName()
 
-?>

@@ -1,11 +1,9 @@
-<?php
 
-// parseExifDate() - parses an EXIF date string and returns it in
-//                   a more human-readable format.
+
+// parseExifDate() - Parses an EXIF date string and returns it in a more human-readable format.
 
 function parseExifDate ( $stamp )
 {
-
     global $mig_config;
 
     // Separate into a date and a time
@@ -60,4 +58,3 @@ function parseExifDate ( $stamp )
 
 }   // -- End of parseExifDate()
 
-?>

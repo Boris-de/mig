@@ -1,17 +1,14 @@
-<?php
 
-// buildImageList() - creates a list of images available
 
-function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $markerType,
-                          $markerLabel, $directoryList, $suppressImageInfo,
-                          $noThumbs, $thumbExt,
-                          $suppressAltTags, $sortType, $hidden, $presorted,
-                          $description, $short_desc, $imagePopup,
-                          $imagePopType, $imagePopLocationBar,
-                          $imagePopMenuBar, $imagePopToolBar,
-                          $commentFilePerImage, $startFrom,
-                          $commentFileShortComments, $showShortOnThumbPage,
-                          $imagePopMaxWidth, $imagePopMaxHeight, $pageType )
+// buildImageList() - Creates a list of images for display.
+
+function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $markerType, $markerLabel,
+                          $directoryList, $suppressImageInfo, $noThumbs, $thumbExt,
+                          $suppressAltTags, $sortType, $hidden, $presorted, $description,
+                          $short_desc, $imagePopup, $imagePopType, $imagePopLocationBar,
+                          $imagePopMenuBar, $imagePopToolBar, $commentFilePerImage, $startFrom,
+                          $commentFileShortComments, $showShortOnThumbPage, $imagePopMaxWidth,
+                          $imagePopMaxHeight, $pageType )
 {
     global $mig_config;
     global $mig_dl;
@@ -266,4 +263,3 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
 
 }   // -- End of buildImageList()
 
-?>

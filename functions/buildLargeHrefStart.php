@@ -1,6 +1,6 @@
-<?php
 
-// buildLargeHrefStart() - Builds the text used for template keyword largeHrefStart.
+
+// buildLargeHrefStart() - Builds the text used for template keyword "largeHrefStart".
 
 function buildLargeHrefStart ( $currDir, $image, $startFrom )
 {
@@ -22,4 +22,3 @@ function buildLargeHrefStart ( $currDir, $image, $startFrom )
 
 }   // -- End of buildLargeHrefStart()
 
-?>

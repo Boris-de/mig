@@ -1,16 +1,12 @@
-<?php
 
-// printTemplate() - prints HTML page from a template file
 
-function printTemplate ( $templateDir, $templateFile, $version,
-                         $maintAddr, $folderList, $imageList, $backLink,
-                         $albumURLroot, $image, $currDir, $newCurrDir,
-                         $pageTitle, $prevLink, $nextLink, $currPos,
-                         $description, $youAreHere, $distURL,
-                         $pathConvertFlag, $pathConvertRegex,
-                         $pathConvertTarget, $pageType,
-                         $largeLink, $largeHrefStart, $largeHrefEnd,
-                         $largeLinkBorder )
+// printTemplate() - Prints HTML page from a template file.
+
+function printTemplate ( $templateDir, $templateFile, $version, $maintAddr, $folderList,
+                         $imageList, $backLink, $albumURLroot, $image, $currDir, $newCurrDir,
+                         $pageTitle, $prevLink, $nextLink, $currPos, $description, $youAreHere,
+                         $distURL, $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
+                         $pageType, $largeLink, $largeHrefStart, $largeHrefEnd, $largeLinkBorder )
 {
     global $REQUEST_URI;
     global $HTTP_SERVER_VARS;
@@ -135,4 +131,3 @@ function printTemplate ( $templateDir, $templateFile, $version,
 
 }    // -- End of printTemplate()
 
-?>

@@ -1,6 +1,6 @@
-<?php
 
-// getNumberOfDirs() - Counts subdirectories in a given folder
+
+// getNumberOfDirs() - Counts subdirectories in a given folder.
 
 function getNumberOfDirs ( $folder, $markerType, $markerLabel, $currDir )
 {
@@ -45,4 +45,3 @@ function getNumberOfDirs ( $folder, $markerType, $markerLabel, $currDir )
 
 }   // -- End of getNumberOfDirs()
 
-?>

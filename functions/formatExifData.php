@@ -1,10 +1,9 @@
-<?php
+
 
 // formatExifData() - Formats EXIF data according to $exifFormatString.
 
 function formatExifData ( $formatString, $exifData )
 {
-
     // %a   Aperture
     // %c   Comment
     // %f   Flash used?
@@ -89,4 +88,3 @@ function formatExifData ( $formatString, $exifData )
 
 }   // -- End of formatExifData()
 
-?>

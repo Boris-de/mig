@@ -1,6 +1,6 @@
-<?php
 
-// buildYouAreHere() - build the "You are here" line for the top of each page
+
+// buildYouAreHere() - Build the "You are here" line for the top of each page.
 
 function buildYouAreHere ( $currDir, $image, $omitImageName )
 {
@@ -69,4 +69,3 @@ function buildYouAreHere ( $currDir, $image, $omitImageName )
 
 }   // -- End of buildYouAreHere()
 
-?>

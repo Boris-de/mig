@@ -1,12 +1,10 @@
-<?php
 
-// getExifDescription() - Fetches a comment if available from the
-//                        Exif comments file (exif.inf) as well as
-//                        fetching EXIF data.
+
+// getExifDescription() - Fetches a comment if available from the Exif comments file (exif.inf)
+//                        as well as fetching EXIF data.
 
 function getExifDescription ( $currDir, $image, $formatString )
 {
-
     global $mig_config;
 
     $aperture   = array ();
@@ -116,4 +114,3 @@ function getExifDescription ( $currDir, $image, $formatString )
 
 }   // -- End of getExifDescription()
 
-?>

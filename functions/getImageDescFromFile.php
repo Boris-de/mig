@@ -1,12 +1,10 @@
-<?php
 
-// getImageDescFromFile() - Fetches an image description from a
-//                          per-image comment file (only used if
-//                          $commentFilePerImage is TRUE)
+
+// getImageDescFromFile() - Fetches an image description from a per-image comment file
+//                          (only used if $commentFilePerImage is TRUE).
 
 function getImageDescFromFile ( $image, $currDir, $short_flag )
 {
-
     $imageDesc = "";
     $fname = getFileName($image);
     $fname = rawurldecode($fname);
@@ -59,4 +57,3 @@ function getImageDescFromFile ( $image, $currDir, $short_flag )
 
 }   // -- End of getImageDescFromFile()
 
-?>

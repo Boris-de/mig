@@ -1,6 +1,6 @@
-<?php
 
-// getNumberOfImages() - counts images in a given folder
+
+// getNumberOfImages() - Counts images in a given folder.
 
 function getNumberOfImages ( $folder, $markerType, $markerLabel )
 {
@@ -50,4 +50,3 @@ function getNumberOfImages ( $folder, $markerType, $markerLabel )
 
 }   // -- End of getNumberOfImages()
 
-?>

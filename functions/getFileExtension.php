@@ -1,6 +1,6 @@
-<?php
 
-// getFileExtension() - figure out a file's extension and return it.
+
+// getFileExtension() - Figure out a file's extension and return it.
 
 function getFileExtension ( $file )
 {
@@ -9,4 +9,3 @@ function getFileExtension ( $file )
 
 }   // -- End of getFileExtension()
 
-?>

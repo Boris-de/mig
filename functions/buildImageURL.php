@@ -1,15 +1,13 @@
-<?php
 
-// buildImageURL() - spit out HTML for a particular image
 
-function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
-                         $markerType, $markerLabel, $noThumbs, $thumbExt,
-                         $suppressAltTags, $description, $short_desc,
-                         $imagePopup, $imagePopType, $imagePopLocationBar,
-                         $imagePopMenuBar, $imagePopToolBar,
-                         $commentFilePerImage, $startFrom,
-                         $commentFileShortComments, $showShortOnThumbPage,
-                         $imagePopMaxWidth, $imagePopMaxHeight, $pageType )
+// buildImageURL() - Create HTML link for a particular image.
+
+function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo, $markerType,
+                         $markerLabel, $noThumbs, $thumbExt, $suppressAltTags, $description,
+                         $short_desc, $imagePopup, $imagePopType, $imagePopLocationBar,
+                         $imagePopMenuBar, $imagePopToolBar, $commentFilePerImage, $startFrom,
+                         $commentFileShortComments, $showShortOnThumbPage, $imagePopMaxWidth,
+                         $imagePopMaxHeight, $pageType )
 {
     global $mig_config;
     global $mig_dl;
@@ -301,4 +299,3 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
 
 }   // -- End of buildImageURL()
 
-?>

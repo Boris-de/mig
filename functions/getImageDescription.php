@@ -1,11 +1,9 @@
-<?php
 
-// getImageDescription() - Fetches an image description from the
-//                         comment file (mig.cf)
+
+// getImageDescription() - Fetches an image description from the comment file (mig.cf).
 
 function getImageDescription ( $image, $description, $short_desc )
 {
-
     $imageDesc = "";
 
     // "Long" description
@@ -23,4 +21,3 @@ function getImageDescription ( $image, $description, $short_desc )
 
 }   // -- End of getImageDescription()
 
-?>

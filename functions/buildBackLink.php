@@ -1,10 +1,9 @@
-<?php
 
-// buildBackLink() - spits out a "back one section" link
+
+// buildBackLink() - Create a "back one step" link.
 
 function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $image )
 {
-
     global $mig_config;
     global $mig_dl;
 
@@ -64,4 +63,3 @@ function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $ima
 
 }   // -- End of buildBackLink()
 
-?>

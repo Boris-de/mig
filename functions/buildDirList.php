@@ -1,13 +1,11 @@
-<?php
 
-// buildDirList() - creates list of directories available
 
-function buildDirList ( $albumURLroot, $currDir, $imageDir,
-                        $maxColumns, $hidden, $presorted, $viewFolderCount,
-                        $markerType, $markerLabel, $ficons,
-                        $randomFolderThumbs, $folderNameLength,
-                        $useThumbFile, $ignoreDotDirectories,
-                        $useRealRandThumbs, $sortType )
+// buildDirList() - Build list of directories for display.
+
+function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden,
+                        $presorted, $viewFolderCount, $markerType, $markerLabel, $ficons,
+                        $randomFolderThumbs, $folderNameLength, $useThumbFile,
+                        $ignoreDotDirectories, $useRealRandThumbs, $sortType )
 {
     global $mig_config;
     global $mig_dl;
@@ -273,4 +271,3 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir,
 
 }   // -- End of buildDirList()
 
-?>

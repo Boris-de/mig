@@ -1,10 +1,8 @@
-<?php
 
-// getRandomThumb() - Find a random thumbnail to show instead of the folder
-//                    icon.
 
-function getRandomThumb ( $file, $folder,
-                          $albumURLroot, $currDir, $markerType, $markerLabel,
+// getRandomThumb() - Find a random thumbnail to show instead of the folder icon.
+
+function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, $markerLabel,
                           $useRealRandThumbs, $ignoreDotDirectories )
 {
     global $hidden;
@@ -241,4 +239,3 @@ function getRandomThumb ( $file, $folder,
 
 }   // -- End of getRandomThumb()
 
-?>
