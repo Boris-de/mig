@@ -1,0 +1,4 @@
+
+* Don't hardcode things like [], &nbsp; into the system.  Be 100% template-
+  based.  It makes things easier on everybody.
+
