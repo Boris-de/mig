@@ -1,14 +1,10 @@
 =pod
 
-Z<>
+=head2 Mig - A general purpose photo gallery
 
-=head1 Mig - A general purpose photo gallery management system.
+Copyright E<copy> 2000-2002 Daniel M. Lowe
 
-Z<>
-
-Copyright 2000-2002 Daniel M. Lowe (dan@tangledhelix.com)
-
-=head2 LICENSE INFORMATION
+=head2 License Information
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -25,157 +21,153 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 A copy of the GPL can be found at http://www.gnu.org/copyleft/gpl.html
-or in the file F<docs/LICENSE>.
 
-=head2 REQUIREMENTS
+=head2 Requirements
 
-This package requires a web server which supports PHP - http://www.php.net/ .
-Any recent version of PHP3 or any version of PHP4 should work.  The
-development platform is Apple OSX, so this code tends to assume a Unix-like
-environment.  As such it may or may not work (and has not been tested) on
-non-unix-like platforms.
+Mig requires a web server which supports PHP [ http://www.php.net/ ].
+The development platform is Apple OSX, so the code tends to assume
+a Unix-like environment.  As such it may or may not work (and has not
+been tested by the author) on non-unix-like platforms.
 
-(Windows users, please see the second labeled "FOR WINDOWS USERS" below.)
+Windows users, please see the section labeled
+E<quot>I<Windows Users>E<quot> below.
 
 The F<mkGallery> utility (used to generate thumbnail images) requires Perl
-( http://www.perl.com ) and, if you want it to general thumbnails, also needs
-ImageMagick ( http://www.imagemagick.org/ ).  Perl and ImageMagick are not
-needed to use Mig itself - only for use with mkGallery.  See
-docs/Utilities.txt.
+[ http://www.perl.com ].  If you want to generate thumbnail images, it also
+requires ImageMagick [ http://www.imagemagick.org/ ].  Neither are required
+to use Mig itself.
 
 The F<jhead> utility which is called by F<mkGallery> for EXIF header
 parsing is a C source code file - you will need to compile it before using
-it.  See the file F<docs/Utilities.txt> for more information.  Since
-F<jhead> is also optional you don't need to worry about this if you don't
-plan to extract EXIF data from your JPEG files.
+it.  On most systems you can just type E<quot>makeE<quot> in the F<jhead>
+directory to build it.
 
-=head2 INSTALLATION AND BASICS
+Since most Windows systems do not come with a C compiler, and my
+understanding is that you have to buy them if you want one, I'd advise
+Windows users to get the pre-built jhead program from Mathias Wandel's
+jhead home page: http://www.sentex.net/~mwandel/jhead/
 
-Installation is fairly straightforward.
+See the utilities document for more information about F<mkGallery>
+and F<jhead>.
 
-1. If you are installing Mig for the first time, you'll need to create a
-directory for it to live in.  Otherwise, just know where your Mig
-installation lives
+=head2 New Installation
 
-4. Review the file F<config.php.default>.  If you want to make any changes,
-make them and then copy the file to F<config.php>.  The reason to do this
-is simple: future installations / upgrades will copy over
-F<config.php.default> with whatever is packaged with that version of Mig.
-The F<config.php> file will never be automatically over-written by the install
-script.
+Read this section if you are installing Mig for the first time.  If you
+are upgrading, skip to the next section which deals with upgrading.
 
-    vim config.php.default
-        [ or if you are a heathen, use some other text editor :-) ]
-        [ make desired changes ]
-    cp config.php.default config.php
+=over 4
 
-Or, if you are upgrading, it's a good idea to review F<config.php.default> to
-see if there is anything new that you will want to add to your F<config.php>.
+=item 1.
 
-(note to pre-1.3.1 users - the old "mig.cfg" file is now called
-"config.php".  Rename your file - "mig.cfg" is now ignored.)
+Create a directory to install Mig into, somewhere your web server can read
+the files and serve them as web pages.
 
-5. Enter the albums directory.
+=item 2.
 
-    cd albums
+Copy the file F<index.php> to your Mig directory.  If your web server uses
+PHP3 and requires the filename extension F<.php3>, then you should rename
+this file to F<index.php3>.
 
-6. Create any folders and subfolders you want for your own albums, and
-copy your images into them.
+=item 3.
 
-    mkdir Trips
-    mkdir Trips/Alberta,_Canada
-    mkdir Trips/Lake_Tahoe,_California
+Copy the file F<config.php.default> to your Mig directory and call it
+F<config.php>.  This is where you can change settings to customize Mig.
 
-    mkdir House
-    mkdir House/Living\ Room
-    mkdir House/Dining\ Room
+=item 4.
 
-You can of course, also do this with FTP, scp, or your favorite file
-handling method.
+Create three subdirectories called F<images>, F<templates> and F<albums>
+under your Mig directory.
 
-A note about spaces in gallery names:  If there is a space embedded in
-the directory name, it is left as a space.  If there's an underscore (_)
-in a directory name, it is displayed to the viewer as a space.  So you
-can use whichever you like in your galleries and both will appear to be
-a space as far as the browser is concerned.
+=item 5.
 
-A note about files:  Basically, any PNG, JPG or GIF file will be shown.
-That is, any file with an extension of .gif .jpg .jpe .jpeg or .gif.
-Note that case is irrelevant so ".GIF" is the same as ".gif" or ".Gif".
+Copy the files F<image.gif> and F<no_thumb.gif> from the images
+subdirectory to the F<images> subdirectory you just made.
 
-A note about file permissions: Mig makes no attempt to modify or check
-the file permissions in your album subdirectory.  It is left to you to
-make sure the web server has the ability to read these files.  On most
-systems this means making sure the directories are at least 0755 (which
-is C<drwxr-xr-x>) and files are at least 0644 (C<-rw-r--r-->).  However, many
-people run their systems in such a way that those modes are considered
-dangerous to them, and I don't make any assumptions.  Please validate
-the permissions on your albums to make sure the web server has access
-to read them.
+=item 6.
 
-Mig does set file permissions on the files it actually installs (the
-PHP files themselves, F<config.php.default>, the templates, etc).  If these
-are unsatisfactory to you (they should be perfectly fine for everyone
-as far as I can see), please let me know, and of course you can reset
-their permissions as you see fit on your system.
+Copy the files F<image.html>, F<folder.html> and F<style.css> from the
+templates subdirectory to the F<templates> subdirectory you just made.
 
-Thumbnails are the same filename as the images they represent, but they
-live in a subdirectory called "thumbs" (this name can be changed by editing
-config.php).
+=item 7.
 
-You can use spaces (or, as above, underscores) in filenames just like
-you can do with directory names.  Underscores in filenames will be
-shown as-is though, they are not re-mapped to be displayed as a space.
+Put image files (your photos, etc) into the F<albums> subdirectory.
+You can make subdirectories to contain different categories of images,
+and those subdirectories can contain subdirectories, and so on.  Mig
+doesn't place any restriction on how many levels deep your subdirectories
+go.  Arrange the album any way you want.  The name of each album is the
+name of the directory, so keep that in mind as you create subdirectories.
+For example:
 
-7. You probably want to create thumbnails.  You can use the F<mkGallery>
-script found in the F<util> subdirectory.  Note that it requires Perl
-and the ImageMagick suite (see the file F<docs/Utilities.txt>).
+    People
+        Family
+        Friends
+    The_Zoo
+        Dolphins
+        Bears
+        Lions
+    Cars
 
-You don't have to use F<mkGallery> - you can make your own thumbnails if
-you want.  Just have them located in the "thumbs" subdirectory (or wherever
-you pointed that directory with C<$thumbSubdir>).
+Notice that I used an underline character in B<The_Zoo>.  Mig will display
+that as a space, so the album will be called B<The Zoo> as far as visitors
+will know.  This makes things simpler since some systems make using
+underlines in directory names unfriendly.
 
-To create thumbnails, in a nutshell:
+Mig supports JPEG, GIF and PNG files.  So files with any of these
+extensions will be recognized:
 
-    cd /usr/local/apache/htdocs/gallery/Trips/Lake_Tahoe,_California
-    ../../util/mkGallery -a -t
+    .gif .png .jpg .jpe .jpeg
 
-See the file F<docs/Utilities.txt> for more about F<mkGallery>.  You can get
-a listing of available options by invoking F<mkGallery> with the C<-h> flag.
+=item 8.
 
-The author finds C<mkGallery -rant> to be the most useful mode for
-general purposes.  Again, see F<docs/Utilities.txt> for more information.
+You're all set - point your browser wherever you installed Mig and you
+should be ready to go!
 
-For F<mkGallery> to create thumbnails, F<convert> from the ImageMagick suite
-must be in your C<$PATH>.
+=item 9.
 
-If you elect not to use thumbnails, a generic image icon will be
-used in place of a thumbnail image, so creating thumbnails is not
-mandatory (it just makes for a nicer presentation for people viewing
-your album).
+{{ THUMBNAILS }}
 
-F<mkGallery> will only bother with the PNG, GIF or JPEG files it finds
-in the current directory (.gif .jpg .jpe .jpeg and .png).
+=back
 
-As of version 1.1, you can use a global thumbnail extension for all
-thumbnails.  For example if you want all thumbnails to be GIFs even
-if the real images they represent are something other than GIF,
-you can do this.  See the C<-E> option to F<mkGallery>, and the
-C<$thumbExt> option in F<config.php>.  Also see F<docs/Utilities.txt>.
+=head2 Upgrading
 
-8. Go to http://www.yourserver.com/mig/ (or wherever you happened to
-install it) to view your gallery with your web browser.
+If you are upgrading from a previous version of Mig, follow these steps:
 
-You may have to tell your web server that F<index.php> (or F<index.php3>)
-is a valid default page.  Apache users may need to add the filename
-to the C<DirectoryIndex> directive (adding to the end of the line in
-your F<httpd.conf> and running C<apachectl graceful> as root is probably
-the way to do that).  Other changes to Apache might be required to
-support PHP.  How to get PHP to work in general is left as an exercise
-to the reader, but http://www.php.net/ and http://www.apache.org/ should
-have the necessary information.
+=over 4
 
-=head2 OPTIONAL CUSTOMIZATION
+=item 1.
+
+Copy the F<index.php> file to your Mig directory.  If your system expects
+PHP scripts to have a file extension of F<.php3>, name it F<index.php3>
+instead.
+
+=item 2.
+
+Starting with version 1.3.1, F<mig.cfg> is now called F<config.php>.
+If you have a F<mig.cfg>, rename it to F<config.php>.  The distribution
+comes with F<config.php.default>, which is the new default config file
+(mostly used as an example).
+
+=item 3.
+
+Starting with version 1.3.2, the F<funcs.php> and F<lang.php> files are no
+longer used.  If you have them, delete them.  All code is now contained in
+F<index.php>.
+
+=item 4.
+
+If you use F<mkGallery>, copy mkGallery from the F<utilities> directory
+to someplace on your system that makes sense to you.
+
+=item 5.
+
+If you use F<jhead> (note that using the EXIF functions of F<mkGallery>
+implies using F<jhead>), you may wish to compile a new copy of F<jhead>
+if it's a newer version than you're using now (to find out when F<jhead>
+was last updated, check the changelog document).
+
+=back
+
+=head2 Optional Customization
 
 1. HTML templates (and colors)
 
@@ -367,25 +359,21 @@ Slovak, Dutch and Polish).
 If you want to use Pop-up windows for your images, see the C<$imagePopup>
 and C<$imagePopType> variables in F<config.php>.
 
-=head2 BUG REPORTING
+=head2 Bug Reporting
 
-You can report bugs in one of two ways.  The first way is to submit a bug
-report on the Mig project page at:
+If you think you've found a bug in Mig, please report it using the Bug
+Tracker at Sourceforge.
 
-    http://sourceforge.net/projects/mig/
+    http://sourceforge.net/tracker/?group_id=24365
 
-The second is to send an email to dan@tangledhelix.com.
+=head2 Feature Requests
 
-=head2 WISH LIST
+If there's a feature you'd like to see in Mig, submit it using the Feature
+Request Tracker at Sourceforge.
 
-You can submit items to the wish list in one of two ways.  The first way is
-to submit a Feature Request on the Mig project page at:
+    http://sourceforge.net/tracker/?group_id=24365
 
-    http://sourceforge.net/projects/mig/
-
-The second is to send an email to dan@tangledhelix.com.
-
-=head2 EMAIL LISTS
+=head2 Email Lists
 
 There are three mailing lists related to Mig.  Visit the URLs below if
 you wish to subscribe.  All lists are currently fairly low-traffic.
@@ -405,6 +393,8 @@ subscribe to mig-announce as well (but you can if you want to).
 mig-devel is for people interested in development work related to Mig.
 
     http://lists.sourceforge.net/lists/listinfo/mig-devel
+
+I<$Id$>
 
 =cut
 
