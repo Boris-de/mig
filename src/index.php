@@ -64,6 +64,12 @@ $configFile = $baseDir . '/mig.cfg';	// Configuration file
 $defaultConfigFile = $configFile . '.default';	// Default config file
 		// (used if $configFile does not exist)
 
+// Collect the server name if possible
+if ($SERVER_SOFTWARE)
+    $server = $SERVER_SOFTWARE;
+else
+    $server = $HTTP_SERVER_VARS['SERVER_SOFTWARE'];
+
 // Default settings (probably over-ridden by mig.cfg or mig.cfg.default)
 $maxFolderColumns = 2;
 $maxThumbColumns = 4;
@@ -335,7 +341,7 @@ if ($pageType == 'folder' or $pageType == '') {
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
                   $folderList, $imageList, $backLink, '', '', '', '',
                   $pageTitle, '', '', '', $bulletin, $youAreHere, $distURL,
-                  $albumDir);
+                  $albumDir, $server, $useVirtual);
 
 
 // If $pageType is "image", show an image
@@ -386,7 +392,8 @@ if ($pageType == 'folder' or $pageType == '') {
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir, '', '');
+                  $description, $youAreHere, $distURL, $albumDir, '', '',
+                  $server, $useVirtual);
 }
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke

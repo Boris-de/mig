@@ -50,7 +50,8 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
                         $maintAddr, $folderList, $imageList, $backLink,
                         $albumURLroot, $image, $currDir, $newCurrDir,
                         $pageTitle, $prevLink, $nextLink, $currPos,
-                        $description, $youAreHere, $distURL, $albumDir )
+                        $description, $youAreHere, $distURL, $albumDir,
+                        $server, $useVirtual)
 {
 
     // Panic if the template file doesn't exist.
@@ -70,7 +71,7 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
             $line = trim($line);
             $line = str_replace('#include "', '', $line);
             $line = str_replace('";', '', $line);
-            if (ereg('/', $line)) {
+            if (strstr($line, '/')) {
                 $line = '<!-- ERROR: #include directive failed.'
                       . ' Path included a "/" character, indicating'
                       . ' an absolute or relative path.  All included'
@@ -83,18 +84,19 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
                 if (file_exists("$templateDir/$incl_file")) {
 
                     // Is this a PHP file?
-                    if (eregi('\.php3?', $incl_file)) {
+                    if ( eregi('.php3?',  $incl_file)) {
                         // include as php
                         include("$templateDir/$incl_file");
 
                     } else {        // Not PHP, either CGI or just text
 
                         // virtual() only works for Apache
-                        if ( eregi('^apache', $GLOBALS['SERVER_SOFTWARE'])
-                             and $useVirtual )
-                                 virtual("$templateDir/$incl_file");
-                        else
-                                 readfile("$templateDir/$incl_file");
+                        if (ereg('^Apache', $server) and $useVirtual) { 
+                            $tmplDir = ereg_replace("^.*/", "", $templateDir);
+                            virtual("$tmplDir/$incl_file");
+                        } else {
+                            readfile("$templateDir/$incl_file");
+                        }
                     }
 
                 } else {
