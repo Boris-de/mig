@@ -1,10 +1,10 @@
 #
 # $Revision$
 #
-# Makefile for MiG documentation
+# Makefile for Mig documentation
 #
 
-TITLE=	MiG Documentation
+TITLE=	Mig Documentation
 HARGS=	--noindex --title="$(TITLE)"
 
 HTML= ../src/docs/html/Apache.html ../src/docs/html/ChangeLog.html \
@@ -25,7 +25,7 @@ TEXT= ../src/docs/Apache.txt ../src/docs/CHANGELOG ../src/docs/CREDITS \
 
 default: all
 
-all: $(TEXT) $(HTML) cleanup
+all: $(TEXT) $(HTML) clean
 
 ../src/docs/html/Apache.html: Apache.pod
 	@pod2html $(HARGS) < Apache.pod > $@
@@ -117,6 +117,6 @@ all: $(TEXT) $(HTML) cleanup
 ../src/docs/FTPinstall.txt: FTPinstall.pod
 	@pod2text FTPinstall.pod > $@
 
-cleanup:
+clean:
 	@/bin/rm -f pod2htm*
 

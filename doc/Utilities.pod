@@ -16,7 +16,7 @@ F<jhead> - Extracts EXIF header information from JPEG files.
 when F<mkGallery> is invoked with the C<-e> flag).
 
 F<convert-metafiles> and F<mf_conv.pl> are deprecated - they can be found
-in the Mig-contrib package in the download section on the MiG site:
+in the Mig-contrib package in the download section on the Mig site:
 
     http://mig.sourceforge.net/
 
@@ -29,7 +29,7 @@ F<mkGallery> can do three things:
 1. Take a directory full of images and create thumbnails for them.
 
 2. Read EXIF header information from image files and cache it in
-a text file for MiG to use.
+a text file for Mig to use.
 
 3. Create blank comment templates in F<mig.cf> files.
 
@@ -38,7 +38,7 @@ which image(s) to work with, or just tell it to process every image in the
 current directory.
 
     Note that mkGallery requires ImageMagick and Perl.  Neither of
-    those is required for MiG itself - they are required only if
+    those is required for Mig itself - they are required only if
     you want to use the mkGallery utility.
 
 F<mkGallery> uses the following Perl modules.  On my system, using Perl
@@ -85,14 +85,14 @@ F<mkGallery> has NOT been tested under Microsoft Windows.
       -d : Use thumbnail subdirectories (instead of using _th, etc).
            See docs/Utilities.txt for more.
       -D : Name of thumbnail subdirectory to use (default is "thumbs" or
-           whatever is in your mig.cfg file).  See docs/Utilities.txt.
+           whatever is in your config.php file).  See docs/Utilities.txt.
       -E : File extension to use for thumbnails.  See docs/Utilities.txt.
 
 
     * If creating thumbnails, "convert" must be in your $PATH.
     * This program supports JPEG, PNG and GIF formats.
     * The "-e" feature only supports JPEG files.
-      MiG - http://mig.sourceforge.net/
+      Mig - http://mig.sourceforge.net/
 
 =head2 A note about pixel sizes
 
@@ -126,6 +126,9 @@ You can specify a quality level with C<-q number>.
 
 =head2 Labels, prefixes, and suffixes
 
+(As of 1.3.1, thumbnail subdirectories are the default - unless you've got
+them turned off, they will take precedence).
+
 The C<-M> and C<-m> options are new in 0.90.  In previous versions, all
 thumbnails were built with the pattern F<filename_th.ext> so that an image
 named F<myHouse.JPG> would have a thumbnail called F<myHouse_th.JPG>.
@@ -139,25 +142,25 @@ could use C<mkGallery -M prefix> to create thumbnails like
 F<th_myHouse.JPG> and F<th_myGarden.JPG> instead.
 
 If you choose to use prefixes and not suffixes, and/or a different label name,
-you must make the associated changes to F<mig.cfg>.  Otherwise MiG will not
-know what to look for.  Changing F<mig.cfg> has a side effect, too -
+you must make the associated changes to F<config.php>.  Otherwise Mig will not
+know what to look for.  Changing F<config.php> has a side effect, too -
 F<mkGallery> reads it to set defaults for C<-m> and C<-M>, so if your
-F<mig.cfg> is set to what you want, you shouldn't have to worry about C<-m>
+F<config.php> is set to what you want, you shouldn't have to worry about C<-m>
 or C<-M> when running F<mkGallery>.
 
-Look at C<$markerType> and C<$markerLabel> in F<mig.cfg.default> or
-F<mig.cfg>.  C<$markerType> equates to C<-M> and C<$markerLabel> equates to
+Look at C<$markerType> and C<$markerLabel> in F<config.php.default> or
+F<config.php>.  C<$markerType> equates to C<-M> and C<$markerLabel> equates to
 C<-m>.
 
-Values in F<mig.cfg> are used, but if you invoke command-line options to
-F<mkGallery>, C<-m> and C<-M> will override the values in F<mig.cfg>.
+Values in F<config.php> are used, but if you invoke command-line options to
+F<mkGallery>, C<-m> and C<-M> will override the values in F<config.php>.
 
 As of version 1.1, you can also use a thumbnail extension type.  This is
 basically in case you have mutiple types of images such as JPGs, GIFs, etc,
 but you want all thumbnails to be a particular type (say, all GIFs).
 
-See both the C<$thumbExt> option in F<mig.cfg>, and the C<-E> option to
-F<mkGallery>.  If you define C<$thumbExt> in F<mig.cfg>, F<mkGallery> will
+See both the C<$thumbExt> option in F<config.php>, and the C<-E> option to
+F<mkGallery>.  If you define C<$thumbExt> in F<config.php>, F<mkGallery> will
 use that value as the default.
 
 (You can also use subdirectories for thumbnails and avoid all this prefix
@@ -166,10 +169,12 @@ and suffix nonsense altogether... see the next section).
 =head2 Using thumbnail subdirectories
 
 Not all users want their thumbnails littering up their folders.  As such,
-MiG has an option which lets you put thumbnails into a subdirectory
+Mig has an option which lets you put thumbnails into a subdirectory
 instead.  To do this, set the C<$useThumbSubdir> and C<$thumbSubdir>
-options in the F<mig.cfg> file.  You can also use the C<-d> and C<-D>
-options to F<mkGallery> to override what F<mig.cfg> has configured.
+options in the F<config.php> file.  You can also use the C<-d> and C<-D>
+options to F<mkGallery> to override what F<config.php> has configured.
+
+(As of 1.3.1, thumbnail subdirectories are the default)
 
 Then you might have files like F<AUT_1015.JPG>, F<AUT_1019.JPG> and in a
 subdirectory F<thumbs/AUT_1015.JPG>, F<thumbs/AUT_1019.JPG> ... so they are

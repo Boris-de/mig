@@ -9,7 +9,7 @@ Z<>
 
 Z<>
 
-This is where I thank people who have contributed things to MiG.  I hope I
+This is where I thank people who have contributed things to Mig.  I hope I
 haven't left anyone out, but if I have, please let me know.
 
 Fadel (fadel@fee.unicamp.br), for contributing code which eventually
@@ -17,9 +17,9 @@ turned into the C<-c> option of the F<mkGallery> script, and for the
 Portugese language translation.
 
 Jeff Lambert (jeffx@ican.net), for contributing code to make a
-"phpNuke Compatible" mode for folks wanting to merge MiG into a phpNuke
+"phpNuke Compatible" mode for folks wanting to merge Mig into a phpNuke
 site - http://www.phpnuke.org/ .  Jeff also found a number of nagging
-little bugs in MiG which have been fixed.
+little bugs in Mig which have been fixed.
 
 Russ McClay (mcclay@taolodge.com.tw), for finding the strange table
 format problem where you would see a horizontal line above and to the left
@@ -30,7 +30,7 @@ Adam Monsen (meonkeys@hotmail.com), for noticing and reporting the
 ".." security hole.
 
 BUL (burckhard@loeh.cx), for going through lots of headache working
-out the kinks for MiG users who are running on a Windows platform, and for
+out the kinks for Mig users who are running on a Windows platform, and for
 the German translation.
 
 Jevin Maltais (jevin@techie.com) and Brian Palik (bpalik@elitepub.com), for
@@ -81,7 +81,7 @@ Marco Ermini <markoer@firenze.linux.it> for the improved Italian
 translation.
 
 A special note to recognize Matthias Wendel, author of the F<jhead>
-utility, which is bundled with MiG.
+utility, which is bundled with Mig.
 
 And of course, to Rasmus Lerdorf and all of the other fine folks who have
 worked so hard to make PHP available in the first place.

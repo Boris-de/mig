@@ -10,7 +10,7 @@
 #
 # Mig - A general purpose photo gallery management system.
 #
-# Copyright 2000-2002 by Daniel M. Lowe <dan@tangledhelix.com>
+# Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
 # Mig is available at http://mig.sourceforge.net/
 #
 # LICENSE INFORMATION

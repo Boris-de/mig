@@ -14,22 +14,22 @@ Z<>
 There are always security considerations when dealing with anonymous
 external users accessing your system and data.
 
-MiG itself mitigates these concerns where it can (for instance, a
-C<currDir> variable containing '..' causes MiG to panic and immediately
-exit), but it can't do everything in itself.
+Mig mitigates these concerns where it can (for instance, a C<currDir>
+variable containing '..' causes Mig to panic and immediately exit),
+but it can't do everything.
 
-The main thing MiG does to help with the security problem is that it never,
+The main thing Mig does to help with the security problem is that it never,
 ever, writes anything to the disk.  It only reads.  This minimizes the
-amount of damage potential that exists.
+potential damage a malicious attacker could do.
 
-An example: MiG's PHP code can't control whether or not a web user fetches
+An example: Mig's PHP code can't control whether or not a web user fetches
 your F<mig.cf> or F<exif.inf> files and so forth by simply using direct
 URLs.  Users of Apache can use the following in their configuration to get
 around this limitation:
 
     <Directory /path/to/your/mig/gallery>
-        # Protect against anyone trying to view mig.cf or mig.cfg
-        <Files ~ "^mig.cfg?$">
+        # Protect against anyone trying to view a mig.cf file
+        <Files ~ "^mig.cf$">
             order allow,deny
             deny from all
         </Files>
@@ -51,7 +51,7 @@ F<docs/Passwords.txt>.
 
 =head2 USEFUL REWRITE IDEAS
 
-You can use Apache's C<mod_rewrite> module to make MiG URLs more simplified
+You can use Apache's C<mod_rewrite> module to make Mig URLs more simplified
 and easier to remember.  Here's what I do on my own site:
 
 First, define simple shortcut names using the jumpMap (see
@@ -83,7 +83,7 @@ Apache, for this to work.
 
 =head2 IF YOU'RE USING WINDOWS
 
-I tried installing MiG on my laptop running Windows ME and PHPTriad (PHP &
+I tried installing Mig on my laptop running Windows ME and PHPTriad (PHP &
 Apache & MySQL all in one bundle).  I had all sorts of trouble.
 
 Pat Moore has reported success using PHPTriad under Windows 98.  I don't

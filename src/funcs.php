@@ -1,11 +1,11 @@
 <?php // $Revision$
 
 //
-// funcs.php - function library for MiG
+// funcs.php - function library for Mig
 //
-// MiG - A general purpose photo gallery management system.
-//       http://mig.sourceforge.net/
-// Copyright (C) 2000-2001 Dan Lowe <dan@tangledhelix.com>
+// Mig - A general purpose photo gallery management system.
+// Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
+// Mig is available at http://mig.sourceforge.net/
 //
 //
 // LICENSE INFORMATION
@@ -38,7 +38,7 @@
 // file "config.php".
 //
 // If you find that is not the case, and you hack in support for some
-// feature you want to see in MiG, please contact me with a code diff
+// feature you want to see in Mig, please contact me with a code diff
 // and if I agree that it is useful to the general public, I will
 // incorporate your code into the main code base.
 //

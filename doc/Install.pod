@@ -5,11 +5,11 @@ $Revision$
 
 Z<>
 
-=head1 MiG - A general purpose photo gallery management system.
+=head1 Mig - A general purpose photo gallery management system.
 
 Z<>
 
-Copyright (C) 2000-2001 Dan Lowe (dan@tangledhelix.com)
+Copyright 2000-2002 Daniel M. Lowe (dan@tangledhelix.com)
 
 =head2 LICENSE INFORMATION
 
@@ -34,7 +34,7 @@ or in the file F<docs/LICENSE>.
 
 This package requires a web server which supports PHP - http://www.php.net/ .
 Any recent version of PHP3 or any version of PHP4 should work.  The
-development platform is Solaris, so this code tends to assume a Unix-like
+development platform is Apple OSX, so this code tends to assume a Unix-like
 environment.  As such it may or may not work (and has not been tested) on
 non-unix-like platforms.
 
@@ -44,7 +44,7 @@ non-unix-like platforms.
 
 The F<mkGallery> utility (used to generate thumbnail images) requires Perl
 - http://www.perl.org and ImageMagick - http://www.imagemagick.org/ .
-You can use MiG without Perl or ImageMagick - but in that case you may
+You can use Mig without Perl or ImageMagick - but in that case you may
 have to create your own thumbnails and not use F<mkGallery>.  See the file
 F<docs/Utilities.txt>.  Since thumbnails are optional, you don't even need to
 generate them if you don't want to or it's not convenient for you.
@@ -82,20 +82,23 @@ installation).
 
     cd /usr/apache/htdocs/mig
 
-4. Review the file F<mig.cfg.default>.  If you want to make any changes,
-make them and then copy the file to F<mig.cfg>.  The reason to do this
+4. Review the file F<config.php.default>.  If you want to make any changes,
+make them and then copy the file to F<config.php>.  The reason to do this
 is simple: future installations / upgrades will copy over
-F<mig.cfg.default> with whatever is packaged with that version of MiG.
-The F<mig.cfg> file will never be automatically over-written by the install
+F<config.php.default> with whatever is packaged with that version of Mig.
+The F<config.php> file will never be automatically over-written by the install
 script.
 
-    vim mig.cfg.default
+    vim config.php.default
         [ or if you are a heathen, use some other text editor :-) ]
         [ make desired changes ]
-    cp mig.cfg.default mig.cfg
+    cp config.php.default config.php
 
-Or, if you are upgrading, it's a good idea to review F<mig.cfg.default> to
-see if there is anything new that you will want to add to your F<mig.cfg>.
+Or, if you are upgrading, it's a good idea to review F<config.php.default> to
+see if there is anything new that you will want to add to your F<config.php>.
+
+(note to pre-1.3.1 users - the old "mig.cfg" file is now called
+"config.php".  Rename your file - "mig.cfg" is now ignored.)
 
 5. Enter the albums directory.
 
@@ -125,7 +128,7 @@ A note about files:  Basically, any PNG, JPG or GIF file will be shown.
 That is, any file with an extension of .gif .jpg .jpe .jpeg or .gif.
 Note that case is irrelevant so ".GIF" is the same as ".gif" or ".Gif".
 
-A note about file permissions: MiG makes no attempt to modify or check
+A note about file permissions: Mig makes no attempt to modify or check
 the file permissions in your album subdirectory.  It is left to you to
 make sure the web server has the ability to read these files.  On most
 systems this means making sure the directories are at least 0755 (which
@@ -135,39 +138,27 @@ dangerous to them, and I don't make any assumptions.  Please validate
 the permissions on your albums to make sure the web server has access
 to read them.
 
-MiG does set file permissions on the files it actually installs (the
-PHP files themselves, F<mig.cfg.default>, the templates, etc).  If these
+Mig does set file permissions on the files it actually installs (the
+PHP files themselves, F<config.php.default>, the templates, etc).  If these
 are unsatisfactory to you (they should be perfectly fine for everyone
 as far as I can see), please let me know, and of course you can reset
 their permissions as you see fit on your system.
 
-Thumbnails are basically seen by MiG as anything that matches the basic
-pattern C<filename_th.EXT>... so C<myhouse_th.gif> will be viewed as a
-thumbnail.  The basic rule of thumb is, try not to use the string C<_th>
-in your filenames.
-
-    Note, as of 0.90 this behavior changed.  This is still true of the
-    default settings, but you now have the ability to control the format
-    of thumbnail filenames.  See docs/Utilities.txt and mig.cfg.default.
+Thumbnails are the same filename as the images they represent, but they
+live in a subdirectory called "thumbs" (this name can be changed by editing
+config.php).
 
 You can use spaces (or, as above, underscores) in filenames just like
 you can do with directory names.  Underscores in filenames will be
 shown as-is though, they are not re-mapped to be displayed as a space.
-
-Also, thumbnails can live in a subdirectory rather than in the main
-folder - see below under "Optional Customization".
 
 7. You probably want to create thumbnails.  You can use the F<mkGallery>
 script found in the F<util> subdirectory.  Note that it requires Perl
 and the ImageMagick suite (see the file F<docs/Utilities.txt>).
 
 You don't have to use F<mkGallery> - you can make your own thumbnails if
-you want.  Just have the filenames match the pattern shown above.  So...
-
-     myHouse.jpg	= myHouse_th.jpg
-     Livingroom.JPG	= Livingroom_th.JPG
-
-Case does matter for the C<_th> - it must be lowercase!
+you want.  Just have them located in the "thumbs" subdirectory (or wherever
+you pointed that directory with C<$thumbSubdir>).
 
 To create thumbnails, in a nutshell:
 
@@ -180,11 +171,6 @@ a listing of available options by invoking F<mkGallery> with the C<-h> flag.
 The author finds C<mkGallery -rant> to be the most useful mode for
 general purposes.  Again, see F<docs/Utilities.txt> for more information.
 
-    Note that not all thumbnails have to use _th as their "unique" part
-    anymore.  See docs/Utilities.txt.  You can make them anything you
-    want, and can even "prefix" them to the filename instead of suffixing
-    them.
-
 For F<mkGallery> to create thumbnails, F<convert> from the ImageMagick suite
 must be in your C<$PATH>.
 
@@ -196,15 +182,11 @@ your album).
 F<mkGallery> will only bother with the PNG, GIF or JPEG files it finds
 in the current directory (.gif .jpg .jpe .jpeg and .png).
 
-As of version 1.1, you can use a thumbnail subdirectory rather than
-having your thumbnails co-exist in the same folder with the images
-they represent.  See below under "Optional customization" for more info.
-
 As of version 1.1, you can use a global thumbnail extension for all
 thumbnails.  For example if you want all thumbnails to be GIFs even
 if the real images they represent are something other than GIF,
 you can do this.  See the C<-E> option to F<mkGallery>, and the
-C<$thumbExt> option in F<mig.cfg>.  Also see F<docs/Utilities.txt>.
+C<$thumbExt> option in F<config.php>.  Also see F<docs/Utilities.txt>.
 
 8. Go to http://www.yourserver.com/mig/ (or wherever you happened to
 install it) to view your gallery with your web browser.
@@ -249,16 +231,16 @@ Tag elements like E<lt>HiddenE<gt> must be at the beginning of a line!
 See the file F<docs/mig_cf.txt> for information about the format of
 F<mig.cf>.
 
-(Note for users upgrading from MiG 0.83 or earlier - the format has
+(Note for users upgrading from Mig 0.83 or earlier - the format has
 changed, as you'd have noticed already.  If you need to convert to the
 new format, use the F<convert-metafiles> script which is in the contrib
-section on the MiG home page).
+section on the Mig home page).
 
 Note that Hidden is not considered secure.  If you need to make sure
 your gallery is secure, please take advantage of the password protection
 in your web server (if it has such a feature).  You can also take
-advantage of MiG's built in password features (see F<docs/Passwords.txt>).
-MiG's password protection isn't exactly secure either, but it's somewhat
+advantage of Mig's built in password features (see F<docs/Passwords.txt>).
+Mig's password protection isn't exactly secure either, but it's somewhat
 better than the Hidden mode.
 
 3. Comments
@@ -269,7 +251,7 @@ same directory as the image in question.
 
 Comments are shown in a box below the image in image views.  In
 thumbnail views, they are shown as the ALT tag text.  (You can suppress
-ALT tags by setting C<$suppressAltTags> to C<TRUE> in F<mig.cfg>).
+ALT tags by setting C<$suppressAltTags> to C<TRUE> in F<config.php>).
 
 As an example, let's say you had files F<house.jpg>, F<car.gif> and
 F<dog.jpg>.  Let's say you wanted a comment on the house and the dog,
@@ -302,11 +284,11 @@ the example gallery).
 See the file F<docs/mig_cf.txt> for information about the format of
 F<mig.cf>.
 
-(Note for users upgrading from MiG 0.83 or earlier - the format has
+(Note for users upgrading from Mig 0.83 or earlier - the format has
 changed, as you'd have noticed already.  The install script probably
 already updated your metafiles such as F<.comments.txt> but if not, you can
 do so by hand by running F<convert-metafiles> which is in the contrib
-directory on the MiG homepage).
+directory on the Mig homepage).
 
 4. EXIF header information
 
@@ -321,8 +303,8 @@ this on a typical Unix or Linux system:
 Since only JPEG files support EXIF headers, F<mkGallery> will only look
 at JPEG files when building the EXIF files.  Much more than the
 comments themselves are stored in these F<exif.inf> files, and future
-versions of MiG may parse more information from these files than it
-currently does.  Right now all MiG knows how to extract from the
+versions of Mig may parse more information from these files than it
+currently does.  Right now all Mig knows how to extract from the
 F<exif.inf> file is embedded comments.
 
 NOTE that most graphic editors destroy EXIF blocks!  They don't know how to
@@ -331,11 +313,11 @@ the file.  You can get around this by building the EXIF data using your raw
 images, and then editing them afterward.  This may not be an option for
 everybody, but there's nothing I can do about it.
 
-(Note for users upgrading from MiG 0.83 or earlier - the filename has
+(Note for users upgrading from Mig 0.83 or earlier - the filename has
 changed, as you'd have noticed already.  The install script probably
 already updated your metafiles such as F<.exif_comments.txt> but if not,
 you can do so by hand by running F<convert-metafiles> which is in the
-contrib directory on the MiG home page.  The only change for EXIF files
+contrib directory on the Mig home page.  The only change for EXIF files
 is the filename, just rename to F<exif.inf>).
 
 5. Style sheets
@@ -375,7 +357,7 @@ if Windows shortcuts (.LNK files) will work instead.
 
 Some people may not like to have the "540KB, 640x480" type stuff to
 be displayed below each thumbnail.  If you don't want it there, see
-the C<$suppressImageInfo> option in F<mig.cfg.default>.  Setting that to
+the C<$suppressImageInfo> option in F<config.php.default>.  Setting that to
 C<TRUE> has the effect of showing thumbnails as images only - no other
 information is shown about each image.
 
@@ -386,90 +368,73 @@ for some useful Apache-specific tips and tricks.
 
 10. Password protected folders
 
-MiG can password-protect folders, or collections of folders.  See
-F<docs/Passwords.txt> for more information.  Note that MiG's password
+Mig can password-protect folders, or collections of folders.  See
+F<docs/Passwords.txt> for more information.  Note that Mig's password
 protection isn't absolutely secure, so don't use it if you require really
 tight security on your images.
 
-11. Thumbnail subdirectories
-
-Some users don't like having their thumbnails littering up their
-folders alongside their images.  For those users, the C<$useThumbSubdir>
-option exists.
-
-Basically to use this, one would create a subdirectory in each folder
-(perhaps called F<thumbs>).  Thumbnails in that subdirectory would have
-the exact same name as their full-size counterparts in the main folder.
-This is different than the old behavior where you were forced to use
-two different filenames.
-
-See F<docs/Utilities.txt> for information about this option and
-F<mkGallery>.  Also see F<mig.cfg.default> for the C<$useThumbSubdir> and
-C<$thumbSubdir> parameters.  By default, thumbnail subdirectories are not
-used (for historical reasons).
-
-12. Thumbnail suppression
+11. Thumbnail suppression
 
 Some people don't want to have thumbnails whatsoever.  For those people the
-C<$noThumbs> switch exists in the F<mig.cfg> file.  Setting C<$noThumbs> to
+C<$noThumbs> switch exists in the F<config.php> file.  Setting C<$noThumbs> to
 C<TRUE> has the effect of not using thumbnail images at all in your albums.
 C<$noThumbs> is set to C<FALSE> by default.
 
-13. Forcing a thumbnail type
+12. Forcing a thumbnail type
 
 Some people expressed a desire to have all thumbnails be a certain
 type no matter what their normal images were.  For example, main
 images might be JPG or GIF but all thumbnails would be GIF,
 regardless.
 
-By default, if an image is a JPG, MiG will also look for a JPG
+By default, if an image is a JPG, Mig will also look for a JPG
 thumbnail.  A GIF image will have a GIF thumbnail.
 
 If you wish to use all the same type for thumbnails even if the
 real image is a different type (or varying types), set the value
-of C<$thumbExt> in F<mig.cfg> to the extension you are using.  Note that
+of C<$thumbExt> in F<config.php> to the extension you are using.  Note that
 case does matter, so setting it to C<gif> and uploading F<foo.GIF>
 will result in an error!
 
-14. Languages other than English
+13. Languages other than English
 
-MiG has support for other languages - however, it only supports those
+Mig has support for other languages - however, it only supports those
 languages someone has supplied translations for.  As I write this,
 that means English and French.  If you want to translate it to another
 language, please get in touch with me and I'll be glad to add your
 translations to the available list of languages.
 
-(see F<mig.cfg.default> for more information - MiG now supports English,
+(see F<config.php.default> for more information - Mig now supports English,
 French, German, Norwegian, Portugese, Finnish, Romanian, Russian
 Windows-1251, Russian KOI8-R, Turkish, Swedish, Danish, Italian, Spanish,
 Slovak, Dutch and Polish).
 
-15. Pop-up windows
+14. Pop-up windows
 
 If you want to use Pop-up windows for your images, see the C<$imagePopup>
-and C<$imagePopType> variables in F<mig.cfg>.
+and C<$imagePopType> variables in F<config.php>.
 
 =head2 BUG REPORTING
 
 You can report bugs in one of two ways.  The first way is to submit a bug
-report on the MiG project page at
+report on the Mig project page at
 
     http://sourceforge.net/projects/mig/
 
-The second is to send an email to mig-bugs@tangledhelix.com
+The second is to send an email to dan@tangledhelix.com.
 
 =head2 WISH LIST
 
 You can submit items to the wish list in one of two ways.  The first way is
-to submit a Feature Request on the MiG project page at
+to submit a Feature Request on the Mig project page at
 
     http://sourceforge.net/projects/mig/
 
-The second is to send an email to mig-wishlist@tangledhelix.com
+The second is to send an email to dan@tangledhelix.com.
 
 =head2 EMAIL LISTS
 
-There are two mailing lists related to MiG.  Visit the URLs below if
+There are two mailing lists related to Mig.  Visit the URLs below if
 you wish to subscribe.  Both lists are currently fairly low-traffic.
 
 mig-announce is an announcements-only list.  New versions and so forth are

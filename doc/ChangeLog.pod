@@ -39,6 +39,16 @@ file is used as the comment.  Mig will strip newlines and tabs out.
 When C<$commentFilePerImage> is C<FALSE>, normal processing of comments
 using the F<mig.cf> file happens.
 
+Changed filename of configuration file from mig.cfg to config.php.  This
+is simply to avoid having people rummaging through your config with their
+web browser.  The install script will attempt to handle this gracefully
+for you, or you can just rename files yourself.
+
+Changed default value of $useThumbSubdir to TRUE.  Changed example gallery
+to match.
+
+Upgraded jhead to version 1.6.
+
 =head2 Version 1.3.0 (Tue 23 Apr 2002)
 
 Added TITLE tags in thumbnail views so when hovering over a thumbnail,

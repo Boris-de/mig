@@ -22,15 +22,16 @@ Each image can have a comment attached (so can folders).
 Easy navigation system to move around the folder tree as well as going
 from one image to the next or previous image in the same folder.
 
-Plug-in mode for PHP-Nuke users.
+Plug-in mode for PHP-Nuke 4.x users.
 
-Scripts are included to create thumbnail images, extract embedded
+Scripts are included to create thumbnail images and extract embedded
 comments from images.
 
 Single configuration file for all site-wide options.
 
 Thumbnails can be a single type (such as GIF) regardless of what the
-actual images are (JPG, GIF, PNG, etc...).
+actual images are (JPG, GIF, PNG, etc...).  By default, thumbnails are
+the same type as the images they represent.
 
 Thumbnails can be in the same directory, or in a special thumbnail
 subdirectory.
@@ -63,7 +64,7 @@ thumbnail can show the associated comment.  This behavior can be turned
 off optionally.
 
 A file-include system as a part of the template system so you can include
-your own files in MiG templates (HTML, PHP, plain text, etc).
+your own files in Mig templates (HTML, PHP, plain text, etc).
 
 Each folder in a folder list can have its own icon if desired - or it will
 use the default (images/folder.gif).

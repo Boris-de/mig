@@ -19,20 +19,20 @@ DIST=	$(DIR).tar.gz
 # Don't include CVS directories or Vim swap files in the bundle
 EXCEPT=	--exclude="CVS" --exclude=".*.swp"
 
-# Arguments to pass to find for cleantree
+# Arguments to pass to find for clean
 FINDARGS=	-exec rm {} \; -print
 
 default: help
 
 help:
-	@echo "make cleantree           Get rid of garbage"
+	@echo "make clean               Get rid of garbage"
 	@echo "make docs                Rebuild documentation from POD"
-	@echo "make mig ver={version}   Build distro bundle for {version}"
+	@echo "make dist ver={version}  Build distro bundle for {version}"
 	@echo " "
 	@echo "   (Note that building a distro bundle rebuilds docs and"
 	@echo "    cleans the tree also)"
 
-mig: docs cleantree
+dist: docs clean
 	@/bin/rm -f $(BUN)/$(DIST)
 	@/bin/mv src $(DIR)
 	@$(TAR) --gzip $(EXCEPT) -cf $(BUN)/$(DIST) $(DIR)
@@ -43,7 +43,7 @@ mig: docs cleantree
 docs:
 	@cd doc ; make ; cd ..
 
-cleantree:
+clean:
 	@echo "Cleaning up garbage files..."
 	@find . -name '.CFUserTextEncoding' $(FINDARGS)
 	@find . -name '.DS_Store' $(FINDARGS)

@@ -5,9 +5,9 @@ $Revision$
 
 Z<>
 
-=head2 Using MiG under Windows
+=head2 Using Mig under Windows
 
-I haven't tested MiG using an IIS system.  I don't have an NT box handy,
+I haven't tested Mig using an IIS system.  I don't have an NT box handy,
 and don't want to :-)  But I have tested it using Personal Web Server under
 Windows98 on my laptop.  It worked out of the box using PWS 4.0 with PHP4.
 
@@ -17,14 +17,14 @@ I installed PHP based on these directions:
 
     http://www.php.net/manual/install-windows95-nt.php
 
-After the PHP install, I dropped MiG onto the system and it worked with no
+After the PHP install, I dropped Mig onto the system and it worked with no
 changes whatsoever.  You will need to tell your web server that the folder
-you stick MiG into has "execute" permission, though.  See the documentation
+you stick Mig into has "execute" permission, though.  See the documentation
 for your web server on how to do this.  You may also have to tell the web
 server to use F<index.php> as one of the default document names for a given
 directory.
 
-Apache for Windows is a different story - MiG just doesn't seem to work in
+Apache for Windows is a different story - Mig just doesn't seem to work in
 that environment at all.  At least not for me (Apache + PHP from the
 PHPTriad package under Windows ME).
 
@@ -33,12 +33,12 @@ So I don't know what the difference between those two installs is, but try
 it for yourself and see how you fare.
 
 If you find your results are different, please drop an email to let me know
-at mig-bugs@tangledhelix.com.
+at dan@tangledhelix.com.
 
-(I know of at least one person using MiG in a Win2000/IIS5 environment.
+(I know of at least one person using Mig in a Win2000/IIS5 environment.
 They had problems until they upgraded to PHP 4.0.2, so my recommendation is
 that you should use PHP 4.0.2 or the latest verion of PHP if you are trying
-to use MiG under Windows.)
+to use Mig under Windows.)
 
 =head2 Windows Installation
 
@@ -50,7 +50,7 @@ F<install.sh> script, you will want to do this:
 similar.  Winzip should know how to handle .tar.gz files.  You can
 find Winzip at http://www.winzip.com/
 
-2. Create a directory to place your MiG installation in (or if you are
+2. Create a directory to place your Mig installation in (or if you are
 upgrading, just know where the current installation is).  I'll use
 F<C:\Mig> as an example in this document, but you can put it anywhere you
 want as long as you know how to make your web server look there for the
@@ -78,17 +78,17 @@ that won't happen, because I've seen some really odd things happen when
 dragging files and folders around in Windows Explorer.  Please be
 careful, and doing a backup first wouldn't hurt either.
 
-7. Copy the F<mig.cfg.default> file to F<mig.cfg> in your Mig directory.
+7. Copy the F<config.php.default> file to F<config.php> in your Mig directory.
 Edit it to taste.  If you are upgrading, you may not need to do this (just
-see if there's anything new in F<mig.cfg.default> and update your existing
-F<mig.cfg>).
+see if there's anything new in F<config.php.default> and update your existing
+F<config.php>).
 
 8. Start putting your images in the F<albums> subdirectory (i.e.
 F<C:\Mig\Albums>) and there you have it.
 
 =head2 Miscellaneous Notes
 
-I'm told by a user in Germany that MiG works under Windows NT and IIS.
+I'm told by a user in Germany that Mig works under Windows NT and IIS.
 It seems that you'd be well served to upgrade to the latest version of PHP
 though, so if you're using Windows, please upgrade to the most recent
 version of PHP.  You can find it at http://www.php.net/
@@ -100,7 +100,7 @@ that.  Other special characters may not work either.  It might be safest to
 just use alphabetics, numbers and things like underscore and hyphen.
 Remember that an underscore will be shown as a space in folder names, so as
 far as the folder names go, an underscore is equivalent to a space as far
-as MiG is concerned (in folder names, anyway).
+as Mig is concerned (in folder names, anyway).
 
 =cut
 

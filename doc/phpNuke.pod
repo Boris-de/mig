@@ -9,11 +9,14 @@ Z<>
 
 Z<>
 
-MiG has a "PHP-Nuke Compatible" mode which you can use to merge MiG into
+Mig has a "PHP-Nuke Compatible" mode which you can use to merge Mig into
 your PHP-Nuke-based site.  If you don't know what PHP-Nuke is, you probably
 don't need to continue reading this file.
 
 PHP-Nuke information can be found at http://www.phpnuke.org/
+
+(PHP-Nuke mode has not been tested with PHP-Nuke 5.x.  I have no idea if it
+will work - use at you own risk).
 
 Please read F<docs/INSTALL> and then apply the following changes.
 
@@ -23,21 +26,21 @@ Please read F<docs/INSTALL> and then apply the following changes.
 way of doing things.
 
 3. When the install is finished, you will have a subdirectory F<mig> in
-your main PHP-Nuke site directory.  Everything related to MiG is stored
+your main PHP-Nuke site directory.  Everything related to Mig is stored
 in that subdirectory, with one exception: F<mig.php>.  That is the script
-you will point to when linking to MiG.  It then loads the rest of its
+you will point to when linking to Mig.  It then loads the rest of its
 code from the F<mig> subdirectory.  That is done to make things cleaner
-so MiG doesn't litter files all over your PHP-Nuke base directory.
+so Mig doesn't litter files all over your PHP-Nuke base directory.
 
-4. You will need to copy the F<mig.cfg.default> sample configuration from
+4. You will need to copy the F<config.php.default> sample configuration from
 the F<mig> subfolder into your PHP-Nuke root directory and call it
-F<mig.cfg>.  In other words:
+F<config.php>.  In other words:
 
     cd {php-nuke-root-directory}
-    cp mig/mig.cfg.default ./mig.cfg
-    vi mig.cfg
+    cp mig/config.php.default ./config.php
+    vi config.php
 
-5. The F<mig.cfg> file should already have the two things you absolutely
+5. The F<config.php> file should already have the two things you absolutely
 need (C<$phpNukeCompatible> and C<$phpNukeRoot>).  Tune the other
 parameters to whatever you see fit.
 

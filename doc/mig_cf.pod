@@ -58,14 +58,14 @@ some useful examples.
 
 If you are upgrading from 0.83 or earlier to 0.90 or later, you'll need to
 update the meta-files.  See the script F<convert-metafiles> which is on the
-MiG home page in the contrib section.  You'll also need the F<mf_conv>
+Mig home page in the contrib section.  You'll also need the F<mf_conv>
 script available from the same location.
 
     http://tangledhelix.com/software/mig/downloads/contrib
 
 =head2 COMMENT LINES
 
-Any line starting with C<#> is a comment line and is ignored by MiG.  Blank
+Any line starting with C<#> is a comment line and is ignored by Mig.  Blank
 lines are also ignored.  You should avoid having either one inside any of
 the element blocks because they are not ignored inside element blocks such
 as E<lt>CommentE<gt>.
@@ -102,7 +102,7 @@ when using hover links that contain HTML elements... so you might want to
 keep HTML elements out of your E<lt>CommentE<gt> structures - especially
 E<lt>A HREFE<gt> tags which don't fit into ALT tags especially well.  (You
 can suppress ALT tags entirely by setting C<$suppressAltTags> to C<TRUE> in
-F<mig.cfg>).
+F<config.php>).
 
 =head2 FOLDER ICONS
 
@@ -153,7 +153,7 @@ to use as the page title for this folder.
 
 You can define, on a per-folder basis, how many columns are used when
 displaying lists of folders and thumbnails.  These override the values of
-C<$maxFolderColumns> and C<$maxThumbColumns> set in F<mig.cfg>.
+C<$maxFolderColumns> and C<$maxThumbColumns> set in F<config.php>.
 
 =head2 HIDDEN ITEMS
 
@@ -176,8 +176,8 @@ tags, as in:
 
 You should note that Hidden is not considered a security feature.  It
 isn't very difficult for someone to get into a hidden folder if they know
-much about MiG.  You should look into your web server's security features
-such as password protection if you are looking for real security.   MiG
+much about Mig.  You should look into your web server's security features
+such as password protection if you are looking for real security.   Mig
 also has its own password protection scheme - see F<docs/Passwords.txt>.
 
 =head2 SORT ORDER
@@ -233,7 +233,7 @@ independently (alphabetically) and just tacked on after the pre-sorted
 items.
 
 What if you want to sort both folders and images?  That's OK, just put two
-E<lt>SortE<gt> tags in, one for each of them.  MiG will figure it out on
+E<lt>SortE<gt> tags in, one for each of them.  Mig will figure it out on
 its own.
 
 (Those who read over the source will note that you can, if you want, stuff

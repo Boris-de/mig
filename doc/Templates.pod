@@ -17,12 +17,12 @@ Colors are also handled by the template files (see later in this file).
 Note that if you like the way the layout of pages are already, you do not
 need to touch the template files at all.  You should only modify a template
 file if you have something in the page layout you wish to change or if you
-have a need to change the colorization of different elements of MiG.
+have a need to change the colorization of different elements of Mig.
 
 =head2 ABOUT TAGS
 
 Template files are simply HTML files with some special tags embedded in
-them, which are expanded by MiG at runtime.
+them, which are expanded by Mig at runtime.
 
 Tags are surrounded by C<%%> marks, such as this example:
 
@@ -34,7 +34,7 @@ Tags are surrounded by C<%%> marks, such as this example:
 In this case, C<%%maintAddr%%> is the relevant tag name.
 
 You can control how the page layout looks by modifying and/or moving HTML
-elements and/or MiG tag elements in the template file.  It is assumed you
+elements and/or Mig tag elements in the template file.  It is assumed you
 have an understanding of HTML - modify the templates at your own risk, and
 always make a backup copy beforehand in case your changes don't work out
 the way you wanted them to.
@@ -71,7 +71,7 @@ before anything else (just like any other situation where you use CGI).
 Please note some things about C<#include>:
 
 1. All files you wish to include must live in the F<templates> subdirectory
-of your MiG installation.
+of your Mig installation.
 
 2. However, if you really don't want to do that (because it means you
 have to maintain two copies of the same file in different locations,
@@ -103,7 +103,7 @@ is used to embed the CSS style sheet file C<style.css>).
 
 =head2 SPECIAL FILES
 
-There are three special files that MiG uses for its own purposes.
+There are three special files that Mig uses for its own purposes.
 
 F<templates/folder.html> - used for any view where folders and/or
 thumbnail images are shown.
@@ -113,7 +113,7 @@ by itself.
 
 F<templates/style.css> - Contains C<text/css> markup.
 
-If you are running MiG in PHP-Nuke Compatible mode (see
+If you are running Mig in PHP-Nuke Compatible mode (see
 F<docs/phpNuke.txt>) then these three files are not used.
 In their place you will instead find:
 
@@ -122,26 +122,26 @@ F<templates/mig_folder.php> - Used for folder/thumbnail views
 F<templates/mig_image.php> - Used for "single image" views
 
 (The CSS style sheet is not used in PHP-Nuke mode because PHP-Nuke uses its
-own CSS style system and MiG aims not to interfere with that.)
+own CSS style system and Mig aims not to interfere with that.)
 
 =head2 DEFINED TAGS
 
-The following is a glossary of recognized MiG template tags, and what they
+The following is a glossary of recognized Mig template tags, and what they
 are expanded to.
 
 1. Tags for use in any template:
 
-    %%baseURL%%         Base URL to call this script (MiG) again.
+    %%baseURL%%         Base URL to call this script (Mig) again.
     %%maintAddr%%       Email address of album maintainer (as defined
-                        in mig.cfg).
-    %%version%%         Current version number of this MiG installation.
+                        in config.php).
+    %%version%%         Current version number of this Mig installation.
     %%backLink%%        This is the "up one level" link on each page.
     %%currDir%%         Current directory, in URL-encoded format.
     %%newCurrDir%%      Same as %%currDir%% with leading "./" removed.
     %%pageTitle%%       <TITLE> tag for this page.
     %%youAreHere%%      This is the "you are here" path at the top of
                         each page.
-    %%distURL%%         URL of MiG home page (value is hard-coded into
+    %%distURL%%         URL of Mig home page (value is hard-coded into
                         index.php).
     %%description%%     Description of the image, taken from the comments
                         file(s).  For folders, this is <Bulletin>.
@@ -173,7 +173,7 @@ with the C<FolderTemplate> entity, as discussed in F<docs/mig_cf.txt>.
 
 =head2 MANAGING COLORS
 
-MiG uses a Cascading Style Sheet (CSS) file to manage all of its element
+Mig uses a Cascading Style Sheet (CSS) file to manage all of its element
 colorization.  Things like the page background, background colors for table
 cells, all are managed by the CSS file F<templates/style.css>.
 

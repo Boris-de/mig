@@ -9,7 +9,7 @@ Z<>
 
 Z<>
 
-This document tries to explain how to install MiG by hand (for people with
+This document tries to explain how to install Mig by hand (for people with
 FTP access only, not shell access, to their web server).
 
 1. Unpack the distribution.  If you're on a Unix or Linux system you can
@@ -20,7 +20,7 @@ do this with the command:
 Where "VERSION" is the version (such as "1.2.3").  If you're on a Windows
 system, try Winzip at http://www.winzip.com/
 
-2. Create a directory on the server to place your MiG installation in (or
+2. Create a directory on the server to place your Mig installation in (or
 if you are upgrading, just know where the current installation is).  I'll
 use F</www/site.com/htdocs/gallery> as an example in this document, but you
 can put it anywhere you want as long as you know your web server can find
@@ -45,10 +45,10 @@ live.  If you want to install the example gallery, copy the
 F<Example_Gallery> folder into the albums folder you just created.
 (Installing the example gallery is optional)
 
-6. Copy the F<mig.cfg.default> file to F<mig.cfg> in your Mig directory.
+6. Copy the F<config.php.default> file to F<config.php> in your Mig directory.
 Edit it to taste.  If you are upgrading, you may not need to do this (just
-see if there's anything new in F<mig.cfg.default> and update your existing
-F<mig.cfg>).
+see if there's anything new in F<config.php.default> and update your existing
+F<config.php>).
 
 7. Start putting your images in the F<albums> subdirectory (i.e.
 F</www/site.com/htdocs/gallery/albums>) and there you have it.
@@ -56,7 +56,7 @@ F</www/site.com/htdocs/gallery/albums>) and there you have it.
 8. If you are copying over any of the files in the F<util> subdirectory, or
 the F<install.sh> file, make sure you send those things over in ASCII mode;
 if you send them in BINARY mode they may not work correctly.  BINARY mode
-should be fine for all of the other files in MiG.
+should be fine for all of the other files in Mig.
 
 =cut
 
