@@ -6,9 +6,9 @@ $mig_config['lang_lib']['ro'] = array (
     'pm'            => 'PM',
     'backhome'      => '&icirc;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
-    'flash_used'    => 'flash&nbsp;used',
-    'largelink'     => 'view&nbsp;full-size&nbsp;image',
-    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
+    'flash_used'    => 'utilizat&nbsp;flash',
+    'largelink'     => 'vedere&nbsp;marita',
+    'largeview'     => '&icirc;napoi&nbsp;la&nbsp;vederea&nbsp;normala',
     'main'          => 'Principal',
     'must_auth'     => 'Pentru&nbsp;a&nbsp;intra,&nbsp;trebuie&nbsp;sa'
                      . '&nbsp;introduceti&nbsp;un&nbsp;nume&nbsp;de'
@@ -22,13 +22,13 @@ $mig_config['lang_lib']['ro'] = array (
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
-    'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                     . '&nbsp;total<br />',
+    'total_images'  => 'Vedere&nbsp;imaginile&nbsp;%s-%e&nbsp;din&nbsp;%t'
+                     . '&nbsp;&icirc;n&nbsp;total<br />',
     'up_one'        => 'nivelul&nbsp;precedent',
-    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
-                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
-                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
-                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
+    'month'         => array ( '01' => 'ian', '02' => 'feb', '03' => 'mar',
+                               '04' => 'apr', '05' => 'mai', '06' => 'iun',
+                               '07' => 'iul', '08' => 'aug', '09' => 'sep',
+                               '10' => 'oct', '11' => 'noi', '12' => 'dec')
 );
 
 

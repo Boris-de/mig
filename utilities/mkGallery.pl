@@ -38,9 +38,10 @@
 #
 # You should not need to modify this code directly.  If you do, and want
 # to contribute your changes to Mig, please send me email with a diff
-# (contextual diffs are preferred, i.e. "diff -c"), and if I agree that
-# your change is of use to the general public, I will incorporate it into
-# the main code tree.
+# and if I agree that your change is of use to the general public, I
+# will incorporate it into the main code tree.  If you have GNU diff,
+# a unified diff is best (diff -u).  If you don't, a contextual
+# diff works too (diff -c).
 #
 # However, in general Mig is written with the goal that the user should
 # never have to modify actual code to use the software - everything is

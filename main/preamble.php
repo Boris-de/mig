@@ -47,8 +47,9 @@ $version = 'VeRsIoN';
 // If you find that is not the case, and you hack in support for some
 // feature you want to see in Mig, please contact me with a code diff and
 // if I agree that it is useful to the general public, I will incorporate
-// your code into the main code base for distribution.  (For the record,
-// I prefer contextual diffs, i.e. "diff -c".)
+// your code into the main code base for distribution.  If you have GNU
+// diff, a unified diff is best (diff -u), if you don't, then contextual
+// diff works too (diff -c).
 //
 // If I don't incorporate it I may very well offer it as "contributed"
 // code that others can download if they wish to do so.
