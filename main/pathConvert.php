@@ -46,8 +46,8 @@ $pathConvertFlag = FALSE;
 //         
 //     You could define:
 //         $pathConvertFlag = TRUE;
-//         $pathConvertRegex = '^.*/www/';
-//         $pathConvertTarget = '/';
+//         $pathConvertRegex = "^.*/www/";
+//         $pathConvertTarget = "/";
 //         
 //     So the regex would match this:  /u25/vhost/www12345/www/
 //     and replace it with a single slash... resulting in:
@@ -56,24 +56,24 @@ $pathConvertFlag = FALSE;
 // Defaults to an empty string.
 //         
 // Example:
-//     $pathConvertRegex = '^.*/www/';
+//     $pathConvertRegex = "^.*/www/";
 //     
 
-$pathConvertRegex = '';
+$pathConvertRegex = "";
 
 //
 // $pathConvertTarget
 //     This is the target string, which replaces the portion matched by
-//     the regex.  Usually this should be '/', but it can be changed.
+//     the regex.  Usually this should be "/", but it can be changed.
 //     See the notes for $convertPathRegex (above) for more details.
 //
 // Defaults to an empty string.
 //
 // Example:
-//     $pathConvertTarget = '/';
+//     $pathConvertTarget = "/";
 //
 
-$pathConvertTarget = '';
+$pathConvertTarget = "";
 
 // -----------------------------------------------------------------
 // End of "INCLUDE PATH" modification section
