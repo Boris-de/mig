@@ -116,5 +116,5 @@ all: $(HTML) $(TEXT) cleanup
 	pod2text FTPinstall.pod > $@
 
 cleanup:
-	/bin/rm -f pod2html*cache
+	/bin/rm -f pod2htm*
 

@@ -25,6 +25,10 @@ not.
 Fixed a bug in getExifDescription.  The string &quot;flash used&quot;
 was hard-coded rather than being included in the language library.
 
+Upgraded to most recent revision of jhead to get ISO rating support.
+
+Added ISO rating to EXIF info parser.
+
 =head2 Version 1.2.8 (Fri 29 Jun 2001)
 
 Added Italian and Spanish translations
