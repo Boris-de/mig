@@ -15,6 +15,7 @@ ARCHIVE=$(DISTDIR)/$(SPOOLDIR).tar.gz
 
 default:
 	@echo "make dist ver={version}"
+	@echo "make index ver={version}"
 	@echo "make docpublish"
 
 mig: dist
