@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.8p1';
+$version = '1.2.9';
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
@@ -91,6 +91,8 @@ $mig_language           = 'en';
 $sortType               = 'default';
 $viewCamInfo            = FALSE;
 $viewFolderCount        = FALSE;
+$imagePopup             = FALSE;
+$imagePopType           = 'reuse';
 
 // Fetch variables from the URI
 //
@@ -338,7 +340,8 @@ if ($pageType == 'folder' or $pageType == '') {
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $mig_language,
                                 $mig_messages, $sortType, $hidden,
-                                $presort_img, $desc);
+                                $presort_img, $desc, $imagePopup,
+                                $imagePopType);
 
     // Only frame the lists in table code when appropriate
 

@@ -414,7 +414,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $useThumbSubdir, $thumbSubdir, $noThumbs,
                          $thumbExt, $suppressAltTags, $language,
                          $mig_messages, $sortType, $hidden, $presorted,
-                         $description )
+                         $description, $imagePopup, $imagePopType )
 {
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
@@ -507,7 +507,8 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                                  $markerLabel, $suppressImageInfo,
                                  $useThumbSubdir, $thumbSubdir, $noThumbs,
                                  $thumbExt, $suppressAltTags, $language,
-                                 $mig_messages, $description);
+                                 $mig_messages, $description, $imagePopup,
+                                 $imagePopType);
             $imageList .= $img;
 
             // Keep track of what row and column we are on
@@ -597,7 +598,8 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
                         $albumURLroot, $fname, $ext, $markerType,
                         $markerLabel, $suppressImageInfo, $useThumbSubdir,
                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
-                        $language, $mig_messages, $description )
+                        $language, $mig_messages, $description, $imagePopup,
+                        $imagePopType )
 {
 
     // newCurrDir is currDir without leading './'
@@ -713,9 +715,31 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // beginning of the table cell
-    $url = '<td class="image"><a href="' . $baseURL . '?currDir='
+    $url = '<td class="image"><a href="';
+
+    // set up the image pop-up if appropriate to do so
+    if ($imagePopup) {
+        $popup_width = $imageWidth + 30;
+        $popup_height = $imageHeight + 150;
+        $url .= '#" onClick="window.open(\'';
+    }
+
+    $url .= $baseURL . '?currDir='
          . $currDir . '&pageType=image&image=' . $newFname
-         . '.' . $ext . '">';
+         . '.' . $ext;
+
+    if ($imagePopup) {
+        $url .= "','";
+        if ($imagePopType == 'reuse') {
+            $url .= 'mig_window_11190874';
+        } else {
+            $url .= 'mig_window_' . time() . '_' . $newFname;
+        }
+        $url .= "','width=$popup_width,height=$popup_height,"
+              . "resizable=yes,scrollbars=1');";
+    }
+
+    $url .= '">';
 
     // If $noThumbs is true, just print the image filename rather
     // than the <IMG> tag pointing to a thumbnail.

@@ -71,5 +71,7 @@ use the default (images/folder.gif).
 The number of images in a directory can be displayed next to the directory,
 in a folder list.
 
+Pop-up windows can be enabled if so desired.
+
 =cut
 

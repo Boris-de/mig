@@ -155,6 +155,20 @@ $thumbExt = '';
 $sortType = 'default';
 
 
+// Image Pop-up Windows
+//
+// If $imagePopup is set to TRUE, any time a thumbnail is clicked on,
+// a pop-up window will be opened.  Defaults to FALSE.
+//
+$imagePopup = FALSE;
+
+// If $imagePopType is set to 'reuse' then the same window will be used
+// for every image.  Otherwise you'll get a new window for every image.
+// Defaults to 'reuse'.
+//
+$imagePopType = 'reuse';
+
+
 // What language to use  (default is 'en' - English)
 //
 // Possible languages:

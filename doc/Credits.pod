@@ -72,6 +72,9 @@ Erik@Braindisorder.org for the Dutch translation.
 
 JMN <umjumasa@terra.es> for an update to the Spanish translation.
 
+Göran Fröjdh <goran@frojdh.com> for the code on which the pop-up window
+feature is based.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with MiG.
 

@@ -325,6 +325,12 @@ versions of MiG may parse more information from these files than it
 currently does.  Right now all MiG knows how to extract from the
 F<exif.inf> file is embedded comments.
 
+NOTE that most graphic editors destroy EXIF blocks!  They don't know how to
+write them so when they save images, they are simply not written back into
+the file.  You can get around this by building the EXIF data using your raw
+images, and then editing them afterward.  This may not be an option for
+everybody, but there's nothing I can do about it.
+
 (Note for users upgrading from MiG 0.83 or earlier - the filename has
 changed, as you'd have noticed already.  The install script probably
 already updated your metafiles such as F<.exif_comments.txt> but if not,
@@ -437,6 +443,11 @@ translations to the available list of languages.
 French, German, Norwegian, Portugese, Finnish, Romanian, Russian
 Windows-1251, Russian KOI8-R, Turkish, Swedish, Danish, Italian, Spanish,
 Slovak and Dutch).
+
+15. Pop-up windows
+
+If you want to use Pop-up windows for your images, see the C<$imagePopup>
+and C<$imagePopType> variables in F<mig.cfg>.
 
 =head2 BUG REPORTING
 

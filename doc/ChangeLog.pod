@@ -9,6 +9,11 @@ Z<>
 
 Z<>
 
+=head2 Version 1.2.9 ()
+
+Added C<$imagePopup> and C<$imagePopType> to F<mig.cfg.default>.  Using these
+one can have pop-up windows enabled.  See F<docs/INSTALL>.
+
 =head2 Version 1.2.8 (Fri 29 Jun 2001)
 
 Added Italian and Spanish translations
