@@ -56,17 +56,15 @@ dist: index
 
 index:
 	rm -f index.php
-	echo "<?php" > index.php
-	( sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
+	( echo "<?php" ; sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
 	  cat main/pathConvert.php; cat main/defaults.php; \
 	  echo "//"; echo "// Function library"; echo "//"; \
 	  cat functions/*.php; \
 	  echo "//"; echo "// Language library"; echo "//"; \
 	  cat languages/*.php; \
 	  echo "//"; echo "// Main logic"; echo "//"; \
-	  cat main/body.php; echo '?>' \
-	) | egrep -v "^(<\?php|\?>)" >> index.php
-	echo "?>" >> index.php
+	  cat main/body.php; echo "?>" \
+	) > index.php
 
 docpublish:
 	cd docs ; make publish
@@ -97,7 +95,7 @@ cms: index
 	cp index.php $(WEB)/phpwebsite/mig.php
 	cp index.php $(WEB)/phpwebthings/mig.php
 	cp index.php $(WEB)/xoops/modules/mig/index.php
-        cp index.php $(WEB)/geeklog/public_html/mig/index.php
+	cp index.php $(WEB)/geeklog/public_html/mig/index.php
 
 clean:
 	rm -rf docs/html docs/text index.php
