@@ -1,0 +1,57 @@
+$Id$
+
+
+=pod
+
+Z<>
+
+=head1 Installing MIG without unix shell access (i.e. via FTP)
+
+Z<>
+
+This document tries to explain how to install MiG by hand (for people with
+FTP access only, not shell access, to their web server).
+
+1. Unpack the distribution.  If you're on a Unix or Linux system you can
+do this with the command:
+
+    tar xvfz mig-VERSION.tar.gz
+
+Where "VERSION" is the version (such as "1.2.3").  If you're on a Windows
+system, try Winzip at http://www.winzip.com/
+
+2. Create a directory on the server to place your MiG installation in (or
+if you are upgrading, just know where the current installation is).  I'll
+use F</www/site.com/htdocs/gallery> as an example in this document, but you
+can put it anywhere you want as long as you know your web server can find
+the files there.
+
+3. Copy the F<index.php>, F<funcs.php> and F<lang.php> file to your
+server's new Mig directory.  This document assumes .php as the extension
+your web server uses to recognize PHP files.  If that isn't the case then
+rename F<index.php> to F<index.php3> (or whatever extension is
+appropriate).  Do NOT rename the other PHP files (their names are hardcoded
+into the program)!
+
+4. Create the subdirectories C<images> and C<templates> (i.e.
+F</www/site.com/htdocs/gallery/images> and
+F</www/site.com/htdocs/gallery/templates>), and copy the files in the
+F<images> and F<templates> subdirectories to those directories,
+respectively.
+
+5. Create subdirectory C<albums> (i.e.
+F</www/site.com/htdocs/gallery/albums>).  This is where your albums will
+live.  If you want to install the example gallery, copy the
+F<Example_Gallery> folder into the albums folder you just created.
+(Installing the example gallery is optional)
+
+6. Copy the F<mig.cfg.default> file to F<mig.cfg> in your Mig directory.
+Edit it to taste.  If you are upgrading, you may not need to do this (just
+see if there's anything new in F<mig.cfg.default> and update your existing
+F<mig.cfg>).
+
+7. Start putting your images in the F<albums> subdirectory (i.e.
+F</www/site.com/htdocs/gallery/albums>) and there you have it.
+
+=cut
+
