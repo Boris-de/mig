@@ -104,6 +104,57 @@ E<lt>A HREFE<gt> tags which don't fit into ALT tags especially well.  (You
 can suppress ALT tags entirely by setting C<$suppressAltTags> to C<TRUE> in
 F<mig.cfg>).
 
+=head2 FOLDER ICONS
+
+    FolderIcon folder_name icon_file.gif
+
+Sometimes it is desirable to have a custom icon for a given folder.
+You can define this with the C<FolderIcon> entity.  Given a folder
+C<Trips/Rome>, let's say you wanted to have a little icon of the
+Colloseum as your folder icon for the F<Rome> folder.  What you would
+do is define, in F<Trips/mig.cf>...
+
+    FolderIcon Rome colloseum.gif
+
+Then you would need to put F<colloseum.gif> into Mig's F<images> folder,
+found in the root directory of your Mig installation.
+
+If you do not define a C<FolderIcon> the default of F<folder.gif> will be
+used.
+
+=head2 PER-FOLDER TEMPLATE
+
+    FolderTemplate /path/to/file.tmpl
+    FolderTemplate file.tmpl
+
+You can define a per-folder template file, which overrides the global
+template file.  This is handy to customize a particular folder.
+
+If the C<FolderTemplate> entity is followed by a filename, the file is
+assumed to be in the same folder as the F<mig.cf> itself.
+
+If the C<FolderTemplate> entity is followed by a full file path, beginning
+with a C</> character, that full path is instead used.
+
+If a C<FolderTemplate> is not defined, the default template file is used.
+
+=head2 PER-FOLDER PAGE TITLE
+
+    PageTitle This is my Page Title for this Folder
+
+You can define a page title per-folder.  Just add the C<PageTitle>
+tag, followed by a single space, followed by the string you wish
+to use as the page title for this folder.
+
+=head2 PER-FOLDER COLUMN SETTINGS
+
+    MaxFolderColumns 2
+    MaxThumbColumns 4
+
+You can define, on a per-folder basis, how many columns are used when
+displaying lists of folders and thumbnails.  These override the values of
+C<$maxFolderColumns> and C<$maxThumbColumns> set in F<mig.cfg>.
+
 =head2 HIDDEN ITEMS
 
     <Hidden>

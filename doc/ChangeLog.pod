@@ -25,6 +25,24 @@ F<exif.inf> is present in a given gallery folder, it will be read to try to
 extract camera model, and frame exposure information for display on the
 page.
 
+Added C<$viewFolderCount> to F<mig.cfg.default>.  If set to C<TRUE>, the
+number of images in a given folder will be displayed next to the folder's
+name in parentheses, in a folder list view.
+
+Added C<FolderIcon> entity to F<mig.cf> parser.  Lets you define something
+other than F<folder.gif> as the icon for a folder.  You can define each
+folder with any icon you want.  Default is still F<folder.gif>.
+
+Added C<FolderTemplate> entity to F<mig.cf> parser.  This allows for a
+template file to be defined within the folder itself, specific to that
+folder.  Or you can define a full path if you wanted.
+
+Added C<PageTitle> entity to F<mig.cf> parser.  Allows for a per-folder
+pageTitle to be set.
+
+Added C<MaxFolderColumns> and C<MaxThumbColumns> entities to F<mig.cf>
+parser.  This permits custom column settings per folder.
+
 =head2 Version 1.2.7p1 (Sun Apr 15 2001)
 
 Fixed bug from 1.2.7 which caused images to show up as folders when both

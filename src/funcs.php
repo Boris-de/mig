@@ -57,6 +57,7 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
     $presort_dir    = array ();
     $presort_img    = array ();
     $desc           = array ();
+    $ficons         = array ();
 
     // Hide thumbnail subdirectory if one is in use.
     if ($useThumbSubdir) {
@@ -118,6 +119,37 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 $mycomment = '';
             }
 
+            // Parse FolderIcon lines
+            if (eregi('^foldericon ', $line)) {
+                $x = trim($line);
+                list($y, $folder, $icon) = explode(' ', $x);
+                $ficons[$folder] = $icon;
+            }
+
+            // Parse FolderTemplate lines
+            if (eregi('^foldertemplate ', $line)) {
+                $x = trim($line);
+                list($y, $template) = explode(' ', $x);
+            }
+
+            // Parse PageTitle lines
+            if (eregi('^pagetitle ', $line)) {
+                $x = trim($line);
+                $pagetitle = eregi_replace('^pagetitle ', '', $x);
+            }
+
+            // Parse MaxFolderColumns lines
+            if (eregi('^maxfoldercolumns ', $line)) {
+                $x = trim($line);
+                list($y, $fcols) = explode(' ', $x);
+            }
+
+            // Parse MaxThumbColumns lines
+            if (eregi('^maxthumbcolumns ', $line)) {
+                $x = trim($line);
+                list($y, $tcols) = explode(' ', $x);
+            }
+
             // Get next line
             $line = fgets($file, 4096);
 
@@ -126,7 +158,9 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
         fclose($file);
     }
 
-    $retval = array ($hidden, $presort_dir, $presort_img, $desc, $bulletin);
+    $retval = array ($hidden, $presort_dir, $presort_img, $desc,
+                     $bulletin, $ficons, $template, $pagetitle,
+                     $fcols, $tcols);
     return $retval;
 
 }   //  -- End of parseMigCf()
@@ -143,13 +177,17 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $server, $useVirtual )
 {
 
+    if (! ereg('^/', $templateFile)) {
+        $templateFile = $albumDir . '/' . $newCurrDir . '/' . $templateFile;
+    }
+
     // Panic if the template file doesn't exist.
-    if (! file_exists("$templateDir/$templateFile")) {
-        print "ERROR: $templateDir/$templateFile does not exist!";
+    if (! file_exists($templateFile)) {
+        print "ERROR: $templateFile does not exist!";
         exit;
     }
 
-    $file = fopen("$templateDir/$templateFile",'r');    // Open template file
+    $file = fopen($templateFile,'r');    // Open template file
     $line = fgets($file, 4096);                         // Get first line
 
     while (! feof($file)) {             // Loop until EOF
@@ -242,7 +280,8 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
 
 function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
                         $useThumbSubdir, $thumbSubdir, $maxColumns,
-                        $hidden, $presorted )
+                        $hidden, $presorted, $viewFolderCount,
+                        $markerType, $markerLabel, $ficons )
 {
 
     $oldCurrDir = $currDir;         // Stash this to build full path with
@@ -252,7 +291,9 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     $currDir = rawurldecode($enc_currdir);
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
-    $directories = array ();                    // prototype
+
+    $directories = array ();                    // prototypes
+    $counts = array ();
 
     while ($file = readdir($dir)) {
 
@@ -265,6 +306,15 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
 
                 // Stash file in an array
                 $directories[$file] = TRUE;
+
+                // Get a count of the images it contains, if
+                // desired.
+                if ($viewFolderCount) {
+                    $folder = "$albumDir/$currDir/$file";
+                    $counts[$file] = getNumberOfImages($folder,
+                                        $useThumbSubdir, $markerType,
+                                        $markerLabel);
+                }
             }
         }
     }
@@ -314,9 +364,19 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
         // Build the full link (icon plus folder name) and tack it on
         // the end of the list.
         $directoryList .= '<td class="folder">' . $linkURL . '<img src="'
-                       . $imageDir . '/folder.gif" border="0"></a>&nbsp;'
+                       . $imageDir . '/';
+        if ($ficons[$file]) {
+            $directoryList .= $ficons[$file];
+        } else {
+            $directoryList .= 'folder.gif';
+        }
+        $directoryList .= '" border="0"></a>&nbsp;'
                        . $linkURL . '<font size="-1">' . $nbspfile
-                       . '</font></a></td>';
+                       . '</font></a>';
+        if ($viewFolderCount and $counts[$file] > 0) {
+            $directoryList .= ' (' . $counts[$file] . ')';
+        }
+        $directoryList .= '</td>';
 
         // Keep track of what row/column we're on
         if ($col == $maxColumns) {
@@ -1044,6 +1104,43 @@ function getNewCurrDir( $currDir )
     return $newCurrDir;
 
 }   // -- End of getNewCurrDir()
+
+
+
+// getNumberOfImages() - counts images in a given folder
+
+function getNumberOfImages( $folder, $useThumbSubdir, $markerType,
+                            $markerLabel )
+{
+
+    $dir = opendir($folder);    // Open directory handle
+
+    while ($file = readdir($dir)) {
+        // Skip over thumbnails
+        if (!$useThumbSubdir) {  // unless $useThumbSubdir is set,
+                                 // then don't waste time on this check
+
+            if ($markerType == 'suffix'
+                and eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file)) {
+                    continue;
+            }
+            if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file)) {
+                continue;
+            }
+        }
+
+        // We'll look at this one only if it's a file and it matches our list
+        // of approved extensions
+        $ext = getFileExtension($file);
+        if (is_file("$folder/$file")
+            and eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
+                $count++;
+        }
+    }
+
+    return $count;
+
+}   // -- End of getNumberOfImages()
 
 
 

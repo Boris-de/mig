@@ -103,6 +103,13 @@ $suppressAltTags = FALSE;
 $viewCamInfo = FALSE;
 
 
+// Boolean to determine whether or not to count images in each folder
+// and display this, in folder views, next to the folder name.
+// Defaults to FALSE.
+//
+$viewFolderCount = FALSE;
+
+
 // Boolean to define whether to suppress thumbnails altogether or not.
 // Defaults to FALSE.
 //

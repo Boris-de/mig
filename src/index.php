@@ -90,6 +90,7 @@ $suppressAltTags        = FALSE;
 $mig_language           = 'en';
 $sortType               = 'default';
 $viewCamInfo            = FALSE;
+$viewFolderCount        = FALSE;
 
 // Fetch variables from the URI
 //
@@ -292,18 +293,34 @@ if (strstr($currDir, '..')) {
 $image = rawurldecode($image);
 
 // Fetch mig.cf information
-list($hidden, $presort_dir, $presort_img, $desc, $bulletin)
+list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
+     $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols)
     = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
 // if $pageType is null, or "folder") generate a folder view
 
 if ($pageType == 'folder' or $pageType == '') {
 
-    // Determine which template to use depending on the mode
-    if ($phpNukeCompatible) {
-        $templateFile = 'mig_folder.php';
+    // Determine which template to use
+    if ($folderTemplate) {
+        $templateFile = $folderTemplate;
+    } elseif ($phpNukeCompatible) {
+        $templateFile = $templateDir . '/mig_folder.php';
     } else {
-        $templateFile = 'folder.html';
+        $templateFile = $templateDir . '/folder.html';
+    }
+
+    // Determine page title to use
+    if ($folderPageTitle) {
+        $pageTitle = $folderPageTitle;
+    }
+
+    // Determine columns to use
+    if ($folderFolderCols) {
+        $maxFolderColumns = $folderFolderCols;
+    }
+    if ($folderThumbCols) {
+        $maxThumbColumns = $folderThumbCols;
     }
 
     // Generate some HTML to pass to the template printer
@@ -311,7 +328,9 @@ if ($pageType == 'folder' or $pageType == '') {
     // list of available folders
     $folderList = buildDirList($baseURL, $albumDir, $currDir, $imageDir,
                                $useThumbSubdir, $thumbSubdir,
-                               $maxFolderColumns, $hidden, $presort_dir);
+                               $maxFolderColumns, $hidden, $presort_dir,
+                               $viewFolderCount, $markerType, $markerLabel,
+                               $ficons);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns, $folderList,
@@ -359,9 +378,12 @@ if ($pageType == 'folder' or $pageType == '') {
     $youAreHere = buildYouAreHere($baseURL, $currDir, '', $mig_language,
                                   $mig_messages);
 
+    // newcurrdir is currdir without the leading './'
+    $newCurrDir = getNewCurrDir($currDir);
+
     // parse the template file and print to stdout
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
-                  $folderList, $imageList, $backLink, '', '', '', '',
+                  $folderList, $imageList, $backLink, '', '', '', $newCurrDir,
                   $pageTitle, '', '', '', $bulletin, $youAreHere, $distURL,
                   $albumDir, $server, $useVirtual);
 
@@ -369,6 +391,10 @@ if ($pageType == 'folder' or $pageType == '') {
 // If $pageType is "image", show an image
 
 } elseif ($pageType == 'image') {
+
+    if ($folderPageTitle) {
+        $pageTitle = $folderPageTitle;
+    }
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
@@ -412,9 +438,9 @@ if ($pageType == 'folder' or $pageType == '') {
 
     // Determine what template to use, based on what mode we are in
     if ($phpNukeCompatible) {
-        $templateFile = 'mig_image.php';
+        $templateFile = $templateDir . '/mig_image.php';
     } else {
-        $templateFile = 'image.html';
+        $templateFile = $templateDir . '/image.html';
     }
 
     // newcurrdir is currdir without the leading './'

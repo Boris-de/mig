@@ -36,7 +36,8 @@ Thumbnails can be in the same directory, or in a special thumbnail
 subdirectory.
 
 Page layout is template-based so you can modify the look and feel of your
-gallery.
+gallery.  A generic template is provided, but you can override it on a
+per-folder basis if desired.
 
 Folders and/or images can be marked as "hidden" to keep them away from
 prying eyes.
@@ -63,6 +64,12 @@ off optionally.
 
 A file-include system as a part of the template system so you can include
 your own files in MiG templates (HTML, PHP, plain text, etc).
+
+Each folder in a folder list can have its own icon if desired - or it will
+use the default (images/folder.gif).
+
+The number of images in a directory can be displayed next to the directory,
+in a folder list.
 
 =cut
 

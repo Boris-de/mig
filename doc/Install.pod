@@ -224,6 +224,8 @@ have the necessary information.
 
 You may optionally edit the HTML templates found in the F<templates>
 subdirectory.  See the file F<docs/Templates.txt> for more information.
+You can also use a custom per-folder template file in each folder if
+desired - see F<docs/mig_cf.txt> for more information.
 
 2. Hidden folders and hidden files
 

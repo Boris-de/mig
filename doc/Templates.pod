@@ -166,6 +166,11 @@ are expanded to.
     %%imageSize%%       HTML that gives WIDTH=nnn and HEIGHT=nnn tags
                         for the image being displayed.
 
+=head2 CUSTOM PER-FOLDER TEMPLATES
+
+If desired, one can define a per-folder template file.  This can be done
+with the C<FolderTemplate> entity, as discussed in F<docs/mig_cf.txt>.
+
 =head2 MANAGING COLORS
 
 MiG uses a Cascading Style Sheet (CSS) file to manage all of its element
