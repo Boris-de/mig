@@ -29,37 +29,37 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     if ($type == 'image') {
         if ($mig_config['usethumbsubdir']) {
-
+        
+            $thumbFile = $mig_config['albumdir'] . "/$oldCurrDir/"
+                       . $mig_config['thumbsubdir'] . "/$fname.";
+                       
             if ($mig_config['thumbext']) {
-                $thumbFile = $mig_config['albumdir']."/$oldCurrDir/"
-                           . $mig_config['thumbsubdir']
-                           . "/$fname." . $mig_config['thumbext'];
+                $thumbFile .= $mig_config['thumbext'];
             } else {
-                $thumbFile = $mig_config['albumdir']."/$oldCurrDir/"
-                           . $mig_config['thumbsubdir']
-                           . "/$fname.$ext";
+                $thumbFile .= $ext;
             }
 
         } else {
 
             if ($mig_config['markertype'] == 'prefix') {
                 $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/"
-                            . $mig_config['markerlabel'];
+                            . $mig_config['markerlabel'] . "_$fname.";
 
                 if ($mig_config['thumbext']) {
-                    $thumbFile .= "_$fname." . $mig_config['thumbext'];
+                    $thumbFile .= $mig_config['thumbext'];
                 } else {
-                    $thumbFile .= "_$fname.$ext";
+                    $thumbFile .= $ext;
                 }
             }
 
             if ($mig_config['markertype'] == 'suffix') {
-                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname";
+                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname"
+                            . "_$markerLabel.";
 
                 if ($mig_config['thumbext']) {
-                    $thumbFile .= "_$markerLabel." . $mig_config['thumbext'];
+                    $thumbFile .= $mig_config['thumbext'];
                 } else {
-                    $thumbFile .= "_$markerLabel.$ext";
+                    $thumbFile .= $ext;
                 }
             }
         }
@@ -68,35 +68,36 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     if (file_exists($thumbFile)) {
         if ($mig_config['usethumbsubdir']) {
             $thumbImage  = $mig_config['albumurlroot'] . "/$currDir/"
-                         . $mig_config['thumbSubdir'];
+                         . $mig_config['thumbSubdir'] . "/$fname.";
 
             if ($mig_config['thumbext']) {
-                $thumbImage .= "/$fname." . $mig_config['thumbext'];
+                $thumbImage .= $mig_config['thumbext'];
             } else {
-                $thumbImage .= "/$fname.$ext";
+                $thumbImage .= $ext;
             }
 
         } else {
 
             if ($mig_config['markertype'] == 'prefix') {
                 $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/".$mig_config['markerlabel'];
+                             . "/$currDir/".$mig_config['markerlabel']
+                             . "_$fname.";
 
                 if ($mig_config['thumbext']) {
-                    $thumbImage .= "_$fname." . $mig_config['thumbext'];
+                    $thumbImage .= $mig_config['thumbext'];
                 } else {
-                    $thumbImage .= "_$fname.$ext";
+                    $thumbImage .= $ext;
                 }
             }
 
             if ($mig_config['markertype'] == 'suffix') {
                 $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/$fname";
+                             . "/$currDir/$fname_$markerLabel.";
 
                 if ($mig_config['thumbext']) {
-                    $thumbImage .= "_$markerLabel." . $mig_config['thumbext'];
+                    $thumbImage .= $mig_config['thumbext'];
                 } else {
-                    $thumbImage .= "_$markerLabel.$ext";
+                    $thumbImage .= $ext;
                 }
             }
         }
@@ -201,7 +202,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
             $url .= ' title="' . $alt_desc . '"';
         }
 
-        $url .= ' href=\"';
+        $url .= ' href="';
 
         // set up the image pop-up if appropriate to do so
         if ($mig_config['imagepopup']) {

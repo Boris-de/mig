@@ -91,6 +91,12 @@ Moved most of the variables which don't change except in the main body into
 the C<$mig_config> array, rather than passing as parameters to functions.
 Most functions no longer have enormously long parameter lists.
 
+Optimized parts of C<buildImageURL()> which were doing the same string
+manipulations in either result of an if/else test.
+
+Got rid of a misplaced backslash in C<buildImageURL()>.  This may fix a bug
+where Mig URLs can get embedded quote marks where they don't belong.
+
 =head2 Version 1.3.8 (Fri, 25 Oct 2002)
 
 If Mig is called with no parameters, it will redirect to itself with
