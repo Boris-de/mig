@@ -1,10 +1,9 @@
 
 // getNumberOfImages() - counts images in a given folder
 
-function getNumberOfImages( $folder, $useThumbSubdir, $markerType,
-                            $markerLabel )
+function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
+                             $markerLabel )
 {
-
     $dir = opendir($folder);    // Open directory handle
 
     while ($file = readdir($dir)) {

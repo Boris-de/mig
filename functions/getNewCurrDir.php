@@ -1,8 +1,8 @@
 
 // getNewCurrDir() - replaces the silly old $newCurrDir being all
-// over the place.  Especially in the URI string itself.
+//                   over the place.  Especially in the URI string itself.
 
-function getNewCurrDir( $currDir )
+function getNewCurrDir ( $currDir )
 {
 
     // This just rips off the leading './' off currDir if it exists

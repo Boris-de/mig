@@ -89,7 +89,8 @@ $maxFolderColumns = 2;
 //
 // $maxThumbColumns
 //     Maximum number of columns to use (how many images across the
-//     screen in a single row) in thumbnail lists.
+//     screen in a single row) in thumbnail lists.  (see also
+//     $maxThumbRows)
 //
 // Defaults to 4.
 //
@@ -111,7 +112,7 @@ $maxThumbColumns = 4;
 //      in a gallery.
 //
 //      If you don't want to use "pages" at all, set this to some
-//      impossibly high value like 10000.
+//      very large value like 1000.
 //
 // Defaults to 5.
 //

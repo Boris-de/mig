@@ -4,8 +4,9 @@
 function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
                         $useThumbSubdir, $thumbSubdir, $maxColumns,
                         $hidden, $presorted, $viewFolderCount,
-                        $markerType, $markerLabel, $ficons )
+                        $ficons )
 {
+    global $mig_config;
 
     $oldCurrDir = $currDir;         // Stash this to build full path
 
@@ -21,9 +22,8 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
     if ($viewFolderCount) {
         while(list($file,$x) = each($presorted)) {
             $folder = "$albumDir/$currDir/$file";
-            $counts[$file] = getNumberOfImages($folder,
-                                $useThumbSubdir, $markerType,
-                                $markerLabel);
+            $counts[$file] = getNumberOfImages($folder, $useThumbSubdir,
+                                               $markerType, $markerLabel);
         }
         reset($presorted);
     }
@@ -45,8 +45,9 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
                 if ($viewFolderCount) {
                     $folder = "$albumDir/$currDir/$file";
                     $counts[$file] = getNumberOfImages($folder,
-                                        $useThumbSubdir, $markerType,
-                                        $markerLabel);
+                                                       $useThumbSubdir,
+                                                       $markerType,
+                                                       $markerLabel);
                 }
             }
         }

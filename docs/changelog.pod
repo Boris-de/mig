@@ -11,6 +11,16 @@ Updated Danish translation with patch from Mikkel Kristensen.
 Tested Nuke mode with PHPWebSite 0.8.2, works fine with no changes.
 Updated F<phpnuke> document to reflect this.
 
+Merged patch from Pawel Dylik to implement pagination of large galleries.
+This resulted in the new F<config.php> option C<$maxThumbRows>.  Right now,
+there's a slight bug in this behavior.  If you click an image while on say,
+page 2, then use the next-image link a bunch of times until you get to an
+image that would be on page 3, if you then go back to thumbnail view, you
+end up back on page 2.  For now I will let this sit, because fixing it
+would require rewriting a lot of code.  However, I may introduce a new
+image sorting function later which addresses this and at the same time
+cleans up some redundant code.
+
 =head2 Version 1.3.2 (Tue, 21 May 2002)
 
 Some major changes this release - please pay attention!

@@ -1,13 +1,14 @@
 
 // buildImageList() - creates a list of images available
 
-function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
-                         $albumURLroot, $maxColumns, $maxRows,
-                         $directoryList, $markerType, $markerLabel,
-                         $suppressImageInfo, $useThumbSubdir, $thumbSubdir,
-                         $noThumbs, $thumbExt, $suppressAltTags, $sortType,
-                         $hidden, $presorted, $description, $imagePopup,
-                         $imagePopType, $commentFilePerImage, $startFrom )
+function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
+                          $albumURLroot, $maxColumns, $maxRows,
+                          $markerType, $markerLabel,
+                          $directoryList, $suppressImageInfo, $useThumbSubdir,
+                          $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
+                          $sortType, $hidden, $presorted, $description,
+                          $imagePopup, $imagePopType, $commentFilePerImage,
+                          $startFrom )
 {
     global $mig_config;
 
@@ -158,10 +159,11 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 
                 $fname = getFileName($file);
                 $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
-                                     $albumURLroot, $fname, $ext, $markerType,
-                                     $markerLabel, $suppressImageInfo,
-                                     $useThumbSubdir, $thumbSubdir, $noThumbs,
-                                     $thumbExt, $suppressAltTags, $description,
+                                     $albumURLroot, $fname, $ext,
+                                     $suppressImageInfo, $markerType,
+                                     $markerLabel, $useThumbSubdir,
+                                     $thumbSubdir, $noThumbs, $thumbExt,
+                                     $suppressAltTags, $description,
                                      $imagePopup, $imagePopType,
                                      $commentFilePerImage, $startFrom);
                 $imageList .= $img;

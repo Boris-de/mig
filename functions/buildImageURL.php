@@ -1,12 +1,12 @@
 
-// buildImageURL() -- spit out HTML for a particular image
+// buildImageURL() - spit out HTML for a particular image
 
-function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
-                        $albumURLroot, $fname, $ext, $markerType,
-                        $markerLabel, $suppressImageInfo, $useThumbSubdir,
-                        $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
-                        $description, $imagePopup, $imagePopType,
-                        $commentFilePerImage, $startFrom )
+function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
+                         $albumURLroot, $fname, $ext, $suppressImageInfo,
+                         $markerType, $markerLabel,
+                         $useThumbSubdir, $thumbSubdir, $noThumbs, $thumbExt,
+                         $suppressAltTags, $description, $imagePopup,
+                         $imagePopType, $commentFilePerImage, $startFrom )
 {
     global $mig_config;
 

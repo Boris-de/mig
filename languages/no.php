@@ -14,6 +14,7 @@ $mig_config['lang_lib']['no'] = array (
     'no_contents'   => 'Tom&nbsp;katalog',
     'previmage'     => 'forrige&nbsp;bilde',
     'thumbview'     => 'tilbake&nbsp;til&nbsp;oversikt',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'opp&nbsp;et&nbsp;niv&#229;',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

@@ -1,9 +1,9 @@
 
 // folderFrame() - frames stuff in HTML table code... avoids template
-// problems in places where there are images but no folders, or vice
-// versa.
+//                 problems in places where there are images but no folders,
+//                 or vice versa.
 
-function folderFrame( $input )
+function folderFrame ( $input )
 {
 
     $retval = '<table border="0" cellpadding="2" cellspacing="0">'

@@ -13,6 +13,7 @@ $mig_config['lang_lib']['ro'] = array (
     'no_contents'   => 'Repertoriu&nbsp;GOL',
     'previmage'     => 'imaginea&nbsp;precedenta',
     'thumbview'     => '&#238;napoi&nbsp;la&nbsp;repertoriu',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'nivelul&nbsp;precedent',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

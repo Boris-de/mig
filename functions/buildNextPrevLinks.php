@@ -1,12 +1,11 @@
 
-// buildNextPrevLinks() -- Build a link to the "next" and "previous"
-// images.
+// buildNextPrevLinks() - Build a link to the "next" and "previous"
+//                        images.
 
-function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
-                             $markerType, $markerLabel, $hidden,
-                             $presorted, $sortType, $startFrom )
+function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
+                              $markerType, $markerLabel,
+                              $hidden, $presorted, $sortType, $startFrom )
 {
-
     global $mig_config;
 
     // newCurrDir is currDir without the leading './'

@@ -13,6 +13,7 @@ $mig_config['lang_lib']['nl'] = array (
     'no_contents'   => 'Geen&nbsp;commentaar.',
     'previmage'     => 'vorige&nbsp;foto',
     'thumbview'     => 'terug&nbsp;naar&nbsp;overzicht',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'een&nbsp;niveau&nbsp;omhoog',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

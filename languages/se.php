@@ -14,6 +14,7 @@ $mig_config['lang_lib']['se'] = array (
                      . '&nbsp;tomt',
     'previmage'     => 'f&ouml;reg&aring;ende&nbsp;bild',
     'thumbview'     => 'tillbaka&nbsp;till&nbsp;miniatyrbilderna',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'tillbaka&nbsp;till&nbsp;f&ouml;reg&aring;ende'
                      . '&nbsp;sida',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',

@@ -1,7 +1,7 @@
 
 // getFileExtension() - figure out a file's extension and return it.
 
-function getFileExtension( $file )
+function getFileExtension ( $file )
 {
 
     // Strip off the extension part of the filename

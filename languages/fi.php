@@ -13,6 +13,7 @@ $mig_config['lang_lib']['fi'] = array (
     'no_contents'   => 'Albumi&nbsp;on&nbsp;tyhj&#228;',
     'previmage'     => 'edellinen&nbsp;kuva',
     'thumbview'     => 'takaisin&nbsp;kuva&nbsp;valikkoon',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'paluu&nbsp;edelliselle&nbsp;sivulle',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

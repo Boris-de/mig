@@ -198,12 +198,16 @@ $albumURLroot = $baseHref . '/albums';
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
-if ($markerType != 'prefix' and $markerType != 'suffix') {
-    $markerType='suffix';
+$mig_config['markerType'] = $markerType;
+if ( $mig_config['markerType'] != 'prefix'
+     && $mig_config['markerType'] != 'suffix' )
+{
+    $mig_config['markerType'] = 'suffix';
 }
 
-if (! $markerLabel) {
-    $markerLabel = 'th';
+$mig_config['markerLabel'] = $markerLabel;
+if (! $mig_config['markerLabel']) {
+    $mig_config['markerLabel'] = 'th';
 }
 
 // (Try to) get around the track_vars vs. register_globals problem
@@ -292,23 +296,18 @@ if ($pageType == 'folder') {
         $maxThumbColumns = $folderThumbCols;
     }
 
-    if ($folderThumbRows) {
-        $maxThumbRows = $folderThumbRows;
-    }
-
     // Generate some HTML to pass to the template printer
 
     // list of available folders
     $folderList = buildDirList($baseURL, $albumDir, $currDir, $imageDir,
                                $useThumbSubdir, $thumbSubdir,
                                $maxFolderColumns, $hidden, $presort_dir,
-                               $viewFolderCount, $markerType, $markerLabel,
-                               $ficons);
+                               $viewFolderCount, $ficons);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,
-                                $maxThumbRows, $folderList, $markerType,
-                                $markerLabel, $suppressImageInfo,
+                                $maxThumbRows, $markerType, $markerLabel,
+                                $folderList, $suppressImageInfo,
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $sortType,
                                 $hidden, $presort_img, $desc, $imagePopup,
@@ -374,8 +373,8 @@ if ($pageType == 'folder') {
     // position (#x of y)
     $Links = array ();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
-                                $markerType, $markerLabel, $hidden,
-                                $presort_img, $sortType, $startFrom);
+                                $markerType, $markerLabel,
+                                $hidden, $presort_img, $sortType, $startFrom);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description

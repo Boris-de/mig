@@ -1,8 +1,9 @@
 
 // getImageDescFromFile() - Fetches an image description from a
-// per-image comment file (used if $commentFilePerImage is TRUE)
+//                          per-image comment file (used if
+//                          $commentFilePerImage is TRUE)
 
-function getImageDescFromFile( $image, $albumDir, $currDir )
+function getImageDescFromFile ( $image, $albumDir, $currDir )
 {
 
     $imageDesc = '';
@@ -24,5 +25,5 @@ function getImageDescFromFile( $image, $albumDir, $currDir )
 
     return $imageDesc;
 
-}   // -- End of getImageDescFromFile();
+}   // -- End of getImageDescFromFile()
 

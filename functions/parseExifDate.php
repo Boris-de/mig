@@ -1,6 +1,6 @@
 
-//  parseExifDate() - parses an EXIF date string and returns it in a
-//  more human-readable format.
+// parseExifDate() - parses an EXIF date string and returns it in a
+//                   more human-readable format.
 
 function parseExifDate ( $stamp )
 {

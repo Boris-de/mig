@@ -1,8 +1,8 @@
 
 // buildYouAreHere() - build the "You are here" line for the top
-// of each page
+//                     of each page
 
-function buildYouAreHere( $baseURL, $currDir, $image )
+function buildYouAreHere ( $baseURL, $currDir, $image )
 {
 
     global $mig_config;

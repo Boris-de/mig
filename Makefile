@@ -17,6 +17,7 @@ default:
 	@echo "make dist ver={version}"
 	@echo "make index ver={version}"
 	@echo "make docpublish"
+	@echo "make snoopy"
 
 mig: dist
 
@@ -55,9 +56,4 @@ index:
 
 docpublish:
 	cd docs ; make publish
-
-snoopy:
-	rm -f index.php
-	make index
-	scp index.php snoopy.net:/www/tangledhelix.com/html/gallery/index3.php
 

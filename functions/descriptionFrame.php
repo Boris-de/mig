@@ -1,7 +1,7 @@
 
 // descriptionFrame() - Same thing as folderFrame() for descriptions.
 
-function descriptionFrame( $input )
+function descriptionFrame ( $input )
 {
 
     $retval = '<table border="0" cellpadding="10" width="60%">'

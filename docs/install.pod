@@ -308,6 +308,20 @@ Slovak, Dutch and Polish).
 Pop-up windows can be used (see the C<$imagePopup> option in
 F<config.php>).
 
+=item 7. Pagination of large galleries
+
+Sometimes a gallery gets so large, fitting all the thumbnails on one page
+becomes a problem (think of a gallery with 500 images).  To resolve this,
+Mig paginates large galleries.  By default, any gallery with more than 20
+images will go into a paged mode (4 images across, in 5 rows).
+
+This can be controlled using two options in F<config.php>:
+C<$maxThumbColumns> and C<$maxThumbRows>.  Their names are
+self-explanatory.  Set C<$maxThumbColumns> to the maximum number of columns
+desired (how many thumbnails across from left to right in one row).  Set
+C<$maxThumbRows> to the maximum number of rows per page/screen.  The
+defaults are 4 columns and 5 rows (for 20 images per page).
+
 =back
 
 =head2 Bug Reporting

@@ -1,8 +1,8 @@
 
 // migURLencode() - fixes a problem where "/" turns into "%2F" when
-// using rawurlencode()
+//                  using rawurlencode()
 
-function migURLencode( $string )
+function migURLencode ( $string )
 {
 
     $new = rawurldecode($string);   // decode first

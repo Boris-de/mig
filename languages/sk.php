@@ -14,6 +14,7 @@ $mig_config['lang_lib']['sk'] = array (
     'previmage'     => 'predch&#225;dzaj&#250;ci&nbsp;obr&#225;zok',
     'thumbview'     => 'sp&#228;?&nbsp;na&nbsp;zmen?eniny&nbsp;obr&#225;zkov'
                      . '(thumbnail)',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'o&nbsp;&#250;rove&#242;&nbsp;vy??ie',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

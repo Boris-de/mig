@@ -1,8 +1,8 @@
 
 // buildBackLink() - spits out a "back one section" link
 
-function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
-                        $noThumbs, $startFrom )
+function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
+                         $noThumbs, $startFrom )
 {
 
     global $mig_config;
