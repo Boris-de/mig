@@ -242,8 +242,9 @@ $mig_messages['it'] = array (
 );
 
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
+// with some adjustments from JMN <umjumasa@terra.es>
 $mig_messages['es'] = array (
-     'backhome'      => 'volver&nbsp;a',
+     'backhome'      => 'regresar&nbsp;inicio',
      'bytes'         => '&nbsp;bytes',
      'main'          => 'Principal',
      'must_auth'     => 'Debes introducir un usuario y clave v&#225;lidas'
