@@ -3,10 +3,10 @@
 // buildNextPrevLinks() - Build a link to the "next" and "previous"
 //                        images.
 
-function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
+function buildNextPrevLinks ( $albumDir, $currDir, $image,
                               $markerType, $markerLabel,
                               $hidden, $presorted, $sortType, $startFrom,
-                              $pageType, $largeSubdir )
+                              $pageType )
 {
     global $mig_config;
     global $mig_dl;
@@ -16,7 +16,7 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
 
     if (is_dir("$albumDir/$currDir")) {
         if ($pageType == 'large') {
-            $dir = opendir("$albumDir/$currDir/$largeSubdir");
+            $dir = opendir("$albumDir/$currDir/".$mig_config['largesubdir']);
         } else {
             $dir = opendir("$albumDir/$currDir");
         }
@@ -147,7 +147,7 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
 
     // else show a real link
     } else {
-        $pLink = '&nbsp;[&nbsp;<a href="' . $baseURL
+        $pLink = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl']
                . '?pageType=' . $pageType . '&amp;currDir=' . $currDir
                . '&amp;image=' . $prev;
         if ($startFrom) {
@@ -167,7 +167,7 @@ function buildNextPrevLinks ( $baseURL, $albumDir, $currDir, $image,
                . '</font>&nbsp;]&nbsp;';
     // else show a real link
     } else {
-        $nLink = '&nbsp;[&nbsp;<a href="' . $baseURL
+        $nLink = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl']
                . '?pageType=' . $pageType . '&amp;currDir=' . $currDir
                . '&amp;image=' . $next;
         if ($startFrom) {

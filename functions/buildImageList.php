@@ -2,10 +2,10 @@
 
 // buildImageList() - creates a list of images available
 
-function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
+function buildImageList ( $albumDir, $currDir,
                           $albumURLroot, $maxColumns, $maxRows, $markerType,
                           $markerLabel, $directoryList, $suppressImageInfo,
-                          $useThumbSubdir, $thumbSubdir, $noThumbs, $thumbExt,
+                          $noThumbs, $thumbExt,
                           $suppressAltTags, $sortType, $hidden, $presorted,
                           $description, $short_desc, $imagePopup,
                           $imagePopType, $imagePopLocationBar,
@@ -53,8 +53,9 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
     while ($file = readdir($dir)) {
         // Skip over thumbnails
-        if (!$useThumbSubdir) {  // unless $useThumbSubdir is set,
-                                 // then don't waste time on this check
+        if (!$mig_config['usethumbsubdir']) {
+                         // unless $useThumbSubdir is set,
+                         // then don't waste time on this check
 
             if ($markerType == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
                 && getFileType($file)) {
@@ -167,7 +168,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
         if ($startFrom) {
             $prevPage = $startFrom - 1;
 
-            $imageList .= '<a href="' . $baseURL
+            $imageList .= '<a href="' . $mig_config['baseurl']
                         . '?pageType=folder&amp;currDir=' . $urlCurrDir
                         . '&amp;startFrom=' . $prevPage;
             if ($mig_dl) {
@@ -184,7 +185,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                 $imageList .= '<b>' . $i . '</b>&nbsp;&nbsp;';
             } else {
                 $ib = $i - 1;
-                $imageList .= '<a href="' . $baseURL
+                $imageList .= '<a href="' . $mig_config['baseurl']
                             . '?pageType=folder&amp;currDir=' . $urlCurrDir
                             . '&amp;startFrom=' . $ib;
                 if ($mig_dl) {
@@ -196,7 +197,7 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
 
         if (($startFrom + 1) < $pages) {
             $nextPage = $startFrom + 1;
-            $imageList .= '<a href="' . $baseURL
+            $imageList .= '<a href="' . $mig_config['baseurl']
                         . '?pageType=folder&amp;currDir=' . $urlCurrDir
                         . '&amp;startFrom=' . $nextPage;
             if ($mig_dl) {
@@ -224,10 +225,10 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                     $imageList .= "\n   <tr>";
                 }
 
-                $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
+                $img = buildImageURL($albumDir, $currDir,
                                      $albumURLroot, $file, $suppressImageInfo,
                                      $markerType, $markerLabel,
-                                     $useThumbSubdir, $thumbSubdir, $noThumbs,
+                                     $noThumbs,
                                      $thumbExt, $suppressAltTags, $description,
                                      $short_desc, $imagePopup, $imagePopType,
                                      $imagePopLocationBar, $imagePopMenuBar,

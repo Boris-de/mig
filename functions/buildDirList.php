@@ -2,14 +2,13 @@
 
 // buildDirList() - creates list of directories available
 
-function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
-                        $imageDir, $useThumbSubdir, $thumbSubdir,
+function buildDirList ( $albumDir, $albumURLroot, $currDir,
+                        $imageDir,
                         $maxColumns, $hidden, $presorted, $viewFolderCount,
                         $markerType, $markerLabel, $ficons,
                         $randomFolderThumbs, $folderNameLength,
                         $useThumbFile, $ignoreDotDirectories,
-                        $useRealRandThumbs, $sortType, $useLargeImages,
-                        $largeSubdir )
+                        $useRealRandThumbs, $sortType )
 {
     global $mig_config;
     global $mig_dl;
@@ -107,19 +106,16 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
         // Calculate how many images in the folder if desired
         if ($viewFolderCount) {
-            $counts[$file] = getNumberOfImages($folder, $useThumbSubdir,
+            $counts[$file] = getNumberOfImages($folder,
                                                $markerType, $markerLabel);
-            $countdir[$file] = getNumberOfDirs($folder, $useThumbSubdir,
-                                               $thumbSubdir, $markerType,
-                                               $markerLabel, $useLargeImages,
-                                               $largeSubdir, $albumDir,
+            $countdir[$file] = getNumberOfDirs($folder, $markerType,
+                                               $markerLabel, $albumDir,
                                                $currDir);
         }
 
         // Handle random folder thumbnails if desired
         if ($randomFolderThumbs) {
-            $samples[$file] = getRandomThumb($file, $folder, $useThumbSubdir,
-                                             $thumbSubdir, $albumURLroot,
+            $samples[$file] = getRandomThumb($file, $folder, $albumURLroot,
                                              $currDir, $markerType,
                                              $markerLabel, $useRealRandThumbs,
                                              $ignoreDotDirectories);
@@ -149,7 +145,7 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
         $enc_file = migURLencode($newCurrDir);
 
         // Build the link itself for re-use below
-        $linkURL = '<a href="' . $baseURL
+        $linkURL = '<a href="' . $mig_config['baseurl']
                  . '?pageType=folder&amp;currDir=' . $enc_file;
         if ($mig_dl) {
             $linkURL .= '&amp;mig_dl=' . $mig_dl;
@@ -195,8 +191,9 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
             $directoryList .= $albumURLroot . '/' . $currDir
                             . '/' . $file . '/';
-            if ($useThumbSubdir) {
-                $directoryList .= $thumbSubdir . '/' . $fname . '.' . $fext;
+            if ($mig_config['usethumbsubdir']) {
+                $directoryList .= $mig_config['thumbsubdir'] . '/'
+                                . $fname . '.' . $fext;
             } else {
                 if ($markerType == 'prefix') {
                     $directoryList .= $markerLabel . '_' . $fname;

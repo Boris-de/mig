@@ -2,7 +2,7 @@
 
 // buildBackLink() - spits out a "back one section" link
 
-function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
+function buildBackLink ( $currDir, $type, $homeLink, $homeLabel,
                          $noThumbs, $startFrom, $pageType, $image )
 {
 
@@ -46,7 +46,7 @@ function buildBackLink ( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     $newCurrDir = migURLencode($junk);
 
     $retval = '&nbsp;[&nbsp;<a href="'
-            . $baseURL . '?currDir=' . $newCurrDir;
+            . $mig_config['baseurl'] . '?currDir=' . $newCurrDir;
     if ($startFrom) {
         $retval .= '&amp;startFrom=' . $startFrom;
     }

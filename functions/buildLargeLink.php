@@ -2,7 +2,7 @@
 
 // buildLargeLink() - builds the text used for template keyword largeLink
 
-function buildLargeLink( $baseURL, $currDir, $image, $startFrom )
+function buildLargeLink( $currDir, $image, $startFrom )
 {
 
     global $mig_config;
@@ -10,7 +10,7 @@ function buildLargeLink( $baseURL, $currDir, $image, $startFrom )
 
     $newCurrDir = migURLencode($currDir);
 
-    $retval = '&nbsp;[&nbsp;<a href="' . $baseURL . '?currDir='
+    $retval = '&nbsp;[&nbsp;<a href="' . $mig_config['baseurl'] . '?currDir='
             . $newCurrDir . '&amp;pageType=large&amp;image=' . $image;
     if ($startFrom) {
         $retval .= '&amp;startFrom=' . $startFrom;

@@ -3,11 +3,12 @@
 // getRandomThumb() - Find a random thumbnail to show instead of the folder
 //                    icon.
 
-function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
+function getRandomThumb ( $file, $folder,
                           $albumURLroot, $currDir, $markerType, $markerLabel,
                           $useRealRandThumbs, $ignoreDotDirectories )
 {
     global $hidden;
+    global $mig_config;
 
     // I don't know why this was here but it broke layout badly...
     //print "<br>";
@@ -15,8 +16,8 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
     // SECTION ONE ...
     // If we're using thumbnail subdirectories.
 
-    if ($useThumbSubdir) {
-        $myThumbDir = $folder . '/' . $thumbSubdir;
+    if ($mig_config['usethumbsubdir']) {
+        $myThumbDir = $folder . '/' . $mig_config['thumbsubdir'];
 
         // Does the thumb subdir exist?  Why would it not?  It would not
         // if we're in a folder that contains only other folders, for
@@ -41,7 +42,8 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                         $mySample = $albumURLroot . '/'
                                   . migURLencode($currDir)
                                   . '/' . migURLencode($file)
-                                  . '/' .$thumbSubdir . '/' . $sample;
+                                  . '/' .$mig_config['thumbsubdir']
+                                  . '/' . $sample;
 
                         // If "real rand" is in use, add this to the
                         // list.  Otherwise just return what we found.
@@ -94,7 +96,6 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                     } else {
                         $mySample = getRandomThumb($file.'/'.$item,
                                        $folder.'/'.$item,
-                                       $useThumbSubdir, $thumbSubdir,
                                        $albumURLroot, $currDir,
                                        $markerType, $markerLabel,
                                        $useRealRandThumbs,
@@ -113,7 +114,6 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                 $randval = rand(0,(sizeof($subfList)-1));
                 $mySample = getRandomThumb($file.'/'.$subfList[$randval],
                                     $folder.'/'.$subfList[$randval],
-                                    $useThumbSubdir, $thumbSubdir,
                                     $albumURLroot, $currDir,
                                     $markerType, $markerLabel,
                                     $useRealRandThumbs,
@@ -198,7 +198,6 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                         } else {
                             $mySample = getRandomThumb($file.'/'.$item,
                                             $folder.'/'.$item,
-                                            $useThumbSubdir, $thumbSubdir,
                                             $albumURLroot, $currDir,
                                             $markerType, $markerLabel,
                                             $useRealRandThumbs,
@@ -217,7 +216,6 @@ function getRandomThumb ( $file, $folder, $useThumbSubdir, $thumbSubdir,
                     $randval = rand(0,(sizeof($subfList)-1));
                     $mySample = getRandomThumb($file.'/'.$subfList[$randval],
                                         $folder.'/'.$subfList[$randval],
-                                        $useThumbSubdir, $thumbSubdir,
                                         $albumURLroot, $currDir,
                                         $markerType, $markerLabel,
                                         $useRealRandThumbs,

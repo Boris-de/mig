@@ -3,7 +3,7 @@
 // buildYouAreHere() - build the "You are here" line for the top
 //                     of each page
 
-function buildYouAreHere ( $baseURL, $currDir, $image, $omitImageName )
+function buildYouAreHere ( $currDir, $image, $omitImageName )
 {
 
     global $mig_config;
@@ -28,7 +28,7 @@ function buildYouAreHere ( $baseURL, $currDir, $image, $omitImageName )
         if ($image == '' && $workingCopy == $currDir) {
             $url = '&nbsp;&gt;&nbsp;' . $label;
         } else {
-            $url = '&nbsp;&gt;&nbsp;<a href="' . $baseURL . '?currDir='
+            $url = '&nbsp;&gt;&nbsp;<a href="' . $mig_config['baseurl'] . '?currDir='
                  . $encodedCopy;
             if ($mig_dl) {
                 $url .= '&amp;mig_dl=' . $mig_dl;
@@ -52,7 +52,7 @@ function buildYouAreHere ( $baseURL, $currDir, $image, $omitImageName )
 
     // Or if we're not, then Main should be a link instead of just text
     } else {
-        $url = '<a href="' . $baseURL . '?currDir=' . $workingCopy;
+        $url = '<a href="' . $mig_config['baseurl'] . '?currDir=' . $workingCopy;
         if ($mig_dl) {
             $url .= '&amp;mig_dl=' . $mig_dl;
         }

@@ -1,43 +1,43 @@
 <?php
 
 // URL to use to call myself again
-if ($_SERVER['PHP_SELF']) {
-    $baseURL = $_SERVER['PHP_SELF'];
-} elseif ($HTTP_SERVER_VARS['PHP_SELF']) {
-    $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
-} elseif ($PHP_SELF) {
-    $baseURL = $PHP_SELF;
-} else {
-    print "FATAL ERROR: Could not set baseURL";
+if ($_SERVER['PHP_SELF'])
+    $mig_config['baseurl'] = $_SERVER['PHP_SELF'];
+elseif ($HTTP_SERVER_VARS['PHP_SELF'])
+    $mig_config['baseurl'] = $HTTP_SERVER_VARS['PHP_SELF'];
+elseif ($PHP_SELF)
+    $mig_config['baseurl'] = $PHP_SELF;
+else {
+    print "FATAL ERROR: Could not set baseurl";
     exit;
 }
 
 // Base directory of installation
-if ($_SERVER['PATH_TRANSLATED']) {
-    $baseDir = $_SERVER['PATH_TRANSLATED'];
-} elseif ($HTTP_SERVER_VARS['PATH_TRANSLATED']) {
-    $baseDir = $HTTP_SERVER_VARS['PATH_TRANSLATED'];
-} elseif ($PATH_TRANSLATED) {
-    $baseDir = $PATH_TRANSLATED;
-} elseif ($_SERVER['SCRIPT_FILENAME']) {
-    $baseDir = $_SERVER['SCRIPT_FILENAME'];
-} elseif ($HTTP_SERVER_VARS['SCRIPT_FILENAME']) {
-    $baseDir = $HTTP_SERVER_VARS['SCRIPT_FILENAME'];
-} elseif ($SCRIPT_FILENAME) {
-    $baseDir = $SCRIPT_FILENAME;
-} else {
-    print "FATAL ERROR: Can not set baseDir";
+if ($_SERVER['PATH_TRANSLATED'])
+    $mig_config['basedir'] = $_SERVER['PATH_TRANSLATED'];
+elseif ($HTTP_SERVER_VARS['PATH_TRANSLATED'])
+    $mig_config['basedir'] = $HTTP_SERVER_VARS['PATH_TRANSLATED'];
+elseif ($PATH_TRANSLATED)
+    $mig_config['basedir'] = $PATH_TRANSLATED;
+elseif ($_SERVER['SCRIPT_FILENAME'])
+    $mig_config['basedir'] = $_SERVER['SCRIPT_FILENAME'];
+elseif ($HTTP_SERVER_VARS['SCRIPT_FILENAME'])
+    $mig_config['basedir'] = $HTTP_SERVER_VARS['SCRIPT_FILENAME'];
+elseif ($SCRIPT_FILENAME)
+    $mig_config['basedir'] = $SCRIPT_FILENAME;
+else {
+    print "FATAL ERROR: Can not set basedir";
     exit;
 }
-$baseDir = dirname($baseDir);
+$mig_config['basedir'] = dirname($mig_config['basedir']);
 
 // Locate and load configuration
-if (file_exists($baseDir . '/mig/config.php')) {
+if (file_exists($mig_config['basedir'] . '/mig/config.php')) {
     // Found it - we're in Nuke mode
-    $configFile = $baseDir . '/mig/config.php';
-} elseif (file_exists($baseDir . '/config.php')) {
+    $configFile = $mig_config['basedir'] . '/mig/config.php';
+} elseif (file_exists($mig_config['basedir'] . '/config.php')) {
     // Found it - regular mode
-    $configFile = $baseDir . '/config.php';
+    $configFile = $mig_config['basedir'] . '/config.php';
 } else {
     // Uh oh.
     print "FATAL ERROR: Can't find Mig configuration!";
@@ -45,7 +45,7 @@ if (file_exists($baseDir . '/mig/config.php')) {
 }
 include(convertIncludePath($pathConvertFlag, $configFile, $pathConvertRegex,
             $pathConvertTarget));
-
+            
 // Return an error if too many modes are set at once
 $usePortal = 0;
 
@@ -60,9 +60,15 @@ if ($usePortal > 1) {
     exit;
 }
 
+// Fetch some settings
+$mig_config['usethumbsubdir'] = $useThumbSubdir;
+$mig_config['thumbsubdir'] = $thumbSubdir;
+$mig_config['largesubdir'] = $largeSubdir;
+$mig_config['uselargeimages'] = $useLargeImages;
+
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
-    $baseDir .= '/mig';
+    $mig_config['basedir'] .= '/mig';
     if (! $phpNukeRoot) {      
         print "FATAL ERROR: \$phpNukeRoot not defined!\n";
         exit;
@@ -80,7 +86,7 @@ if ($phpNukeCompatible) {
 
 // or for PhpWebThings...
 } elseif ($phpWebThingsCompatible) {
-    $baseDir .= '/mig';
+    $mig_config['basedir'] .= '/mig';
     if (! $phpWebThingsRoot) {
         print "FATAL ERROR: \$phpWebThingsRoot not defined!\n";
         exit;
@@ -165,13 +171,15 @@ if (! $PATH_INFO) {
 
 // Is this a jump-tag URL?
 if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$jump]");
+    header("Location: http://$SERVER_NAME" . $mig_config['baseurl']
+         . "?$jumpMap[$jump]");
     exit;
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
 if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
+    header("Location: http://$SERVER_NAME" . $mig_config['baseurl']
+         . "?$jumpMap[$PATH_INFO]");
     exit;
 }
 
@@ -189,7 +197,8 @@ if ($_GET['currDir']) {
     }
 
     if ($SERVER_NAME) {
-        header("Location: http://$SERVER_NAME$baseURL?currDir=.");
+        header("Location: http://$SERVER_NAME" . $mig_config['baseurl']
+             . "?currDir=.");
         exit;
     }
 }
@@ -335,13 +344,13 @@ while ($workCopy) {
     }
 }
 
-$albumDir = $baseDir . '/albums';     // Where albums live
+$albumDir = $mig_config['basedir'] . '/albums';     // Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
-$templateDir = $baseDir . '/templates'; // Where templates live
+$templateDir = $mig_config['basedir'] . '/templates'; // Where templates live
 
 // baseURL with the scriptname torn off the end
-$baseHref = ereg_replace('/[^/]+$', '', $baseURL);
+$baseHref = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
 // Adjust for Nuke mode if appropriate
 if ($phpNukeCompatible || $phpWebThingsCompatible) {
     $baseHref .= '/mig';
@@ -374,8 +383,7 @@ if (! $folderSortType) {
 list($hidden, $presort_dir, $presort_img, $desc, $short_desc, $bulletin,
      $ficons, $folderTemplate, $folderPageTitle, $folderFolderCols,
      $folderThumbCols, $folderThumbRows, $folderMaintAddr, $useThumbFile)
-  = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir,
-               $useLargeImages, $largeSubdir);
+  = parseMigCf("$albumDir/$currDir");
 
 // Determine page title to use
 if ($folderPageTitle) {
@@ -451,20 +459,20 @@ if ($pageType == 'folder') {
     // Generate some HTML to pass to the template printer
 
     // list of available folders
-    $folderList = buildDirList($baseURL, $albumDir, $albumURLroot, $currDir,
-                               $imageDir, $useThumbSubdir, $thumbSubdir,
+    $folderList = buildDirList($albumDir, $albumURLroot, $currDir,
+                               $imageDir,
                                $maxFolderColumns, $hidden, $presort_dir,
                                $viewFolderCount, $markerType,
                                $markerLabel, $ficons, $randomFolderThumbs,
                                $folderNameLength, $useThumbFile,
                                $ignoreDotDirectories, $useRealRandThumbs,
-                               $folderSortType, $useLargeImages, $largeSubdir);
+                               $folderSortType);
     // list of available images
-    $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
+    $imageList = buildImageList($albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns,
                                 $maxThumbRows, $markerType, $markerLabel,
                                 $folderList, $suppressImageInfo,
-                                $useThumbSubdir, $thumbSubdir, $noThumbs,
+                                $noThumbs,
                                 $thumbExt, $suppressAltTags, $sortType,
                                 $hidden, $presort_img, $desc, $short_desc,
                                 $imagePopup, $imagePopType,
@@ -524,17 +532,17 @@ if ($pageType == 'folder') {
     }
 
     // build the "back" link
-    $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
+    $backLink = buildBackLink($currDir, 'back', $homeLink,
                               $homeLabel, $noThumbs, '', $pageType, $image);
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, '', $omitImageName);
+    $youAreHere = buildYouAreHere($currDir, '', $omitImageName);
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
     // parse the template file and print to stdout
-    printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
+    printTemplate($templateDir, $templateFile, $version, $maintAddr,
                   $folderList, $imageList, $backLink, '', '', '',
                   $newCurrDir, $pageTitle, '', '', '', $bulletin,
                   $youAreHere, $distURL, $albumDir, $pathConvertFlag,
@@ -548,16 +556,16 @@ if ($pageType == 'folder') {
 
     // Trick back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
+    $backLink = buildBackLink("$currDir/blah", 'up', '', '',
                               $noThumbs, $startFrom, $pageType, $image);
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
-    $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
+    $Links = buildNextPrevLinks($albumDir, $currDir, $image,
                                 $markerType, $markerLabel,
                                 $hidden, $presort_img, $sortType, $startFrom,
-                                $pageType, $largeSubdir);
+                                $pageType);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
@@ -600,7 +608,7 @@ if ($pageType == 'folder') {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $omitImageName);
+    $youAreHere = buildYouAreHere($currDir, $image, $omitImageName);
 
     // Which template to use.
     if ($usePortal) {           // portal is in use
@@ -612,14 +620,16 @@ if ($pageType == 'folder') {
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
-    if ($useLargeImages &&
-            file_exists("$albumDir/$currDir/$largeSubdir/$image"))
+    if ($mig_config['uselargeimages'] &&
+            file_exists("$albumDir/$currDir/"
+                      . $mig_config['largesubdir']
+                      . "/$image"))
     {
-        $largeLink = buildLargeLink($baseURL, $currDir, $image, $startFrom);
+        $largeLink = buildLargeLink($currDir, $image, $startFrom);
 
         // Only build this link if we plan to use it
         if ($largeLinkFromMedium) {
-            $largeHrefStart = buildLargeHrefStart($baseURL, $currDir,
+            $largeHrefStart = buildLargeHrefStart($currDir,
                                                   $image, $startFrom);
             $largeHrefEnd = '</a>';
         }
@@ -631,7 +641,7 @@ if ($pageType == 'folder') {
     }
 
     // Send it all to the template printer to dump to stdout
-    printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
+    printTemplate($templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
                   $description, $youAreHere, $distURL, $albumDir,
@@ -645,16 +655,16 @@ if ($pageType == 'folder') {
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
+    $backLink = buildBackLink("$currDir/blah", 'up', '', '',
                               $noThumbs, $startFrom, $pageType, $image);
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
-    $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
+    $Links = buildNextPrevLinks($albumDir, $currDir, $image,
                                 $markerType, $markerLabel,
                                 $hidden, $presort_img, $sortType, $startFrom,
-                                $pageType, $largeSubdir);
+                                $pageType);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
@@ -697,7 +707,7 @@ if ($pageType == 'folder') {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $omitImageName);
+    $youAreHere = buildYouAreHere($currDir, $image, $omitImageName);
 
     // Which template to use
     if ($usePortal) {           // portal is in use
@@ -710,12 +720,12 @@ if ($pageType == 'folder') {
     $newCurrDir = getNewCurrDir($currDir);
 
     // Send it all to the template printer to dump to stdout
-    printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
+    printTemplate($templateDir, $templateFile, $version, $maintAddr,
                   '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
                   $description, $youAreHere, $distURL, $albumDir,
                   $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
-                  $pageType, $largeSubdir, '', '', '', '');
+                  $pageType, '', '', '', '');
 }
 
 // Finish up for content management systems

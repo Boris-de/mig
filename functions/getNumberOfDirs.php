@@ -2,10 +2,12 @@
 
 // getNumberOfDirs() - Counts subdirectories in a given folder
 
-function getNumberOfDirs ( $folder, $useThumbSubdir, $thumbSubdir,
-                           $markerType, $markerLabel, $useLargeImages,
-                           $largeSubdir, $albumDir, $currDir )
+function getNumberOfDirs ( $folder,
+                           $markerType, $markerLabel,
+                           $albumDir, $currDir )
 {
+    global $mig_config;
+    
     if (is_dir($folder)) {
         $dir = opendir($folder);    // Open directory handle
     } else {
@@ -16,19 +18,19 @@ function getNumberOfDirs ( $folder, $useThumbSubdir, $thumbSubdir,
 
     while ($file = readdir($dir)) {
         // Get hidden item list from mig.cf
-        list($hidden, $x) = parseMigCf($folder, $useThumbSubdir,
-                                       $thumbSubdir, $useLargeImages,
-                                       $largeSubdir);
+        list($hidden, $x) = parseMigCf($folder);
 
         // Must be a directory, and can't be . or ..
         if ($file != '.' && $file != '..' && is_dir("$folder/$file"))
         {
             // Ignore thumbnail subdirectories if in use
-            if ($useThumbSubdir && $file == $thumbSubdir)
+            if ($mig_config['usethumbsubdir']
+                && $file == $mig_config['thumbsubdir'])
                 continue;
 
             // And full-size directories too
-            if ($useLargeImages && $file == $largeSubdir)
+            if ($mig_config['uselargeimages']
+                && $file == $mig_config['largesubdir'])
                 continue;
 
             // Ignore hidden items

@@ -2,12 +2,12 @@
 
 // buildImageURL() - spit out HTML for a particular image
 
-function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
+function buildImageURL ( $albumDir, $currDir,
                          $albumURLroot, $filename, $suppressImageInfo,
-                         $markerType, $markerLabel, $useThumbSubdir,
-                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
-                         $description, $short_desc, $imagePopup,
-                         $imagePopType, $imagePopLocationBar,
+                         $markerType, $markerLabel,
+                         $noThumbs, $thumbExt,
+                         $suppressAltTags, $description, $short_desc,
+                         $imagePopup, $imagePopType, $imagePopLocationBar,
                          $imagePopMenuBar, $imagePopToolBar,
                          $commentFilePerImage, $startFrom,
                          $commentFileShortComments, $showShortOnThumbPage,
@@ -35,13 +35,15 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
     // "generic" thumbnail image.
 
     if ($type == 'image') {
-        if ($useThumbSubdir) {
+        if ($mig_config['usethumbsubdir']) {
 
             if ($thumbExt) {
-                $thumbFile = "$albumDir/$oldCurrDir/$thumbSubdir"
+                $thumbFile = "$albumDir/$oldCurrDir/"
+                           . $mig_config['thumbsubdir']
                            . "/$fname.$thumbExt";
             } else {
-                $thumbFile = "$albumDir/$oldCurrDir/$thumbSubdir"
+                $thumbFile = "$albumDir/$oldCurrDir/"
+                           . $mig_config['thumbsubdir']
                            . "/$fname.$ext";
             }
 
@@ -70,8 +72,9 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     if (file_exists($thumbFile)) {
-        if ($useThumbSubdir) {
-            $thumbImage  = "$albumURLroot/$currDir/$thumbSubdir";
+        if ($mig_config['usethumbsubdir']) {
+            $thumbImage  = "$albumURLroot/$currDir/"
+                         . $mig_config['thumbSubdir'];
 
             if ($thumbExt) {
                 $thumbImage .= "/$fname.$thumbExt";
@@ -104,7 +107,7 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
         $thumbImage = migURLencode($thumbImage);
 
     } else {
-        $newRoot = ereg_replace('/[^/]+$', '', $baseURL);
+        $newRoot = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
         switch ($type) {
             case 'image':
                 $thumbImage = $newRoot . '/images/no_thumb.gif';
@@ -220,7 +223,7 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
             $url .= '#" onClick="window.open(\'';
         }
 
-        $url .= $baseURL . '?currDir='
+        $url .= $mig_config['baseurl'] . '?currDir='
              . $currDir . '&amp;pageType=image&amp;image=' . $newFname
              . '.' . $ext;
 

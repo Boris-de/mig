@@ -2,18 +2,19 @@
 
 // printTemplate() - prints HTML page from a template file
 
-function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
+function printTemplate ( $templateDir, $templateFile, $version,
                          $maintAddr, $folderList, $imageList, $backLink,
                          $albumURLroot, $image, $currDir, $newCurrDir,
                          $pageTitle, $prevLink, $nextLink, $currPos,
                          $description, $youAreHere, $distURL, $albumDir,
                          $pathConvertFlag, $pathConvertRegex,
-                         $pathConvertTarget, $pageType, $largeSubdir,
+                         $pathConvertTarget, $pageType,
                          $largeLink, $largeHrefStart, $largeHrefEnd,
                          $largeLinkBorder )
 {
     global $REQUEST_URI;
     global $HTTP_SERVER_VARS;
+    global $mig_config;
 
     // Get URL for %%newLang%% variable
     if ($_SERVER['REQUEST_URI']) {
@@ -97,10 +98,15 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                     $imageProps = GetImageSize("$albumDir/$currDir/$image");
                 } elseif ($pageType == 'large') {
                     $imageProps =
-                      GetImageSize("$albumDir/$currDir/$largeSubdir/$image");
+                      GetImageSize("$albumDir/$currDir/"
+                                 . $mig_config['largesubdir']
+                                 . "/$image");
                 }
                 $imageSize = $imageProps[3];
             }
+            
+            $baseURL = $mig_config['baseurl'];
+            $largeSubdir = $mig_config['largesubdir'];
 
             // List of valid tags
             $replacement_list = array (
