@@ -8,8 +8,12 @@ convert-metafiles.sh        (requires a shell)
     all subfolders.  See description for mf_conv.pl.
 
 ===========================================================================
+crypt.php
+    Turns a plaintext password into a crypt()'d password (in PHP).
+
+===========================================================================
 crypt.pl                    (requires Perl)
-    Turns a plaintext password into a crypt() password
+    Turns a plaintext password into a crypt()'d password (in Perl).
 
 ===========================================================================
 featured.php
