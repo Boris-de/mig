@@ -665,6 +665,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
         $url .= '<img src="' . $thumbImage . '"';
             // Only print the ALT tag if it's wanted.
             if (! $suppressAltTags) {
+                $alt_desc = strip_tags($alt_desc);
                 $url .= 'alt="' . $alt_desc . '"';
             }
         $url .= ' border="0" ' . $thumbHTML . '>';
