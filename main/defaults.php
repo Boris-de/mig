@@ -35,6 +35,7 @@ $sortType                   = 'default';
 $suppressAltTags            = FALSE;
 $suppressImageInfo          = FALSE;
 $thumbSubdir                = 'thumbs';
+$useRealRandThumbs          = TRUE;
 $useThumbSubdir             = TRUE;
 $viewFolderCount            = FALSE;
 

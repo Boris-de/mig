@@ -6,7 +6,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                         $maxColumns, $hidden, $presorted, $viewFolderCount,
                         $markerType, $markerLabel, $ficons,
                         $randomFolderThumbs, $folderNameLength,
-                        $useThumbFile, $ignoreDotDirectories )
+                        $useThumbFile, $ignoreDotDirectories,
+                        $useRealRandThumbs )
 {
     global $mig_config;
 
@@ -93,7 +94,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
             $samples[$file] = getRandomThumb($file, $folder, $useThumbSubdir,
                                              $thumbSubdir, $albumURLroot,
                                              $currDir, $markerType,
-                                             $markerLabel);
+                                             $markerLabel, $useRealRandThumbs,
+                                             $ignoreDotDirectories);
         }
     }
 

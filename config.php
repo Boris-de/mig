@@ -157,7 +157,7 @@ $thumbSubdir = 'thumbs';
 //      If TRUE, instead of the generic folder icon, a represenative
 //      thumbnail from the folder is shown.  If Mig is unable to find a
 //      thumbnail to use, it will use the generic folder icon instead.
-//      Unless there are folders whose subfolders and there subfolders
+//      Unless there are folders whose subfolders and their subfolders
 //      and so on have no thumbnails, the generic folder icon should
 //      never be used.
 //
@@ -168,6 +168,37 @@ $thumbSubdir = 'thumbs';
 //
 
 $randomFolderThumbs = FALSE;
+
+
+//
+// $useRealRandThumbs
+//      If TRUE, a real random selection is done.  It used to be that
+//      Mig would just look for the first thumbnail it could find and
+//      use that.  A lot of people, including the author, thought that
+//      sucked, so $useRealRandThumbs was introduced which will find
+//      all available thumbnails and pick one randomly each time the
+//      script is called.
+//
+//      This obviously results in more I/O and on large galleries could
+//      cause a problem with execution time.  So I didn't "fix the bug"
+//      entirely, I made it an optional behavior.  By default, real
+//      random behavior is used, but it can be turned off by setting this
+//      to FALSE.
+//
+//      Generally, you want this to be TRUE unless you have trouble with
+//      it (most likely to happen if you have a slow server, a busy server,
+//      slow disks, or very large galleries).
+//
+//      And of course this option is ignored if $randomFolderThumbs is
+//      set to FALSE.
+//
+// Defaults to TRUE.
+// 
+// Example:
+//      $useRealRandThumbs = TRUE;
+//
+
+$useRealRandThumbs = TRUE;
 
 
 //

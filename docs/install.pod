@@ -353,7 +353,7 @@ defaults are 4 columns and 5 rows (for 20 images per page).
 Instead of using the generic folder icon for folder views, Mig can use a
 randomly selected thumbnail from the folder as the icon.  To turn this
 behavior on, set C<$randomFolderThumbs> to C<TRUE> in F<config.php>.
-(See also C<$folderNameLength>.)
+(See also C<$folderNameLength> and C<$useRealRandThumbs>.)
 
 If the folder itself contains only other folders, and no images, Mig will
 traverse subdirectories until it finds a usable thumbnail to use as an

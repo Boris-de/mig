@@ -2,7 +2,7 @@
 
 =head2 MIG Change Log
 
-=head2 Version 1.3.6 (NOT YET RELEASED)
+=head2 Version 1.3.6 (Mon, 30 Sep 2002)
 
 Updated Danish, Italian and German translations.
 
@@ -33,6 +33,15 @@ like it).  Fixed other minor HTML/CSS bugs.
 
 Modified C<printTemplate()> to recognize SMB shares in Windows when
 determining whether or not to prepend full path.
+
+[Sourceforge bug report #585312] -
+Changed C<getRandomThumb()> to actually get a random thumb, instead of
+just returning the first thumb found.  This is optional behavior - those
+preferring the old way can set C<$useRealRandThumbs> to C<FALSE>.  NOTE:
+this doesn't honor E<lt>HiddenE<gt> tags - things that are hidden may
+still show up using C<$randomFolderThumbs>!  This is convoluted and I don't
+plan to fix that bug, so don't use C<$randomFolderThumbs> if you want to
+use E<lt>HiddenE<gt> too!
 
 =head2 Version 1.3.5 (Sun, 07 Jul 2002)
 
