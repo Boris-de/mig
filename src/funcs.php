@@ -691,8 +691,9 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // Get description, if any
-    $alt_desc = getImageDescription("$fname.$ext", $description);
     //$alt_exif = getExifDescription($albumDir, $currDir, "$fname.$ext", '');
+    $alt_desc = getImageDescription("$fname.$ext", $description);
+    $alt_desc = strip_tags($alt_desc);
 
     // if both are present, separate with "--"
     //if ($alt_desc and $alt_exif) {
@@ -725,7 +726,11 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // beginning of the table cell
-    $url = '<td class="image"><a href="';
+    $url = '<td class="image"><a';
+    if (!$suppressAltTags) {
+        $url .= ' title="' . $alt_desc . '"';
+    }
+    $url .= ' href="';
 
     // set up the image pop-up if appropriate to do so
     if ($imagePopup) {
@@ -759,8 +764,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
         $url .= '<img src="' . $thumbImage . '"';
             // Only print the ALT tag if it's wanted.
             if (! $suppressAltTags) {
-                $alt_desc = strip_tags($alt_desc);
-                $url .= 'alt="' . $alt_desc . '"';
+                $url .= ' alt="' . $alt_desc . '"';
             }
         $url .= ' border="0" ' . $thumbHTML . '>';
     }
