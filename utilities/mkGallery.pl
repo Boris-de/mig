@@ -102,6 +102,25 @@ my $migConfig = 'mig.cf';       # Name of per-directory configuration file
 
 my $globalConfig = $mydir . '/../config.php';       # Global config file
 
+my $localConfig = $mydir . '/mkGallery.opt';	# Local config file
+my $localConfLine;
+
+if ( -e $localConfig ) {
+    # Local config options are memorized here.
+    open LC, $localConfig or die "Can't read local config file\n";
+    chomp($localConfLine = <LC>);
+    close LC;
+    
+    # Stuff this in @ARGV where getopts() can find it
+    @ARGV = split(/\s+/, $localConfLine);
+    print "NOTE: Using memorized options from $localConfig\n\n";
+    print "Stored: $localConfLine\n";
+    print "\@ARGV is: \n";
+    foreach (@ARGV) {
+        print $_, "\n";
+    }
+}
+    
 # Fetch command line options
 my %opt = ();
 getopts('acdD:eE:f:hiKM:m:nq:rs:tw', \%opt);
