@@ -25,7 +25,7 @@ TEXT= ../src/docs/Apache.txt ../src/docs/CHANGELOG ../src/docs/CREDITS \
 
 default: all
 
-all: $(TEXT) $(HTML) clean
+all: makedirs $(TEXT) $(HTML) clean
 
 ../src/docs/html/Apache.html: Apache.pod
 	@pod2html $(HARGS) < Apache.pod > $@
@@ -120,3 +120,5 @@ all: $(TEXT) $(HTML) clean
 clean:
 	@/bin/rm -f pod2htm*
 
+makedirs:
+	@/bin/mkdir -m 0755 -p ../src/docs/html

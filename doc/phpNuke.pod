@@ -16,7 +16,7 @@ don't need to continue reading this file.
 PHP-Nuke information can be found at http://www.phpnuke.org/
 
 (PHP-Nuke mode has not been tested with PHP-Nuke 5.x.  I have no idea if it
-will work - use at you own risk).
+will work - use at you own risk.  It was last tested with PHP-Nuke 4.2.)
 
 Please read F<docs/INSTALL> and then apply the following changes.
 
@@ -40,9 +40,9 @@ F<config.php>.  In other words:
     cp mig/config.php.default ./config.php
     vi config.php
 
-5. The F<config.php> file should already have the two things you absolutely
-need (C<$phpNukeCompatible> and C<$phpNukeRoot>).  Tune the other
-parameters to whatever you see fit.
+5. The F<config.php> file should already have the two things you
+absolutely need (C<$phpNukeCompatible> and C<$phpNukeRoot>).  Tune the 
+other parameters however you see fit.
 
 Make sure you can write to your phpNuke directory when installing.
 If not, su to root, or log in as the user who owns the site prior to

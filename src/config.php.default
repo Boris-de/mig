@@ -7,7 +7,8 @@
 // will over-write config.php.default, but will not over-write config.php.
 //
 // Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
-// Mig is available at http://mig.sourceforge.net/
+//
+// http://mig.sourceforge.net/
 //
 // Lines starting with // are comments.
 //
@@ -62,7 +63,7 @@ $maxThumbColumns = 4;
 
 
 // Boolean to turn thumbnail subdirectories on or off.
-// Defaults to FALSE.
+// Defaults to TRUE.
 //
 // To use a subdirectory for thumbnails, set this to TRUE.
 // When this is set to true, $markerType and $markerLabel are ignored.
@@ -244,6 +245,8 @@ $mig_language = 'en';
 $phpNukeCompatible = FALSE;
 
 //     Set this to the full path to the root of your phpNuke install.
+//     (Ignored if $phpNukeCompatible is set to FALSE).
+//
 //     Example:
 //         $phpNukeRoot = '/usr/apache/htdocs';
 //
@@ -263,6 +266,9 @@ $phpNukeRoot = '';
 // Passwords are in crypt() format.  See docs/Passwords.txt for more.
 // Need more than one directory and/or user?  that's fine, just add more
 // than one line.
+//
+// THIS FEATURE IS NOT REALLY SECURE.  PLEASE DON'T RELY ON IT FOR YOUR
+// SECURITY NEEDS.
 //
 
 // -----------------------------------------------------------------

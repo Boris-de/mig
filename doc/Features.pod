@@ -13,7 +13,7 @@ Requires only PHP.  Will run on Windows, Unix, any web server that can
 run PHP scripts.
 
 "Drop and Go" gallery addition.  Just create a directory and put some
-images in it (create thumbnails, if you want), and you're done.
+images in it (create thumbnails, if you want to), and you're done.
 
 Any number of folders and subfolders can be used.
 
@@ -22,7 +22,7 @@ Each image can have a comment attached (so can folders).
 Easy navigation system to move around the folder tree as well as going
 from one image to the next or previous image in the same folder.
 
-Plug-in mode for PHP-Nuke 4.x users.
+Plug-in mode for PHP-Nuke 4.x users.  (NOT tested with 5.x)
 
 Scripts are included to create thumbnail images and extract embedded
 comments from images.
@@ -64,7 +64,7 @@ thumbnail can show the associated comment.  This behavior can be turned
 off optionally.
 
 A file-include system as a part of the template system so you can include
-your own files in Mig templates (HTML, PHP, plain text, etc).
+your own files in Mig templates (HTML, PHP, plain text, CGI, etc).
 
 Each folder in a folder list can have its own icon if desired - or it will
 use the default (images/folder.gif).

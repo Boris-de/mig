@@ -11,18 +11,18 @@ Z<>
 
 =head2 OVERVIEW
 
-Template files give you some control of the layout of output pages.
-Colors are also handled by the template files (see later in this file).
+Template files give you control of the layout of output pages.
+Colors are also handled by the template files (see later in this document).
 
-Note that if you like the way the layout of pages are already, you do not
+Note that if you like the page layout already, you do not
 need to touch the template files at all.  You should only modify a template
 file if you have something in the page layout you wish to change or if you
-have a need to change the colorization of different elements of Mig.
+have a need to change the colorization of different elements in Mig.
 
 =head2 ABOUT TAGS
 
-Template files are simply HTML files with some special tags embedded in
-them, which are expanded by Mig at runtime.
+Template files are simply HTML files with special tags embedded in
+them.  Mig expands these tags at runtime.
 
 Tags are surrounded by C<%%> marks, such as this example:
 
@@ -33,7 +33,7 @@ Tags are surrounded by C<%%> marks, such as this example:
 
 In this case, C<%%maintAddr%%> is the relevant tag name.
 
-You can control how the page layout looks by modifying and/or moving HTML
+You can control the page layout by modifying and/or moving HTML
 elements and/or Mig tag elements in the template file.  It is assumed you
 have an understanding of HTML - modify the templates at your own risk, and
 always make a backup copy beforehand in case your changes don't work out
@@ -43,7 +43,7 @@ There is a glossary of tags later in this document.
 
 If you don't know anything about HTML you can try checking out
 http://www.htmlhelp.com/ or looking for some other online help sites by
-using a search engine such as Yahoo.
+using a search engine such as Google (www.google.com).
 
 =head2 INCLUDING FILES
 
@@ -111,7 +111,8 @@ thumbnail images are shown.
 F<templates/image.html> - used for any view where an image is shown
 by itself.
 
-F<templates/style.css> - Contains C<text/css> markup.
+F<templates/style.css> - Contains C<text/css> (Cascading Style Sheet)
+markup.
 
 If you are running Mig in PHP-Nuke Compatible mode (see
 F<docs/phpNuke.txt>) then these three files are not used.

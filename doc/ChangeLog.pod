@@ -9,35 +9,35 @@ Z<>
 
 Z<>
 
-=head2 Version 1.3.2 (NOT YET RELEASED)
+=head2 Version 1.3.2
 
 Added C<MaintAddr> object to mig.cf parser (thanks to Simon Wood for
-supplying this code!).  This permits you to change the value of $maintAddr
-on a per-folder basis if desired.
+supplying this code!).  This permits you to change the value of
+C<$maintAddr> on a per-folder basis if desired.
 
 Fixed regex bug that caused the exposure time (from EXIF data) to be
 incorrectly reported in some circumstances.
 
-=head2 Version 1.3.1 (Tue 7 May 2002)
+=head2 Version 1.3.1 (Tue, 07 May 2002)
 
-[Sourceforge Bug Report #467122] -
+[Sourceforge bug report #467122] -
 Fixed sorting bug (if C<$sortType> was set to anything other than
 C<default>, the thumbnails would be sorted, but the images would
 actually be out of order as far as the next/previous links were
 concerned.  Turns out the sorting had made it into C<buildImageList()>
 but not C<buildNextPrevLinks()>.
 
-[Sourceforge Bug Report #512980] -
+[Sourceforge bug report #512980] -
 Removed two extraneous arguments in a call to C<printTemplate()>.
 This hadn't caused me any trouble, but if C<error_reporting> was set
 to include C<E_NOTICE>, errors would be generated.
 
-[Sourceforge Feature Request #521109] -
-Now when invoked with C<-c>, F<mkGallery> will also add a C<Bulletin>
+[Sourceforge feature request #521109] -
+Now when invoked with C<-c>, F<mkGallery> will also add a E<lt>BulletinE<gt>
 tag to F<mig.cf>.  In interactive mode it will ask the user for the
 bulletin text, otherwise it will just create an empty bulletin.
 
-[Sourceforge Feature Request #521032] -
+[Sourceforge feature request #521032] -
 Added new config variable C<$commentFilePerImage> (default C<FALSE>).
 When set to C<TRUE>, Mig looks for comments in a separate file for
 each image rather than looking for all comments in F<mig.cf>.  For
@@ -48,21 +48,22 @@ file is used as the comment.  Mig will strip newlines and tabs out.
 When C<$commentFilePerImage> is C<FALSE>, normal processing of comments
 using the F<mig.cf> file happens.
 
-Changed filename of configuration file from mig.cfg to config.php.  This
-is simply to avoid having people rummaging through your config with their
-web browser.  The install script will attempt to handle this gracefully
-for you, or you can just rename files yourself.
+Changed filename of configuration file from F<mig.cfg> to F<config.php>.
+This is simply to avoid having people rummaging through your config with
+their web browser.  The install script will attempt to handle this
+gracefully for you, or you can just rename files yourself.
 
-Changed default value of $useThumbSubdir to TRUE.  Changed example gallery
-to match.
+Changed default value of C<$useThumbSubdir> to TRUE.  Changed example
+gallery to match.
 
 Upgraded jhead to version 1.6.
 
-=head2 Version 1.3.0 (Tue 23 Apr 2002)
+=head2 Version 1.3.0 (Tue, 23 Apr 2002)
 
-Added TITLE tags in thumbnail views so when hovering over a thumbnail,
-you get the comment whether using Mozilla/Gecko/Netscape or Internet
-Explorer.  C<$suppressAltTags> will also suppress the TITLE tags.
+Added E<lt>TITLEE<gt> tags in thumbnail views so when hovering over a
+thumbnail, you get the comment whether using Mozilla/Gecko/Netscape or
+Internet Explorer.  C<$suppressAltTags> will also suppress the
+E<lt>TITLEE<gt> tags.
 
 Added Polish translation.
 
@@ -75,8 +76,7 @@ activated by setting C<$viewDateInfo> to C<TRUE> in F<mig.cfg>.
 Changed C<getExifDescription()> formatting slightly.
 Changed f-stop display to omit any '/' if present.
 
-
-=head2 Version 1.2.9 (Thu 16 Aug 2001)
+=head2 Version 1.2.9 (Thu, 16 Aug 2001)
 
 Added C<$imagePopup> and C<$imagePopType> to F<mig.cfg.default>.  Using these
 one can have pop-up windows enabled.  See F<docs/INSTALL>.
@@ -98,16 +98,16 @@ Added ISO rating to EXIF info parser.
 
 Fixed bug in ALT tag (there was no space before the SRC and ALT bits).
 
-=head2 Version 1.2.8 (Fri 29 Jun 2001)
+=head2 Version 1.2.8 (Fri, 29 Jun 2001)
 
-Added Italian and Spanish translations
+Added Italian and Spanish translations.
 
 [Sourceforge feature request #416337] - 
 Modified the ALT tag code such that HTML entities within E<lt>commentE<gt>
 blocks should be OK now even if hover-over comments are being used
 in thumbnail views.
 
-Added Slovak and Dutch translations
+Added Slovak and Dutch translations.
 
 [Sourceforge feature request #414831] -
 Added C<$viewCamInfo> to F<mig.cfg.default>.  If set to C<TRUE> and an
@@ -138,59 +138,59 @@ pageTitle to be set.
 Added C<MaxFolderColumns> and C<MaxThumbColumns> entities to F<mig.cf>
 parser.  This permits custom column settings per folder.
 
-=head2 Version 1.2.7p1 (Sun Apr 15 2001)
+=head2 Version 1.2.7p1 (Sun, 15 Apr 2001)
 
 Fixed bug from 1.2.7 which caused images to show up as folders when both
 folders and images were present.
 
-=head2 Version 1.2.7 (Sat Apr 14 2001)
+=head2 Version 1.2.7 (Sat, 14 Apr 2001)
 
-Added Danish translation
+Added Danish translation.
 
-Modified template parser so that you can use #include to include PHP files
-(files with extensions ".php" or ".php3")
+Modified template parser so that you can use C<#include> to include PHP
+files (files with extensions C<.php> or C<.php3>).
 
-Added docs/FTPinstall.txt for people who have only FTP access to their
+Added F<docs/FTPinstall.txt> for people who have only FTP access to their
 server and no shell access (i.e. they can't run F<install.sh>).
 
-Streamlined code where possible
+Streamlined code where possible.
 
-Got rid of repeated parses of mig.cf in subroutines and created
-parseMigCf() to just do it once to save time and effort on file i/o.
+Got rid of repeated parses of F<mig.cf> in subroutines and created
+C<parseMigCf()> to just do it once to save time and effort on file I/O.
 
-=head2 Version 1.2.4 (Mon Apr 09 2001)
+=head2 Version 1.2.4 (Mon, 09 Apr 2001)
 
-Added Swedish translation
+Added Swedish translation.
 
-Removed all calls to die() since they seemed to not work in all versions
+Removed all calls to C<die()> since they seemed to not work in all versions
 of PHP.
 
-=head2 Version 1.2.3 (Mon Apr 09 2001)
+=head2 Version 1.2.3 (Mon, 09 Apr 2001)
 
-Removed install.bat, rewrote docs/Windows.txt to match.
+Removed F<install.bat>, rewrote F<docs/Windows.txt> to match.
 
-Rewrote install.sh for new directory layout (which was a side-effect of
+Rewrote F<install.sh> for new directory layout (which was a side-effect of
 making Windows installs easier).
 
 Adjusted all server variables so that things should work whether
-register_globals or track_vars are in use (or both).
+C<register_globals> or C<track_vars> are in use (or both).
 
-Found a hard-coded directory in printTemplate() - corrected.
+Found a hard-coded directory in C<printTemplate()> - corrected.
 
-=head2 Version 1.2.2 (Sun Apr 08 2001)
+=head2 Version 1.2.2 (Sun, 08 Apr 2001)
 
-Added language definition for Turkish
+Added language definition for Turkish.
 
 Changed all occurrences of C<$language> to C<$mig_language> because of a
 suspected conflict with a variable name in PHP-Nuke.
 
-=head2 Version 1.2.1 (Fri Apr 06 2001)
+=head2 Version 1.2.1 (Fri, 06 Apr 2001)
 
 Fixed a bug where folks with C<track_vars = Off> would break.
 
-Added definitions for Russian Windows-1251 and Russian KOI8-R
+Added translations for Russian Windows-1251 and Russian KOI8-R.
 
-=head2 Version 1.2 (Fri Apr 06 2001)
+=head2 Version 1.2 (Fri, 06 Apr 2001)
 
 Added C<$suppressAltTags> to F<mig.cfg> - when set to C<TRUE>, ALT tags are
 not added in thumbnail lists.
@@ -204,16 +204,15 @@ image to fetch the size for.  This had been causing a problem under some
 conditions.
 
 Added multi-language support (so far English and French translations).  See
-the C<$language> variable in F<mig.cfg.default>.  (Note this variable is
-known as C<$mig_language> as of version 1.2.2)
+the C<$language> variable in F<mig.cfg.default>.
 
 Added C<$sortType> to F<mig.cfg.default>.
 
 Fixed bug that caused trouble with folks not using C<register_globals>.
 
-Added definitions for German, Norwegian, Portugese, Finnish, Romanian.
+Added translations for German, Norwegian, Portugese, Finnish, Romanian.
 
-=head2 Version 1.1 (Thu Dec 28 2000)
+=head2 Version 1.1 (Thu, 28 Dec 2000)
 
 Added F<docs/Apache.txt> with useful tips and tricks for Apache users.
 
@@ -255,12 +254,12 @@ C<$maxColumns>, if present, will be used as the default value of
 C<$maxThumbColumns>.  This lets people use something other than a single
 column for folder listings.
 
-=head2 Version 1.0 (Wed Dec 06 2000)
+=head2 Version 1.0 (Wed, 06 Dec 2000)
 
 You can now type "quit" at any prompt during F<install.sh> to abort.
 
 F<install.sh> and PHP code revamped and retested for PHP-Nuke compatible
-mode.  Now the MiG install (except for F<mig.php> and F<mig.cfg>) are
+mode.  Now the Mig install (except for F<mig.php> and F<mig.cfg>) are
 sandboxed into the F<mig> subdirectory rather than being right in the base
 PHP-Nuke directory.
 
@@ -271,7 +270,7 @@ Added C<$suppressImageInfo> to F<mig.cfg.default> - boolean option which
 controls whether to suppress the information printed below thumbnail images
 on thumbnail view pages.
 
-=head2 Version 0.99 (Thu Nov 16 2000)
+=head2 Version 0.99 (Thu, 16 Nov 2000)
 
 Not an enhancement, but I finally got around to trying out symlinks.  Put a
 bit about this in F<docs/Install.txt>.
@@ -290,7 +289,7 @@ contrib script instead.  F<mf_conv.pl>, too.
 
 Added the C<PATH_INFO> method for Jump URLs.  See F<docs/Jump.txt>.
 
-Added -n and -r switches to F<mkGallery>.  See F<docs/Utilities.txt>.
+Added C<-n> and C<-r> switches to F<mkGallery>.  See F<docs/Utilities.txt>.
 
 Revamped C<#include> for Apache users so it can execute CGI's too.  See
 F<docs/Templates.txt>.
@@ -298,31 +297,32 @@ F<docs/Templates.txt>.
 Fixed C<buildNextPrevLinks()> to use an array as its return value instead
 of the (uglier) string concatenation method.
 
-=head2 Version 0.98 (Sun Nov 05 2000)
+=head2 Version 0.98 (Sun, 05 Nov 2000)
 
 Added jump URL tags.  See F<docs/Jump.txt> for more information.
 
-=head2 Version 0.97 (Sat Nov 04 2000)
+=head2 Version 0.97 (Sat, 04 Nov 2000)
 
 Fixed table formatting problem in C<imageFrame()> which caused an extra
 cell to be printed which was visible as a small line in IE browsers.
 
-=head2 Version 0.96 (Thu Nov 02 2000)
+=head2 Version 0.96 (Thu, 02 Nov 2000)
 
 Updated F<docs/Install.txt> with notes about file permissions.
 
 Fixed bug in C<buildNextPrevLinks()> - it was ignoring E<lt>SortE<gt>
 lists.
 
-=head2 Version 0.95 (Tue Oct 31 2000)
+Happy birthday, Katie!
+
+=head2 Version 0.95 (Tue, 31 Oct 2000)
 
 Ran the example gallery through a C<mogrify -quality 40> to reduce the size
 of the download tarball.  Went from just over 600KB to about 340KB.
 Amazingly, I can't even tell the difference viewing the images.
 
 Removed a hard-coded value from C<buildImageURL()> which broke things for
-folks who had changed the value of C<$albumDir>.  It was found in three
-places inside that function.
+folks who had changed the value of C<$albumDir>.
 
 Made the terms of the licensing clearer according to the FSF GNU
 guidelines at http://www.gnu.org/copyleft/gpl.html .
@@ -334,7 +334,7 @@ F<docs/Utilities.txt>.
 
 Happy Halloween!
 
-=head2 Version 0.94 (Sat Oct 28 2000)
+=head2 Version 0.94 (Sat, 28 Oct 2000)
 
 F<mkGallery> will now sort items before handling them, so output files like
 the comment file will have items alphabetically (for simplicity).
@@ -342,12 +342,12 @@ the comment file will have items alphabetically (for simplicity).
 Fixed bug in C<buildDirList()> that didn't do the rendering of spaces and
 underscores correctly (they should be rendered as C<&nbsp;>).
 
-Fixed rather large bug in C<buildDirList()> which caused cascading links
-in the output HTML.  This was not very noticeable until one had a large
-list of folders (where large is just a few tens of directories).  A string
-was not being properly reset at the beginning of each loop iteration.
+Fixed bug in C<buildDirList()> which caused cascading links in the output
+HTML.  This was not very noticeable until one had a large list of folders
+(where large is just a few tens of directories).  A string was not being
+properly reset at the beginning of each loop iteration.
 
-=head2 Version 0.93 (Tue 17 Oct 2000)
+=head2 Version 0.93 (Tue, 17 Oct 2000)
 
 Added a question to F<install.sh> which asks the user if they are upgrading
 from 0.83 or earlier (so not everyone for the rest of time has to run
@@ -375,27 +375,27 @@ well, to help the browser in its rendering task.
 Added new tag C<%%imageSize%%> to the F<image.html> template.
 
 Switched from using C<$SCRIPT_NAME> to using C<$PHP_SELF>.  This basically
-means MiG should work for people using PHP's CGI mode now.
+means Mig should work for people using PHP's CGI mode now.
 
 Implemented E<lt>SortE<gt> element in F<mig.cf> - see F<docs/mig_cf.txt>.
 
-=head2 Version 0.92 (Mon 02 Oct 2000)
+=head2 Version 0.92 (Mon, 02 Oct 2000)
 
 Plugged a security hole (C<$currDir> wasn't being checked for '..') which
 let viewers see the entire directory stucture of a system.  Anyone using
 anything prior to 0.92 should upgrade immediately!
 
-=head2 Version 0.91 (Sat 30 Sep 2000)
+=head2 Version 0.91 (Sat, 30 Sep 2000)
 
 Fixed a bug in F<mf_conv.pl> which caused the comment conversion process to
 cascade itself... it stored a list of images and comments in memory, but
 when it entered a new directory it was not cleaning that out, so every
 F<mig.cf> had comments for all the files in all the directories it had seen
 before.  Not particularly dangerous but it litters your F<mig.cf> files
-badly.  This is only a problem for folks who upgraded from a release of MiG
-version 0.83 or earlier to MiG 0.90.
+badly.  This is only a problem for folks who upgraded from a release of Mig
+version 0.83 or earlier to Mig 0.90.
 
-=head2 Version 0.90 (Sat 30 Sep 2000)
+=head2 Version 0.90 (Sat, 30 Sep 2000)
 
 Created F<install.sh> to act as an installer script.  Reorganized the
 directory structure somewhat while doing this.
@@ -430,7 +430,7 @@ doesn't behave regarding the C<BODY> element and CSS, based on my tests.
 So there's a default color set in the C<BODY> tag in the HTML templates.
 See the file F<docs/Templates.txt> for more information.
 
-Added tag C<%%distURL%%> for templates.  Removed "MiG" from E<lt>TITLEE<gt>
+Added tag C<%%distURL%%> for templates.  Removed "Mig" from E<lt>TITLEE<gt>
 in the default templates.
 
 Added script F<convert-metafiles> to convert metafiles to new format.
@@ -476,7 +476,7 @@ C<rawurlencode()> on it.
 
 Added C<-c> option to F<mkGallery> - this will populate the F<mig.cf> file
 with blank E<lt>CommentE<gt> elements.  It was adapted from F<mkComments>,
-which was contributed by André Fadel (fadel F<at> fee.unicamp.br).  See
+which was contributed by André Fadel (fadel at fee.unicamp.br).  See
 F<docs/Utilities.txt> for information.
 
 Fixed bug in C<getExifDescription()> which was returning incorrect values.
@@ -490,23 +490,23 @@ F<exif.inf> files.
 
 Fixed bug which caused improper display of filesizes in thumbnail views.
 
-=head2 Version 0.83 (Thu 24 Aug 2000)
+=head2 Version 0.83 (Thu, 24 Aug 2000)
 
 Images and folders are now sorted alphabetically, to make the sorting
 consistent, if not (yet) completely customizable.
 
-=head2 Version 0.82 (Thu 24 Aug 2000)
+=head2 Version 0.82 (Thu, 24 Aug 2000)
 
 Fixed bug in F<mkGallery> that caused problems parsing filenames with
 embedded spaces.
 
-=head2 Version 0.81 (Sat 12 Aug 2000)
+=head2 Version 0.81 (Sat, 12 Aug 2000)
 
 Changed the behavior of C<buildYouAreHere()> so the browser can't click on
 the current item - that is, the current folder or the current image.  It
 just seemed silly to recreate the browser's reload button.
 
-=head2 Version 0.80 (Sat 12 Aug 2000)
+=head2 Version 0.80 (Sat, 12 Aug 2000)
 
 The pieces of the "you are here" headline are now clickable for simpler
 navigation between levels.
@@ -517,40 +517,40 @@ used to having it any other way, it was causing confusion.
 Got C<newCurrDir> out of the URI string which makes the URL about 50% as
 long as before.  This entailed adding C<getNewCurrDir()> calls.
 
-=head2 Version 0.77 (Sat 12 Aug 2000)
+=head2 Version 0.77 (Sat, 12 Aug 2000)
 
 Added style sheet support.  See the file F<templates/style.css>.
 
-=head2 Version 0.76 (Fri 11 Aug 2000)
+=head2 Version 0.76 (Fri, 11 Aug 2000)
 
 Rearranged the layout in F<image.html> to make it friendlier for small
 screens.
 
-=head2 Version 0.75 (Tue 08 Aug 2000)
+=head2 Version 0.75 (Tue, 08 Aug 2000)
 
 Fixed overpadded image tables.
 
-=head2 Version 0.74 (Mon 07 Aug 2000)
+=head2 Version 0.74 (Mon, 07 Aug 2000)
 
 Cleaned up the HTML layout (mostly shuffling, adding, deleting
 E<lt>BRE<gt>).
 
-=head2 Version 0.73 (Mon 07 Aug 2000)
+=head2 Version 0.73 (Mon, 07 Aug 2000)
 
 Added a "now viewing #x of y" in image views, so the browser can easily
 tell how many images are left in either direction without returning to the
 thumbnail view.
 
-=head2 Version 0.72 (Mon 07 Aug 2000)
+=head2 Version 0.72 (Mon, 07 Aug 2000)
 
 Using colored table cells for comments now.  Embedded comments are
 seperated from file-based comments with an E<lt>HRE<gt> element.
 
-=head2 Version 0.71 (Mon 07 Aug 2000)
+=head2 Version 0.71 (Mon, 07 Aug 2000)
 
 Descriptions are centered now.
 
-=head2 Version 0.70 (Mon 07 Aug 2000)
+=head2 Version 0.70 (Mon, 07 Aug 2000)
 
 Bundled F<jhead> from Matthias Wandel in order to parse EXIF headers.
 F<jhead> will be a child process of F<mkGallery> when invoked with C<-e>.
@@ -562,13 +562,13 @@ that's not the only action possible anymore).
 
 Added function C<getExifDescription()> which parses the
 F<.exif_comments.txt> files for embedded comments and displays them in
-image views.  (This file is known as F<exif.inf> as of the 0.90 release)
+image views.
 
-=head2 Version 0.61 (Sun 06 Aug 2000)
+=head2 Version 0.61 (Sun, 06 Aug 2000)
 
 Added "you are here" line, but it's not clickable yet.
 
-=head2 Version 0.60 (Sun 06 Aug 2000)
+=head2 Version 0.60 (Sun, 06 Aug 2000)
 
 Added "hidden" feature.  Anything put into F<.hidden.txt> in a directory
 will cause the listed items (one per line) to be rendered invisible.
@@ -580,12 +580,12 @@ proper call was C<ereg()> or C<ereg_replace()>.
 Added "comment" feature.  Comments are stored in F<.comments.txt>.  See
 F<INSTALL> for more information.
 
-=head2 Version 0.51 (Sun 06 Aug 2000)
+=head2 Version 0.51 (Sun, 06 Aug 2000)
 
 Added C<$homeLink> and C<$homeLabel> to config, to print a "back to {home}"
 link at the "root" folder level.
 
-=head2 Version 0.50 (Sat 05 Aug 2000)
+=head2 Version 0.50 (Sat, 05 Aug 2000)
 
 Set default colors so if C<$imageBGcolor> and/or C<$folderBGcolor> are
 missing in the config, it won't default to black.
@@ -596,17 +596,17 @@ Set default C<$title> in case that is omitted from config file.
 
 Set default C<$maintAddr> in case that is omitted from config file.
 
-Got next/previous links working in image views
+Got next/previous links working in image views.
 
 Removed "back" link from "main" or "root" of album.
 
-=head2 Version 0.41 (Fri 04 Aug 2000)
+=head2 Version 0.41 (Fri, 04 Aug 2000)
 
 Fixed font size bug with back link on "main" page.
 
-=head2 Version 0.40 (Fri 04 Aug 2000)
+=head2 Version 0.40 (Fri, 04 Aug 2000)
 
-Rewrote F<mkGallery> with C<use strict> and C<-w>
+Rewrote F<mkGallery> with C<use strict> and C<-w>.
 
 Symlinked F<index.php3> to F<index.php> for simplicity.
 
@@ -626,15 +626,14 @@ Added variables C<$imageBGcolor> and C<$folderBGcolor>, which are
 background colors for the table backgrounds for the image and folder
 tables, respectively.  They can be found in F<mig.cfg.default>.
 
-Documented templates in F<templates/README.templates>.  (This can now be
-found in F<docs/Templates.txt> as of 0.90)
+Documented templates in F<templates/README.templates>.
 
-=head2 Version 0.36 (Tue 01 Aug 2000)
+=head2 Version 0.36 (Tue, 01 Aug 2000)
 
 Got rid of C<$phpExt> - include files aren't seen by the web server anyway,
 so the extension wasn't relevant.
 
-=head2 Version 0.35 (Tue 01 Aug 2000)
+=head2 Version 0.35 (Tue, 01 Aug 2000)
 
 Reworked page formatting.  Now if there are no folders and no images
 present, the browser gets "No contents".  If no folders, the folder table
@@ -644,25 +643,25 @@ both, you see both tables.  The result is less confusing.
 If F<mig.cfg> is missing, F<mig.cfg.default> will be read instead, to avoid
 any errors popping up. 
 
-=head2 Version 0.34 (Mon 31 Jul 2000)
+=head2 Version 0.34 (Mon, 31 Jul 2000)
 
 Added a second back link to each page since pages can grow long enough that
 having one at the top and one at the bottom is desirable.
 
-=head2 Version 0.33 (Mon 31 Jul 2000)
+=head2 Version 0.33 (Mon, 31 Jul 2000)
 
-Added filesize to the thumbnails page
+Added filesize to the thumbnails page.
 
-=head2 Version 0.32 (Mon 31 Jul 2000)
+=head2 Version 0.32 (Mon, 31 Jul 2000)
 
 Fixed a stupid bug (C<$maxColumns> was being ignored).  Table layouts on
 thumbnail pages should work now.
 
-=head2 Version 0.31 (Mon 31 Jul 2000)
+=head2 Version 0.31 (Mon, 31 Jul 2000)
 
 If a thumbnail is missing, a generic image will be used in its place.
 
-=head2 Version 0.3 (Mon 31 Jul 2000)
+=head2 Version 0.3 (Mon, 31 Jul 2000)
 
 The "back" link is now grayed out when at the "main" page.
 
@@ -683,23 +682,23 @@ C<.php3> extensions instead of C<.php>.
 Added C<$pageTitle> to insert into the E<lt>TITLEE<gt> element of each
 template.
 
-Removed C<*currLocation> routines
+Removed C<*currLocation> routines.
 
 Started using F<mig.cfg.default> for dist bundles to avoid over-writing old
 config files.
 
 Fixed a bug which caused image view "back" links to go not to the previous
-page, but literally to "../"
+page, but literally to "../".
 
-Fixed URL pointer in the HTML templates to reflect correct MiG distribution
+Fixed URL pointer in the HTML templates to reflect correct Mig distribution
 URL.
 
-=head2 Version 0.2 (Sun 30 Jul 2000)
+=head2 Version 0.2 (Sun, 30 Jul 2000)
 
 The F<mkGallery> utility script is complete.  Requires Perl and
 ImageMagick.  No other significant changes in 0.2.
 
-=head2 Version 0.1 (Fri 28 Jul 2000)
+=head2 Version 0.1 (Fri, 28 Jul 2000)
 
 Got "any directory anywhere" directory browsing working correctly.  An
 album can have any number of directories and subdirectories now.  This is

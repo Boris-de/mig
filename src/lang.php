@@ -4,7 +4,8 @@
 // lang.php - Language library for Mig
 //
 // Copyright 2000-2002 Daniel M. Lowe <dan@tangledhelix.com>
-// Mig is available at http://mig.sourceforge.net/
+//
+// http://mig.sourceforge.net/
 //
 //
 // Currently available:

@@ -7,38 +7,16 @@ Z<>
 
 =head2 Using Mig under Windows
 
-I haven't tested Mig using an IIS system.  I don't have an NT box handy,
-and don't want to :-)  But I have tested it using Personal Web Server under
-Windows98 on my laptop.  It worked out of the box using PWS 4.0 with PHP4.
-
-I installed PWS 4.0 using all of the default settings.
-
-I installed PHP based on these directions:
-
-    http://www.php.net/manual/install-windows95-nt.php
-
-After the PHP install, I dropped Mig onto the system and it worked with no
-changes whatsoever.  You will need to tell your web server that the folder
-you stick Mig into has "execute" permission, though.  See the documentation
-for your web server on how to do this.  You may also have to tell the web
-server to use F<index.php> as one of the default document names for a given
-directory.
-
-Apache for Windows is a different story - Mig just doesn't seem to work in
-that environment at all.  At least not for me (Apache + PHP from the
-PHPTriad package under Windows ME).
-
-Another user, Pat Moore, reported success using PHPTriad under Windows 98.
-So I don't know what the difference between those two installs is, but try
-it for yourself and see how you fare.
-
-If you find your results are different, please drop an email to let me know
-at dan@tangledhelix.com.
-
-(I know of at least one person using Mig in a Win2000/IIS5 environment.
-They had problems until they upgraded to PHP 4.0.2, so my recommendation is
-that you should use PHP 4.0.2 or the latest verion of PHP if you are trying
-to use Mig under Windows.)
+I have not tested Mig under IIS, although others have.  I have no Windows
+machines to test with (I'm a Mac user), so I rely on reports from the field
+to tell me what does and doesn't work.  I did install Mig once on a
+laptop running Windows98 and Personal Web Server 4.0 (and PHP4) and it
+worked.  But I do not test Windows installations regularly.  Mig is
+developed in a unix-like environment (Apple OSX) and my site runs in a
+similar environment (FreeBSD), so Mig has a decidedly unix-biased way of
+doing things.  But I make an attempt to accomodate Windows users.  If you
+find any Windows-centric issues in Mig, please email me at
+dan@tangledhelix.com and I'll try to fix them.
 
 =head2 Windows Installation
 
@@ -71,12 +49,13 @@ respectively.
 5. Create subdirectory C<albums> (i.e. F<C:\Mig\Albums>).  This is where
 your albums will live.  If you want to install the example gallery, drag
 the F<Example_Gallery> folder into the albums folder you just created.
-Installing the example gallery is optional.
+Installing the example gallery is optional and only useful if you want to
+see an actual gallery and how it is set up.
 
-6. Make sure you don't copy over your photo files, please.  I can't warrant
+6. Make sure you don't write over your own album.  I can't warrant
 that won't happen, because I've seen some really odd things happen when
 dragging files and folders around in Windows Explorer.  Please be
-careful, and doing a backup first wouldn't hurt either.
+careful and make backups of your data if at all possible.
 
 7. Copy the F<config.php.default> file to F<config.php> in your Mig directory.
 Edit it to taste.  If you are upgrading, you may not need to do this (just
@@ -90,12 +69,12 @@ F<C:\Mig\Albums>) and there you have it.
 
 I'm told by a user in Germany that Mig works under Windows NT and IIS.
 It seems that you'd be well served to upgrade to the latest version of PHP
-though, so if you're using Windows, please upgrade to the most recent
-version of PHP.  You can find it at http://www.php.net/
+though.  You can find it at http://www.php.net/
 
 I'm also told by this same user that having a comma in a filename or
 directory name causes trouble on their Windows platform (although I have
-had no problems with same under Linux, FreeBSD or Solaris).  So be aware of
+had no problems with same under Linux, FreeBSD, Solaris or Darwin).
+So be aware of
 that.  Other special characters may not work either.  It might be safest to
 just use alphabetics, numbers and things like underscore and hyphen.
 Remember that an underscore will be shown as a space in folder names, so as

@@ -53,7 +53,7 @@ The F<jhead> utility which is called by F<mkGallery> for EXIF header
 parsing is a C source code file - you will need to compile it before using
 it.  See the file F<docs/Utilities.txt> for more information.  Since
 F<jhead> is also optional you don't need to worry about this if you don't
-plan to extract embedded comment information from your JPEG files.
+plan to extract EXIF data from your JPEG files.
 
 =head2 INSTALLATION AND BASICS
 
@@ -231,11 +231,6 @@ Tag elements like E<lt>HiddenE<gt> must be at the beginning of a line!
 See the file F<docs/mig_cf.txt> for information about the format of
 F<mig.cf>.
 
-(Note for users upgrading from Mig 0.83 or earlier - the format has
-changed, as you'd have noticed already.  If you need to convert to the
-new format, use the F<convert-metafiles> script which is in the contrib
-section on the Mig home page).
-
 Note that Hidden is not considered secure.  If you need to make sure
 your gallery is secure, please take advantage of the password protection
 in your web server (if it has such a feature).  You can also take
@@ -284,12 +279,6 @@ the example gallery).
 See the file F<docs/mig_cf.txt> for information about the format of
 F<mig.cf>.
 
-(Note for users upgrading from Mig 0.83 or earlier - the format has
-changed, as you'd have noticed already.  The install script probably
-already updated your metafiles such as F<.comments.txt> but if not, you can
-do so by hand by running F<convert-metafiles> which is in the contrib
-directory on the Mig homepage).
-
 4. EXIF header information
 
 You can build EXIF comment files (F<exif.inf>) using F<mkGallery> and the
@@ -301,24 +290,18 @@ this on a typical Unix or Linux system:
     cd util/jhead ; make clean ; make
 
 Since only JPEG files support EXIF headers, F<mkGallery> will only look
-at JPEG files when building the EXIF files.  Much more than the
-comments themselves are stored in these F<exif.inf> files, and future
-versions of Mig may parse more information from these files than it
-currently does.  Right now all Mig knows how to extract from the
-F<exif.inf> file is embedded comments.
+at JPEG files when building the EXIF files.
+
+EXIF data generally contains information such as shutter speed, aperture,
+ISO rating, the original shooting date and time, and sometimes comments.
+Mig can read some, but not all, of this data.  Future versions of Mig may
+understand more of the data than it currently does.
 
 NOTE that most graphic editors destroy EXIF blocks!  They don't know how to
 write them so when they save images, they are simply not written back into
 the file.  You can get around this by building the EXIF data using your raw
 images, and then editing them afterward.  This may not be an option for
 everybody, but there's nothing I can do about it.
-
-(Note for users upgrading from Mig 0.83 or earlier - the filename has
-changed, as you'd have noticed already.  The install script probably
-already updated your metafiles such as F<.exif_comments.txt> but if not,
-you can do so by hand by running F<convert-metafiles> which is in the
-contrib directory on the Mig home page.  The only change for EXIF files
-is the filename, just rename to F<exif.inf>).
 
 5. Style sheets
 
@@ -417,7 +400,7 @@ and C<$imagePopType> variables in F<config.php>.
 =head2 BUG REPORTING
 
 You can report bugs in one of two ways.  The first way is to submit a bug
-report on the Mig project page at
+report on the Mig project page at:
 
     http://sourceforge.net/projects/mig/
 
@@ -426,7 +409,7 @@ The second is to send an email to dan@tangledhelix.com.
 =head2 WISH LIST
 
 You can submit items to the wish list in one of two ways.  The first way is
-to submit a Feature Request on the Mig project page at
+to submit a Feature Request on the Mig project page at:
 
     http://sourceforge.net/projects/mig/
 
@@ -434,8 +417,8 @@ The second is to send an email to dan@tangledhelix.com.
 
 =head2 EMAIL LISTS
 
-There are two mailing lists related to Mig.  Visit the URLs below if
-you wish to subscribe.  Both lists are currently fairly low-traffic.
+There are three mailing lists related to Mig.  Visit the URLs below if
+you wish to subscribe.  All lists are currently fairly low-traffic.
 
 mig-announce is an announcements-only list.  New versions and so forth are
 announced on this list.
@@ -448,6 +431,10 @@ here, so if you subscribe to mig-users you don't necessarily have to
 subscribe to mig-announce as well (but you can if you want to).
 
     http://lists.sourceforge.net/lists/listinfo/mig-users
+
+mig-devel is for people interested in development work related to Mig.
+
+    http://lists.sourceforge.net/lists/listinfo/mig-devel
 
 =cut
 

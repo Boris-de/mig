@@ -12,13 +12,12 @@ Z<>
 F<mkGallery> - Create a gallery from images in the current directory.
 
 F<jhead> - Extracts EXIF header information from JPEG files.
-(Note that F<jhead> is not for direct use - it is called by F<mkGallery>
-when F<mkGallery> is invoked with the C<-e> flag).
+(F<jhead> is used by F<mkGallery>, so you don't need to use it
+directly, however, you can if you want to; it has a lot of nice features).
 
-F<convert-metafiles> and F<mf_conv.pl> are deprecated - they can be found
-in the Mig-contrib package in the download section on the Mig site:
-
-    http://mig.sourceforge.net/
+(F<convert-metafiles> and F<mf_conv.pl> are deprecated - they can be found
+in the Mig-contrib package in the download section on the Mig site at
+http://mig.sourceforge.net/ )
 
 =head1 mkGallery
 
@@ -29,7 +28,7 @@ F<mkGallery> can do three things:
 1. Take a directory full of images and create thumbnails for them.
 
 2. Read EXIF header information from image files and cache it in
-a text file for Mig to use.
+text files for Mig to use.
 
 3. Create blank comment templates in F<mig.cf> files.
 
@@ -37,9 +36,10 @@ It can do all of them at the same time, too, if you want.  You can specify
 which image(s) to work with, or just tell it to process every image in the
 current directory.
 
-    Note that mkGallery requires ImageMagick and Perl.  Neither of
-    those is required for Mig itself - they are required only if
-    you want to use the mkGallery utility.
+(Note that F<mkGallery> requires Perl.  Perl is not required for Mig
+itself.  It is required only if you want to use the F<mkGallery> utility.
+If you wish to generate thumbnails, the "convert" utility from the
+ImageMagick suite is also required.)
 
 F<mkGallery> uses the following Perl modules.  On my system, using Perl
 5.005_03, these are all included.  You probably will not have to install
@@ -68,7 +68,7 @@ F<mkGallery> has NOT been tested under Microsoft Windows.
            be over-written instead.
       -t : Generate thumbnail images.
       -e : Build "exif.inf" file.
-           See the file docs/Utilities.txt - you must build the jhead
+           See the file docs/Utilities.txt - you must compile the jhead
            utility (included) before you can use the -e option.
       -c : Generate blank comments for uncommented images.
       -i : "Interactive" mode for comments (see docs/Utilities.txt).
@@ -87,7 +87,6 @@ F<mkGallery> has NOT been tested under Microsoft Windows.
       -D : Name of thumbnail subdirectory to use (default is "thumbs" or
            whatever is in your config.php file).  See docs/Utilities.txt.
       -E : File extension to use for thumbnails.  See docs/Utilities.txt.
-
 
     * If creating thumbnails, "convert" must be in your $PATH.
     * This program supports JPEG, PNG and GIF formats.
@@ -124,67 +123,19 @@ large detailed photographs yet still keeping a very good file size
 
 You can specify a quality level with C<-q number>.
 
-=head2 Labels, prefixes, and suffixes
+=head2 Thumbnails
 
-(As of 1.3.1, thumbnail subdirectories are the default - unless you've got
-them turned off, they will take precedence).
-
-The C<-M> and C<-m> options are new in 0.90.  In previous versions, all
-thumbnails were built with the pattern F<filename_th.ext> so that an image
-named F<myHouse.JPG> would have a thumbnail called F<myHouse_th.JPG>.
-
-That's been changed.  You can now use any text you want for the label,
-not just C<th>.  So you could have C<mkGallery -m mini> create thumbnails for
-you like F<myHouse_mini.JPG> and F<myGarden_mini.JPG> instead.
-
-Also, you can use a prefix rather than the default (a suffix).  So you
-could use C<mkGallery -M prefix> to create thumbnails like
-F<th_myHouse.JPG> and F<th_myGarden.JPG> instead.
-
-If you choose to use prefixes and not suffixes, and/or a different label name,
-you must make the associated changes to F<config.php>.  Otherwise Mig will not
-know what to look for.  Changing F<config.php> has a side effect, too -
-F<mkGallery> reads it to set defaults for C<-m> and C<-M>, so if your
-F<config.php> is set to what you want, you shouldn't have to worry about C<-m>
-or C<-M> when running F<mkGallery>.
-
-Look at C<$markerType> and C<$markerLabel> in F<config.php.default> or
-F<config.php>.  C<$markerType> equates to C<-M> and C<$markerLabel> equates to
-C<-m>.
-
-Values in F<config.php> are used, but if you invoke command-line options to
-F<mkGallery>, C<-m> and C<-M> will override the values in F<config.php>.
-
-As of version 1.1, you can also use a thumbnail extension type.  This is
-basically in case you have mutiple types of images such as JPGs, GIFs, etc,
-but you want all thumbnails to be a particular type (say, all GIFs).
-
-See both the C<$thumbExt> option in F<config.php>, and the C<-E> option to
-F<mkGallery>.  If you define C<$thumbExt> in F<config.php>, F<mkGallery> will
-use that value as the default.
-
-(You can also use subdirectories for thumbnails and avoid all this prefix
-and suffix nonsense altogether... see the next section).
-
-=head2 Using thumbnail subdirectories
-
-Not all users want their thumbnails littering up their folders.  As such,
-Mig has an option which lets you put thumbnails into a subdirectory
-instead.  To do this, set the C<$useThumbSubdir> and C<$thumbSubdir>
-options in the F<config.php> file.  You can also use the C<-d> and C<-D>
-options to F<mkGallery> to override what F<config.php> has configured.
-
-(As of 1.3.1, thumbnail subdirectories are the default)
+Thumbnails are stored in a subdirectory called "thumbs" by default.
+(This can be changed - see the C<$thumbSubdir> option in F<config.php>.)
 
 Then you might have files like F<AUT_1015.JPG>, F<AUT_1019.JPG> and in a
 subdirectory F<thumbs/AUT_1015.JPG>, F<thumbs/AUT_1019.JPG> ... so they are
-the same filename for both, just in different directories.  Many people
-view this as cleaner (I've converted my own gallery over to this method).
+the same filename for both, just in different directories.
 
 You don't have to create the directories ahead of time - F<mkGallery> will
 create any directories which are not already there.
 
-=head2 "Interactive" mode
+=head2 Interactive mode
 
 If using the C<-c> option to generate comment fields in F<mig.cf>, you can
 also optionally specify C<-i> or Interactive mode.  Basically all this will
@@ -235,7 +186,7 @@ just type C<make> in the F<util/jhead> subdirectory.  If you don't have gcc
 you'll need to edit F<Makefile> to point to your compiler.
 
 This should work as-is on most Unix or Unix-like platforms.  I can attest
-to its working with Linux.
+to its working with Linux, FreeBSD, Solaris and Apple OSX.
 
 F<jhead> is not something you need to run directly - it is used by
 F<mkGallery> if you invoke F<mkGallery> with the C<-e> flag. 

@@ -441,11 +441,12 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $albumURLroot, $maxColumns, $directoryList,
                          $markerType, $markerLabel, $suppressImageInfo,
                          $useThumbSubdir, $thumbSubdir, $noThumbs,
-                         $thumbExt, $suppressAltTags, $language,
-                         $mig_messages, $sortType, $hidden, $presorted,
-                         $description, $imagePopup, $imagePopType,
-                         $commentFilePerImage )
+                         $thumbExt, $suppressAltTags, $sortType, $hidden,
+                         $presorted, $description, $imagePopup,
+                         $imagePopType, $commentFilePerImage )
 {
+    global $mig_language;
+    global $mig_messages;
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
 
@@ -536,9 +537,9 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                                  $albumURLroot, $fname, $ext, $markerType,
                                  $markerLabel, $suppressImageInfo,
                                  $useThumbSubdir, $thumbSubdir, $noThumbs,
-                                 $thumbExt, $suppressAltTags, $language,
-                                 $mig_messages, $description, $imagePopup,
-                                 $imagePopType, $commentFilePerImage);
+                                 $thumbExt, $suppressAltTags, $description,
+                                 $imagePopup, $imagePopType,
+                                 $commentFilePerImage);
             $imageList .= $img;
 
             // Keep track of what row and column we are on
@@ -572,16 +573,18 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 // buildBackLink() - spits out a "back one section" link
 
 function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
-                        $noThumbs, $language, $mig_messages )
+                        $noThumbs)
 {
+    global $mig_language;
+    global $mig_messages;
 
     // $type notes whether we want a "back" link or "up one level" link.
     if ($type == 'back' or $noThumbs) {
         //$label = 'up&nbsp;one&nbsp;level';
-        $label = $mig_messages[$language]['up_one'];
+        $label = $mig_messages[$mig_language]['up_one'];
     } elseif ($type == 'up') {
         //$label = 'back&nbsp;to&nbsp;thumbnail&nbsp;view';
-        $label = $mig_messages[$language]['thumbview'];
+        $label = $mig_messages[$mig_language]['thumbview'];
     }
 
     // don't send a link back if we're a the root of the tree
@@ -599,7 +602,7 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
             $retval  = '<font size="-1">[&nbsp;<a href="'
                      . $homeLink
                      . '">'
-                     . $mig_messages[$language]['backhome']
+                     . $mig_messages[$mig_language]['backhome']
                      . '&nbsp;'
                      . $homeLabel
                      . '</a>&nbsp;]</font><br><br>';
@@ -630,9 +633,11 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
                         $albumURLroot, $fname, $ext, $markerType,
                         $markerLabel, $suppressImageInfo, $useThumbSubdir,
                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
-                        $language, $mig_messages, $description, $imagePopup,
-                        $imagePopType, $commentFilePerImage )
+                        $description, $imagePopup, $imagePopType,
+                        $commentFilePerImage )
 {
+    global $mig_language;
+    global $mig_messages;
 
     // newCurrDir is currDir without leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -740,7 +745,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     } elseif ($imageSize > 1024) {
         $imageSize = sprintf('%01.1f', $imageSize / 1024) . 'KB';
     } else {
-        $imageSize = $imageSize . $mig_messages[$language]['bytes'];
+        $imageSize = $imageSize . $mig_messages[$mig_language]['bytes'];
     }
 
     // Figure out thumbnail geometry
@@ -818,9 +823,11 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 // images.
 
 function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
-                             $markerType, $markerLabel, $language,
-                             $mig_messages, $hidden, $presorted, $sortType )
+                             $markerType, $markerLabel, $hidden,
+                             $presorted, $sortType )
 {
+    global $mig_language;
+    global $mig_messages;
 
     // newCurrDir is currDir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -940,27 +947,27 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     // If there is no previous image, show a greyed-out link
     if ($prev == 'NA') {
         $pLink = '<font size="-1">[&nbsp;<font color="#999999">'
-               . $mig_messages[$language]['previmage']
+               . $mig_messages[$mig_language]['previmage']
                . '</font>&nbsp;]</font>';
 
     // else show a real link
     } else {
         $pLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
-               . $prev . '">' . $mig_messages[$language]['previmage']
+               . $prev . '">' . $mig_messages[$mig_language]['previmage']
                . '</a>&nbsp;]</font>';
     }
 
     // If there is no next image, show a greyed-out link
     if ($next == 'NA') {
         $nLink = '<font size="-1">[&nbsp;<font color="#999999">'
-               . $mig_messages[$language]['nextimage']
+               . $mig_messages[$mig_language]['nextimage']
                . '</font>&nbsp;]</font>';
     // else show a real link
     } else {
         $nLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
-               . $next . '">' . $mig_messages[$language]['nextimage']
+               . $next . '">' . $mig_messages[$mig_language]['nextimage']
                . '</a>&nbsp;]</font>';
     }
 
@@ -978,9 +985,10 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 // buildYouAreHere() - build the "You are here" line for the top
 // of each page
 
-function buildYouAreHere( $baseURL, $currDir, $image, $language,
-                          $mig_messages )
+function buildYouAreHere( $baseURL, $currDir, $image )
 {
+    global $mig_language;
+    global $mig_messages;
 
     // Use $workingCopy so we don't trash value of $currDir
     $workingCopy = $currDir;
@@ -1014,14 +1022,14 @@ function buildYouAreHere( $baseURL, $currDir, $image, $language,
 
     // If we're down to '.' as our currDir then this is 'Main'
     if ($currDir == '.') {
-        $url = '<b>' . $mig_messages[$language]['main'] . '</b>';
+        $url = '<b>' . $mig_messages[$mig_language]['main'] . '</b>';
         $x = $hereString;
         $hereString = $url . $x;
 
     // Or if we're not, then Main should be a link instead of just text
     } else {
         $url = '<a href="' . $baseURL . '?currDir=' . $workingCopy
-             . '">' . $mig_messages[$language]['main'] . '</a>';
+             . '">' . $mig_messages[$mig_language]['main'] . '</a>';
         $x = $hereString;
         $hereString = $url . $x;
     }

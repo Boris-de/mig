@@ -5,7 +5,7 @@ $Revision$
 
 Z<>
 
-=head1 Installing MIG without unix shell access (i.e. via FTP)
+=head1 Installing Mig without unix shell access (i.e. via FTP)
 
 Z<>
 

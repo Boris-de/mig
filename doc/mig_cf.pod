@@ -54,15 +54,6 @@ some useful examples.
 
 (Below you'll find a table defining valid tags and what they do)
 
-=head2 UPGRADING
-
-If you are upgrading from 0.83 or earlier to 0.90 or later, you'll need to
-update the meta-files.  See the script F<convert-metafiles> which is on the
-Mig home page in the contrib section.  You'll also need the F<mf_conv>
-script available from the same location.
-
-    http://tangledhelix.com/software/mig/downloads/contrib
-
 =head2 COMMENT LINES
 
 Any line starting with C<#> is a comment line and is ignored by Mig.  Blank
@@ -151,8 +142,11 @@ to use as the page title for this folder.
     MaintAddr joe@mama.com
 
 You can define a per-folder maintainer email address.  The global value
-set in config.php will be used normally, but if the current folder's mig.cf
-contains a MaintAddr line, that address will be used instead.
+set in F<config.php> will be used normally, but if the current folder's
+F<mig.cf> contains a C<MaintAddr> line, that address will be used instead.
+
+This is handy in the case where different folders on your site are really
+owned by different people.
 
 =head2 PER-FOLDER COLUMN SETTINGS
 
@@ -170,11 +164,11 @@ C<$maxFolderColumns> and C<$maxThumbColumns> set in F<config.php>.
     [item]
     </Hidden>
 
-Hidden elements are lists of items which are invisible to the browser.
+C<Hidden> elements are lists of items which are invisible to the browser.
 Sometimes you might want to hide something from the general public, maybe
 because you just don't want anyone to view it, or maybe you are working on
 it and don't want to let anyone see it until it is finished.  Either way
-you can do this with the Hidden element.  One item per line between the
+you can do this with the C<Hidden> element.  One item per line between the
 tags, as in:
 
     <Hidden>
@@ -182,11 +176,12 @@ tags, as in:
     England
     </Hidden>
 
-You should note that Hidden is not considered a security feature.  It
+You should note that C<Hidden> is not considered a security feature.  It
 isn't very difficult for someone to get into a hidden folder if they know
 much about Mig.  You should look into your web server's security features
 such as password protection if you are looking for real security.   Mig
 also has its own password protection scheme - see F<docs/Passwords.txt>.
+(Mig's password scheme isn't really secure either).
 
 =head2 SORT ORDER
 
@@ -248,7 +243,8 @@ its own.
 all sorted items into a single E<lt>SortE<gt> element.  That's true, but I
 don't recommend doing it - it tends to get confusing that way.  It's best
 to just define multiple E<lt>SortE<gt> elements and have one for files, one
-for folders.)
+for folders.  It may be marginally less efficient during parsing, but
+hardly so.)
 
 =head2 SECURITY
 

@@ -35,10 +35,9 @@ or in the file F<docs/LICENSE>.
 A web server which supports PHP.  PHP3 or PHP4 should work.  Windows users
 will be better off upgrading to the latest version of PHP4.
 
-The F<mkGallery> utility requires Perl and ImageMagick.  See
-F<docs/Utilities.txt> for more information.  ImageMagick is not
-required to use Mig itself; it is only required if you want to use
-F<mkGallery> to create thumbnail images.
+The F<mkGallery> utility requires Perl (and, if you want it to handle
+thumbnails, ImageMagick also).  These are not required for Mig - only
+for F<mkGallery>.  See F<docs/Utilities.txt> for more information.
 
 If you wish to extract embedded comments from JPEG files, you will also
 need a C compiler (such as gcc) in order to build the (included) F<jhead>
@@ -66,8 +65,8 @@ might be.
 
 =head2 MAILING LISTS
 
-There are two mailing lists related to Mig.  Visit the URLs below if
-you wish to subscribe.  Both lists are currently fairly low-traffic.
+There are three mailing lists related to Mig.  Visit the URLs below if
+you wish to subscribe.  All lists are currently fairly low-traffic.
 
 mig-announce is an announcements-only list.  New versions and so forth are
 announced on this list.
@@ -81,23 +80,28 @@ subscribe to mig-announce as well (but you can if you want to).
 
     http://lists.sourceforge.net/lists/listinfo/mig-users
 
+mig-devel is a development discussion list.  Anyone wanting to get into
+technical detail about Mig and the code within can join here.
+
+    http://lists.sourceforge.net/lists/listinfo/mig-devel
+
 =head2 REPORTING BUGS
 
 You can report bugs in one of two ways.  The first way is to submit a bug
-report on the Mig project page at
+report on the Mig project page at:
 
     http://sourceforge.net/projects/mig/
 
-The second is to send an email to dan@tangledhelix.com
+The second is to send an email to dan@tangledhelix.com .
 
 =head2 WISH LIST
 
 You can submit items to the wish list in one of two ways.  The first way is
-to submit a Feature Request on the Mig project page at
+to submit a Feature Request on the Mig project page at:
 
     http://sourceforge.net/projects/mig/
 
-The second is to send an email to dan@tangledhelix.com
+The second is to send an email to dan@tangledhelix.com .
 
 =cut
 
