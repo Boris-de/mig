@@ -301,10 +301,10 @@ $mig_messages['it'] = array (
     'previmage'    => 'immagine&nbsp;precedente',
     'thumbview'    => 'torna&nbsp;alla&nbsp;vista&nbsp;per&nbsp;icone',
     'up_one'       => 'torna&nbsp;al&nbsp;livello&nbsp;superiore',
-    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
-                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
-                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
-                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
+    'month'        => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                              '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                              '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                              '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
@@ -321,10 +321,10 @@ $mig_messages['es'] = array (
     'previmage'    => 'anterior&nbsp;im&#225;gen',
     'thumbview'    => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
     'up_one'       => 'subir&nbsp;un&nbsp;nivel',
-    'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
-                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',
-                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
-                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
+    'month'        => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
+                              '04' => 'Apr', '05' => 'May', '06' => 'Jun',
+                              '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
+                              '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
 
 // Slovak - courtesy of Juro Polak <polak@axon.sk>
