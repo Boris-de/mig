@@ -153,7 +153,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
         $phrase = str_replace('%s', $start_img, $phrase);
         // %e is end image
         $phrase = str_replace('%e', $end_img, $phrase);
-        $phrase.="foobar";
+        
 
         $pageBlock .= "\n" . '   <tr>' . "\n" . '    <td colspan="'
                     . $max_col . '" align="center"><small>' . $phrase;
