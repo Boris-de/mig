@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Revision$
 
 //
 // MiG - A general purpose photo gallery management system.

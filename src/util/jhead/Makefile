@@ -1,4 +1,4 @@
-# $Id$
+# $Revision$
 #
 # Makefile for jhead
 #

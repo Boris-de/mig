@@ -1,4 +1,4 @@
-$Id$
+$Revision$
 
 
 =pod
@@ -433,7 +433,7 @@ translations to the available list of languages.
 
 (see F<mig.cfg.default> for more information - MiG now supports English,
 French, German, Norwegian, Portugese, Finnish, Romanian, Russian
-Windows-1251, Russian KOI8-R, Turkish, Swedish and Danish)
+Windows-1251, Russian KOI8-R, Turkish, Swedish, Danish and Italian.)
 
 =head2 BUG REPORTING
 

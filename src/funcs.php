@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Revision$
 
 //
 // funcs.php - function library for MiG

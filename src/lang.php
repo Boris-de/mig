@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Revision$
 
 //
 // lang.php - Language library for MiG
@@ -21,6 +21,7 @@
 //  tr      Turkish
 //  se      Swedish
 //  da      Danish
+//  it      Italian
 //
 
 // English (default)
@@ -221,6 +222,20 @@ $mig_messages['da'] = array (
     'previmage'     => 'forrige&nbsp;billed',
     'thumbview'     => 'tilbage&nbsp;til&nbsp;oversigten',
     'up_one'        => 'tilbage'
+);
+
+// Italian - courtesy of Alessandro Polett <pollok@toth.it>
+$mig_messages['it'] = array (
+    'backhome'      => 'indietro&nbsp;a',
+    'bytes'         => '&nbsp;bytes',
+    'main'          => 'Principale',
+    'must_auth'     => 'Devi inserire uno user e una password validi'
+                     . ' per entrare',
+    'nextimage'     => 'prossima&nbsp;immagine',
+    'no_contents'   => 'Vuoto.',
+    'previmage'     => 'immagine&nbsp;precedente',
+    'thumbview'     => 'indietro&nbsp;al&nbsp;thumbnail',
+    'up_one'        => 'su&nbsp;di&nbsp;un&nbsp;livello'
 );
 
 ?>

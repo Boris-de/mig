@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id$
+# $Revision$
 #
 # Installation script for MiG
 #

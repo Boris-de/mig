@@ -1,4 +1,4 @@
-<?php // $Id$
+<?php // $Revision$
 
 //
 // mig.cfg - Configuration file for MiG
@@ -154,6 +154,7 @@ $sortType = 'default';
 //   tr     Turkish
 //   se     Swedish
 //   da     Danish
+//   it     Italian
 //
 // If you want to translate MiG into another language, please contact
 // dan@tangledhelix.com.
