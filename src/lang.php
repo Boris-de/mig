@@ -22,6 +22,7 @@
 //  se      Swedish
 //  da      Danish
 //  it      Italian
+//  es      Spanish
 //
 
 // English (default)
@@ -236,6 +237,20 @@ $mig_messages['it'] = array (
     'previmage'     => 'immagine&nbsp;precedente',
     'thumbview'     => 'indietro&nbsp;al&nbsp;thumbnail',
     'up_one'        => 'su&nbsp;di&nbsp;un&nbsp;livello'
+);
+
+// Spanish - courtesy of Alex Dantart <alex@pixar.es>
+$mig_messages['es'] = array (
+     'backhome'      => 'volver&nbsp;a',
+     'bytes'         => '&nbsp;bytes',
+     'main'          => 'Principal',
+     'must_auth'     => 'Debes introducir un usuario y clave v&#225;lidas'
+                      . ' para acceder',
+     'nextimage'     => 'siguiente&nbsp;im&#225;gen',
+     'no_contents'   => 'Sin&nbsp;contenidos.',
+     'previmage'     => 'anterior&nbsp;im&#225;gen',
+     'thumbview'     => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
+     'up_one'        => 'subir&nbsp;un&nbsp;nivel'
 );
 
 ?>
