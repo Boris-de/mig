@@ -1,5 +1,6 @@
+
 // Russian KOI8-R - courtesy of Anatoly Ropotov <lynx@rulez.lv>
-$mig_messages['koi8r'] = array (
+$mig_config['lang']['koi8r'] = array (
     'backhome'      => '&#215;&#197;&#210;&#206;&#213;&#212;&#216;&#211;'
                      . '&#209;&nbsp;&#203;',
     'bytes'         => '&nbsp;&#194;&#193;&#202;&#212;',
@@ -29,3 +30,4 @@ $mig_messages['koi8r'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

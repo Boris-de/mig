@@ -1,5 +1,6 @@
+
 // Polish - courtesy of martvin@box43.pl
-$mig_messages['pl'] = array (
+$mig_config['lang']['pl'] = array (
     'backhome'      => 'powr&#243;t&nbsp;do',
     'bytes'         => '&nbsp;bajt&#243;w',
     'flash_used'    => 'u&#191;yto&nbsp;Flash',
@@ -16,3 +17,4 @@ $mig_messages['pl'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

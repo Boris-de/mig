@@ -1,5 +1,6 @@
+
 // Swedish - courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
-$mig_messages['se'] = array (
+$mig_config['lang']['se'] = array (
     'backhome'      => 'tillbaka',
     'bytes'         => '&nbsp;byte',
     'flash_used'    => 'flash used',
@@ -18,3 +19,4 @@ $mig_messages['se'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

@@ -1,3 +1,4 @@
+
 // descriptionFrame() - Same thing as folderFrame() for descriptions.
 
 function descriptionFrame( $input )
@@ -9,3 +10,4 @@ function descriptionFrame( $input )
     return $retval;
 
 }   // -- End of descriptionFrame()
+

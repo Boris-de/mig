@@ -1,5 +1,6 @@
+
 // Romanian - courtesy of Eugen Dedu <dedu@ese-metz.fr>
-$mig_messages['ro'] = array (
+$mig_config['lang']['ro'] = array (
     'backhome'      => '&#238;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
     'flash_used'    => 'flash used',
@@ -16,3 +17,4 @@ $mig_messages['ro'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

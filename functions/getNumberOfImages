@@ -1,3 +1,4 @@
+
 // getNumberOfImages() - counts images in a given folder
 
 function getNumberOfImages( $folder, $useThumbSubdir, $markerType,
@@ -32,3 +33,4 @@ function getNumberOfImages( $folder, $useThumbSubdir, $markerType,
     return $count;
 
 }   // -- End of getNumberOfImages()
+

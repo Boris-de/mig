@@ -1,5 +1,6 @@
+
 // Portugese - courtesy of Fadel <fadel@fee.unicamp.br>
-$mig_messages['br'] = array (
+$mig_config['lang']['br'] = array (
     'backhome'      => 'voltar&nbsp;para',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash usado',
@@ -16,3 +17,4 @@ $mig_messages['br'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

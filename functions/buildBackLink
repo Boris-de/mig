@@ -1,3 +1,4 @@
+
 // buildBackLink() - spits out a "back one section" link
 
 function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
@@ -51,3 +52,4 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
     return $retval;
 
 }   // -- End of buildBackLink()
+

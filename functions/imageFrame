@@ -1,3 +1,4 @@
+
 // imageFrame() - Same thing as folderFrame() but for image tables.
 
 function imageFrame( $input )
@@ -9,3 +10,4 @@ function imageFrame( $input )
     return $retval;
 
 }   // -- End of imageFrame()
+

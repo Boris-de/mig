@@ -1,3 +1,4 @@
+
 // parseMigCf - Parse a mig.cf file for sort and hidden blocks
 
 function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
@@ -124,3 +125,4 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
     return $retval;
 
 }   //  -- End of parseMigCf()
+

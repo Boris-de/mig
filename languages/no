@@ -1,7 +1,8 @@
+
 // Norwegian
 // Translated by Joffer aka Christopher Thorjussen - January 8th, 2000
 // http://www.irc-arendal.net
-$mig_messages['no'] = array (
+$mig_config['lang']['no'] = array (
     'backhome'      => 'tilbake',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',
@@ -17,3 +18,4 @@ $mig_messages['no'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

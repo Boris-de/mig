@@ -1,5 +1,6 @@
+
 // German - courtesy of "Burckhard Loeh" <lb@loeh.cx>
-$mig_messages['de'] = array (
+$mig_config['lang']['de'] = array (
     'backhome'      => 'zurueck&nbsp;zu',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'blitz benutzt',
@@ -16,3 +17,4 @@ $mig_messages['de'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

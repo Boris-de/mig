@@ -1,3 +1,4 @@
+
 // folderFrame() - frames stuff in HTML table code... avoids template
 // problems in places where there are images but no folders, or vice
 // versa.
@@ -11,3 +12,4 @@ function folderFrame( $input )
     return $retval;
 
 }   // -- End of folderFrame()
+

@@ -1,5 +1,6 @@
+
 // Slovak - courtesy of Juro Polak <polak@axon.sk>
-$mig_messages['sk'] = array (
+$mig_config['lang']['sk'] = array (
     'backhome'      => 'sp&#228;?&nbsp;na',
     'bytes'         => '&nbsp;bytov',
     'flash_used'    => 'flash used',
@@ -17,3 +18,4 @@ $mig_messages['sk'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

@@ -1,5 +1,6 @@
+
 // Dutch - courtesy of Erik@Braindisorder.org
-$mig_messages['nl'] = array (
+$mig_config['nl'] = array (
     'backhome'      => 'Terug&nbsp;naar',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',
@@ -16,3 +17,4 @@ $mig_messages['nl'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

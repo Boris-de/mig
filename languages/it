@@ -1,5 +1,6 @@
+
 // Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
-$mig_messages['it'] = array (
+$mig_config['lang']['it'] = array (
     'backhome'     => 'torna&nbsp;a',
     'bytes'        => '&nbsp;bytes',
     'flash_used'   => 'usato flash',
@@ -16,3 +17,4 @@ $mig_messages['it'] = array (
                               '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                               '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

@@ -1,5 +1,6 @@
+
 // Turkish - courtesy of Dogan Sariguzel <dogan@procam.com.tr>
-$mig_messages['tr'] = array (
+$mig_config['lang']['tr'] = array (
     'backhome'      => 'geri&nbsp;d&#246;n:',
     'bytes'         => '&nbsp;bit',
     'flash_used'    => 'flash used',
@@ -17,3 +18,4 @@ $mig_messages['tr'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

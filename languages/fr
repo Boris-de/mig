@@ -1,5 +1,6 @@
+
 // French - courtesy of jérôme ROUER <CCFRANCE.bibli@bigpond.com.kh>
-$mig_messages['fr'] = array (
+$mig_config['lang']['fr'] = array (
     'backhome'      => 'Retour&nbsp;vers',
     'bytes'         => '&nbsp;octets',
     'flash_used'    => 'flash utilis&#233;',
@@ -17,3 +18,4 @@ $mig_messages['fr'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

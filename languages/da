@@ -1,5 +1,6 @@
+
 // Danish - courtesy of Mikkel Mondrup Kristensen <hh00d-mmk@uv.horshs.dk>
-$mig_messages['da'] = array (
+$mig_config['lang']['dk'] = array (
     'backhome'      => 'tilbage&nbsp;til',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'flash used',
@@ -16,3 +17,4 @@ $mig_messages['da'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+

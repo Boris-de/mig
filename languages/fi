@@ -1,5 +1,6 @@
+
 // Finnish - courtesy of Jani Mikkonen <jani@mikkonen.org>
-$mig_messages['fi'] = array (
+$mig_config['lang']['fi'] = array (
     'backhome'      => 'takaisin',
     'bytes'         => '&nbsp;byte&#228;',
     'flash_used'    => 'flash used',
@@ -16,3 +17,4 @@ $mig_messages['fi'] = array (
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
                                '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
 );
+
