@@ -64,7 +64,7 @@ Sebastian Djupsjöbacka (basse@iki.fi) for the Swedish translation.
 Mikkel Mondrup Kristensen (hh00d-mmk@uv.horshs.dk) for the Danish
 translation.
 
-Alessandro Poletto (pollok@toth.it) for the Italian translation.
+Alessandro Poletto (pollok@toth.it) for the original Italian translation.
 
 Juro Polak (polak@axon.sk) for the Slovak translation.
 
@@ -76,6 +76,9 @@ Göran Fröjdh <goran@frojdh.com> for the code on which the pop-up window
 feature is based.
 
 Martin <martvin@box43.pl> for the Polish translation.
+
+Marco Ermini <markoer@firenze.linux.it> for the improved Italian
+translation.
 
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with MiG.

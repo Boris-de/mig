@@ -17,6 +17,8 @@ Explorer.  C<$suppressAltTags> will also suppress the TITLE tags.
 
 Added Polish translation.
 
+Replaced Italian translation with cleaner one from Marco Ermini.
+
 =head2 Version 1.2.9 (Thu 16 Aug 2001)
 
 Added C<$imagePopup> and C<$imagePopType> to F<mig.cfg.default>.  Using these
