@@ -26,6 +26,13 @@ incorrectly reported in some circumstances.
 
 General cleanup of documentation.
 
+If F<config.php> is missing, Mig will move on and just use default values
+instead.  Why anyone would want to do that is beyond me, but I think it's
+simpler this way.
+
+Modified F<mkGallery> to look for jhead in its own directory.  Simplifies
+the process of finding it.
+
 =head2 Version 1.3.1 (Tue, 07 May 2002)
 
 [Sourceforge bug report #467122] -
@@ -264,7 +271,8 @@ column for folder listings.
 
 =head2 Version 1.0 (Wed, 06 Dec 2000)
 
-You can now type "quit" at any prompt during F<install.sh> to abort.
+You can now type E<quot>quitE<quot> at any prompt during F<install.sh> to
+abort.
 
 F<install.sh> and PHP code revamped and retested for PHP-Nuke compatible
 mode.  Now the Mig install (except for F<mig.php> and F<mig.cfg>) are
@@ -370,9 +378,10 @@ not go back to using underlines.  So I defined C<A:*> as having
 C<text-decoration=underline> in F<templates/style.css> (which is what you'd
 expect to see becaues most browsers underline links by default).
 
-Changed link on image view pages that goes back to read "back to thumbnail
-view".  Previously it read "back to folder view" but it has been pointed
-out to me that the wording was confusing.
+Changed link on image view pages that goes back to read E<quot>back to
+thumbnail viewE<quot>.  Previously it read E<quot>back to folder
+viewE<quot> but it has been pointed out to me that the wording was
+confusing.
 
 Discovered the amazing function C<GetImageSize()>.  Now all thumbnail views
 will use C<width= height=> for the thumbnails (this helps speed up the
@@ -431,15 +440,15 @@ F<.hidden.txt>, etc.  EXIF header info will still live in F<exif.inf>
 (formerly known as F<.exif_comments.txt>).  Documentation is in
 F<docs/mig_cf.txt>.
 
-Updated all files to reflect new domain "tangledhelix.com".
+Updated all files to reflect new domain E<quot>tangledhelix.comE<quot>.
 
 Converted all colorization to use CSS stylesheets.  However, Netscape
 doesn't behave regarding the C<BODY> element and CSS, based on my tests.
 So there's a default color set in the C<BODY> tag in the HTML templates.
 See the file F<docs/Templates.txt> for more information.
 
-Added tag C<%%distURL%%> for templates.  Removed "Mig" from E<lt>TITLEE<gt>
-in the default templates.
+Added tag C<%%distURL%%> for templates.  Removed E<quot>MigE,<quot> from
+E<lt>TITLEE<gt> in the default templates.
 
 Added script F<convert-metafiles> to convert metafiles to new format.
 It calls a Perl child process, F<mf_conv.pl>.
@@ -451,8 +460,8 @@ are hard to predict but which are probably in their C<$PATH>.
 Added E<lt>BulletinE<gt> feature to F<mig.cf>.  See F<docs/mig_cf.txt> for
 info.
 
-"_" (underscore) is now rendered as a space character in the YouAreHere
-line as well as in the folder-list boxes.
+E<quot>_E<quot> (underscore) is now rendered as a space character in the
+YouAreHere line as well as in the folder-list boxes.
 
 Got E<lt>CommentE<gt> working, got EXIF parsing working.
 
@@ -465,11 +474,12 @@ improperly.
 Added C<$markerType> and C<$markerText> to F<mig.cfg.default>.  Added C<-m>
 and C<-M> flags to F<mkGallery>.  These were added to support customizable
 thumbnail naming conventions.  You can now decide what thumbnail marker
-name to use (previously was forced to be "th".  Also now you can declare it
-to be a prefix (as in "th_filename.JPG") or a suffix (as in
-"filename_th.JPG").  Default will be as previous, suffix mode using "th"
-for filename_th.JPG.  See F<docs/Utilities.txt> and F<docs/Install.txt> and
-F<mig.cfg.default> for more information.
+name to use (previously was forced to be E<quot>thE<quot>.  Also now you
+can declare it to be a prefix (as in E<quot>th_filename.JPGE<quot>) or a
+suffix (as in E<quot>filename_th.JPGE<quot>).  Default will be as previous,
+suffix mode using E<quot>thE<quot> for filename_th.JPG.  See
+F<docs/Utilities.txt> and F<docs/Install.txt> and F<mig.cfg.default> for
+more information.
 
 Updated F<mkGallery> to read C<$markerType> and C<$markerLabel> from
 F<mig.cfg>, so you don't have to worry about the C<-M> and C<-m> flags as
@@ -516,8 +526,8 @@ just seemed silly to recreate the browser's reload button.
 
 =head2 Version 0.80 (Sat, 12 Aug 2000)
 
-The pieces of the "you are here" headline are now clickable for simpler
-navigation between levels.
+The pieces of the E<quot>you are hereE<quot> headline are now clickable for
+simpler navigation between levels.
 
 Changed the style sheet so the links are underlined again.  People aren't
 used to having it any other way, it was causing confusion.
@@ -545,9 +555,9 @@ E<lt>BRE<gt>).
 
 =head2 Version 0.73 (Mon, 07 Aug 2000)
 
-Added a "now viewing #x of y" in image views, so the browser can easily
-tell how many images are left in either direction without returning to the
-thumbnail view.
+Added a E<quot>now viewing #x of yE<quot> in image views, so the browser
+can easily tell how many images are left in either direction without
+returning to the thumbnail view.
 
 =head2 Version 0.72 (Mon, 07 Aug 2000)
 
@@ -574,24 +584,24 @@ image views.
 
 =head2 Version 0.61 (Sun, 06 Aug 2000)
 
-Added "you are here" line, but it's not clickable yet.
+Added E<quot>you are hereE<quot> line, but it's not clickable yet.
 
 =head2 Version 0.60 (Sun, 06 Aug 2000)
 
-Added "hidden" feature.  Anything put into F<.hidden.txt> in a directory
-will cause the listed items (one per line) to be rendered invisible.
-This is, of course, optional.
+Added E<quot>hiddenE<quot> feature.  Anything put into F<.hidden.txt> in a
+directory will cause the listed items (one per line) to be rendered
+invisible.  This is, of course, optional.
 
 Cleaned up places where C<eregi()> or C<eregi_replace()> were used when the
 proper call was C<ereg()> or C<ereg_replace()>.
 
-Added "comment" feature.  Comments are stored in F<.comments.txt>.  See
-F<INSTALL> for more information.
+Added E<quot>commentE<quot> feature.  Comments are stored in
+F<.comments.txt>.  See F<INSTALL> for more information.
 
 =head2 Version 0.51 (Sun, 06 Aug 2000)
 
-Added C<$homeLink> and C<$homeLabel> to config, to print a "back to {home}"
-link at the "root" folder level.
+Added C<$homeLink> and C<$homeLabel> to config, to print a E<quot>back to
+{home}E<quot> link at the E<quot>rootE<quot> folder level.
 
 =head2 Version 0.50 (Sat, 05 Aug 2000)
 
@@ -606,11 +616,12 @@ Set default C<$maintAddr> in case that is omitted from config file.
 
 Got next/previous links working in image views.
 
-Removed "back" link from "main" or "root" of album.
+Removed E<quot>backE<quot> link from E<quot>mainE<quot> or
+E<quot>rootE<quot> of album.
 
 =head2 Version 0.41 (Fri, 04 Aug 2000)
 
-Fixed font size bug with back link on "main" page.
+Fixed font size bug with back link on E<quot>mainE<quot> page.
 
 =head2 Version 0.40 (Fri, 04 Aug 2000)
 
@@ -618,8 +629,8 @@ Rewrote F<mkGallery> with C<use strict> and C<-w>.
 
 Symlinked F<index.php3> to F<index.php> for simplicity.
 
-Replaced "E<lt>E<lt>" in C<buildBackLink()> with C<&lt;&lt;> and cleaned up
-other such bits throughout the code.
+Replaced E<quot>E<lt>E<lt>E<quot> in C<buildBackLink()> with C<&lt;&lt;>
+and cleaned up other such bits throughout the code.
 
 Replaced most spaces in templates & PHP with C<&nbsp;> due to odd
 formatting problems with MSIE.
@@ -644,9 +655,9 @@ so the extension wasn't relevant.
 =head2 Version 0.35 (Tue, 01 Aug 2000)
 
 Reworked page formatting.  Now if there are no folders and no images
-present, the browser gets "No contents".  If no folders, the folder table
-isn't printed.  If no images, the images table isn't printed.  If there are
-both, you see both tables.  The result is less confusing.
+present, the browser gets E<quot>No contentsE<quot>.  If no folders, the
+folder table isn't printed.  If no images, the images table isn't printed.
+If there are both, you see both tables.  The result is less confusing.
 
 If F<mig.cfg> is missing, F<mig.cfg.default> will be read instead, to avoid
 any errors popping up. 
@@ -671,7 +682,8 @@ If a thumbnail is missing, a generic image will be used in its place.
 
 =head2 Version 0.3 (Mon, 31 Jul 2000)
 
-The "back" link is now grayed out when at the "main" page.
+The E<quot>backE<quot> link is now grayed out when at the
+E<quot>mainE<quot> page.
 
 Fixed bug in F<mkGallery> that would cause it to create thumbnails of
 already-existing thumbnail images.
@@ -680,9 +692,10 @@ Viewing a folder will now show the thumbnail images correctly.
 
 Added template F<image.html> to view individual images.
 
-Removed the "you are at" headline, the help function, and the "exit"
-button.  The latter two were never too useful, and the former is a real
-pain to get working.  I'll save it for some future release.
+Removed the E<quot>you are atE<quot> headline, the help function, and the
+E<quot>exitE<quot> button.  The latter two were never too useful, and the
+former is a real pain to get working.  I'll save it for some future
+release.
 
 Added C<$phpExt> variable for PHP3 users who might need filenames with
 C<.php3> extensions instead of C<.php>.
@@ -695,8 +708,8 @@ Removed C<*currLocation> routines.
 Started using F<mig.cfg.default> for dist bundles to avoid over-writing old
 config files.
 
-Fixed a bug which caused image view "back" links to go not to the previous
-page, but literally to "../".
+Fixed a bug which caused image view E<quot>backE<quot> links to go not to
+the previous page, but literally to E<quot>../E<quot>.
 
 Fixed URL pointer in the HTML templates to reflect correct Mig distribution
 URL.
@@ -708,9 +721,9 @@ ImageMagick.  No other significant changes in 0.2.
 
 =head2 Version 0.1 (Fri, 28 Jul 2000)
 
-Got "any directory anywhere" directory browsing working correctly.  An
-album can have any number of directories and subdirectories now.  This is
-much better than the old 2-level directory model.
+Got E<quot>any directory anywhereE<quot> directory browsing working
+correctly.  An album can have any number of directories and subdirectories
+now.  This is much better than the old 2-level directory model.
 
 Changed direction on the topic of thumbnail generation.  It's better to
 pre-generate them instead of having the PHP code do it on the fly.  Having
@@ -730,14 +743,14 @@ Got HTML templates working.
 Added a help link, back link, and a mailto: link to each page.  Each page
 also has a link back to the distribution URL.
 
-Got the "you are here" path to display, but no links yet.
+Got the E<quot>you are hereE<quot> path to display, but no links yet.
 
 Got rid of the old problem from F<album.php3> where the path had to be
 statically set in the code ahead of time (and the fact that tilde-URLs like
 C</~dan/> didn't work).  This time around the script figures out where it
 is in the filesystem and bases everything else on that path.
 
-Added the "exit" link to take browser to an outside URL.
+Added the E<quot>exitE<quot> link to take browser to an outside URL.
 
 =cut
 

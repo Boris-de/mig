@@ -12,9 +12,9 @@ turned into the C<-c> option of the F<mkGallery> script, and for the
 Portugese translation.
 
 Jeff Lambert (jeffx at ican.net), for contributing code to make a
-"phpNuke Compatible" mode for folks wanting to merge Mig into a phpNuke
-site - http://www.phpnuke.org/ .  Jeff also found a number of nagging
-little bugs in Mig which have been fixed.
+E<quot>phpNuke CompatibleE<quot> mode for folks wanting to merge Mig into a
+phpNuke site [ http://www.phpnuke.org/ ].  Jeff also found a number of
+nagging little bugs in Mig which have been fixed.
 
 Russ McClay (mcclay at taolodge.com.tw), for finding the strange table
 format problem where you would see a horizontal line above and to the left
@@ -22,7 +22,7 @@ side of the screen.  Fixing this fixed another strange bug where sometimes
 things weren't centered.
 
 Adam Monsen (meonkeys at hotmail.com), for noticing and reporting the
-".." security hole.
+E<quot>..E<quot> security hole.
 
 BUL (burckhard at loeh.cx), for going through lots of headache working
 out the kinks for Mig users who are running on a Windows platform, and for
@@ -40,8 +40,8 @@ F<mkGallery> do things in sorted order.
 Jon Anhold (jon at snoopy.net), for contributing code which turned into
 the C<$suppressImageInfo> option.
 
-jérôme ROUER (CCFRANCE.bibli at bigpond.com.kh), for the French
-translation.
+jE<eacute>rE<ocirc>me ROUER (CCFRANCE.bibli at bigpond.com.kh), for the
+French translation.
 
 Joffer aka Christopher Thorjussen (joffer at online.no), for the
 Norwegian translation.
@@ -54,7 +54,7 @@ Anatoly Ropotov (lynx at rulez.lv) for the Russian translations.
 
 Dogan Sariguzel (dogan at procam.com.tr) for the Turkish translation.
 
-Sebastian Djupsjöbacka (basse at iki.fi) for the Swedish translation.
+Sebastian DjupsjE<ouml>backa (basse at iki.fi) for the Swedish translation.
 
 Mikkel Mondrup Kristensen (hh00d-mmk at uv.horshs.dk) for the Danish
 translation.
@@ -68,8 +68,8 @@ Erik at Braindisorder.org for the Dutch translation.
 
 JMN (umjumasa at terra.es) for an update to the Spanish translation.
 
-Göran Fröjdh (goran at frojdh.com) for the code on which the pop-up window
-feature is based.
+GE<ouml>ran FrE<ouml>jdh (goran at frojdh.com) for the code on which the
+pop-up window feature is based.
 
 Martin (martvin at box43.pl) for the Polish translation.
 
