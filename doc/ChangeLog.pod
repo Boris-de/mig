@@ -9,6 +9,11 @@ Z<>
 
 Z<>
 
+=head2 Version 1.2.7p1 (Sun Apr 15 2001)
+
+Fixed bug from 1.2.7 which caused images to show up as folders when both
+folders and images were present.
+
 =head2 Version 1.2.7 (Sat Apr 14 2001)
 
 Added Danish translation

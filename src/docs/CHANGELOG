@@ -1,7 +1,12 @@
 
 MIG CHANGE LOG
 
-  Version 1.2.5 ()
+  Version 1.2.7p1 (Sun Apr 15 2001)
+
+    Fixed bug from 1.2.7 which caused images to show up as folders
+    when both folders and images were present.
+
+  Version 1.2.7 (Sat Apr 14 2001)
 
     Added Danish translation
 
@@ -11,6 +16,12 @@ MIG CHANGE LOG
     Added docs/FTPinstall.txt for people who have only FTP access to
     their server and no shell access (i.e. they can't run
     install.sh).
+
+    Streamlined code where possible
+
+    Got rid of repeated parses of mig.cf in subroutines and created
+    parseMigCf() to just do it once to save time and effort on file
+    i/o.
 
   Version 1.2.4 (Mon Apr 09 2001)
 

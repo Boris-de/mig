@@ -14,7 +14,8 @@
 	<LI><A HREF="#MIG_CHANGE_LOG">MIG CHANGE LOG</A>
 	<UL>
 
-		<LI><A HREF="#Version_1_2_5_">Version 1.2.5 ()</A>
+		<LI><A HREF="#Version_1_2_7p1_Sun_Apr_15_2001">Version 1.2.7p1 (Sun Apr 15 2001)</A>
+		<LI><A HREF="#Version_1_2_7_Sat_Apr_14_2001_">Version 1.2.7 (Sat Apr 14 2001)</A>
 		<LI><A HREF="#Version_1_2_4_Mon_Apr_09_2001_">Version 1.2.4 (Mon Apr 09 2001)</A>
 		<LI><A HREF="#Version_1_2_3_Mon_Apr_09_2001_">Version 1.2.3 (Mon Apr 09 2001)</A>
 		<LI><A HREF="#Version_1_2_2_Sun_Apr_08_2001_">Version 1.2.2 (Sun Apr 08 2001)</A>
@@ -80,7 +81,14 @@
 
 <P>
 <HR>
-<H2><A NAME="Version_1_2_5_">Version 1.2.5 ()</A></H2>
+<H2><A NAME="Version_1_2_7p1_Sun_Apr_15_2001">Version 1.2.7p1 (Sun Apr 15 2001)</A></H2>
+<P>
+Fixed bug from 1.2.7 which caused images to show up as folders when both
+folders and images were present.
+
+<P>
+<HR>
+<H2><A NAME="Version_1_2_7_Sat_Apr_14_2001_">Version 1.2.7 (Sat Apr 14 2001)</A></H2>
 <P>
 Added Danish translation
 
@@ -91,6 +99,14 @@ Modified template parser so that you can use #include to include PHP files
 <P>
 Added docs/FTPinstall.txt for people who have only FTP access to their
 server and no shell access (i.e. they can't run <EM>install.sh</EM>).
+
+<P>
+Streamlined code where possible
+
+<P>
+Got rid of repeated parses of mig.cf in subroutines and created
+<CODE>parseMigCf()</CODE> to just do it once to save time and effort on
+file i/o.
 
 <P>
 <HR>

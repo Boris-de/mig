@@ -53,9 +53,10 @@ function parseMigCf( $directory, $useThumbSubdir, $thumbSubdir )
     $cfgfile = 'mig.cf';
 
     // Prototypes
-    $hidden     = array ();
-    $presorted  = array ();
-    $desc       = array ();
+    $hidden         = array ();
+    $presort_dir    = array ();
+    $presort_img    = array ();
+    $desc           = array ();
 
     // Hide thumbnail subdirectory if one is in use.
     if ($useThumbSubdir) {
@@ -83,7 +84,11 @@ function parseMigCf( $directory, $useThumbSubdir, $thumbSubdir )
                 $line = fgets($file, 4096);
                 while (!eregi('^</sort>', $line)) {
                     $line = trim($line);
-                    $presorted[$line] = TRUE;   // sorted array
+                    if (is_file("$directory/$line")) {
+                        $presort_img[$line] = TRUE;
+                    } elseif (is_dir("$directory/$line")) {
+                        $presort_dir[$line] = TRUE;
+                    }
                     $line = fgets($file, 4096);
                 }
             }
@@ -121,7 +126,7 @@ function parseMigCf( $directory, $useThumbSubdir, $thumbSubdir )
         fclose($file);
     }
 
-    $retval = array ( $hidden, $presorted, $desc, $bulletin );
+    $retval = array ($hidden, $presort_dir, $presort_img, $desc, $bulletin);
     return $retval;
 
 }   //  -- End of parseMigCf()
@@ -135,7 +140,7 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
                         $albumURLroot, $image, $currDir, $newCurrDir,
                         $pageTitle, $prevLink, $nextLink, $currPos,
                         $description, $youAreHere, $distURL, $albumDir,
-                        $server, $useVirtual)
+                        $server, $useVirtual )
 {
 
     // Panic if the template file doesn't exist.

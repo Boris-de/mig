@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.7';
+$version = '1.2.7p1';
 
 // URL to call myself again
 if ($PHP_SELF) {    // if using register_globals
@@ -291,7 +291,7 @@ if (strstr($currDir, '..')) {
 $image = rawurldecode($image);
 
 // Fetch mig.cf information
-list($hidden, $presorted, $description, $bulletin)
+list($hidden, $presort_dir, $presort_img, $desc, $bulletin)
     = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
 // if $pageType is null, or "folder") generate a folder view
@@ -310,15 +310,15 @@ if ($pageType == 'folder' or $pageType == '') {
     // list of available folders
     $folderList = buildDirList($baseURL, $albumDir, $currDir, $imageDir,
                                $useThumbSubdir, $thumbSubdir,
-                               $maxFolderColumns, $hidden, $presorted);
+                               $maxFolderColumns, $hidden, $presort_dir);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns, $folderList,
                                 $markerType, $markerLabel, $suppressImageInfo,
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $mig_language,
-                                $mig_messages, $sortType, $hidden, $presorted,
-                                $description);
+                                $mig_messages, $sortType, $hidden,
+                                $presort_img, $desc);
 
     // Only frame the lists in table code when appropriate
 
@@ -379,11 +379,11 @@ if ($pageType == 'folder' or $pageType == '') {
     $Links = array();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel, $mig_language,
-                                $mig_messages, $hidden, $presorted);
+                                $mig_messages, $hidden, $presort_img);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    $description  = getImageDescription($image, $description);
+    $description  = getImageDescription($image, $desc);
     $exifDescription = getExifDescription($albumDir, $currDir, $image);
 
     // If both descriptions are non-NULL, separate them with an <HR>
