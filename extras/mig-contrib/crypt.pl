@@ -12,7 +12,7 @@ print "\n      *** WARNING ***\n";
 print "  Passwords will appear on the screen as you type them.\n";
 print "  Make sure you know who is watching your screen!\n\n";
 
-$another = 'y';		# Control trigger for outmost loop
+$another = "y";		# Control trigger for outmost loop
 
 while ($another !~ /^n/i) {
 

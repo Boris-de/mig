@@ -1,5 +1,6 @@
-<?php // $Id$
+<?php
 
+// $Id$
 //
 // config.php - Configuration file for Mig
 //
@@ -18,13 +19,13 @@
 // $pageTitle
 //     The page title (seen in the title bar of the browser).
 //
-// Defaults to 'My Photo Album'.
+// Defaults to "My Photo Album".
 //
 // Example:
-//     $pageTitle = 'My Photo Album';
+//     $pageTitle = "My Photo Album";
 //
 
-$pageTitle = 'My Photo Album';
+$pageTitle = "My Photo Album";
 
 
 //
@@ -33,13 +34,13 @@ $pageTitle = 'My Photo Album';
 //     global setting.  A per-folder maintAddr can be defined using the
 //     MaintAddr keyword in a mig.cf file.
 //
-// Defaults to 'webmaster@mydomain.com'.
+// Defaults to "webmaster@mydomain.com".
 //
 // Example:
-//     $maintAddr = 'webmaster@mydomain.com';
+//     $maintAddr = "webmaster@mydomain.com";
 //
 
-$maintAddr = 'webmaster@mydomain.com';
+$maintAddr = "webmaster@mydomain.com";
 
 
 //
@@ -50,10 +51,10 @@ $maintAddr = 'webmaster@mydomain.com';
 // No default.
 //
 // Example:
-//     $homeLink = 'http://mydomain.com/';
+//     $homeLink = "http://mydomain.com/";
 //
 
-$homeLink = '';
+$homeLink = "";
 
 
 //
@@ -66,10 +67,10 @@ $homeLink = '';
 // No default.
 //
 // Example:
-//     $homeLabel = 'My Home Page';
+//     $homeLabel = "My Home Page";
 //
 
-$homeLabel = '';
+$homeLabel = "";
 
 
 //
@@ -143,13 +144,13 @@ $useThumbSubdir = TRUE;
 //     What subdirectory to use for thumbnails.  This is ignored if
 //     $useThumbSubdir is set to FALSE.
 //
-// Defaults to 'thumbs'.
+// Defaults to "thumbs".
 //
 // Example:
-//     $thumbSubdir = 'thumbs';
+//     $thumbSubdir = "thumbs";
 //
 
-$thumbSubdir = 'thumbs';
+$thumbSubdir = "thumbs";
 
 
 //
@@ -228,7 +229,7 @@ $useRealRandThumbs = TRUE;
 //          %%largeHrefEnd%%
 //          %%largeLinkBorder%%
 //
-//      Also, copy over large.html (or for PHP-Nuke etc, use mig_large.php)
+//      Also, copy large.html (or for PHP-Nuke etc, use mig_large.php)
 //      to your templates folder.
 //
 // Defaults to FALSE.
@@ -245,13 +246,13 @@ $useLargeImages = FALSE;
 //      Name of subdirectory to use for "large" images.  This option is
 //      ignored if $useLargeImages is FALSE.
 //
-// Defaults to 'large'.
+// Defaults to "large".
 //
 // Example:
-//      $largeSubdir = 'large';
+//      $largeSubdir = "large";
 //
 
-$largeSubdir = 'large';
+$largeSubdir = "large";
 
 
 //
@@ -319,16 +320,16 @@ $folderNameLength = 15;
 //     If set to 'prefix', it will be named as in th_img_4900.jpg.
 //
 //     This option is over-ridden by $useThumbSubdir.  Using thumbnail
-//     subdirectories is recommended, so avoid this option and the option
-//     $markerLabel if possible.
+//     subdirectories is recommended, so avoid this option (along with
+//     $markerLabel) if possible.
 //
-// Defaults to 'suffix'.
+// Defaults to "suffix".
 //
 // Example:
-//     $markerType = 'suffix';
+//     $markerType = "suffix";
 //
 
-$markerType = 'suffix';
+$markerType = "suffix";
 
 
 //
@@ -347,13 +348,13 @@ $markerType = 'suffix';
 //     subdirectories is recommended, so avoid this option and the option
 //     $markerType if possible.
 //
-// Defaults to 'th'.
+// Defaults to "th".
 //
 // Example:
-//     $markerLabel = 'th';
+//     $markerLabel = "th";
 //
 
-$markerLabel = 'th';
+$markerLabel = "th";
 
 
 //
@@ -457,10 +458,10 @@ $noThumbs = FALSE;
 // No default.
 //
 // Example:
-//     $thumbExt = 'gif';
+//     $thumbExt = "gif";
 //
 
-$thumbExt = '';
+$thumbExt = "";
 
 
 //
@@ -474,13 +475,13 @@ $thumbExt = '';
 //     Note that if you define a <Sort> block in a mig.cf file, that will
 //     override this setting.
 //
-// Defaults to 'default'.
+// Defaults to "default".
 //
 // Example:
-//     $sortType = 'default';
+//     $sortType = "default";
 //
 
-$sortType = 'default';
+$sortType = "default";
 
 
 //
@@ -488,12 +489,13 @@ $sortType = 'default';
 //      If present, overrides the value of $sortType when sorting folders.
 //      Has the same possible values as $sortType (see above).
 //
-// Defaults to 'default'.
+// Defaults to "default".
 //
-// Example: $folderSortType = 'default';
+// Example:
+//	$folderSortType = "default";
 //
 
-$folderSortType = 'default';
+$folderSortType = "default";
 
 
 //
@@ -517,13 +519,13 @@ $imagePopup = FALSE;
 //     for every image.  Otherwise you'll get a new window for every image.
 //     Ignored if $imagePopup is set to FALSE.
 //
-// Defaults to 'reuse'.
+// Defaults to "reuse".
 //
 // Example:
-//     $imagePopType = 'reuse';
+//     $imagePopType = "reuse";
 //
 
-$imagePopType = 'reuse';
+$imagePopType = "reuse";
 
 
 //
@@ -658,7 +660,7 @@ $ignoreDotDirectories = FALSE;
 //     Defines the display format for EXIF data blocks.  Sections are
 //     separated by | characters.  For example:
 //     
-//         '|%c<hr>|%M %D %Y, %T - |%m<br>|%l |%s |%a|'
+//         "|%c<hr>|%M %D %Y, %T - |%m<br>|%l |%s |%a|"
 //
 //     Each block is contained between two | characters.  If any one
 //     item inside the block can be expanded, the block will be printed.
@@ -697,21 +699,21 @@ $ignoreDotDirectories = FALSE;
 //          Jan 04 2002, 12:54PM - Canon EOS D30
 //           ISO 100 85mm 1/45 f5.6 (flash used)
 //
-// Defaults to '|%c|' - which is just embedded comments.
+// Defaults to "|%c|" - which is just embedded comments.
 //
 // Examples:
 //
 //  Just the date and time:
-//     $exifFormatString = '|%M %D %Y, %T|';
+//     $exifFormatString = "|%M %D %Y, %T|";
 //
 //  What used to be called $viewCamInfo would look like this:
-//     $exifFormatString = '|%c<hr>|%m<br>|ISO %i |%l |%s |%a |(%f)|';
+//     $exifFormatString = "|%c<hr>|%m<br>|ISO %i |%l |%s |%a |(%f)|";
 //
 //  What used to be $viewCamInfo and $viewDateInfo together is:
-//     '|%c<hr>|%M %D %Y, %T - |%m<br>|ISO %i |%l |%s |%a |(%f)|';
+//     "|%c<hr>|%M %D %Y, %T - |%m<br>|ISO %i |%l |%s |%a |(%f)|";
 //
 
-$exifFormatString = '|%c|';
+$exifFormatString = "|%c|";
 
 
 //
@@ -767,13 +769,13 @@ $exifFormatString = '|%c|';
 //     deprecated and it should be used as $mig_language as of
 //     version 1.2.2)
 //
-// Defaults to 'en'.
+// Defaults to "en".
 //
 // Example:
-//     $mig_language = 'en';
+//     $mig_language = "en";
 //
 
-$mig_language = 'en';
+$mig_language = "en";
 
 
 //
@@ -783,7 +785,7 @@ $mig_language = 'en';
 // Default is no jump map.
 //
 // Example:
-//     $jumpMap['example'] = 'currDir=./Mig_Example_Gallery';
+//     $jumpMap["example"] = "currDir=./Mig_Example_Gallery";
 //
 
 
@@ -842,21 +844,21 @@ $mig_GeeklogCompatible = FALSE;
 //      Same thing, only for Geeklog.  Ignored if $mig_GeeklogCompatible
 //      is FALSE.
 //
-// $phpNukeRoot, $phpWebThingsRoot and $mig_GeeklogRoot default to ''.
+// $phpNukeRoot, $phpWebThingsRoot and $mig_GeeklogRoot default to "".
 //
-// $mig_xoopsRoot defaults to '../..'.
+// $mig_xoopsRoot defaults to "../..".
 //
 // Examples:
-//      $phpNukeRoot = '/www/mysite.com/nuke';
-//      $phpWebThingsRoot = '/www/mysite.com/webthings';
-//      $mig_xoopsRoot = '/www/mysite.com/xoops';
-//      $mig_GeeklogRoot = '/www/mysite.com/geeklog';
+//      $phpNukeRoot = "/www/mysite.com/nuke";
+//      $phpWebThingsRoot = "/www/mysite.com/webthings";
+//      $mig_xoopsRoot = "/www/mysite.com/xoops";
+//      $mig_GeeklogRoot = "/www/mysite.com/geeklog";
 //
 
-$phpNukeRoot = '';
-$phpWebThingsRoot = '';
-$mig_xoopsRoot = '../..';
-$mig_GeeklogRoot = '';
+$phpNukeRoot = "";
+$phpWebThingsRoot = "";
+$mig_xoopsRoot = "../..";
+$mig_GeeklogRoot = "";
 
 //      
 // $mig_xoopsRBlockForImage
@@ -901,7 +903,7 @@ $mig_GeeklogRBlockForFolder = 1;
 //     $protect[Directory][user] = password;
 //
 // Example:
-//     $protect['./Example_Gallery']['joe'] = 'IBDXWbkBirMfU';
+//     $protect["./Example_Gallery"]["joe"] = "IBDXWbkBirMfU";
 //
 // Passwords are in crypt() format.  See the "passwords" document.
 // Need more than one directory and/or user?  that's fine, just add more

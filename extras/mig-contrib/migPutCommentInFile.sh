@@ -64,6 +64,7 @@ for filename in $@; do
 
 # Replace the comment in the file
 	wrjpgcom -replace -comment \"$comment\" $filename > $filename"_com"
+#"
 
 # Move the newly commented file back
 	mv $filename"_com" $filename

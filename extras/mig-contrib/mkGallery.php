@@ -10,24 +10,24 @@
 // before using it on a real album.
 //
 
-echo '<pre>';
+echo "<pre>";
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
     $baseURL = $PHP_SELF;
 } else {            // otherwise, must be using track_vars
-    $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
+    $baseURL = $HTTP_SERVER_VARS["PHP_SELF"];
 }
 
 // base directory of installation
 if ($PATH_TRANSLATED) {   // if using register_glolals
     $baseDir = dirname($PATH_TRANSLATED);
 } else {                  // otherwise, must be using track_vars
-    $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
+    $baseDir = dirname($HTTP_SERVER_VARS["PATH_TRANSLATED"]);
 }
 
-$albumDir = $baseDir . '/albums';
-$mkGallery = $baseDir . '/util/mkGallery -rant';
+$albumDir = $baseDir . "/albums";
+$mkGallery = $baseDir . "/util/mkGallery -rant";
 
 chdir("$albumDir");
 passthru("$mkGallery");

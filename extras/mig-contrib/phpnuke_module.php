@@ -17,12 +17,12 @@
 //
 
 // Munge base reference
-$baseHref = ereg_replace('/modules.*$', '', $PHP_SELF);
+$baseHref = ereg_replace("/modules.*$", "", $PHP_SELF);
 
-if ($_SERVER['SERVER_NAME']) {
-    $SERVER_NAME = $_SERVER['SERVER_NAME'];
-} elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
-    $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
+if ($_SERVER["SERVER_NAME"]) {
+    $SERVER_NAME = $_SERVER["SERVER_NAME"];
+} elseif ($HTTP_SERVER_VARS["SERVER_NAME"]) {
+    $SERVER_NAME = $HTTP_SERVER_VARS["SERVER_NAME"];
 }
 
 if ($SERVER_NAME) {

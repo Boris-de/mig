@@ -16,11 +16,11 @@ use Getopt::Std;
 my $basedir = cwd();
 
 my %opt = ();
-getopts('I:', \%opt);
+getopts("I:", \%opt);
 
-die "No filename specified.\n" unless $opt{'I'};
+die "No filename specified.\n" unless $opt{"I"};
 
-my $inputfile = $opt{'I'};
+my $inputfile = $opt{"I"};
 
 my %hidden = ();
 my %comments = ();
