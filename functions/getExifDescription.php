@@ -89,8 +89,6 @@ function getExifDescription( $albumDir, $currDir, $image, $viewCamInfo,
 
         fclose($file);
 
-        // return $desc[$image];
-
         $return = '';
         if ($desc[$image]) {
             $return .= $desc[$image];

@@ -7,7 +7,7 @@ function buildDirList ( $baseURL, $albumDir, $currDir, $imageDir,
                         $markerType, $markerLabel, $ficons )
 {
 
-    $oldCurrDir = $currDir;         // Stash this to build full path with
+    $oldCurrDir = $currDir;         // Stash this to build full path
 
     // Create a URL-encoded version of $currDir
     $enc_currdir = $currDir;

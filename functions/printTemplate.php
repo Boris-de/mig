@@ -5,10 +5,8 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $maintAddr, $folderList, $imageList, $backLink,
                          $albumURLroot, $image, $currDir, $newCurrDir,
                          $pageTitle, $prevLink, $nextLink, $currPos,
-                         $description, $youAreHere, $distURL, $albumDir,
-                         $server )
+                         $description, $youAreHere, $distURL, $albumDir)
 {
-
     if (! ereg('^/', $templateFile)) {
         $templateFile = $albumDir . '/' . $newCurrDir . '/' . $templateFile;
     }

@@ -5,8 +5,7 @@
 function migURLencode( $string )
 {
 
-    $new = $string;
-    $new = rawurldecode($new);      // decode first
+    $new = rawurldecode($string);   // decode first
     $new = rawurlencode($new);      // then encode
 
     $new = str_replace('%2F', '/', $new);       // slash (/)
