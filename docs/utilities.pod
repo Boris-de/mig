@@ -87,6 +87,17 @@ F<mkGallery.pl> has not been tested under Microsoft Windows by the author.
  * See the "utilities" document for more information.
 
    Mig - http://mig.sourceforge.net/
+   
+For people who don't like to type in the same options to F<mkGallery.pl>
+every time they use it, you may store memorized options in the file
+F<mkGallery.opt> (this goes in the same directory as F<mkGallery.pl>).
+Put the options in as you would type them at the command line.  For
+example if you usually do this:
+
+    ../../util/mkGallery -rantK
+    
+Then you would just put the '-rantK' in F<mkGallery.opt>, and
+F<mkGallery.pl> will know to read it from that file.
 
 =head2 Generating EXIF files
 

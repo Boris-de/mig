@@ -107,6 +107,9 @@ Fixed bug in handling of E<lt>ShortE<gt> blocks.
 
 Fixed bug in Exif format string handling.
 
+Added feature to F<mkGallery.pl>: options can be memorized by putting them
+in F<mkGallery.opt>.  See the utilities documentation.
+
 =head2 Version 1.3.8 (Fri, 25 Oct 2002)
 
 If Mig is called with no parameters, it will redirect to itself with
