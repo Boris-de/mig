@@ -9,7 +9,7 @@ Z<>
 
 Z<>
 
-=head2 Version 1.2.5 ()
+=head2 Version 1.2.7 (Sat Apr 14 2001)
 
 Added Danish translation
 
@@ -18,6 +18,11 @@ Modified template parser so that you can use #include to include PHP files
 
 Added docs/FTPinstall.txt for people who have only FTP access to their
 server and no shell access (i.e. they can't run F<install.sh>).
+
+Streamlined code where possible
+
+Got rid of repeated parses of mig.cf in subroutines and created
+parseMigCf() to just do it once to save time and effort on file i/o.
 
 =head2 Version 1.2.4 (Mon Apr 09 2001)
 
