@@ -12,7 +12,7 @@ difficult to do and certainly not backward-compatible.
 Jump tags were invented to address this problem.  Take this URL for
 example:
 
-    http://tangledhelix.com/gallery/index.php?pageType=folder&currDir=./Our%20House/Before%20We%20Redecorated
+http://tangledhelix.com/gallery/index.php?pageType=folder&currDir=./Our%20House/Before%20We%20Redecorated
 
 At 105 characters long, and having tons of URL-encoded C<%xx> entities
 in it, it's not a pretty URL to have to send someone.  But here's what you

@@ -1,0 +1,76 @@
+=pod
+
+$Id$
+
+=head2 Mig and the Apache Server
+
+=head2 Security Considerations
+
+There are always security considerations when dealing with anonymous
+external users accessing your system and data.  Mig mitigates these
+concerns where it can (for instance, a C<currDir> variable containing
+E<quot>..E<quot> causes Mig to panic and immediately exit), but it can't do
+everything.
+
+The main thing Mig does to help with the security problem is that it never,
+ever, writes anything to the disk.  It only reads.  This minimizes the
+potential damage a malicious attacker could do.
+
+An example: Mig's PHP code can't control whether or not a web user fetches
+your F<mig.cf> or F<exif.inf> files and so forth by simply using direct
+URLs.  Users of Apache can use the following in their configuration to get
+around this limitation:
+
+    <Directory /path/to/your/mig/gallery>
+        # Protect against anyone trying to view a mig.cf file
+        <Files ~ "^mig.cf$">
+            order allow,deny
+            deny from all
+        </Files>
+        # Protect against anyone trying to view exif.inf files
+        <Files ~ "^exif.inf$">
+            order allow,deny
+            deny from all
+        </Files>
+    </Directory>
+
+With these rules in place, someone can't for example go to a URL like:
+
+    http://tangledhelix.com/gallery/albums/Miscellaneous/mig.cf
+
+to see that file.  It would be met with an access denial from the server.
+
+=head2 Useful Rewrite Ideas
+
+You can use Apache's C<mod_rewrite> module to make Mig URLs more simplified
+and easier to remember.  Here's what I do on my own site:
+
+First, define simple shortcut names using the jumpMap (see the
+E<quot>jumpE<quot> document).
+
+Then, add a rule or two like this to F<httpd.conf>:
+
+  RewriteRule ^/go/([^/]+)        /gallery/index.php?jump=$1    [R]
+  RewriteRule ^/photo/([^/]+)     /gallery/index.php?jump=$1    [R]
+
+That way you can use URLs like this:
+
+  http://tangledhelix.com/photo/kate
+  http://tangledhelix.com/go/kate
+
+And it will automatically go to the right place.  You can also do your own
+custom shortcuts of course, like these:
+
+  RewriteRule ^/kate           /gallery/index.php?jump=kate     [R]
+  RewriteRule ^/house          /gallery/index.php?jump=house    [R]
+  RewriteRule ^/europe         /gallery/index.php?jump=europe   [R]
+
+So you can have even simpler URLs if you want for certain galleries, like
+http://tangledhelix.com/kate/
+
+Naturally you will need to put C<RewriteEngine on> in the config prior to
+these rules, and have C<mod_rewrite> built into your installation of
+Apache, for this to work.
+
+=cut
+
