@@ -91,6 +91,9 @@ Moved most of the variables which don't change except in the main body into
 the C<$mig_config> array, rather than passing as parameters to functions.
 Most functions no longer have enormously long parameter lists.
 
+Added a call to C<stripslashes()> to get rid of the extra backslashes
+found in Windows SMB share paths.
+
 Optimized parts of C<buildImageURL()> which were doing the same string
 manipulations in either result of an if/else test.
 
