@@ -4,7 +4,7 @@
 
 function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
                              $markerType, $markerLabel, $hidden,
-                             $presorted, $sortType )
+                             $presorted, $sortType, $startFrom )
 {
 
     global $mig_config;
@@ -138,8 +138,12 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     } else {
         $pLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
-               . $prev . '">' . $mig_config['lang']['previmage']
-               . '</a>&nbsp;]</font>';
+               . $prev;
+        if ($startFrom) {
+            $pLink .= '&startFrom=' . $startFrom;
+        }
+        $pLink .= '">' . $mig_config['lang']['previmage']
+                . '</a>&nbsp;]</font>';
     }
 
     // If there is no next image, show a greyed-out link
@@ -151,8 +155,12 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     } else {
         $nLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
-               . $next . '">' . $mig_config['lang']['nextimage']
-               . '</a>&nbsp;]</font>';
+               . $next;
+        if ($startFrom) {
+            $nLink .= '&startFrom=' . $startFrom;
+        }
+        $nLink .= '">' . $mig_config['lang']['nextimage']
+                . '</a>&nbsp;]</font>';
     }
 
     // Current position in the list

@@ -13,6 +13,7 @@ $mig_config['lang_lib']['en'] = array (
     'no_contents'   => 'No&nbsp;contents.',
     'previmage'     => 'previous&nbsp;image',
     'thumbview'     => 'back&nbsp;to&nbsp;thumbnail&nbsp;view',
+    'total_images'  => '&nbsp;images&nbsp;in&nbsp;gallery.<br>',
     'up_one'        => 'up&nbsp;one&nbsp;level',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',

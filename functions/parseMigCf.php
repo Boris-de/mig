@@ -113,6 +113,12 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
                 list($y, $tcols) = explode(' ', $x);
             }
 
+            // Parse MaxThumbRows lines
+            if (eregi('^maxthumbrows ', $line)) {
+                $x = trim($line);
+                list($y, $trows) = explode(' ', $x);
+            }
+
             // Get next line
             $line = fgets($file, 4096);
 
@@ -123,7 +129,7 @@ function parseMigCf ( $directory, $useThumbSubdir, $thumbSubdir )
 
     $retval = array ($hidden, $presort_dir, $presort_img, $desc,
                      $bulletin, $ficons, $template, $pagetitle,
-                     $fcols, $tcols, $maintaddr);
+                     $fcols, $tcols, $trows, $maintaddr);
     return $retval;
 
 }   //  -- End of parseMigCf()

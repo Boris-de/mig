@@ -101,6 +101,10 @@ if (! $jump) {
     $jump = $HTTP_GET_VARS['jump'];         // for track_vars
 }
 
+if (! $startFrom) {
+    $startFrom = $HTTP_GET_VARS['startFrom'];
+}
+
 // Grab appropriate language from library
 $mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
 
@@ -223,7 +227,7 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
 // Fetch mig.cf information
 list($hidden, $presort_dir, $presort_img, $desc, $bulletin, $ficons,
      $folderTemplate, $folderPageTitle, $folderFolderCols, $folderThumbCols,
-     $folderMaintAddr)
+     $folderThumbRows, $folderMaintAddr)
   = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
 
 // Determine page title to use
@@ -279,13 +283,17 @@ if ($pageType == 'folder') {
         $templateFile = $templateDir . '/folder.html';
     }
 
-    // Determine columns to use
+    // Determine columns and rows to use
     if ($folderFolderCols) {
         $maxFolderColumns = $folderFolderCols;
     }
 
     if ($folderThumbCols) {
         $maxThumbColumns = $folderThumbCols;
+    }
+
+    if ($folderThumbRows) {
+        $maxThumbRows = $folderThumbRows;
     }
 
     // Generate some HTML to pass to the template printer
@@ -298,12 +306,14 @@ if ($pageType == 'folder') {
                                $ficons);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
-                                $albumURLroot, $maxThumbColumns, $folderList,
-                                $markerType, $markerLabel, $suppressImageInfo,
+                                $albumURLroot, $maxThumbColumns,
+                                $maxThumbRows, $folderList, $markerType,
+                                $markerLabel, $suppressImageInfo,
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $sortType,
                                 $hidden, $presort_img, $desc, $imagePopup,
-                                $imagePopType, $commentFilePerImage);
+                                $imagePopType, $commentFilePerImage,
+                                $startFrom);
 
     // Only frame the lists in table code when appropriate
 
@@ -336,7 +346,7 @@ if ($pageType == 'folder') {
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
-                              $homeLabel, $noThumbs);
+                              $homeLabel, $noThumbs, NULL);
 
     // build the "you are here" line
     $youAreHere = buildYouAreHere($baseURL, $currDir, NULL);
@@ -358,14 +368,14 @@ if ($pageType == 'folder') {
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
     $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', NULL, NULL,
-                              $noThumbs);
+                              $noThumbs, $startFrom);
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
     $Links = array ();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel, $hidden,
-                                $presort_img, $sortType);
+                                $presort_img, $sortType, $startFrom);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description

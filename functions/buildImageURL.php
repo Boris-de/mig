@@ -6,7 +6,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
                         $markerLabel, $suppressImageInfo, $useThumbSubdir,
                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
                         $description, $imagePopup, $imagePopType,
-                        $commentFilePerImage )
+                        $commentFilePerImage, $startFrom )
 {
     global $mig_config;
 
@@ -147,6 +147,10 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     $url .= $baseURL . '?currDir='
          . $currDir . '&pageType=image&image=' . $newFname
          . '.' . $ext;
+
+    if ($startFrom) {
+        $url .= '&startFrom=' . $startFrom;
+    }
 
     if ($imagePopup) {
         $url .= "','";

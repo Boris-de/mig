@@ -12,6 +12,7 @@ $markerLabel            = 'th';
 $markerType             = 'suffix';
 $maxFolderColumns       = 2;
 $maxThumbColumns        = 4;
+$maxThumbRows           = 3;
 $mig_language           = 'en';
 $noThumbs               = FALSE;
 $pageTitle              = 'My Photo Album';

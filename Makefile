@@ -55,3 +55,9 @@ index:
 
 docpublish:
 	cd docs ; make publish
+
+snoopy:
+	rm -f index.php
+	make index
+	scp index.php snoopy.net:/www/tangledhelix.com/html/gallery/index3.php
+

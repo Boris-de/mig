@@ -101,6 +101,28 @@ $maxThumbColumns = 4;
 
 
 //
+// $maxThumbRows
+//      Maximum number of rows to use (how many rows of thumbnails on
+//      the screen on a single page) in thumbnail views.  The total
+//      number of images on one "page" is:
+//          ($maxThumbColumns * $maxThumbRows)
+//      So by default, 20 images per page.  Mig will turn a given
+//      gallery into a set of pages if there are more than 20 images
+//      in a gallery.
+//
+//      If you don't want to use "pages" at all, set this to some
+//      impossibly high value like 10000.
+//
+// Defaults to 5.
+//
+// Example:
+//      $maxThumbRows = 5;
+//
+
+$maxThumbRows = 5;
+
+
+//
 // $useThumbSubdir
 //     Boolean to turn thumbnail subdirectories on or off.
 //     When this is set to TRUE, $markerType and $markerLabel are ignored.

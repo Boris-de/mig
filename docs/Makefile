@@ -4,8 +4,6 @@
 # Makefile for Mig documentation
 #
 
-SCP=	/usr/bin/scp -F $(HOME)/Library/SSH/Config
-
 hcmd=	pod2html --noindex
 tcmd=	pod2text
 
@@ -40,4 +38,4 @@ clean:
 	rm -f pod2htm*
 
 publish:
-	$(SCP) html/changelog.html html/install.html mig.sf.net:web/htdocs
+	scp html/changelog.html html/install.html mig.sf.net:web/htdocs

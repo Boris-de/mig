@@ -2,13 +2,14 @@
 // buildImageList() - creates a list of images available
 
 function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
-                         $albumURLroot, $maxColumns, $directoryList,
-                         $markerType, $markerLabel, $suppressImageInfo,
-                         $useThumbSubdir, $thumbSubdir, $noThumbs,
-                         $thumbExt, $suppressAltTags, $sortType, $hidden,
-                         $presorted, $description, $imagePopup,
-                         $imagePopType, $commentFilePerImage )
+                         $albumURLroot, $maxColumns, $maxRows,
+                         $directoryList, $markerType, $markerLabel,
+                         $suppressImageInfo, $useThumbSubdir, $thumbSubdir,
+                         $noThumbs, $thumbExt, $suppressAltTags, $sortType,
+                         $hidden, $presorted, $description, $imagePopup,
+                         $imagePopType, $commentFilePerImage, $startFrom )
 {
+    global $mig_config;
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
 
@@ -18,9 +19,13 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
     $maxColumns--;          // Tricks maxColumns into working since it
                             // really starts at 0, not 1.
 
+    $maxRows--;             // same for rows
+
     // prototype the arrays
     $imagefiles     = array ();
     $filedates      = array ();
+
+    $thumbsInFolder = 0;
 
     while ($file = readdir($dir)) {
         // Skip over thumbnails
@@ -45,8 +50,12 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                         and !$presorted[$file]
                         and eregi('^(jpg|gif|png|jpeg|jpe)$', $ext))
         {
+            // Increase thumb counter
+            ++$thumbsInFolder;
+
             // Stash file in an array
             $imagefiles[$file] = TRUE;
+
             // and stash a timestamp as well if needed
             if (ereg("bydate.*", $sortType)) {
                 $timestamp = filemtime("$albumDir/$currDir/$file");
@@ -83,34 +92,88 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
 
     reset($presorted);          // reset array pointer
 
+    // Set up pagination environment
+    $max_col = $maxColumns + 1;
+    $max_row = $maxRows + 1;
+    $firstThumb = $startFrom * $max_col * $max_row;
+    // This rounds off any fractional part
+    $pages = ceil($thumbsInFolder / ($max_col * $max_row));
+
+    // Handle pagination
+    if ($thumbsInFolder > ($max_col * $max_row)) {
+
+        $imageList .= '<tr><td colspan=' . $max_col . ' align="center">'
+                    . $thumbsInFolder . $mig_config['lang']['total_images'];
+
+        if ($startFrom) {
+            $prevPage = $startFrom - 1;
+
+            $imageList .= '<a href="' . $baseURL
+                        . '?pageType=folder&currDir=' . $currDir
+                        . '&startFrom=' . $prevPage
+                        . '">&laquo;</A>&nbsp;&nbsp;';
+        }
+
+        for ($i = 1; $i <= $pages; ++$i) {
+            if (floor(($i - 11) / 20) == (($i - 11) / 20)) {
+                $imageList .= '<br>';
+            }
+            if ($i == ($startFrom + 1)) {
+                $imageList .= '<b>' . $i . '</b>&nbsp;&nbsp;';
+            } else {
+                $ib = $i - 1;
+                $imageList .= '<a href="' . $baseURL
+                            . '?pageType=folder&currDir=' . $currDir
+                            . '&startFrom=' . $ib . '">'
+                            . $i . '</a>&nbsp;&nbsp;';
+            }
+        }
+
+        if (($startFrom + 1) < $pages) {
+            $nextPage = $startFrom + 1;
+            $imageList .= '<a href="' . $baseURL
+                        . '?pageType=folder&currDir=' . $currDir
+                        . '&startFrom=' . $nextPage . '">&raquo;</A>';
+        }
+
+        $imageList .= '</td></tr>';
+    }
+
+    $thumbCounter = -1;
+
     while (list($file,$junk) = each($presorted)) {
 
-        // Only look at valid image types
-        $ext = getFileExtension($file);
-        if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
+        ++$thumbCounter;
 
-            // If this is a new row, start a new <TR>
-            if ($col == 0) {
-                $imageList .= '<tr>';
-            }
+        if ($thumbCounter >= $firstThumb && $row <= $maxRows) {
 
-            $fname = getFileName($file);
-            $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
-                                 $albumURLroot, $fname, $ext, $markerType,
-                                 $markerLabel, $suppressImageInfo,
-                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
-                                 $thumbExt, $suppressAltTags, $description,
-                                 $imagePopup, $imagePopType,
-                                 $commentFilePerImage);
-            $imageList .= $img;
+            // Only look at valid image types
+            $ext = getFileExtension($file);
+            if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
 
-            // Keep track of what row and column we are on
-            if ($col == $maxColumns) {
-                $imageList .= '</tr>';
-                $row++;
-                $col = 0;
-            } else {
-                $col++;
+                // If this is a new row, start a new <TR>
+                if ($col == 0) {
+                    $imageList .= '<tr>';
+                }
+
+                $fname = getFileName($file);
+                $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
+                                     $albumURLroot, $fname, $ext, $markerType,
+                                     $markerLabel, $suppressImageInfo,
+                                     $useThumbSubdir, $thumbSubdir, $noThumbs,
+                                     $thumbExt, $suppressAltTags, $description,
+                                     $imagePopup, $imagePopType,
+                                     $commentFilePerImage, $startFrom);
+                $imageList .= $img;
+
+                // Keep track of what row and column we are on
+                if ($col == $maxColumns) {
+                    $imageList .= '</tr>';
+                    ++$row;
+                    $col = 0;
+                } else {
+                    ++$col;
+                }
             }
         }
     }
