@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.9-beta2';
+$version = '1.2.9';
 
 // URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
