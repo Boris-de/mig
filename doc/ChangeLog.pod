@@ -16,6 +16,11 @@ Removed install.bat, rewrote docs/Windows.txt to match.
 Rewrote install.sh for new directory layout (which was a side-effect of
 making Windows installs easier).
 
+Adjusted all server variables so that things should work whether
+register_globals or track_vars are in use (or both).
+
+Found a hard-coded directory in printTemplate() - corrected.
+
 =head2 Version 1.2.2 (Sun Apr 08 2001)
 
 Added language definition for Turkish

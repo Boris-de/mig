@@ -3,7 +3,7 @@
 //
 // MiG - A general purpose photo gallery management system.
 //       http://mig.sourceforge.net/
-// Copyright (C) 2000 Daniel M. Lowe	<dan@tangledhelix.com>
+// Copyright (C) 2000-2001 Daniel M. Lowe <dan@tangledhelix.com>
 //
 //
 // LICENSE INFORMATION
@@ -28,9 +28,9 @@
 //
 // ----------------------------------------------------------------------
 //
-// Please see the files in the docs/ subdirectory.
+// Please see the files in the docs subdirectory.
 //
-// Do not modify this file directly.  Please see the file docs/Install.txt
+// Do not modify this file directly.  Please see the file docs/INSTALL
 // for installation directions.  The code is written in such a way that
 // all of your customization needs should be taken care of by the config
 // file "mig.cfg".
@@ -46,18 +46,18 @@
 
 
 // Version number - Do not change
-$version = '1.2.2';
+$version = '1.2.3';
 
-// self-referential URL
-if ($PHP_SELF)
+// URL to call myself again
+if ($PHP_SELF)      // if using register_globals
     $baseURL = $PHP_SELF;
-else
+else                // otherwise, must be using track_vars
     $baseURL = $HTTP_SERVER_VARS['PHP_SELF'];
 
 // base directory of installation
-if ($PATH_TRANSLATED)
+if ($PATH_TRANSLATED)   // if using register_glolals
     $baseDir = dirname($PATH_TRANSLATED);
-else
+else                    // otherwise, must be using track_vars
     $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
 
 $configFile = $baseDir . '/mig.cfg';	// Configuration file
@@ -69,7 +69,7 @@ $maxFolderColumns = 2;
 $maxThumbColumns = 4;
 $pageTitle = 'Photo Album';
 $maintAddr = 'webmaster@mydomain.com';
-$distURL = 'http://tangledhelix.com/software/mig/';
+$distURL = 'http://mig.sourceforge.net/';
 $markerType = 'suffix';
 $markerLabel = 'th';
 $phpNukeCompatible = FALSE;
@@ -81,18 +81,19 @@ $suppressAltTags = FALSE;
 $mig_language = 'en';
 $sortType = 'default';
 
-// Fetch variables from the QUERY_STRING
-if (!$currDir) {
+// Fetch variables from the URI
+//
+if (!$currDir) {        // not using register_globals, so the assumption
+                        // is that track_vars is in use
     $currDir        = $HTTP_GET_VARS['currDir'];
     $image          = $HTTP_GET_VARS['image'];
     $pageType       = $HTTP_GET_VARS['pageType'];
 }
-
 if (!$jump)
-    $jump           = $HTTP_GET_VARS['jump'];
+    $jump           = $HTTP_GET_VARS['jump'];       // for track_vars
 
 // Set a current directory if one doesn't exist
-// If there is one present, strip URL encoding from it
+// Or if there is one present, strip URL encoding from it
 if ($currDir == '')
     $currDir = '.';
 else
@@ -103,32 +104,40 @@ if (file_exists($configFile))
     $realConfig = $configFile;
 else
     $realConfig = $defaultConfigFile;
-
-include($realConfig);
+if (file_exists($realConfig))
+    include($realConfig);
+else
+    die("FATAL ERROR: Configuration file missing!");
 
 // Change $baseDir for PHP-Nuke compatibility mode
 if ($phpNukeCompatible)
     $baseDir .= '/mig';
 
-// Make functions available for use
+// Load function library
 $funcsFile = $baseDir . '/funcs.php';
-include($funcsFile);
+if (file_exists($funcsFile))
+    include($funcsFile);
+else
+    die("FATAL ERROR: Function library missing!");
 
-// Load language file
+// Load language library
 $langFile = $baseDir . '/lang.php';
-include($langFile);
+if (file_exists($langFile))
+    include($langFile);
+else
+    die("FATAL ERROR: Language library missing!");
 
 // Backward compatibility with older mig.cfg versions
 if ($maxColumns)
     $maxThumbColumns = $maxColumns;
 
-// Get rid of \'s if magic_quotes_gpc is turned on.
+// Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (get_magic_quotes_gpc() == 1) {
     $currDir = stripslashes($currDir);
     $image = stripslashes($image);
 }
 
-// Turn off magic_quotes_runtime
+// Turn off magic_quotes_runtime (causes trouble with some installations)
 set_magic_quotes_runtime(0);
 
 // Handle any password authentication needs
@@ -138,14 +147,21 @@ $workCopy = $currDir;       // temporary copy of $currDir
 while ($workCopy) {
 
     if ($protect[$workCopy]) {
+
+        // Try to get around the track_vars/register_globals problem
+        if (!$PHP_AUTH_USER)
+            $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
+        if (!$PHP_AUTH_PW)
+            $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
+
         // If there's not a username yet, fetch one by popping up a
         // login dialog box
-        if (!isset($PHP_AUTH_USER)) {
+        if (!$PHP_AUTH_USER) {
             header('WWW-Authenticate: Basic realm="protected"');
             header('HTTP/1.0 401 Unauthorized');
-            //print 'You must enter a valid username and password to enter';
             print $mig_messages[$mig_language]['must_auth'];
             exit;
+
         } else {
             // Case #2: password/user are present but don't match up
             // with our known user base.  Reject the attempt.
@@ -155,7 +171,6 @@ while ($workCopy) {
             {
                 header('WWW-Authenticate: Basic realm="protected"');
                 header('HTTP/1.0 401 Unauthorized');
-                //print 'You must enter a valid username and password to enter';
                 print $mig_messages[$mig_language]['must_auth'];
                 exit;
             }
@@ -168,6 +183,7 @@ while ($workCopy) {
         $workCopy = FALSE;
     else
         // pare $workCopy down one directory at a time
+        // so we can check back all the way to '.'
         $workCopy = ereg_replace('/[^/]+$', '', $workCopy);
 }
 
@@ -176,7 +192,7 @@ $albumDir = $baseDir . '/albums';	// Where albums live
 
 $templateDir = $baseDir . '/templates';	// Where templates live
 
-// $baseURL with the scriptname torn off
+// $baseURL with the scriptname torn off the end
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
 
 // Change $baseHref for PHP-Nuke compatibility mode
@@ -188,28 +204,28 @@ $imageDir = $baseHref . '/images';
 
 // Root where album images are living
 $albumURLroot = $baseHref . '/albums';
-// Sometimes Windows users have to set this manually, like:
+// NOTE: Sometimes Windows users have to set this manually, like:
 // $albumURLroot = '/mig/albums';
 
 // Well, GIGO... set default to sane if someone screws up their
 // config file
 if ($markerType != 'prefix' and $markerType != 'suffix')
     $markerType='suffix';
-
 if (!$markerLabel)
     $markerLabel = 'th';
 
+// Get around the track_vars vs. register_globals problem
 if (!$SERVER_NAME)
     $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
     $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
 
-// Is this a jump URL?
+// Is this a jump-tag URL?
 if ($jump and $jumpMap[$jump] and $SERVER_NAME) {
     header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$jump]");
     exit;
 }
 
-// Jump using PATH_INFO rather than ?jump=x
+// Jump-tag using PATH_INFO rather than "....?jump=x" URI
 if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
     header("Location: http://$SERVER_NAME$baseURL?$jumpMap[$PATH_INFO]");
     exit;
@@ -219,17 +235,15 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
 if ($phpNukeCompatible) {
 
     // Bail out if the root directory isn't set.
-    if (! $phpNukeRoot) {
-        print 'FATAL ERROR: phpNuke Root Directory is not set.';
-        exit;
-    }
+    if (!$phpNukeRoot)
+        die("FATAL ERROR: phpNuke Root Directory is not set.");
 
     if (!isset($mainfile))
-        include('mainfile.php');
+        include('mainfile.php');        // PHP-Nuke library
 
-    include('header.php');  // PHP Nuke surrounding framework
+    include('header.php');  // PHP-Nuke library
 
-    // Table to nest MiG in, inside the PHPNuke framework
+    // A table to nest MiG in, inside the PHPNuke framework
     print '<table width="100%" border="0" cellspacing="0" cellpadding="2"';
     print ' bgcolor="#000000"><tr><td>';
     print '<table width="100%" border="0" cellspacing="1" cellpadding="7"';
@@ -238,10 +252,8 @@ if ($phpNukeCompatible) {
 
 // Look at $currDir from a security angle.  Don't let folks go outside
 // the album directory base
-if (ereg('\.\.', $currDir)) {
-    print 'SECURITY VIOLATION';
-    exit;
-}
+if (ereg('\.\.', $currDir))
+    die("SECURITY VIOLATION");
 
 // strip URL encoding here too
 $image = rawurldecode($image);
@@ -250,7 +262,7 @@ $image = rawurldecode($image);
 
 if ($pageType == 'folder' or $pageType == '') {
 
-    // Determine which template to use depending on mode
+    // Determine which template to use depending on the mode
     if ($phpNukeCompatible)
         $templateFile = 'mig_folder.php';
     else
@@ -276,7 +288,6 @@ if ($pageType == 'folder' or $pageType == '') {
 
     // no folders or images - print the "no contents" line
     if ($folderList == 'NULL' and $imageList == 'NULL') {
-        //$folderList = 'No&nbsp;contents.';
         $folderList = $mig_messages[$mig_language]['no_contents'];
         $folderList = folderFrame($folderList);
         $imageList = '';
@@ -332,15 +343,13 @@ if ($pageType == 'folder' or $pageType == '') {
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel, $mig_language,
                                 $mig_messages);
-    $nextLink = $Links[0];
-    $prevLink = $Links[1];
-    $currPos = $Links[2];
+    list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
     $description  = getImageDescription($albumDir, $currDir, $image);
     $exifDescription = getExifDescription($albumDir, $currDir, $image);
 
-    // If both descriptions are non-NULL, separate them with an HR
+    // If both descriptions are non-NULL, separate them with an <HR>
     if ($description and $exifDescription) {
         $description .= '<hr>';
         $description .= $exifDescription;

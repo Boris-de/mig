@@ -5,7 +5,7 @@
 //
 // MiG - A general purpose photo gallery management system.
 //       http://mig.sourceforge.net/
-// Copyright (C) 2000 Daniel M. Lowe	<dan@tangledhelix.com>
+// Copyright (C) 2000-2001 Daniel M. Lowe <dan@tangledhelix.com>
 //
 //
 // LICENSE INFORMATION
@@ -32,7 +32,7 @@
 //
 // Please see the files in the docs/ subdirectory.
 //
-// Do not modify this file directly.  Please see the file docs/Install.txt
+// Do not modify this file directly.  Please see the file docs/INSTALL
 // for installation directions.  The code is written in such a way that
 // all of your customization needs should be taken care of by the config
 // file "mig.cfg".
@@ -54,10 +54,8 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
 {
 
     // Panic if the template file doesn't exist.
-    if (! file_exists("$templateDir/$templateFile")) {
-        print "ERROR: $templateDir/$templateFile does not exist!\n";
-        exit;
-    }
+    if (!file_exists("$templateDir/$templateFile"))
+        die("ERROR: $templateDir/$templateFile does not exist!");
 
     $file = fopen("$templateDir/$templateFile",'r'); // Open template file
     $line = fgets($file, 4096);                         // Get first line
@@ -81,19 +79,17 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
             } else {
                 $incl_file = $line;
                 if (file_exists("$templateDir/$incl_file")) {
+
                     // virtual() only works for Apache
                     if ( eregi('^apache', $GLOBALS['SERVER_SOFTWARE'])
                          and $useVirtual )
-                    {
-                        virtual("templates/$incl_file");
+                             virtual("$templateDir/$incl_file");
+                    else
+                             readfile("$templateDir/$incl_file");
 
-                    } else {
-                        readfile("$templateDir/$incl_file");
-                    }
                 } else {
                     $line = '<!-- ERROR: #include directive failed.'
-                          . ' Named file '
-                          . $incl_file
+                          . ' Named file ' . $incl_file
                           . ' does not exist.  Directive was:'
                           . "\n    $orig_line\n-->\n";
                     print $line;
@@ -111,26 +107,18 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
                 $imageSize = $imageProps[3];
             }
 
+            // List of valid tags
+            $replacement_list = array (
+                'baseURL', 'maintAddr', 'version', 'folderList',
+                'imageList', 'backLink', 'currDir', 'newCurrDir',
+                'image', 'albumURLroot', 'pageTitle', 'nextLink',
+                'prevLink', 'currPos', 'description', 'youAreHere',
+                'distURL', 'encodedImageURL', 'imageSize'
+            );
+
             // Do substitution for various variables
-            $line = str_replace('%%baseURL%%', $baseURL, $line);
-            $line = str_replace('%%maintAddr%%', $maintAddr, $line);
-            $line = str_replace('%%version%%', $version, $line);
-            $line = str_replace('%%folderList%%', $folderList, $line);
-            $line = str_replace('%%imageList%%', $imageList, $line);
-            $line = str_replace('%%backLink%%', $backLink, $line);
-            $line = str_replace('%%currDir%%', $currDir, $line);
-            $line = str_replace('%%newCurrDir%%', $newCurrDir, $line);
-            $line = str_replace('%%image%%', $image, $line);
-            $line = str_replace('%%albumURLroot%%', $albumURLroot, $line);
-            $line = str_replace('%%pageTitle%%', $pageTitle, $line);
-            $line = str_replace('%%nextLink%%', $nextLink, $line);
-            $line = str_replace('%%prevLink%%', $prevLink, $line);
-            $line = str_replace('%%currPos%%', $currPos, $line);
-            $line = str_replace('%%description%%', $description, $line);
-            $line = str_replace('%%youAreHere%%', $youAreHere, $line);
-            $line = str_replace('%%distURL%%', $distURL, $line);
-            $line = str_replace('%%encodedImageURL%%',$encodedImageURL,$line);
-            $line = str_replace('%%imageSize%%', $imageSize, $line);
+            while (list($key,$val) = each($replacement_list))
+                $line = str_replace("%%$val%%", $$val, $line);
 
             print $line;			// Print resulting line
         }
@@ -181,11 +169,12 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
                 $line = fgets($file, 4096);
                 while (!eregi('^</sort>', $line)) {
                     $line = trim($line);
+
                     // If it's a directory not a file, stuff it in the
                     // sort list
-                    if (is_dir("$albumDir/$currDir/$line")) {
+                    if (is_dir("$albumDir/$currDir/$line"))
                         $presorted[$line] = 1;	// sorted array
-                    }
+
                     $line = fgets($file, 4096);
                 }
             }
@@ -195,9 +184,8 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
     }
 
     // Ignore thumbnail directories if they're being used
-    if ($useThumbSubdir) {
+    if ($useThumbSubdir)
         $hidden[$thumbSubdir] = 1;
-    }
 
     $dir = opendir("$albumDir/$currDir");		// Open directory handle
     $directories = array();	// prototype
@@ -206,13 +194,13 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
 
         // Ignore . and .. and make sure it's a directory
         if ($file != '.' and $file != '..'
-                                and is_dir("$albumDir/$currDir/$file")) {
+            and is_dir("$albumDir/$currDir/$file"))
+
             // Ignore anything that's hidden or was already sorted.
-            if (!$hidden[$file] and !$presorted[$file]) {
+            if (!$hidden[$file] and !$presorted[$file])
+
                 // Stash file in an array
                 $directories[$file] = 1;
-            }
-        }
     }
 
     ksort($directories);	// sort so we can yank them in sorted order
@@ -220,9 +208,8 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
 
     // snatch each element from $directories and shove it on the end of
     // $presorted
-    while (list($file,$junk) = each($directories)) {
+    while (list($file,$junk) = each($directories))
         $presorted[$file] = 1;
-    }
 
     reset($presorted);		// reset array pointer
 
@@ -276,13 +263,12 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
     closedir($dir); 
 
     // If there aren't any subfolders to look at, then just say so.
-    if ($directoryList == '') {
+    if ($directoryList == '')
         return 'NULL';
 
-    } elseif (!eregi('</tr>$', $directoryList)) {
+    elseif (!eregi('</tr>$', $directoryList))
         // Stick a </tr> on the end if it isn't there already
         $directoryList .= '</tr>';
-    }
 
     return $directoryList;
 
@@ -319,10 +305,11 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                 $line = fgets($file, 4096);
                 while (!eregi('^</sort>', $line)) {
                     $line = trim($line);
+
                     // If it's a file, not a directory, add to the list
-                    if (is_file("$albumDir/$currDir/$line")) {
+                    if (is_file("$albumDir/$currDir/$line"))
                         $presorted[$line] = 1;
-                    }
+
                     $line = fgets($file, 4096);
                 }
             }
@@ -347,14 +334,15 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         // Skip over thumbnails
         if (!$useThumbSubdir) {  // unless $useThumbSubdir is set,
                                  // then don't waste time on this check
-            if ($markerType == 'suffix' and
-                    eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file))
-            {
+
+            if ($markerType == 'suffix'
+                and eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file))
+
+                    continue;
+
+            if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file))
                 continue;
-            }
-            if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file)) {
-                continue;
-            }
+
         }
 
         // We'll look at this one only if it's a file, it's not hidden,
@@ -389,15 +377,14 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // Join the two sorted lists together into a single list
-    if (ereg("bydate.*", $sortType)) {
-        while(list($junk,$file) = each($filedates)) {
+    if (ereg("bydate.*", $sortType))
+        while(list($junk,$file) = each($filedates))
             $presorted[$file] = 1;
-        }
-    } else {
-        while (list($file,$junk) = each($imagefiles)) {
+
+    else
+        while (list($file,$junk) = each($imagefiles))
             $presorted[$file] = 1;
-        }
-    }
+
     reset($presorted);	// reset array pointer
 
     while (list($file,$junk) = each($presorted)) {
@@ -407,9 +394,8 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
         if (eregi('^(jpg|gif|png|jpeg|jpe)$', $ext)) {
 
             // If this is a new row, start a new <TR>
-            if ($col == 0) {
+            if ($col == 0)
                 $imageList .= '<tr>';
-            }
 
             $fname = getFileName($file);
             $img = buildImageURL($baseURL, $baseDir, $albumDir, $currDir,
@@ -434,13 +420,12 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
     closedir($dir);
 
     // If there aren't any images to work with, just say so.
-    if ($imageList == '') {
+    if ($imageList == '')
         $imageList = 'NULL';
 
-    } elseif (!eregi('</tr>$', $imageList)) {
+    elseif (!eregi('</tr>$', $imageList))
         // Stick a </tr> on the end if it isn't there already.
         $imageList .= '</tr>';
-    }
 
     return $imageList;
 
@@ -455,23 +440,23 @@ function buildBackLink( $baseURL, $currDir, $type, $homeLink, $homeLabel,
 {
 
     // $type notes whether we want a "back" link or "up one level" link.
-    if ($type == 'back' or $noThumbs) {
+    if ($type == 'back' or $noThumbs)
         //$label = 'up&nbsp;one&nbsp;level';
         $label = $mig_messages[$language]['up_one'];
-    } elseif ($type == 'up') {
+    elseif ($type == 'up')
         //$label = 'back&nbsp;to&nbsp;thumbnail&nbsp;view';
         $label = $mig_messages[$language]['thumbview'];
-    }
 
     // don't send a link back if we're a the root of the tree
     if ($currDir == '.') {
         if ($homeLink != '') {
-            if ($homeLabel == '') {
+
+            if ($homeLabel == '')
                 $homeLabel = $homeLink;
-            } else {
+            else
                 // Get rid of spaces due to silly formatting in MSIE
                 $homeLabel = str_replace(' ', '&nbsp;', $homeLabel);
-            }
+
             // Build a link to the "home" page
             $retval  = '<font size="-1">[&nbsp;<a href="'
                      . $homeLink
@@ -523,54 +508,60 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     // "generic" thumbnail image.
 
     if ($useThumbSubdir) {
-        if ($thumbExt) {
+
+        if ($thumbExt)
             $thumbFile = "$albumDir/$oldCurrDir/$thumbSubdir/$fname.$thumbExt";
-        } else {
+        else
             $thumbFile = "$albumDir/$oldCurrDir/$thumbSubdir/$fname.$ext";
-        }
+
     } else {
+
         if ($markerType == 'prefix') {
             $thumbFile  = "$albumDir/$oldCurrDir/$markerLabel";
-            if ($thumbExt) {
+
+            if ($thumbExt)
                 $thumbFile .= "_$fname.$thumbExt";
-            } else {
+            else
                 $thumbFile .= "_$fname.$ext";
-            }
         }
+
         if ($markerType == 'suffix') {
             $thumbFile  = "$albumDir/$oldCurrDir/$fname";
-            if ($thumbExt) {
+            if ($thumbExt)
                 $thumbFile .= "_$markerLabel.$thumbExt";
-            } else {
+            else
                 $thumbFile .= "_$markerLabel.$ext";
-            }
         }
+
     }
 
     if (file_exists($thumbFile)) {
         if ($useThumbSubdir) {
             $thumbImage  = "$albumURLroot/$currDir/$thumbSubdir";
-            if ($thumbExt) {
+
+            if ($thumbExt)
                 $thumbImage .= "/$fname.$thumbExt";
-            } else {
+            else
                 $thumbImage .= "/$fname.$ext";
-            }
+
         } else {
+
             if ($markerType == 'prefix') {
                 $thumbImage  = "$albumURLroot/$currDir/$markerLabel";
-                if ($thumbExt) {
+
+                if ($thumbExt)
                     $thumbImage .= "_$fname.$thumbExt";
-                } else {
+                else
                     $thumbImage .= "_$fname.$ext";
-                }
             }
+
             if ($markerType == 'suffix') {
                 $thumbImage  = "$albumURLroot/$currDir/$fname";
-                if ($thumbExt) {
+
+                if ($thumbExt)
                     $thumbImage .= "_$markerLabel.$thumbExt";
-                } else {
+                else
                     $thumbImage .= "_$markerLabel.$ext";
-                }
             }
         }
         $thumbImage = migURLencode($thumbImage);
@@ -584,9 +575,8 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     $alt_exif = getExifDescription($albumDir, $currDir, "$fname.$ext");
 
     // if both are present, separate with "--"
-    if ($alt_desc and $alt_exif) {
+    if ($alt_desc and $alt_exif)
         $alt_desc .= " -- $alt_exif";
-    }
 
     // Figure out the image's size (in bytes and pixels) for display
     $imageFile = "$albumDir/$oldCurrDir/$fname.$ext";
@@ -598,13 +588,12 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 
     // Figure out the bytes
     $imageSize = filesize($imageFile);
-    if ($imageSize > 1048576) {
+    if ($imageSize > 1048576)
         $imageSize = sprintf('%01.1f', $imageSize / 1024 / 1024) . 'MB';
-    } elseif ($imageSize > 1024) {
+    elseif ($imageSize > 1024)
         $imageSize = sprintf('%01.1f', $imageSize / 1024) . 'KB';
-    } else {
+    else
         $imageSize = $imageSize . $mig_messages[$language]['bytes'];
-    }
 
     // Figure out thumbnail geometry
     $thumbHTML = '';
@@ -636,9 +625,9 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     // If $suppressImageInfo is FALSE, show the image info
     if (!$suppressImageInfo) {
         $url .= '<br><font size="-1">';
-        if (!$noThumbs) {
+        if (!$noThumbs)
             $url .= $fname . '.' . $ext . '<br>';
-        }
+
         $url .= '(' . $imageWidth . 'x' . $imageHeight . ', '
              . $imageSize . ')</font>';
     }
@@ -681,9 +670,9 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
                     $line = trim($line);
                     // If it's a file not a directory, stuff it in the
                     // sort list
-                    if (is_file("$albumDir/$currDir/$line")) {
+                    if (is_file("$albumDir/$currDir/$line"))
                         $presorted[$line] = 1;      // sorted array
-                    }
+
                     $line = fgets($file, 4096);
                 }
             }
@@ -700,28 +689,28 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     // Gather all files into an array
     $fileList = array ();
     while ($file = readdir($dir)) {
+
         // Ignore thumbnails
-        if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file)) {
+        if ($markerType == 'prefix' and ereg("^$markerLabel\_", $file))
             continue;
-        }
-        if ($markerType == 'suffix' and
-                       eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file))
-        {
-            continue;
-        }
+
+        if ($markerType == 'suffix'
+            and eregi("_$markerLabel\.(gif|jpg|png|jpeg|jpe)$", $file))
+                continue;
+
         // Only look at valid image formats
-        if (!eregi('\.(gif|jpg|png|jpeg|jpe)$', $file)) {
+        if (!eregi('\.(gif|jpg|png|jpeg|jpe)$', $file))
             continue; 
-        } 
+
         // Ignore the hidden images
-        if ($hidden[$file]) {
+        if ($hidden[$file])
             continue;
-        }
+
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
-        if (is_file("$albumDir/$currDir/$file") and ! $presorted[$file]) {
+        if (is_file("$albumDir/$currDir/$file") and ! $presorted[$file])
             $fileList[$file] = 1;
-        }
+
     }
 
     closedir($dir); 
@@ -731,9 +720,9 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
     // snatch each element from $filelist and shove it on the end of
     // $presorted
-    while (list($file,$junk) = each($fileList)) {
+    while (list($file,$junk) = each($fileList))
         $presorted[$file] = 1;
-    }
+
     reset($presorted);	// reset array pointer
 
     // Gather all files into an array
@@ -746,9 +735,9 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     while (list($file, $junk) = each($presorted)) {
     
         // If "this" is the one we're looking for, mark it as such.
-        if ($file == $image) {
+        if ($file == $image)
             $ThisImagePos = $i;
-        }
+
         $fList[$i] = $file;	// Stash filename in the array
         $i++;              // increment the counter, of course.
     } 
@@ -758,21 +747,19 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
 
     // Next is one more than $ThisImagePos.  Test if that has a value
     // and if it does, consider it "next".
-    if ($fList[$ThisImagePos+1]) {
+    if ($fList[$ThisImagePos+1])
         $next = migURLencode($fList[$ThisImagePos+1]);
-    } else {
+    else
         $next = 'NA';
-    }
 
     // Previous must always be one less than the current index.  If
     // that has a value, that is.  Unless the current index is "1" in
     // which case we know there is no previous.
     
-    if ($ThisImagePos == 1) {
+    if ($ThisImagePos == 1)
         $prev = 'NA';
-    } elseif ($fList[$ThisImagePos-1]) {
+    elseif ($fList[$ThisImagePos-1])
         $prev = migURLencode($fList[$ThisImagePos-1]); 
-    } 
 
     // URL-encode currDir
     $currDir = migURLencode($currDir);
@@ -781,30 +768,29 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     $newCurrDir = getNewCurrDir($currDir);
 
     // If there is no previous image, show a greyed-out link
-    if ($prev == 'NA') {
+    if ($prev == 'NA')
         $pLink = '<font size="-1">[&nbsp;<font color="#999999">'
                . $mig_messages[$language]['previmage']
                . '</font>&nbsp;]</font>';
+
     // else show a real link
-    } else {
+    else
         $pLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
                . $prev . '">' . $mig_messages[$language]['previmage']
                . '</a>&nbsp;]</font>';
-    }
 
     // If there is no next image, show a greyed-out link
-    if ($next == 'NA') {
+    if ($next == 'NA')
         $nLink = '<font size="-1">[&nbsp;<font color="#999999">'
                . $mig_messages[$language]['nextimage']
                . '</font>&nbsp;]</font>';
     // else show a real link
-    } else {
+    else
         $nLink = '<font size="-1">[&nbsp;<a href="' . $baseURL
                . '?pageType=image&currDir=' . $currDir . '&image='
                . $next . '">' . $mig_messages[$language]['nextimage']
                . '</a>&nbsp;]</font>';
-    }
 
     // Current position in the list
     $currPos = '#' . $ThisImagePos . '&nbsp;of&nbsp;' . $i;
@@ -838,12 +824,11 @@ function buildYouAreHere( $baseURL, $currDir, $image, $language,
         // Get a URL-encoded copy of $workingCopy
         $encodedCopy = migURLencode($workingCopy);
 
-        if ($image == '' and $workingCopy == $currDir) {
+        if ($image == '' and $workingCopy == $currDir)
             $url = '&nbsp;:&nbsp;<b>' . $label . '</b>';
-        } else {
+        else
             $url = '&nbsp;:&nbsp;<a href="' . $baseURL . '?currDir='
                  . $encodedCopy . '">' . $label . '</a>';
-        }
 
         // Strip the last piece off of $workingCopy to go to next loop
         $workingCopy = ereg_replace('/[^/]+$', '', $workingCopy);
@@ -868,9 +853,8 @@ function buildYouAreHere( $baseURL, $currDir, $image, $language,
     }
 
     // If there's an image, tack it onto the end of the hereString
-    if ($image != '') {
+    if ($image != '')
         $hereString .= '&nbsp;:&nbsp;<b>' . $image . '</b>';
-    }
 
     $x = $hereString;
     $hereString = '<font size="-1">' . $x . '</font>';
@@ -938,9 +922,8 @@ function getImageDescription( $albumDir, $currDir, $image )
     }
 
     $imageDesc = '';
-    if ($description[$image]) {
+    if ($description[$image])
         $imageDesc = $description[$image];
-    }
 
     return $imageDesc;
 
