@@ -290,6 +290,10 @@ if (strstr($currDir, '..')) {
 // strip URL encoding here too
 $image = rawurldecode($image);
 
+// Fetch mig.cf information
+list($hidden, $presorted, $description, $bulletin)
+    = parseMigCf("$albumDir/$currDir", $useThumbSubdir, $thumbSubdir);
+
 // if $pageType is null, or "folder") generate a folder view
 
 if ($pageType == 'folder' or $pageType == '') {
@@ -306,16 +310,15 @@ if ($pageType == 'folder' or $pageType == '') {
     // list of available folders
     $folderList = buildDirList($baseURL, $albumDir, $currDir, $imageDir,
                                $useThumbSubdir, $thumbSubdir,
-                               $maxFolderColumns);
+                               $maxFolderColumns, $hidden, $presorted);
     // list of available images
     $imageList = buildImageList($baseURL, $baseDir, $albumDir, $currDir,
                                 $albumURLroot, $maxThumbColumns, $folderList,
                                 $markerType, $markerLabel, $suppressImageInfo,
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $mig_language,
-                                $mig_messages, $sortType);
-    // bulletin text, if any
-    $bulletin = getBulletin($albumDir, $currDir);
+                                $mig_messages, $sortType, $hidden, $presorted,
+                                $description);
 
     // Only frame the lists in table code when appropriate
 
@@ -376,11 +379,11 @@ if ($pageType == 'folder' or $pageType == '') {
     $Links = array();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel, $mig_language,
-                                $mig_messages);
+                                $mig_messages, $hidden, $presorted);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description
-    $description  = getImageDescription($albumDir, $currDir, $image);
+    $description  = getImageDescription($image, $description);
     $exifDescription = getExifDescription($albumDir, $currDir, $image);
 
     // If both descriptions are non-NULL, separate them with an <HR>

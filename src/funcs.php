@@ -44,6 +44,90 @@
 //
 
 
+// parseMigCf - Parse a mig.cf file for sort and hidden blocks
+
+function parseMigCf( $directory, $useThumbSubdir, $thumbSubdir )
+{
+
+    // What file to parse
+    $cfgfile = 'mig.cf';
+
+    // Prototypes
+    $hidden     = array ();
+    $presorted  = array ();
+    $desc       = array ();
+
+    // Hide thumbnail subdirectory if one is in use.
+    if ($useThumbSubdir) {
+        $hidden[$thumbSubdir] = TRUE;
+    }
+
+    if (file_exists("$directory/$cfgfile")) {
+        $file = fopen("$directory/$cfgfile", 'r');
+        $line = fgets($file, 4096);     // get first line
+
+        while (!feof($file)) {
+
+            // Parse <hidden> blocks
+            if (eregi('^<hidden>', $line)) {
+                $line = fgets($file, 4096);
+                while (!eregi('^</hidden>', $line)) {
+                    $line = trim($line);
+                    $hidden[$line] = TRUE;
+                    $line = fgets($file, 4096);
+                }
+            }
+
+            // Parse <sort> structure
+            if (eregi('^<sort>', $line)) {
+                $line = fgets($file, 4096);
+                while (!eregi('^</sort>', $line)) {
+                    $line = trim($line);
+                    $presorted[$line] = TRUE;   // sorted array
+                    $line = fgets($file, 4096);
+                }
+            }
+
+            // Parse <bulletin> structure
+            if (eregi('^<bulletin>', $line)) {
+                $line = fgets($file, 4096);
+                while (!eregi('^</bulletin>', $line)) {
+                    $bulletin .= $line;
+                    $line = fgets($file, 4096);
+                }
+            }
+
+            // Parse <comment> structure
+            if (eregi('^<comment', $line)) {
+                $commfilename = trim($line);
+                $commfilename = str_replace('">', '', $commfilename);
+                $commfilename = eregi_replace('^<comment "','',$commfilename);
+                $line = fgets($file, 4096);
+                while (!eregi('^</comment', $line)) {
+                    $line = trim($line);
+                    $mycomment .= "$line ";
+                    $line = fgets($file, 4096);
+                }
+                $desc[$commfilename] = $mycomment;
+                $commfilename = '';
+                $mycomment = '';
+            }
+
+            // Get next line
+            $line = fgets($file, 4096);
+
+        } // end of main while() loop
+
+        fclose($file);
+    }
+
+    $retval = array ( $hidden, $presorted, $desc, $bulletin );
+    return $retval;
+
+}   //  -- End of parseMigCf()
+
+
+
 // printTemplate() - prints HTML page from a template file
 
 function printTemplate( $baseURL, $templateDir, $templateFile, $version,
@@ -152,7 +236,8 @@ function printTemplate( $baseURL, $templateDir, $templateFile, $version,
 // buildDirList() - creates list of directories available
 
 function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
-                       $useThumbSubdir, $thumbSubdir, $maxColumns )
+                       $useThumbSubdir, $thumbSubdir, $maxColumns,
+                       $hidden, $presorted )
 {
 
     $oldCurrDir = $currDir;	// Stash this to build full path with
@@ -160,50 +245,6 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
     // Create a URL-encoded version of $currDir
     $enc_currdir = $currDir;
     $currDir = rawurldecode($enc_currdir);
-
-    // Read in config info for this directory
-    // buildDirList() only really cares about <Hidden> and <Sort> tags.
-
-    // array prototypes
-    $hidden     = array ();
-    $presorted  = array ();
-
-    if (file_exists("$albumDir/$currDir/mig.cf")) {
-        $file = fopen("$albumDir/$currDir/mig.cf", 'r');
-        $line = fgets($file, 4096);		// get first line
-        while (!feof($file)) {
-            // Parse <Hidden> structure
-            if (eregi('^<hidden>', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</hidden>', $line)) {
-                    $line = trim($line);
-                    $hidden[$line] = TRUE;
-                    $line = fgets($file, 4096);
-                }
-            }
-            // Parse <Sort> structure
-            if (eregi('^<sort', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</sort>', $line)) {
-                    $line = trim($line);
-
-                    // If it's a directory not a file, stuff it in the
-                    // sort list
-                    if (is_dir("$albumDir/$currDir/$line")) {
-                        $presorted[$line] = TRUE;   // sorted array
-                    }
-                    $line = fgets($file, 4096);
-                }
-            }
-            $line = fgets($file, 4096);		// get another line
-        }
-        fclose($file);
-    }
-
-    // Ignore thumbnail directories if they're being used
-    if ($useThumbSubdir) {
-        $hidden[$thumbSubdir] = TRUE;
-    }
 
     $dir = opendir("$albumDir/$currDir");		// Open directory handle
     $directories = array();	// prototype
@@ -307,41 +348,9 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                          $markerType, $markerLabel, $suppressImageInfo,
                          $useThumbSubdir, $thumbSubdir, $noThumbs,
                          $thumbExt, $suppressAltTags, $language,
-                         $mig_messages, $sortType)
+                         $mig_messages, $sortType, $hidden, $presorted,
+                         $description )
 {
-
-    // Read in the "hidden stuff" information
-    $hidden = array ();         // prototype
-    $presorted = array ();      // prototype
-    if (file_exists("$albumDir/$currDir/mig.cf")) {
-        $file = fopen("$albumDir/$currDir/mig.cf", 'r');
-        $line = fgets($file, 4096);         // get first line
-        while (!feof($file)) {
-            if (eregi('^<hidden>', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</hidden>', $line)) {
-                    $line = trim($line);
-                    $hidden[$line] = TRUE;
-                    $line = fgets($file, 4096);
-                }
-            }
-            if (eregi('^<sort', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</sort>', $line)) {
-                    $line = trim($line);
-
-                    // If it's a file, not a directory, add to the list
-                    if (is_file("$albumDir/$currDir/$line")) {
-                        $presorted[$line] = TRUE;
-                    }
-
-                    $line = fgets($file, 4096);
-                }
-            }
-            $line = fgets($file, 4096);               // get another line
-        }
-        fclose($file);
-    }
 
     $dir = opendir("$albumDir/$currDir");		// Open directory handle
 
@@ -433,7 +442,7 @@ function buildImageList( $baseURL, $baseDir, $albumDir, $currDir,
                                  $markerLabel, $suppressImageInfo,
                                  $useThumbSubdir, $thumbSubdir, $noThumbs,
                                  $thumbExt, $suppressAltTags, $language,
-                                 $mig_messages);
+                                 $mig_messages, $description);
             $imageList .= $img;
 
             // Keep track of what row and column we are on
@@ -523,7 +532,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
                         $albumURLroot, $fname, $ext, $markerType,
                         $markerLabel, $suppressImageInfo, $useThumbSubdir,
                         $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
-                        $language, $mig_messages )
+                        $language, $mig_messages, $description )
 {
 
     // newCurrDir is currDir without leading './'
@@ -605,7 +614,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
     }
 
     // Get description, if any
-    $alt_desc = getImageDescription($albumDir, $currDir, "$fname.$ext");
+    $alt_desc = getImageDescription("$fname.$ext", $description);
     $alt_exif = getExifDescription($albumDir, $currDir, "$fname.$ext");
 
     // if both are present, separate with "--"
@@ -680,41 +689,8 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 
 function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
                              $markerType, $markerLabel, $language,
-                             $mig_messages )
+                             $mig_messages, $hidden, $presorted )
 {
-
-    // Read in the config file
-    $hidden = array ();         // prototype
-    $presorted = array ();      // prototype
-    if (file_exists("$albumDir/$currDir/mig.cf")) {
-        $file = fopen("$albumDir/$currDir/mig.cf", 'r');
-        $line = fgets($file, 4096);         // get first line
-        while (!feof($file)) {
-            if (eregi('^<hidden>', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</hidden>', $line)) {
-                    $line = trim($line);
-                    $hidden[$line] = TRUE;
-                    $line = fgets($file, 4096);
-                } 
-            } 
-            // Parse <Sort> structure
-            if (eregi('^<sort', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</sort>', $line)) {
-                    $line = trim($line);
-                    // If it's a file not a directory, stuff it in the
-                    // sort list
-                    if (is_file("$albumDir/$currDir/$line")) {
-                        $presorted[$line] = TRUE;      // sorted array
-                    }
-                    $line = fgets($file, 4096);
-                }
-            }
-            $line = fgets($file, 4096);               // get another line
-        } 
-        fclose($file);
-    } 
 
     // newCurrDir is currDir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -936,33 +912,8 @@ function getFileName( $file )
 // getImageDescription() - Fetches an image description from the
 // comments file (mig.cf)
 
-function getImageDescription( $albumDir, $currDir, $image )
+function getImageDescription( $image, $description )
 {
-
-    $description = array (); // prototype
-
-    if (file_exists("$albumDir/$currDir/mig.cf")) {
-        $file = fopen("$albumDir/$currDir/mig.cf", 'r');
-        $line = fgets($file, 4096);		// get first line
-        while (!feof($file)) {
-            if (eregi('^<comment', $line)) {
-                $commfilename = trim($line);
-                $commfilename = str_replace('">', '', $commfilename);
-                $commfilename = eregi_replace('^<comment "','',$commfilename);
-                $line = fgets($file, 4096);
-                while (!eregi('^</comment', $line)) {
-                    $line = trim($line);
-                    $mycomment .= "$line ";
-                    $line = fgets($file, 4096);
-                }
-                $description[$commfilename] = $mycomment;
-                $commfilename = '';
-                $mycomment = '';
-            }
-            $line = fgets($file, 4096);	// get another line
-        }
-        fclose($file);
-    }
 
     $imageDesc = '';
     if ($description[$image]) {
@@ -1018,33 +969,6 @@ function getNewCurrDir( $currDir )
     return $newCurrDir;
 
 }	// -- End of getNewCurrDir()
-
-
-
-// getBulletin() - get Bulletin text
-
-function getBulletin( $albumDir, $currDir )
-{
-
-    if (file_exists("$albumDir/$currDir/mig.cf")) {
-        $file = fopen("$albumDir/$currDir/mig.cf", 'r');
-        $line = fgets($file, 4096);
-        while (!feof($file)) {
-            if (eregi('^<bulletin>', $line)) {
-                $line = fgets($file, 4096);
-                while (!eregi('^</bulletin>', $line)) {
-                    $bulletin .= $line;
-                    $line = fgets($file, 4096);
-                }
-            }
-            $line = fgets($file, 4096);
-        }
-        fclose($file);
-    }
-
-    return $bulletin;
-
-}	// -- End of getBulletin()
 
 
 
