@@ -48,7 +48,7 @@
 // Version number - Do not change
 $version = '1.2.7p1';
 
-// URL to call myself again
+// URL to use to call myself again
 if ($PHP_SELF) {    // if using register_globals
     $baseURL = $PHP_SELF;
 } else {            // otherwise, must be using track_vars
@@ -62,9 +62,9 @@ if ($PATH_TRANSLATED) {   // if using register_glolals
     $baseDir = dirname($HTTP_SERVER_VARS['PATH_TRANSLATED']);
 }
 
-$configFile = $baseDir . '/mig.cfg';	// Configuration file
-$defaultConfigFile = $configFile . '.default';	// Default config file
-		// (used if $configFile does not exist)
+$configFile = $baseDir . '/mig.cfg';                // Configuration file
+$defaultConfigFile = $configFile . '.default';      // Default config file
+// (used if $configFile does not exist)
 
 // Collect the server name if possible
 if ($SERVER_SOFTWARE) {
@@ -92,13 +92,13 @@ $sortType               = 'default';
 
 // Fetch variables from the URI
 //
-if (!$currDir) {        // not using register_globals, so the assumption
+if (! $currDir) {       // not using register_globals, so the assumption
                         // is that track_vars is in use
     $currDir        = $HTTP_GET_VARS['currDir'];
     $image          = $HTTP_GET_VARS['image'];
     $pageType       = $HTTP_GET_VARS['pageType'];
 }
-if (!$jump) {
+if (! $jump) {
     $jump           = $HTTP_GET_VARS['jump'];       // for track_vars
 }
 
@@ -168,16 +168,16 @@ while ($workCopy) {
     if ($protect[$workCopy]) {
 
         // Try to get around the track_vars/register_globals problem
-        if (!$PHP_AUTH_USER) {
+        if (! $PHP_AUTH_USER) {
             $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
         }
-        if (!$PHP_AUTH_PW) {
+        if (! $PHP_AUTH_PW) {
             $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
         }
 
         // If there's not a username yet, fetch one by popping up a
         // login dialog box
-        if (!$PHP_AUTH_USER) {
+        if (! $PHP_AUTH_USER) {
             header('WWW-Authenticate: Basic realm="protected"');
             header('HTTP/1.0 401 Unauthorized');
             print $mig_messages[$mig_language]['must_auth'];
@@ -209,10 +209,10 @@ while ($workCopy) {
     }
 }
 
-$albumDir = $baseDir . '/albums';	// Where albums live
+$albumDir = $baseDir . '/albums';// Where albums live
 // If you change the directory here also make sure to change $albumURLroot
 
-$templateDir = $baseDir . '/templates';	// Where templates live
+$templateDir = $baseDir . '/templates';// Where templates live
 
 // $baseURL with the scriptname torn off the end
 $baseHref = ereg_replace('/[^/]+$', '', $baseURL);
@@ -235,12 +235,12 @@ $albumURLroot = $baseHref . '/albums';
 if ($markerType != 'prefix' and $markerType != 'suffix') {
     $markerType='suffix';
 }
-if (!$markerLabel) {
+if (! $markerLabel) {
     $markerLabel = 'th';
 }
 
 // (Try to) get around the track_vars vs. register_globals problem
-if (!$SERVER_NAME) {
+if (! $SERVER_NAME) {
     $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
     $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
 }
@@ -261,12 +261,12 @@ if ($PATH_INFO and $jumpMap[$PATH_INFO] and $SERVER_NAME) {
 if ($phpNukeCompatible) {
 
     // Bail out if the root directory isn't set.
-    if (!$phpNukeRoot) {
+    if (! $phpNukeRoot) {
         print "FATAL ERROR: phpNuke Root Directory is not set.";
         exit;
     }
 
-    if (!isset($mainfile)) {
+    if (! isset($mainfile)) {
         include('mainfile.php');        // PHP-Nuke library
     }
 
@@ -376,7 +376,7 @@ if ($pageType == 'folder' or $pageType == '') {
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)
-    $Links = array();
+    $Links = array ();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel, $mig_language,
                                 $mig_messages, $hidden, $presort_img);

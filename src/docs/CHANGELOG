@@ -3,7 +3,12 @@ MIG CHANGE LOG
 
   Version 1.2.8 ()
 
-    Added Italian translation
+    Added Italian and Spanish translations
+
+    [Sourceforge feature request #416337] - Modified the ALT tag
+    code such that HTML entities within <comment> blocks should be
+    OK now even if hover-over comments are being used in thumbnail
+    views.
 
   Version 1.2.7p1 (Sun Apr 15 2001)
 

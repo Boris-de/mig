@@ -47,3 +47,9 @@ Installing MIG without unix shell access (i.e. via FTP)
     7. Start putting your images in the albums subdirectory (i.e.
     /www/site.com/htdocs/gallery/albums) and there you have it.
 
+    8. If you are copying over any of the files in the util
+    subdirectory, or the install.sh file, make sure you send those
+    things over in ASCII mode; if you send them in BINARY mode they
+    may not work correctly. BINARY mode should be fine for all of
+    the other files in MiG.
+
