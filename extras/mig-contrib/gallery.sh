@@ -15,8 +15,8 @@
 # It requires mogrify, which is part of the ImageMagick suite.
 # http://www.imagemagick.org/
 #
-# Actually I don't use this anymore... I use Photoshop.  But I used to
-# use this and it didn't work too badly for me.
+# Actually I don't use this anymore, I use Photoshop.  But I used to
+# use this and it didn't work too badly for me when I did.
 #
 
 echo "processing $1 ..."

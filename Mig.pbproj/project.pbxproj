@@ -5,6 +5,157 @@
 	};
 	objectVersion = 38;
 	objects = {
+		F50CD43F039F739201010203 = {
+			buildArgumentsString = cms;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Portals;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				ver = "local-test";
+			};
+			buildToolPath = /usr/bin/gnumake;
+			buildWorkingDirectory = "~/projects/mig";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = Portals;
+			productName = Portals;
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F50CD440039F7BC301010203 = {
+			buildArgumentsString = contrib;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Contrib;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			buildToolPath = /usr/bin/gnumake;
+			buildWorkingDirectory = "~/projects/mig/extras";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = Contrib;
+			productName = Contrib;
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F50CD441039F7BE201010203 = {
+			buildArgumentsString = gallery;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Example Gallery";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			buildToolPath = /usr/bin/gnumake;
+			buildWorkingDirectory = "~/projects/mig/extras";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = "Example Gallery";
+			productName = "Example Gallery";
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F5825B1703A285D001010203 = {
+			buildArgumentsString = dist;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Bundle;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				ver = 1.4.0rc4;
+			};
+			buildToolPath = /usr/bin/gnumake;
+			buildWorkingDirectory = "~/projects/mig";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = "Bundle (edit ver)";
+			productName = Bundle;
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F5825B1803A286A701010203 = {
+			buildArgumentsString = docpublish;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Publish Docs";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			buildToolPath = /usr/bin/gnumake;
+			buildWorkingDirectory = "~/projects/mig";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = "Publish Docs";
+			productName = "Publich Docs";
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F5825B1903A286DC01010203 = {
+			buildArgumentsString = mig.sf.net;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Install on mig.sf.net";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				ver = 1.4.0rc3;
+			};
+			buildToolPath = /usr/bin/gnumake;
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = "sf.net (edit ver)";
+			productName = "Install on mig.sf.net";
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F59704C103A185E001010203 = {
+			isa = PBXFileReference;
+			path = cz.php;
+			refType = 4;
+		};
 		F5A326F8039CC0FC01010203 = {
 			children = (
 				F5A326FD039CC13101010203,
@@ -50,6 +201,13 @@
 			mainGroup = F5A326F8039CC0FC01010203;
 			projectDirPath = "";
 			targets = (
+				F5ED9971039E510D01010203,
+				F50CD43F039F739201010203,
+				F50CD440039F7BC301010203,
+				F50CD441039F7BE201010203,
+				F5825B1703A285D001010203,
+				F5825B1803A286A701010203,
+				F5825B1903A286DC01010203,
 			);
 		};
 		F5A326FD039CC13101010203 = {
@@ -87,7 +245,6 @@
 				F5A32704039CC13101010203,
 				F5A32705039CC13101010203,
 				F5A32706039CC13101010203,
-				F5A32707039CC13101010203,
 				F5A32713039CC13101010203,
 				F5A32714039CC13101010203,
 				F5A32715039CC13101010203,
@@ -96,7 +253,6 @@
 				F5A32718039CC13101010203,
 				F5A32719039CC13101010203,
 				F5A3271A039CC13101010203,
-				F5A3271B039CC13101010203,
 				F5A32727039CC13101010203,
 			);
 			isa = PBXGroup;
@@ -116,79 +272,6 @@
 		F5A32706039CC13101010203 = {
 			isa = PBXFileReference;
 			path = credits.pod;
-			refType = 4;
-		};
-		F5A32707039CC13101010203 = {
-			children = (
-				F5A32708039CC13101010203,
-				F5A32709039CC13101010203,
-				F5A3270A039CC13101010203,
-				F5A3270B039CC13101010203,
-				F5A3270C039CC13101010203,
-				F5A3270D039CC13101010203,
-				F5A3270E039CC13101010203,
-				F5A3270F039CC13101010203,
-				F5A32710039CC13101010203,
-				F5A32711039CC13101010203,
-				F5A32712039CC13101010203,
-			);
-			isa = PBXGroup;
-			path = html;
-			refType = 4;
-		};
-		F5A32708039CC13101010203 = {
-			isa = PBXFileReference;
-			path = apache.html;
-			refType = 4;
-		};
-		F5A32709039CC13101010203 = {
-			isa = PBXFileReference;
-			path = changelog.html;
-			refType = 4;
-		};
-		F5A3270A039CC13101010203 = {
-			isa = PBXFileReference;
-			path = credits.html;
-			refType = 4;
-		};
-		F5A3270B039CC13101010203 = {
-			isa = PBXFileReference;
-			path = install.html;
-			refType = 4;
-		};
-		F5A3270C039CC13101010203 = {
-			isa = PBXFileReference;
-			path = jump.html;
-			refType = 4;
-		};
-		F5A3270D039CC13101010203 = {
-			isa = PBXFileReference;
-			path = license.html;
-			refType = 4;
-		};
-		F5A3270E039CC13101010203 = {
-			isa = PBXFileReference;
-			path = mig_cf.html;
-			refType = 4;
-		};
-		F5A3270F039CC13101010203 = {
-			isa = PBXFileReference;
-			path = passwords.html;
-			refType = 4;
-		};
-		F5A32710039CC13101010203 = {
-			isa = PBXFileReference;
-			path = portals.html;
-			refType = 4;
-		};
-		F5A32711039CC13101010203 = {
-			isa = PBXFileReference;
-			path = templates.html;
-			refType = 4;
-		};
-		F5A32712039CC13101010203 = {
-			isa = PBXFileReference;
-			path = utilities.html;
 			refType = 4;
 		};
 		F5A32713039CC13101010203 = {
@@ -229,79 +312,6 @@
 		F5A3271A039CC13101010203 = {
 			isa = PBXFileReference;
 			path = templates.pod;
-			refType = 4;
-		};
-		F5A3271B039CC13101010203 = {
-			children = (
-				F5A3271C039CC13101010203,
-				F5A3271D039CC13101010203,
-				F5A3271E039CC13101010203,
-				F5A3271F039CC13101010203,
-				F5A32720039CC13101010203,
-				F5A32721039CC13101010203,
-				F5A32722039CC13101010203,
-				F5A32723039CC13101010203,
-				F5A32724039CC13101010203,
-				F5A32725039CC13101010203,
-				F5A32726039CC13101010203,
-			);
-			isa = PBXGroup;
-			path = text;
-			refType = 4;
-		};
-		F5A3271C039CC13101010203 = {
-			isa = PBXFileReference;
-			path = apache.txt;
-			refType = 4;
-		};
-		F5A3271D039CC13101010203 = {
-			isa = PBXFileReference;
-			path = changelog.txt;
-			refType = 4;
-		};
-		F5A3271E039CC13101010203 = {
-			isa = PBXFileReference;
-			path = credits.txt;
-			refType = 4;
-		};
-		F5A3271F039CC13101010203 = {
-			isa = PBXFileReference;
-			path = install.txt;
-			refType = 4;
-		};
-		F5A32720039CC13101010203 = {
-			isa = PBXFileReference;
-			path = jump.txt;
-			refType = 4;
-		};
-		F5A32721039CC13101010203 = {
-			isa = PBXFileReference;
-			path = license.txt;
-			refType = 4;
-		};
-		F5A32722039CC13101010203 = {
-			isa = PBXFileReference;
-			path = mig_cf.txt;
-			refType = 4;
-		};
-		F5A32723039CC13101010203 = {
-			isa = PBXFileReference;
-			path = passwords.txt;
-			refType = 4;
-		};
-		F5A32724039CC13101010203 = {
-			isa = PBXFileReference;
-			path = portals.txt;
-			refType = 4;
-		};
-		F5A32725039CC13101010203 = {
-			isa = PBXFileReference;
-			path = templates.txt;
-			refType = 4;
-		};
-		F5A32726039CC13101010203 = {
-			isa = PBXFileReference;
-			path = utilities.txt;
 			refType = 4;
 		};
 		F5A32727039CC13101010203 = {
@@ -765,6 +775,7 @@
 		F5A32774039CC13201010203 = {
 			children = (
 				F5A32775039CC13201010203,
+				F59704C103A185E001010203,
 				F5A32776039CC13201010203,
 				F5A32777039CC13201010203,
 				F5A32778039CC13201010203,
@@ -933,7 +944,6 @@
 		};
 		F5A32790039CC13201010203 = {
 			children = (
-				F5A32791039CC13201010203,
 				F5A32792039CC13201010203,
 				F5A32793039CC13201010203,
 				F5A32794039CC13201010203,
@@ -944,11 +954,6 @@
 			);
 			isa = PBXGroup;
 			path = templates;
-			refType = 4;
-		};
-		F5A32791039CC13201010203 = {
-			isa = PBXFileReference;
-			path = .DS_Store;
 			refType = 4;
 		};
 		F5A32792039CC13201010203 = {
@@ -1029,6 +1034,31 @@
 			isa = PBXFileReference;
 			path = xoops_version.php;
 			refType = 4;
+		};
+		F5ED9971039E510D01010203 = {
+			buildArgumentsString = test;
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = Test;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				ver = "local-test";
+			};
+			buildToolPath = /usr/bin/gnumake;
+			buildWorkingDirectory = "~/projects/mig";
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = Test;
+			productName = Test;
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 287;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
 		};
 	};
 	rootObject = F5A326FC039CC0FC01010203;

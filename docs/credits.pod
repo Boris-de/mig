@@ -14,6 +14,8 @@ truly stand on the shoulders of giants.
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.
 
+Pavel XPJ Jisl (pavel at cetoraz.info) for the Czech translation.
+
 Dirk Haun (dirk at haun-online.de) for patches that enabled Geeklog
 compatibility.
 
