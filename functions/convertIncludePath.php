@@ -5,6 +5,8 @@
 
 function convertIncludePath ( $flag, $path="", $regex, $new )
 {
+    global $mig_config;
+    
     if ($flag) {
         $path = ereg_replace($regex, $new, $path);
     }

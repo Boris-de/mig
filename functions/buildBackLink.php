@@ -2,19 +2,17 @@
 
 // buildBackLink() - Create a "back one step" link.
 
-function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $image )
+function buildBackLink ( $currDir, $type )
 {
     global $mig_config;
-    global $mig_dl;
-    
 
     // $type notes whether we want a "back" link or "up one level" link.
-    if ($type == "back" or $noThumbs) {
+    if ($type == "back" or $mig_config["nothumbs"]) {
         $label = $mig_config["lang"]["up_one"];
     } elseif ($type == "up") {
-        if ($pageType == "large") {
+        if ($mig_config["pagetype"] == "large") {
             $label = $mig_config["lang"]["largeview"];
-        } elseif ($pageType == "image") {
+        } elseif ($mig_config["pagetype"] == "image") {
             $label = $mig_config["lang"]["thumbview"];
         }
     }
@@ -47,16 +45,14 @@ function buildBackLink ( $currDir, $type, $noThumbs, $startFrom, $pageType, $ima
 
     $retval = "&nbsp;[&nbsp;<a href=\""
             . $mig_config["baseurl"] . "?currDir=" . $newCurrDir;
-    if ($startFrom) {
-        $retval .= "&amp;startFrom=" . $startFrom;
+    if ($mig_config["startfrom"]) {
+        $retval .= "&amp;startFrom=" . $mig_config["startfrom"];
     }
-    if ($mig_dl) {
-        $retval .= "&amp;mig_dl=" . $mig_dl;
+    if ($mig_config["mig_dl"]) {
+        $retval .= "&amp;mig_dl=" . $mig_config["mig_dl"];
     }
-    if ($pageType == "image") {
-        $retval .= "&amp;pageType=folder&amp;image=" . $image;
-    } elseif ($pageType == "large") {
-        $retval .= "&amp;pageType=image&amp;image=" . $image;
+    if ($mig_config["pagetype"] == "large") {
+        $retval .= "&amp;pageType=image&amp;image=" . $mig_config["image"];
     }
     $retval .= "\">" . $label . "</a>&nbsp;]&nbsp;";
 

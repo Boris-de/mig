@@ -2,7 +2,7 @@
 
 // getNumberOfDirs() - Counts subdirectories in a given folder.
 
-function getNumberOfDirs ( $folder, $markerType, $markerLabel, $currDir )
+function getNumberOfDirs ( $folder, $currDir )
 {
     global $mig_config;
     
@@ -16,7 +16,7 @@ function getNumberOfDirs ( $folder, $markerType, $markerLabel, $currDir )
 
     while ($file = readdir($dir)) {
         // Get hidden item list from mig.cf
-        list($hidden, $x) = parseMigCf($folder);
+        list($mig_config["hidden"], $x) = parseMigCf($folder);
 
         // Must be a directory, and can't be . or ..
         if ($file != "." && $file != ".." && is_dir("$folder/$file"))
@@ -32,7 +32,7 @@ function getNumberOfDirs ( $folder, $markerType, $markerLabel, $currDir )
                 continue;
 
             // Ignore hidden items
-            if ($hidden[$file]) {
+            if ($mig_config["hidden"][$file]) {
                 continue;
             }
 

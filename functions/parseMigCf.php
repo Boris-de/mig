@@ -10,22 +10,24 @@ function parseMigCf ( $directory )
     $cfgfile = "mig.cf";
 
     // Prototypes
-    $hidden         = array ();
+    $mig_config["hidden"] = array ();
+    
     $presort_dir    = array ();
     $presort_img    = array ();
     $short_desc     = array ();
     $desc           = array ();
     $ficons         = array ();
-    $usethumbfile   = array ();
+    
+    $mig_config["usethumbfile"] = array ();
 
     // Hide thumbnail subdirectory if one is in use.
     if ($mig_config["usethumbsubdir"]) {
-        $hidden[$mig_config["thumbsubdir"]] = TRUE;
+        $mig_config["hidden"][$mig_config["thumbsubdir"]] = TRUE;
     }
 
     // Hide large subdirectory if one is in use.
     if ($mig_config["uselargeimages"]) {
-        $hidden[$mig_config["largesubdir"]] = TRUE;
+        $mig_config["hidden"][$mig_config["largesubdir"]] = TRUE;
     }
 
     if (file_exists("$directory/$cfgfile")) {
@@ -39,7 +41,7 @@ function parseMigCf ( $directory )
                 $line = fgets($file, 4096);
                 while (! eregi("^</hidden>", $line)) {
                     $line = trim($line);
-                    $hidden[$line] = TRUE;
+                    $mig_config["hidden"][$line] = TRUE;
                     $line = fgets($file, 4096);
                 }
             }
@@ -112,7 +114,7 @@ function parseMigCf ( $directory )
             if (eregi("^usethumb ", $line)) {
                 $x = trim($line);
                 list($y, $folder, $thumbnail) = explode(" ", $x);
-                $usethumbfile[$folder] = $thumbnail;
+                $mig_config["usethumbfile"][$folder] = $thumbnail;
             }
 
             // Parse FolderTemplate lines
@@ -124,7 +126,7 @@ function parseMigCf ( $directory )
             // Parse PageTitle lines
             if (eregi("^pagetitle ", $line)) {
                 $x = trim($line);
-                $pagetitle = eregi_replace("^pagetitle ", "", $x);
+                $mig_config["pagetitle"] = eregi_replace("^pagetitle ", "", $x);
             }
 
             // Parse MaintAddr lines
@@ -159,9 +161,9 @@ function parseMigCf ( $directory )
         fclose($file);
     }
 
-    return array ($hidden, $presort_dir, $presort_img, $desc, $short_desc,
-                  $bulletin, $ficons, $template, $pagetitle, $fcols,
-                  $tcols, $trows, $maintaddr, $usethumbfile);
+    return array ($presort_dir, $presort_img, $desc, $short_desc,
+                  $bulletin, $ficons, $template, $fcols,
+                  $tcols, $trows, $maintaddr);
 
 }   //  -- End of parseMigCf()
 

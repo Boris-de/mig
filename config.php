@@ -742,6 +742,7 @@ $exifFormatString = "|%c|";
 //       jp      Japanese (ISO-2022-JP)
 //       pliso   Polish ISO-8859-2
 //       zh      Traditional Chinese (big5)
+//       cz      Czech
 //
 //     You can also define a language by using mig_dl in the URL.  Just
 //     add a mig_dl={lang} to the query string.  For example, if you have

@@ -2,13 +2,9 @@
 
 // buildDirList() - Build list of directories for display.
 
-function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden,
-                        $presorted, $viewFolderCount, $markerType, $markerLabel, $ficons,
-                        $randomFolderThumbs, $folderNameLength, $useThumbFile,
-                        $ignoreDotDirectories, $useRealRandThumbs, $sortType )
+function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 {
     global $mig_config;
-    global $mig_dl;
 
     $oldCurrDir = $currDir;         // Stash this to build full path
 
@@ -51,7 +47,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
 
         // Ignore directories whose name begins with "." if the
         // appropriate option is set
-        if ($ignoreDotDirectories && ereg("^\.", $file)) {
+        if ($mig_config["ignoredotdirectories"] && ereg("^\.", $file)) {
             continue;
         }
 
@@ -59,7 +55,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
         $directories[$file] = TRUE;
 
         // And stash a timestamp
-        if (ereg("bydate.*", $sortType)) {
+        if (ereg("bydate.*", $mig_config["foldersorttype"])) {
             $timestamp = filemtime($mig_config["albumdir"]."/".$currDir
                                    ."/".$file);
             $filedates["$timestamp-$file"] = $file;
@@ -77,17 +73,17 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
     ksort($directories);    // sort so we can yank them in sorted order
     reset($directories);    // reset array pointer to beginning
 
-    if ($sortType == "bydate-ascend") {
+    if ($mig_config["foldersorttype"] == "bydate-ascend") {
         ksort($filedates);
         reset($filedates);
 
-    } elseif ($sortType == "bydate-descend") {
+    } elseif ($mig_config["foldersorttype"] == "bydate-descend") {
         krsort($filedates);
         reset($filedates);
     }
 
     // Join the two sorted lists together into a single list
-    if (ereg("bydate.*", $sortType)) {
+    if (ereg("bydate.*", $mig_config["foldersorttype"])) {
         while (list($junk,$file) = each($filedates)) {
             $presorted[$file] = TRUE;
         }
@@ -99,7 +95,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
     }
 
     // Make sure hidden items aren't displayed
-    while (list($file,$junk) = each($hidden))
+    while (list($file,$junk) = each($mig_config["hidden"]))
         unset ($presorted[$file]);
 
     reset($presorted);          // reset array pointer
@@ -110,18 +106,14 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
         $folder = $mig_config["albumdir"]."/".$currDir."/".$file;
 
         // Calculate how many images in the folder if desired
-        if ($viewFolderCount) {
-            $counts[$file] = getNumberOfImages($folder,
-                                               $markerType, $markerLabel);
-            $countdir[$file] = getNumberOfDirs($folder, $markerType,
-                                               $markerLabel, $currDir);
+        if ($mig_config["viewfoldercount"]) {
+            $counts[$file] = getNumberOfImages($folder);
+            $countdir[$file] = getNumberOfDirs($folder, $currDir);
         }
 
         // Handle random folder thumbnails if desired
-        if ($randomFolderThumbs) {
-            $samples[$file] = getRandomThumb($file, $folder, $albumURLroot, $currDir,
-                                             $markerType, $markerLabel, $useRealRandThumbs,
-                                             $ignoreDotDirectories);
+        if ($mig_config["randomfolderthumbs"]) {
+            $samples[$file] = getRandomThumb($file, $folder, $currDir);
         }
     }
 
@@ -151,8 +143,8 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
         $linkURL = "<a href=\""
                  . $mig_config["baseurl"]
                  . "?pageType=folder&amp;currDir=" . $enc_file;
-        if ($mig_dl) {
-            $linkURL .= "&amp;mig_dl=" . $mig_dl;
+        if ($mig_config["mig_dl"]) {
+            $linkURL .= "&amp;mig_dl=" . $mig_config["mig_dl"];
         }
         $linkURL .= "\">";
 
@@ -162,13 +154,15 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
         // Also, shorten filename length if using random thumbs,
         // to make the table cleaner
         $nbspfile = $file;
-        if ($randomFolderThumbs && strlen($nbspfile) > $folderNameLength) {
-            $nbspfile = substr($nbspfile,0,$folderNameLength-1) . "(..)";
+        if ($mig_config["randomfolderthumbs"]
+            && strlen($nbspfile) > $mig_config["foldernamelength"]) {
+                $nbspfile = substr($nbspfile,0,$mig_config["foldernamelength"]-1)
+                          . "(..)";
         }
         $nbspfile = str_replace(" ", "&nbsp;", $nbspfile);
         $nbspfile = str_replace("_", "&nbsp;", $nbspfile);
 
-        if ($randomFolderThumbs) {
+        if ($mig_config["randomfolderthumbs"]) {
             $folderTableClass = "folderthumbs";
             $folderTableAlign = "center";
         } else {
@@ -184,39 +178,39 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
                         . $linkURL
                         . "<img src=\"";
 
-        if ($useThumbFile[$file]) {
+        if ($mig_config["usethumbfile"][$file]) {
             // Found a UseThumb line in mig.cf - process as such
 
-            $fname = getFileName($useThumbFile[$file]);
-            if ($thumbExt) {
-                $fext = $thumbExt;
+            $fname = getFileName($mig_config["usethumbfile"][$file]);
+            if ($mig_config["thumbext"]) {
+                $fext = $mig_config["thumbext"];
             } else {
-                $fext = getFileExtension($useThumbFile[$file]);
+                $fext = getFileExtension($mig_config["usethumbfile"][$file]);
             }
 
-            $directoryList .= $albumURLroot . "/" . $currDir
+            $directoryList .= $mig_config["albumurlroot"] . "/" . $currDir
                             . "/" . $file . "/";
             if ($mig_config["usethumbsubdir"]) {
                 $directoryList .= $mig_config["thumbsubdir"] . "/"
                                 . $fname . "." . $fext;
             } else {
-                if ($markerType == "prefix") {
-                    $directoryList .= $markerLabel . "_" . $fname;
+                if ($mig_config["markertype"] == "prefix") {
+                    $directoryList .= $mig_config["markerlabel"] . "_" . $fname;
                 } else {
-                    $directoryList .= $fname . "_" . $markerLabel;
+                    $directoryList .= $fname . "_" . $mig_config["markerlabel"];
                 }
                 $directoryList .= "." . $fext;
             }
         } elseif ($ficons[$file]) {
             // Found a FolderIcon line in mig.cf - process as such
-            $directoryList .= $imageDir . "/" . $ficons[$file];
+            $directoryList .= $mig_config["imagedir"] . "/" . $ficons[$file];
         } elseif ($samples[$file]) {
             // Using a random thumbnail as the folder icon
             $directoryList .= $samples[$file];
         } else {
             // Otherwise, we're out a thumbnail; use the generic
             // folder icon as a last resort
-            $directoryList .= $imageDir . "/folder.gif";
+            $directoryList .= $mig_config["imagedir"] . "/folder.gif";
         }
 
         // Define a separator of either a space or a line break,
@@ -224,7 +218,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
         // (Use a line break if random thumbnail is present so the name
         // appears underneath it - also use a line break if the thumbnail
         // was specified).
-        if ($samples[$file] || $useThumbFile[$file]) {
+        if ($samples[$file] || $mig_config["usethumbfile"][$file]) {
             $sep = "<br />";
         } else {
             $sep = "&nbsp;";
@@ -239,7 +233,7 @@ function buildDirList ( $albumURLroot, $currDir, $imageDir, $maxColumns, $hidden
                        . $linkURL . $nbspfile . "</a>";
 
         // Display counts if appropriate
-        if ($viewFolderCount &&
+        if ($mig_config["viewfoldercount"] &&
                 (($counts[$file] > 0) || ($countdir[$file] > 0)) )
         {
             $directoryList .= $sep . "<acronym title=\"(folders/files)\">("

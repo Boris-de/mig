@@ -2,11 +2,11 @@
 
 // getRandomThumb() - Find a random thumbnail to show instead of the folder icon.
 
-function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, $markerLabel,
-                          $useRealRandThumbs, $ignoreDotDirectories )
+function getRandomThumb ( $file, $folder, $currDir )
 {
-    global $hidden;
     global $mig_config;
+    
+    $markerLabel = $mig_config["markerlabel"];
 
     // I don't know why this was here but it broke layout badly...
     //print "<br>";
@@ -31,13 +31,13 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                 if ($sample != "." && $sample != "..") {
 
                     // Ignore hidden items
-                    if ($hidden[$sample]) {
+                    if ($mig_config["hidden"][$sample]) {
                         continue;
                     }
 
                     // And use the first valid match found
                     if (getFileType($sample)) {
-                        $mySample = $albumURLroot . "/"
+                        $mySample = $mig_config["albumurlroot"] . "/"
                                   . migURLencode($currDir)
                                   . "/" . migURLencode($file)
                                   . "/" .$mig_config["thumbsubdir"]
@@ -45,7 +45,7 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
 
                         // If "real rand" is in use, add this to the
                         // list.  Otherwise just return what we found.
-                        if ($useRealRandThumbs) {
+                        if ($mig_config["userealrandthumbs"]) {
                             $randThumbList[] = $mySample;
                         } else {
                             return $mySample;
@@ -76,12 +76,12 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                 {
 
                     // Ignore hidden items
-                    if ($hidden[$item]) {
+                    if ($mig_config["hidden"][$item]) {
                         continue;
                     }
 
                     // Ignore dot directories if appropriate
-                    if ($ignoreDotDirectories && ereg("^\.", $item)) {
+                    if ($mig_config["ignoredotdirectories"] && ereg("^\.", $item)) {
                         continue;
                     }
 
@@ -89,15 +89,12 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                     // and pick a random folder, then recurse into it.
                     // Otherwise just use the first folder found,
                     // and recurse into that.
-                    if ($useRealRandThumbs) {
+                    if ($mig_config["userealrandthumbs"]) {
                         $subfList[] = $item;
                     } else {
-                        $mySample = getRandomThumb($file."/".$item,
-                                       $folder."/".$item,
-                                       $albumURLroot, $currDir,
-                                       $markerType, $markerLabel,
-                                       $useRealRandThumbs,
-                                       $ignoreDotDirectories);
+                        $mySample = getRandomThumb($file."/".$item, $folder."/".$item,
+                                                   $currDir,
+                                                   $mig_config["userealrandthumbs"]);
 
                         if ($mySample) {
                             return $mySample;
@@ -111,11 +108,7 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                 srand((double)microtime()*1000000); // get random folder
                 $randval = rand(0,(sizeof($subfList)-1));
                 $mySample = getRandomThumb($file."/".$subfList[$randval],
-                                    $folder."/".$subfList[$randval],
-                                    $albumURLroot, $currDir,
-                                    $markerType, $markerLabel,
-                                    $useRealRandThumbs,
-                                    $ignoreDotDirectories);
+                                    $folder."/".$subfList[$randval], $currDir);
 
                 return $mySample;
             }
@@ -142,13 +135,13 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
             // Using prefix/suffix and label settings,
             // figure out if this is a thumbnail or not.
             // This is so we skip over regular images.
-            if ($markerType == "prefix") {
+            if ($mig_config["markertype"] == "prefix") {
                 if (ereg("^$markerLabel\_", $sample)
                     && getFileType($sample))
                 {
                     $mySample = $sample;
                 }
-            } elseif ($markerType == "suffix") {
+            } elseif ($mig_config["markertype"] == "suffix") {
                 if (ereg("_$markerLabel\.[^.]+$", $sample)
                     && getFileType($sample))
                 {
@@ -161,13 +154,13 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
             }
 
             if ($mySample) {
-                $mySample = $albumURLroot . "/" . $currDir . "/" . $file
+                $mySample = $mig_config["albumurlroot"] . "/" . $currDir . "/" . $file
                           . "/" . $mySample;
 
                 // If "real rand" is in effect, add to the list for
                 // later random selection.  Otherwise just return
                 // what we found.
-                if ($useRealRandThumbs) {
+                if ($mig_config["userealrandthumbs"]) {
                     $randThumbList[] = $mySample;
                 } else {
                     return $mySample;
@@ -182,24 +175,20 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                     {
 
                         // Ignore hidden items
-                        if ($hidden[$item]) {
+                        if ($mig_config["hidden"][$item]) {
                             continue;
                         }
 
                         // Ignore dot directories if appropriate
-                        if ($ignoreDotDirectories && ereg("^\.", $item)) {
+                        if ($mig_config["ignoredotdirectories"] && ereg("^\.", $item)) {
                             continue;
                         }
 
-                        if ($useRealRandThumbs) {
+                        if ($mig_config["userealrandthumbs"]) {
                             $subfList[] = $item;
                         } else {
-                            $mySample = getRandomThumb($file."/".$item,
-                                            $folder."/".$item,
-                                            $albumURLroot, $currDir,
-                                            $markerType, $markerLabel,
-                                            $useRealRandThumbs,
-                                            $ignoreDotDirectories);
+                            $mySample = getRandomThumb($file."/".$item, $folder."/".$item,
+                                            $currDir);
 
                             if ($mySample) {
                                 return $mySample;
@@ -213,11 +202,7 @@ function getRandomThumb ( $file, $folder, $albumURLroot, $currDir, $markerType, 
                     srand((double)microtime()*1000000);     // get random folder
                     $randval = rand(0,(sizeof($subfList)-1));
                     $mySample = getRandomThumb($file."/".$subfList[$randval],
-                                        $folder."/".$subfList[$randval],
-                                        $albumURLroot, $currDir,
-                                        $markerType, $markerLabel,
-                                        $useRealRandThumbs,
-                                        $ignoreDotDirectories);
+                                        $folder."/".$subfList[$randval], $currDir);
 
                     if ($mySample) {
                         return $mySample;

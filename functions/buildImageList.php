@@ -2,16 +2,10 @@
 
 // buildImageList() - Creates a list of images for display.
 
-function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $markerType, $markerLabel,
-                          $directoryList, $suppressImageInfo, $noThumbs, $thumbExt,
-                          $suppressAltTags, $sortType, $hidden, $presorted, $description,
-                          $short_desc, $imagePopup, $imagePopType, $imagePopLocationBar,
-                          $imagePopMenuBar, $imagePopToolBar, $commentFilePerImage, $startFrom,
-                          $commentFileShortComments, $showShortOnThumbPage, $imagePopMaxWidth,
-                          $imagePopMaxHeight, $pageType )
+function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
+                          $presorted, $description, $short_desc )
 {
     global $mig_config;
-    global $mig_dl;
 
     if (is_dir($mig_config["albumdir"]."/".$currDir)) {
         $dir = opendir($mig_config["albumdir"]."/".$currDir);
@@ -47,18 +41,19 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
     // Reset array pointer
     reset($presorted);
 
+    $markerLabel = $mig_config["markerlabel"];
     while ($file = readdir($dir)) {
         // Skip over thumbnails
         if (!$mig_config["usethumbsubdir"]) {
                          // unless $useThumbSubdir is set,
                          // then don't waste time on this check
 
-            if ($markerType == "suffix" && ereg("_$markerLabel\.[^.]+$", $file)
+            if ($mig_config["markertype"] == "suffix" && ereg("_$markerLabel\.[^.]+$", $file)
                 && getFileType($file)) {
                     continue;
             }
 
-            if ($markerType == "prefix" && ereg("^$markerLabel\_", $file)) {
+            if ($mig_config["markertype"] == "prefix" && ereg("^$markerLabel\_", $file)) {
                 continue;
             }
 
@@ -76,7 +71,7 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
             $imagefiles[$file] = TRUE;
 
             // and stash a timestamp as well if needed
-            if (ereg("bydate.*", $sortType)) {
+            if (ereg("bydate.*", $mig_config["sorttype"])) {
                 $timestamp = filemtime($mig_config["albumdir"]
                                        . "/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
@@ -89,17 +84,17 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
 
     reset($imagefiles); // reset array pointer
 
-    if ($sortType == "bydate-ascend") {
+    if ($mig_config["sorttype"] == "bydate-ascend") {
         ksort($filedates);
         reset($filedates);
 
-    } elseif ($sortType == "bydate-descend") {
+    } elseif ($mig_config["sorttype"] == "bydate-descend") {
         krsort($filedates);
         reset($filedates);
     }
 
     // Join the two sorted lists together into a single list
-    if (ereg("bydate.*", $sortType)) {
+    if (ereg("bydate.*", $mig_config["sorttype"])) {
         while (list($junk,$file) = each($filedates)) {
             $presorted[$file] = TRUE;
         }
@@ -111,7 +106,7 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
     }
 
     // Make sure hidden items don't show up
-    while (list($file,$junk) = each($hidden))
+    while (list($file,$junk) = each($mig_config["hidden"]))
         unset ($presorted[$file]);
 
     reset($presorted);          // reset array pointer
@@ -125,26 +120,26 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
     // Set up pagination environment
     $max_col = $maxColumns + 1;
     $max_row = $maxRows + 1;
-    $firstThumb = $startFrom * $max_col * $max_row;
+    $firstThumb = $mig_config["startfrom"] * $max_col * $max_row;
     // This rounds off any fractional part
     $pages = ceil($thumbsInFolder / ($max_col * $max_row));
 
     // Handle pagination
     if ($thumbsInFolder > ($max_col * $max_row)) {
 
-        if ($startFrom) {
-            $start_img = ($startFrom * $max_col * $max_row) + 1;
+        if ($mig_config["startfrom"]) {
+            $start_img = ($mig_config["startfrom"] * $max_col * $max_row) + 1;
 
             if (($start_img+($max_col*$max_row)-1) >= $thumbsInFolder) {
                 // This must be the last page.
                 $end_img = $thumbsInFolder;
             } else {
                 // Not the first, not last - some middle page.
-                $end_img = ($startFrom+1) * $max_col * $max_row;
+                $end_img = ($mig_config["startfrom"] + 1) * $max_col * $max_row;
             }
 
         } else {
-            // Absence of $startFrom means we're on page 1 (startFrom=0).
+            // Absence of startFrom means we're on page 1 (startFrom=0).
             // Therefore, we can easily calculate what we need.
             $start_img = 1;
             $end_img = $max_col * $max_row;
@@ -159,52 +154,54 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
         // %e is end image
         $phrase = str_replace("%e", $end_img, $phrase);
 
-        $imageList .= "\n   <tr>\n    <td colspan=\""
+        $pageBlock .= "\n   <tr>\n    <td colspan=\""
                     . $max_col . "\" align=\"center\"><small>" . $phrase;
 
-        if ($startFrom) {
-            $prevPage = $startFrom - 1;
+        if ($mig_config["startfrom"]) {
+            $prevPage = $mig_config["startfrom"] - 1;
 
-            $imageList .= "<a href=\"" . $mig_config["baseurl"]
+            $pageBlock .= "<a href=\"" . $mig_config["baseurl"]
                         . "?pageType=folder&amp;currDir=" . $urlCurrDir
                         . "&amp;startFrom=" . $prevPage;
-            if ($mig_dl) {
-                $imageList .= "&amp;mig_dl=" . $mig_dl;
+            if ($mig_config["mig_dl"]) {
+                $pageBlock .= "&amp;mig_dl=" . $mig_config["mig_dl"];
             }
-            $imageList .= "\">&laquo;</A>&nbsp;&nbsp;";
+            $pageBlock .= "\">&laquo;</A>&nbsp;&nbsp;";
         }
 
         for ($i = 1; $i <= $pages; ++$i) {
             if (floor(($i - 11) / 20) == (($i - 11) / 20)) {
-                $imageList .= "<br />";
+                $pageBlock .= "<br />";
             }
-            if ($i == ($startFrom + 1)) {
-                $imageList .= "<b>" . $i . "</b>&nbsp;&nbsp;";
+            if ($i == ($mig_config["startfrom"] + 1)) {
+                $pageBlock .= "<b>" . $i . "</b>&nbsp;&nbsp;";
             } else {
                 $ib = $i - 1;
-                $imageList .= "<a href=\"" . $mig_config["baseurl"]
+                $pageBlock .= "<a href=\"" . $mig_config["baseurl"]
                             . "?pageType=folder&amp;currDir=" . $urlCurrDir
                             . "&amp;startFrom=" . $ib;
-                if ($mig_dl) {
-                    $imageList .= "&amp;mig_dl=" . $mig_dl;
+                if ($mig_config["mig_dl"]) {
+                    $pageBlock .= "&amp;mig_dl=" . $mig_config["mig_dl"];
                 }
-                $imageList .= "\">" . $i . "</a>&nbsp;&nbsp;";
+                $pageBlock .= "\">" . $i . "</a>&nbsp;&nbsp;";
             }
         }
 
-        if (($startFrom + 1) < $pages) {
-            $nextPage = $startFrom + 1;
-            $imageList .= "<a href=\"" . $mig_config["baseurl"]
+        if (($mig_config["startfrom"] + 1) < $pages) {
+            $nextPage = $mig_config["startfrom"] + 1;
+            $pageBlock .= "<a href=\"" . $mig_config["baseurl"]
                         . "?pageType=folder&amp;currDir=" . $urlCurrDir
                         . "&amp;startFrom=" . $nextPage;
-            if ($mig_dl) {
-                $imageList .= "&amp;mig_dl=" . $mig_dl;
+            if ($mig_config["mig_dl"]) {
+                $pageBlock .= "&amp;mig_dl=" . $mig_config["mig_dl"];
             }
-            $imageList .= "\">&raquo;</A>";
+            $pageBlock .= "\">&raquo;</A>";
         }
 
-        $imageList .= "</small></td>\n   </tr>";
+        $pageBlock .= "</small></td>\n   </tr>";
     }
+    
+    $imageList .= $pageBlock;
 
     $thumbCounter = -1;
 
@@ -222,15 +219,7 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
                     $imageList .= "\n   <tr>";
                 }
 
-                $img = buildImageURL($currDir, $albumURLroot, $file, $suppressImageInfo,
-                                     $markerType, $markerLabel, $noThumbs,
-                                     $thumbExt, $suppressAltTags, $description,
-                                     $short_desc, $imagePopup, $imagePopType,
-                                     $imagePopLocationBar, $imagePopMenuBar,
-                                     $imagePopToolBar, $commentFilePerImage,
-                                     $startFrom, $commentFileShortComments,
-                                     $showShortOnThumbPage, $imagePopMaxWidth,
-                                     $imagePopMaxHeight, $pageType);
+                $img = buildImageURL($currDir, $file, $description, $short_desc);
                 $imageList .= $img;
 
                 // Keep track of what row and column we are on
@@ -246,6 +235,8 @@ function buildImageList ( $currDir, $albumURLroot, $maxColumns, $maxRows, $marke
     }
 
     closedir($dir);
+    
+    $imageList .= $pageBlock;
 
     // If there aren't any images to work with, just say so.
     if ($imageList == "") {

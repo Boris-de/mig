@@ -3,10 +3,12 @@
 // getImageDescFromFile() - Fetches an image description from a per-image comment file
 //                          (only used if $commentFilePerImage is TRUE).
 
-function getImageDescFromFile ( $image, $currDir, $short_flag )
+function getImageDescFromFile ( $currDir, $short_flag )
 {
+    global $mig_config;
+
     $imageDesc = "";
-    $fname = getFileName($image);
+    $fname = getFileName($mig_config["image"]);
     $fname = rawurldecode($fname);
 
     if (file_exists($mig_config["albumdir"]."/$currDir/$fname.txt")) {

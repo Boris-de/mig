@@ -3,10 +3,10 @@
 // getExifDescription() - Fetches a comment if available from the Exif comments file (exif.inf)
 //                        as well as fetching EXIF data.
 
-function getExifDescription ( $currDir, $image, $formatString )
+function getExifDescription ( $currDir, $formatString )
 {
     global $mig_config;
-
+    
     $aperture   = array ();
     $day        = array ();
     $desc       = array ();
@@ -91,6 +91,8 @@ function getExifDescription ( $currDir, $image, $formatString )
         }
 
         fclose($file);
+        
+        $image = $mig_config["image"];
 
         $exifData = array ( "comment"   => $desc[$image],
                             "model"     => $model[$image],

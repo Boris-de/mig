@@ -2,17 +2,15 @@
 
 // buildNextPrevLinks() - Build links to the "next" and "previous" images.
 
-function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidden, $presorted,
-                              $sortType, $startFrom, $pageType )
+function buildNextPrevLinks ( $currDir, $presorted )
 {
     global $mig_config;
-    global $mig_dl;
 
     // newCurrDir is currDir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
     if (is_dir($mig_config["albumdir"]."/$currDir")) {
-        if ($pageType == "large") {
+        if ($mig_config["pagetype"] == "large") {
             $dir = opendir($mig_config["albumdir"]."/$currDir/".$mig_config["largesubdir"]);
         } else {
             $dir = opendir($mig_config["albumdir"]."/$currDir");
@@ -25,13 +23,15 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
     // Gather all files into an array
     $fileList = array ();
     while ($file = readdir($dir)) {
+    
+        $markerLabel = $mig_config["markerlabel"];
 
         // Ignore thumbnails
-        if ($markerType == "prefix" && ereg("^$markerLabel\_", $file)) {
+        if ($mig_config["markertype"] == "prefix" && ereg("^$markerLabel\_", $file)) {
             continue;
         }
 
-        if ($markerType == "suffix" && ereg("_$markerLabel\.[^.]+$", $file)
+        if ($mig_config["markertype"] == "suffix" && ereg("_$markerLabel\.[^.]+$", $file)
             && getFileType($file)) {
                 continue;
         }
@@ -42,7 +42,7 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
         }
 
         // Ignore the hidden images
-        if ($hidden[$file]) {
+        if ($mig_config["hidden"][$file]) {
             continue;
         }
 
@@ -51,7 +51,7 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
         if (is_file($mig_config["albumdir"]."/$currDir/$file") && ! $presorted[$file]) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
-            if (ereg("bydate.*", $sortType)) {
+            if (ereg("bydate.*", $mig_config["sorttype"])) {
                 $timestamp = filemtime($mig_config["albumdir"]."/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
             }
@@ -63,17 +63,17 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
     ksort($fileList);       // sort, so we see sorted results
     reset($fileList);       // reset array pointer
 
-    if ($sortType == "bydate-ascend") {
+    if ($mig_config["sorttype"] == "bydate-ascend") {
         ksort($filedates);
         reset($filedates);
 
-    } elseif ($sortType == "bydate-descend") {
+    } elseif ($mig_config["sorttype"] == "bydate-descend") {
         krsort($filedates);
         reset($filedates);
     }
 
     // Generated final sorted list
-    if (ereg("bydate.*", $sortType)) {
+    if (ereg("bydate.*", $mig_config["sorttype"])) {
         // since $filedates is sorted by date, and date is
         // the key, the key is pointless to put in the list now.
         // so we store the value, not the key, in $presorted
@@ -101,7 +101,7 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
     while (list($file, $junk) = each($presorted)) {
     
         // If "this" is the one we're looking for, mark it as such.
-        if ($file == $image) {
+        if ($file == $mig_config["image"]) {
             $ThisImagePos = $i;
         }
 
@@ -145,13 +145,13 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
     // else show a real link
     } else {
         $pLink = "&nbsp;[&nbsp;<a href=\"" . $mig_config["baseurl"]
-               . "?pageType=" . $pageType . "&amp;currDir=" . $currDir
+               . "?pageType=" . $mig_config["pagetype"] . "&amp;currDir=" . $currDir
                . "&amp;image=" . $prev;
-        if ($startFrom) {
-            $pLink .= "&amp;startFrom=" . $startFrom;
+        if ($mig_config["startfrom"]) {
+            $pLink .= "&amp;startFrom=" . $mig_config["startfrom"];
         }
-        if ($mig_dl) {
-            $pLink .= "&amp;mig_dl=" . $mig_dl;
+        if ($mig_config["mig_dl"]) {
+            $pLink .= "&amp;mig_dl=" . $mig_config["mig_dl"];
         }
         $pLink .= "\">" . $mig_config["lang"]["previmage"]
                 . "</a>&nbsp;]&nbsp;";
@@ -165,13 +165,13 @@ function buildNextPrevLinks ( $currDir, $image, $markerType, $markerLabel, $hidd
     // else show a real link
     } else {
         $nLink = "&nbsp;[&nbsp;<a href=\"" . $mig_config["baseurl"]
-               . "?pageType=" . $pageType . "&amp;currDir=" . $currDir
+               . "?pageType=" . $mig_config["pagetype"] . "&amp;currDir=" . $currDir
                . "&amp;image=" . $next;
-        if ($startFrom) {
-            $nLink .= "&amp;startFrom=" . $startFrom;
+        if ($mig_config["startfrom"]) {
+            $nLink .= "&amp;startFrom=" . $mig_config["startfrom"];
         }
-        if ($mig_dl) {
-            $nLink .= "&amp;mig_dl=" . $mig_dl;
+        if ($mig_config["mig_dl"]) {
+            $nLink .= "&amp;mig_dl=" . $mig_config["mig_dl"];
         }
         $nLink .= "\">" . $mig_config["lang"]["nextimage"]
                 . "</a>&nbsp;]&nbsp;";

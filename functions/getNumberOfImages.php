@@ -2,9 +2,11 @@
 
 // getNumberOfImages() - Counts images in a given folder.
 
-function getNumberOfImages ( $folder, $markerType, $markerLabel )
+function getNumberOfImages ( $folder )
 {
     global $mig_config;
+    
+    $markerLabel = $mig_config["markerlabel"];
     
     if (is_dir($folder)) {
         $dir = opendir($folder);    // Open directory handle
@@ -15,7 +17,7 @@ function getNumberOfImages ( $folder, $markerType, $markerLabel )
     $count = 0;
 
     // Get hidden item list from mig.cf
-    list($hidden, $x) = parseMigCf($folder);
+    list($mig_config["hidden"], $x) = parseMigCf($folder);
 
     while ($file = readdir($dir)) {
 
@@ -24,18 +26,18 @@ function getNumberOfImages ( $folder, $markerType, $markerLabel )
                                  // unless $useThumbSubdir is set,
                                  // then don't waste time on this check
 
-            if ($markerType == "suffix" && ereg("_$markerLabel\.[^.]+$",$file)
+            if ($mig_config["markertype"] == "suffix" && ereg("_$markerLabel\.[^.]+$",$file)
                 && getFileType($file)) {
                     continue;
             }
-            if ($markerType == "prefix" && ereg("^$markerLabel\_", $file)) {
+            if ($mig_config["markertype"] == "prefix" && ereg("^$markerLabel\_", $file)) {
                 continue;
             }
 
         }
 
         // Ignore hidden items
-        if ($hidden[$file]) {
+        if ($mig_config["hidden"][$file]) {
             continue;
         }
 

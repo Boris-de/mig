@@ -5,6 +5,8 @@
 
 function getFileType ( $filename )
 {
+    global $mig_config;
+    
     $ext = getFileExtension($filename);
     $ext = strtolower($ext);
 

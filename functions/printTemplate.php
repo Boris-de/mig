@@ -2,15 +2,18 @@
 
 // printTemplate() - Prints HTML page from a template file.
 
-function printTemplate ( $templateDir, $templateFile, $version, $maintAddr, $folderList,
-                         $imageList, $backLink, $albumURLroot, $image, $currDir, $newCurrDir,
-                         $pageTitle, $prevLink, $nextLink, $currPos, $description, $youAreHere,
-                         $distURL, $pathConvertFlag, $pathConvertRegex, $pathConvertTarget,
-                         $pageType, $largeLink, $largeHrefStart, $largeHrefEnd, $largeLinkBorder )
+function printTemplate ( $templateFile, $version, $maintAddr,
+                         $folderList, $imageList, $backLink,
+                         $currDir, $newCurrDir, $prevLink,
+                         $nextLink, $currPos, $description, $youAreHere,
+                         $distURL, $pathConvertFlag, $pathConvertRegex,
+                         $pathConvertTarget, $largeLink, $largeHrefStart,
+                         $largeHrefEnd, $largeLinkBorder )
 {
+    global $mig_config;
+
     global $REQUEST_URI;
     global $HTTP_SERVER_VARS;
-    global $mig_config;
 
     // Get URL for %%newLang%% variable
     if ($_SERVER["REQUEST_URI"]) {
@@ -59,18 +62,17 @@ function printTemplate ( $templateDir, $templateFile, $version, $maintAddr, $fol
                 print $line;
             } else {
                 $incl_file = $line;
-                if (file_exists("$templateDir/$incl_file")) {
+                if (file_exists($mig_config["templatedir"] ."/$incl_file")) {
 
                     if (function_exists("virtual")) {
                         // virtual() doesn't like absolute paths,
                         // apparently, so just pass it a relative one.
-                        $tmplDir = ereg_replace("^.*/", "", $templateDir);
+                        $tmplDir = ereg_replace("^.*/", "", $mig_config["templatedir"]);
                         virtual("$tmplDir/$incl_file");
                     } else {
                         include( convertIncludePath($pathConvertFlag,
-                                                    "$templateDir/$incl_file",
-                                                    $pathConvertRegex,
-                                                    $pathConvertTarget));
+                                            $mig_config["templatedir"]."/$incl_file",
+                                            $pathConvertRegex, $pathConvertTarget));
                     }
 
                 } else {
@@ -86,24 +88,28 @@ function printTemplate ( $templateDir, $templateFile, $version, $maintAddr, $fol
         } else {
 
             // Make sure this is URL encoded
-            $encodedImageURL = migURLencode($image);
+            $encodedImageURL = migURLencode($mig_config["image"]);
 
             // If pagetype is large, add largeSubdir to path.
-            if ($image) {
+            if ($mig_config["image"]) {
                 // Get image pixel size for <IMG> element
-                if ($pageType == "image") {
-                    $imageProps = GetImageSize($mig_config["albumdir"]."/$currDir/$image");
-                } elseif ($pageType == "large") {
+                if ($mig_config["pagetype"] == "image") {
+                    $imageProps = GetImageSize($mig_config["albumdir"]."/$currDir/"
+                                               .$mig_config["image"]);
+                } elseif ($mig_config["pagetype"] == "large") {
                     $imageProps =
                       GetImageSize($mig_config["albumdir"]."/$currDir/"
                                  . $mig_config["largesubdir"]
-                                 . "/$image");
+                                 . "/".$mig_config["image"]);
                 }
                 $imageSize = $imageProps[3];
             }
             
-            $baseURL = $mig_config["baseurl"];
-            $largeSubdir = $mig_config["largesubdir"];
+            $albumURLroot		= $mig_config["albumurlroot"];
+            $baseURL			= $mig_config["baseurl"];
+            $image			= $mig_config["image"];
+            $largeSubdir		= $mig_config["largesubdir"];
+            $pageTitle			= $mig_config["pagetitle"];
 
             // List of valid tags
             $replacement_list = array (

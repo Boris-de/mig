@@ -2,15 +2,12 @@
 
 // buildImageURL() - Create HTML link for a particular image.
 
-function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo, $markerType,
-                         $markerLabel, $noThumbs, $thumbExt, $suppressAltTags, $description,
-                         $short_desc, $imagePopup, $imagePopType, $imagePopLocationBar,
-                         $imagePopMenuBar, $imagePopToolBar, $commentFilePerImage, $startFrom,
-                         $commentFileShortComments, $showShortOnThumbPage, $imagePopMaxWidth,
-                         $imagePopMaxHeight, $pageType )
+function buildImageURL ( $currDir, $filename, $description, $short_desc )
 {
     global $mig_config;
-    global $mig_dl;
+    
+    $markerLabel = $mig_config["markerlabel"];
+
 
     // Collect information about this object.
     $fname  = getFileName($filename);
@@ -33,10 +30,10 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
     if ($type == "image") {
         if ($mig_config["usethumbsubdir"]) {
 
-            if ($thumbExt) {
+            if ($mig_config["thumbext"]) {
                 $thumbFile = $mig_config["albumdir"]."/$oldCurrDir/"
                            . $mig_config["thumbsubdir"]
-                           . "/$fname.$thumbExt";
+                           . "/$fname." . $mig_config["thumbext"];
             } else {
                 $thumbFile = $mig_config["albumdir"]."/$oldCurrDir/"
                            . $mig_config["thumbsubdir"]
@@ -45,21 +42,22 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
 
         } else {
 
-            if ($markerType == "prefix") {
-                $thumbFile  = $mig_config["albumdir"]."/$oldCurrDir/$markerLabel";
+            if ($mig_config["markertype"] == "prefix") {
+                $thumbFile  = $mig_config["albumdir"]."/$oldCurrDir/"
+                            . $mig_config["markerlabel"];
 
-                if ($thumbExt) {
-                    $thumbFile .= "_$fname.$thumbExt";
+                if ($mig_config["thumbext"]) {
+                    $thumbFile .= "_$fname." . $mig_config["thumbext"];
                 } else {
                     $thumbFile .= "_$fname.$ext";
                 }
             }
 
-            if ($markerType == "suffix") {
+            if ($mig_config["markertype"] == "suffix") {
                 $thumbFile  = $mig_config["albumdir"]."/$oldCurrDir/$fname";
 
-                if ($thumbExt) {
-                    $thumbFile .= "_$markerLabel.$thumbExt";
+                if ($mig_config["thumbext"]) {
+                    $thumbFile .= "_$markerLabel." . $mig_config["thumbext"];
                 } else {
                     $thumbFile .= "_$markerLabel.$ext";
                 }
@@ -69,32 +67,34 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
 
     if (file_exists($thumbFile)) {
         if ($mig_config["usethumbsubdir"]) {
-            $thumbImage  = "$albumURLroot/$currDir/"
+            $thumbImage  = $mig_config["albumurlroot"] . "/$currDir/"
                          . $mig_config["thumbSubdir"];
 
-            if ($thumbExt) {
-                $thumbImage .= "/$fname.$thumbExt";
+            if ($mig_config["thumbext"]) {
+                $thumbImage .= "/$fname." . $mig_config["thumbext"];
             } else {
                 $thumbImage .= "/$fname.$ext";
             }
 
         } else {
 
-            if ($markerType == "prefix") {
-                $thumbImage  = "$albumURLroot/$currDir/$markerLabel";
+            if ($mig_config["markertype"] == "prefix") {
+                $thumbImage  = $mig_config["albumurlroot"]
+                             . "/$currDir/".$mig_config["markerlabel"];
 
-                if ($thumbExt) {
-                    $thumbImage .= "_$fname.$thumbExt";
+                if ($mig_config["thumbext"]) {
+                    $thumbImage .= "_$fname." . $mig_config["thumbext"];
                 } else {
                     $thumbImage .= "_$fname.$ext";
                 }
             }
 
-            if ($markerType == "suffix") {
-                $thumbImage  = "$albumURLroot/$currDir/$fname";
+            if ($mig_config["markertype"] == "suffix") {
+                $thumbImage  = $mig_config["albumurlroot"]
+                             . "/$currDir/$fname";
 
-                if ($thumbExt) {
-                    $thumbImage .= "_$markerLabel.$thumbExt";
+                if ($mig_config["thumbext"]) {
+                    $thumbImage .= "_$markerLabel." . $mig_config["thumbext"];
                 } else {
                     $thumbImage .= "_$markerLabel.$ext";
                 }
@@ -118,9 +118,8 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
     }
 
     // Get description, if any
-    if ($commentFilePerImage) {
-        list($alt_desc, $x) = getImageDescFromFile("$fname.$ext",
-                                        $currDir, $commentFileShortComments);
+    if ($mig_config["commentfileperimage"]) {
+        list($alt_desc, $x) = getImageDescFromFile("$fname.$ext", $currDir);
         // Get a conventional comment if there isn't one here.
         if (! $alt_desc) {
             list($alt_desc, $desc) = getImageDescription("$fname.$ext",
@@ -171,18 +170,18 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
     if ($type != "image") {
 
         $url = "\n    <td align=\"center\" class=\"image\"><a";
-        if (!$suppressAltTags) { 
+        if (! $mig_config["suppressalttags"]) { 
             $url .= " title=\"" . $alt_desc . "\"";
         }
 
-        $url .= " href=\"" . $albumURLroot . "/" . $currDir . "/"
+        $url .= " href=\"" . $mig_config["albumurlroot"] . "/" . $currDir . "/"
               . $fname . "." . $ext . "\">"
               . "<img src=\"" . $thumbImage . "\"></a>";
 
         // If $suppressImageInfo is FALSE, show the file info
-        if (!$suppressImageInfo) {
+        if (!$mig_config["suppressimageinfo"]) {
             $url .= "<br />";
-            if (!$noThumbs) {
+            if (!$mig_config["nothumbs"]) {
                 $url .= $fname . "." . $ext . "<br />"
                       . "(" . $type . ")<br />";
             }
@@ -198,23 +197,23 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
         // beginning of the table cell
         $url = "\n    <td align=\"center\" class=\"image\"><a";
 
-        if (!$suppressAltTags) {
+        if (! $mig_config["suppressalttags"]) {
             $url .= " title=\"" . $alt_desc . "\"";
         }
 
         $url .= " href=\"";
 
         // set up the image pop-up if appropriate to do so
-        if ($imagePopup) {
+        if ($mig_config["imagepopup"]) {
             $popup_width = $imageWidth + 30;
             $popup_height = $imageHeight + 150;
         
             // Add max size for popup window
-            if ($popup_width > $imagePopMaxWidth) {
-                $popup_width = $imagePopMaxWidth;
+            if ($popup_width > $mig_config["imagepopmaxwidth"]) {
+                $popup_width = $mig_config["imagepopmaxwidth"];
             }
-            if ($popup_height > $imagePopMaxHeight) {
-                $popup_height = $imagePopMaxHeight;
+            if ($popup_height > $mig_config["imagepopmaxheight"]) {
+                $popup_height = $mig_config["imagepopmaxheight"];
             }
             $url .= "#\" onClick=\"window.open('";
         }
@@ -223,18 +222,18 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
              . $currDir . "&amp;pageType=image&amp;image=" . $newFname
              . "." . $ext;
 
-        if ($startFrom) {
-            $url .= "&amp;startFrom=" . $startFrom;
+        if ($mig_config["startfrom"]) {
+            $url .= "&amp;startFrom=" . $mig_config["startfrom"];
         }
 
-        if ($mig_dl) {
-            $url .= "&amp;mig_dl=" . $mig_dl;
+        if ($mig_config["mig_dl"]) {
+            $url .= "&amp;mig_dl=" . $mig_config["mig_dl"];
         }
 
-        if ($imagePopup) {
+        if ($mig_config["imagepopup"]) {
             $url .= "','";
 
-            if ($imagePopType == "reuse") {
+            if ($mig_config["imagepoptype"] == "reuse") {
                 $url .= "mig_window_11190874";
             } else {
                 $url .= "mig_window_" . time() . "_" . $newFname;
@@ -245,13 +244,13 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
 
             // Set up various toolbar options if requested
 
-            if ($imagePopLocationBar) {
+            if ($mig_config["imagepoplocationbar"]) {
                 $url .= ",location=1";
             }
-            if ($imagePopToolBar) {
+            if ($mig_config["imagepoptoolbar"]) {
                 $url .= ",toolbar=1";
             }
-            if ($imagePopMenuBar) {
+            if ($mig_config["imagepopmenubar"]) {
                 $url .= ",menubar=1";
             }
 
@@ -262,12 +261,12 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
 
         // If $noThumbs is true, just print the image filename rather
         // than the <IMG> tag pointing to a thumbnail.
-        if ($noThumbs) {
+        if ($mig_config["nothumbs"]) {
             $url .= "$newFname.$ext";
         } else {
             $url .= "<img src=\"" . $thumbImage . "\"";
                 // Only print the ALT tag if it's wanted.
-                if (! $suppressAltTags) {
+                if (! $mig_config["suppressalttags"]) {
                     $url .= " alt=\"" . $alt_desc . "\"";
                 }
 
@@ -277,9 +276,9 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
         $url .= "</a>";     // End the <A> element
 
         // If $suppressImageInfo is FALSE, show the image info
-        if (!$suppressImageInfo) {
+        if (!$mig_config["suppressimageinfo"]) {
             $url .= "<br />";
-            if (!$noThumbs) {
+            if (!$mig_config["nothumbs"]) {
                 $url .= $fname . "." . $ext . "<br />";
             }
 
@@ -288,7 +287,7 @@ function buildImageURL ( $currDir, $albumURLroot, $filename, $suppressImageInfo,
         }
 
         // If $showShortOnThumbPage is TRUE, show short comment
-        if ($showShortOnThumbPage) {
+        if ($mig_config["showshortonthumbpage"]) {
             $url .= "<br />";
             $url .= $alt_desc;
         }

@@ -2,10 +2,9 @@
 
 // buildYouAreHere() - Build the "You are here" line for the top of each page.
 
-function buildYouAreHere ( $currDir, $image, $omitImageName )
+function buildYouAreHere ( $currDir )
 {
     global $mig_config;
-    global $mig_dl;
 
     // Use $workingCopy so we don't trash value of $currDir
     $workingCopy = $currDir;
@@ -23,13 +22,13 @@ function buildYouAreHere ( $currDir, $image, $omitImageName )
         // Get a URL-encoded copy of $workingCopy
         $encodedCopy = migURLencode($workingCopy);
 
-        if ($image == "" && $workingCopy == $currDir) {
+        if ($mig_config["image"] == "" && $workingCopy == $currDir) {
             $url = "&nbsp;&gt;&nbsp;" . $label;
         } else {
             $url = "&nbsp;&gt;&nbsp;<a href=\"" . $mig_config["baseurl"] . "?currDir="
                  . $encodedCopy;
-            if ($mig_dl) {
-                $url .= "&amp;mig_dl=" . $mig_dl;
+            if ($mig_config["mig_dl"]) {
+                $url .= "&amp;mig_dl=" . $mig_config["mig_dl"];
             }
             $url .= "\">" . $label . "</a>";
         }
@@ -51,8 +50,8 @@ function buildYouAreHere ( $currDir, $image, $omitImageName )
     // Or if we're not, then Main should be a link instead of just text
     } else {
         $url = "<a href=\"" . $mig_config["baseurl"] . "?currDir=" . $workingCopy;
-        if ($mig_dl) {
-            $url .= "&amp;mig_dl=" . $mig_dl;
+        if ($mig_config["mig_dl"]) {
+            $url .= "&amp;mig_dl=" . $mig_config["mig_dl"];
         }
         $url .= "\">" . $mig_config["lang"]["main"] . "</a>";
         $x = $hereString;
@@ -61,8 +60,8 @@ function buildYouAreHere ( $currDir, $image, $omitImageName )
 
     // If there's an image, tack it onto the end of the hereString
     // unless we have $omitImageName set to TRUE
-    if ($image != "" && ! $omitImageName) {
-        $hereString .= "&nbsp;&gt;&nbsp;" . $image;
+    if ($mig_config["image"] != "" && ! $mig_config["omitimagename"]) {
+        $hereString .= "&nbsp;&gt;&nbsp;" . $mig_config["image"];
     }
 
     return $hereString;
