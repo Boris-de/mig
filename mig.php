@@ -1,4 +1,11 @@
 <?
+//mig.php
+//just for internal use for development. not meant for public use.
+//run the makefile instead
+//works fine for me but not with all functions guaranteed.
+//
+//werner
+
 
 function include_all_files($dir){
  //includes all files in a directory...
