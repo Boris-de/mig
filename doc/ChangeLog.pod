@@ -9,7 +9,7 @@ Z<>
 
 Z<>
 
-=head2 Version 1.2.8 (Fri 29 Jun 2001)
+=head2 Version 1.2.8p1 (Fri 29 Jun 2001)
 
 Added Italian and Spanish translations
 
