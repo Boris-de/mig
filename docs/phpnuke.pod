@@ -1,0 +1,41 @@
+=pod
+
+$Id$
+
+=head2 Using Mig With PHP-Nuke
+
+Mig has a E<quot>PHP-Nuke compatibleE<quot> mode which you can use to merge
+Mig into your PHP-Nuke-based site.  If you don't know what PHP-Nuke is, you
+probably don't need to continue reading this document.
+
+PHP-Nuke information can be found at http://www.phpnuke.org/
+
+(PHP-Nuke mode has not been tested with PHP-Nuke 5.x.  I have no idea if it
+will work - use at you own risk.  It was last tested with PHP-Nuke 4.2.)
+
+Please read the E<quot>installE<quot> document and then apply the following
+changes.
+
+=over 4
+
+=item 1.
+
+Instead of F<index.php>, name the main file mig.php and put it in the root
+directory where your PHP-Nuke is installed.
+
+=item 2.
+
+Copy F<config.php> to the same place.  Edit it and change
+C<$phpNukeCompatible> to C<TRUE>.  Change C<$phpNukeRoot> to point to the
+root directory of your PHP-Nuke installation.
+
+=item 3.
+
+Create a subdirectory E<quot>migE<quot> in your PHP-Nuke root directory.
+Put all other Mig files there, as described in the E<quot>installE<quot>
+document.
+
+=back
+
+=cut
+
