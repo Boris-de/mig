@@ -77,7 +77,7 @@ if ($usePortal > 1) {
 // Fetch some settings into $mig_config
 $mig_config['commentfileperimage']		= $commentFilePerImage;
 $mig_config['commentfileshortcomments']		= $commentFileShortComments;
-$mig_config['fileinfoformatstring']			= $fileInfoFormatString;
+$mig_config['fileinfoformatstring']             = $fileInfoFormatString;
 $mig_config['foldernamelength']			= $folderNameLength;
 $mig_config['foldersorttype']			= $folderSortType;
 $mig_config['homelabel']			= $homeLabel;
@@ -89,12 +89,12 @@ $mig_config['imagepopmaxwidth']			= $imagePopMaxWidth;
 $mig_config['imagepoptoolbar']			= $imagePopToolBar;
 $mig_config['imagepopup']			= $imagePopup;
 $mig_config['largesubdir']			= $largeSubdir;
-$mig_config['nextformatstring']          = $nextFormatString;
+$mig_config['nextformatstring']                 = $nextFormatString;
 $mig_config['nothumbs']				= $noThumbs;
 $mig_config['omitimagename']			= $omitImageName;
 $mig_config['randomfolderthumbs']		= $randomFolderThumbs;
 $mig_config['pagetitle']			= $pageTitle;
-$mig_config['prevformatstring']          = $prevFormatString;
+$mig_config['prevformatstring']                 = $prevFormatString;
 $mig_config['showshortonthumbpage']		= $showShortOnThumbPage;
 $mig_config['sorttype']				= $sortType;
 $mig_config['suppressalttags']			= $suppressAltTags;
