@@ -30,7 +30,7 @@ a Unix-like environment.  As such it may or may not work (and has not
 been tested by the author) on non-unix-like platforms.
 
 Windows users, please see the section labeled
-E<quot>I<Windows Users>E<quot> below.
+E<quot>Windows UsersE<quot> below.
 
 The F<mkGallery> utility (used to generate thumbnail images) requires Perl
 [ http://www.perl.com ].  If you want to generate thumbnail images, it also
@@ -394,7 +394,7 @@ mig-devel is for people interested in development work related to Mig.
 
     http://lists.sourceforge.net/lists/listinfo/mig-devel
 
-I<$Id$>
+$Id$
 
 =cut
 
