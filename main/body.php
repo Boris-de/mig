@@ -264,6 +264,12 @@ if ( $currDir != '.' && ! ereg('^./[^/][^/]*', $currDir) ) {
     exit;
 }
 
+// currDir may not end in / unless it is './' in its entirety
+if ( $currDir != './' && ereg('/$', $currDir) ) {
+    print "ERROR: \$currDir is invalid.  Exiting.";
+    exit;
+}
+
 // Strip URL encoding
 $currDir = rawurldecode($currDir);
 
