@@ -33,6 +33,8 @@ help:
 	@echo "    cleans the tree also)"
 
 dist: docs clean
+	@echo "Creating distribution bundle..."
+	@/bin/mkdir -m 0755 -p $(BUN)
 	@/bin/rm -f $(BUN)/$(DIST)
 	@/bin/mv src $(DIR)
 	@$(TAR) --gzip $(EXCEPT) -cf $(BUN)/$(DIST) $(DIR)
@@ -41,6 +43,7 @@ dist: docs clean
 	@/bin/ls -l $(BUN)/$(DIST)
 
 docs:
+	@echo "Rebuilding documentation tree..."
 	@cd doc ; make ; cd ..
 
 clean:
