@@ -35,6 +35,13 @@ Create a subdirectory E<quot>migE<quot> in your PHP-Nuke root directory.
 Put all other Mig files there, as described in the E<quot>installE<quot>
 document.
 
+=item 4.
+
+Ignore the F<templates> files that the F<install> document specifies.
+Instead, copy over the files from the F<templates/phpnuke> directory into
+your Mig F<templates> directory.  PHP-Nuke doesn't use the HTML templates
+Mig normally uses, and it does not use the CSS file either.
+
 =back
 
 =cut

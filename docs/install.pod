@@ -53,6 +53,9 @@ jhead home page: http://www.sentex.net/~mwandel/jhead/
 See the E<quot>utilitiesE<quot> document for more information about
 F<mkGallery> and F<jhead>.
 
+If you are looking for information on the PHP-Nuke mode, see the F<phpnuke>
+document.
+
 =head2 New Installation
 
 Read this section if you are installing Mig for the first time.  If you

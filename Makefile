@@ -4,9 +4,6 @@
 # Makefile to build Mig distributions
 #
 
-# Path to (GNU) tar
-TAR=/usr/bin/gnutar
-
 # Where to keep distributions (directory)
 DISTDIR=../bundles/mig
 

@@ -10,7 +10,8 @@ Some major changes this release - please pay attention!
 
 Eliminated F<install.sh> - all installs are now done the same way (Windows,
 unix, FTP, shell prompt, whatever).  Eliminated F<FTPinstall> and
-F<Windows> documents since they are now redundant.
+F<Windows> documents since they are now redundant.  New installation
+procedure is documented in the F<install> document.
 
 Changed language designation for Danish to E<quot>dkE<quot> instead of
 E<quot>daE<quot> (I don't know what E<quot>daE<quot> is, but it's not
@@ -19,7 +20,7 @@ Denmark).
 Removed F<Example Gallery> from main distribution.  It will be available
 from this point forward as a separate package on the site.  There's no
 reason for every Mig download to be almost half a meg (the 1.3.2b1 tar.gz
-is under 150K).
+I built is under 150K).
 
 Added C<MaintAddr> object to F<mig.cf> parser (thanks to Simon Wood for
 supplying this code!).  This permits you to change the value of
@@ -34,8 +35,8 @@ If F<config.php> is missing, Mig will move on and just use default values
 instead.  Why anyone would want to do that is beyond me, but I think it's
 simpler this way (one less file to worry about looking at).
 
-Modified F<mkGallery> to look for F<jhead> in its own directory.
-Simplifies the process of finding it.
+Modified F<mkGallery> to look for F<jhead> in E<quot>.E<quot> - simplifies
+the task of finding it.
 
 Entirely restructured the CVS tree.  When the smoke cleared, F<funcs.php>
 and F<lang.php> had vanished (merged into F<index.php>).  Mig is just one
