@@ -7,11 +7,6 @@
 # Where to keep distributions (directory)
 DISTDIR= ../bundles/mig
 
-# Webserver root
-WEB= /Users/dan/Sites
-WTEST= $(WEB)/mig_test
-WPORT= $(WEB)/mig_portal
-
 # Temporary directory to build a Mig install in (this gets tarred up)
 SPOOLDIR= mig-$(ver)
 
@@ -67,8 +62,9 @@ docpublish:
 	cd docs ; make publish
 
 mig.sf.net: index
-	scp index.php mig.sf.net:web/gallery
-	scp templates/*html templates/*.css mig.sf.net:web/gallery/templates
+	cp index.php ../mig.sf.net/gallery
+	cp templates/*html templates/*.css ../mig.sf.net/gallery/templates
+	cd ../mig.sf.net ; make
 	@echo "URL: http://mig.sf.net/gallery/"
 
 clean:
