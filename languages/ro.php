@@ -3,7 +3,7 @@
 $mig_config['lang_lib']['ro'] = array (
     'am'            => 'AM',
     'pm'            => 'PM',
-    'backhome'      => '&#238;napoi&nbsp;la',
+    'backhome'      => '&icirc;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
     'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Principal',
@@ -14,7 +14,7 @@ $mig_config['lang_lib']['ro'] = array (
     'nextimage'     => 'imaginea&nbsp;urmatoare',
     'no_contents'   => 'Repertoriu&nbsp;GOL',
     'previmage'     => 'imaginea&nbsp;precedenta',
-    'thumbview'     => '&#238;napoi&nbsp;la&nbsp;repertoriu',
+    'thumbview'     => '&icirc;napoi&nbsp;la&nbsp;repertoriu',
     // total_images is special.  It has three elements you can use:
     //     %t :    Total images in folder
     //     %s :    First image shown this page

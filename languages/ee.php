@@ -8,7 +8,7 @@ $mig_config['lang_lib']['ee'] = array (
     'flash_used'   => 'kasutatud&nbsp;v&auml;lku',
     'main'         => 'Avaleht',
     'must_auth'    => 'Vaatamiseks&nbsp;tuleb&nbsp;sisestada&nbsp;'
-                    . 'kasutajatunnus&nbsp;ja&nbsparool',
+                    . 'kasutajatunnus&nbsp;ja&nbsp;arool',
     'nextimage'    => 'j&auml;rgmine&nbsp;pilt',
     'no_contents'  => 'Kataloog&nbsp;on&nbsp;t&uuml;hi',
     'previmage'    => 'eelmine&nbsp;pilt',

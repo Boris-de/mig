@@ -1,7 +1,5 @@
 =pod
 
-$Id$
-
 =head2 General
 
 This document aims to explain how F<mig.cf> works and what it is.
@@ -53,6 +51,13 @@ some useful examples.)
 Any line starting with C<#> is considered a remark and is ignored by Mig.
 Blank lines are also ignored.  Neither are ignored inside an element block
 such as E<lt>commentE<gt>, so it's best if they don't appear inside blocks.
+
+=head2 Using a Windows text editor
+
+If you are editing F<mig.cf> files using a Windows text editor, you may
+want to leave one or more blank lines at the end of the file.  Some Windows
+text editors apparently don't add end-of-line characters to the end of the
+last line in the file, and this confuses Mig.
 
 =head2 Bulletins
 

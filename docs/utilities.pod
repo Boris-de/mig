@@ -1,7 +1,5 @@
 =pod
 
-$Id$
-
 =head2 Bundled Utilities
 
 F<mkGallery.pl> - Create a gallery from images in the current directory.

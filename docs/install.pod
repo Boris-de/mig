@@ -1,10 +1,8 @@
 =pod
 
-$Id$
-
 =head2 Mig - A general purpose photo gallery
 
-Copyright E<copy> 2000-2002 Daniel M. Lowe
+Copyright 2000-2002 Daniel M. Lowe
 
 =head2 License Information
 
@@ -226,6 +224,12 @@ most recent release of PHP.
 Another user reported that having a comma (,) in the directory name of any
 album would cause problems, so avoid using commas.
 
+I've had reports that Windows text editors leave files without trailing end
+of line characters, which apparently confuses Mig.  If you're editing files
+in a Windows text editor (such as F<mig.cf> files), you may want to leave
+one blank line at the end of the file, just so there's at least one end of
+line character after the last E<quot>realE<quot> line.
+
 =head2 The Example Gallery
 
 If you want to see an example gallery (that is, install one on your system
@@ -234,6 +238,12 @@ project page at http://sf.net/projects/mig/ (look in the
 E<quot>ExtrasE<quot> section in the project files listing).  After
 downloading the file, unpack it in the albums sub directory and it should
 appear as E<quot>Mig Example GalleryE<quot>.
+
+=head2 Other people using Mig
+
+You can see a list of sites using Mig at: http://mig.sf.net/users.php
+
+If you'd like to list your site there, email me: at dan@tangledhelix.com
 
 =head2 Optional Customization
 
@@ -316,7 +326,8 @@ your translations to the available list of languages.
 See F<config.php.default> for more information - Mig now supports English,
 French, German, Norwegian, Portugese, Finnish, Romanian, Russian
 (Windows-1251 and KOI8-R), Turkish, Swedish, Danish, Italian, Spanish,
-Slovak, Dutch, Polish, Estonian and Japanese (ISO-2022-JP).
+Slovak, Dutch, Polish (including an ISO-8859-2 version), Estonian and
+Japanese (ISO-2022-JP).
 
 =item 6. Pop-up windows
 
@@ -356,6 +367,33 @@ useless folder branch would result in the generic folder icon being shown.
 If you want to use thumbnails as icons, but would rather pick your own
 instead of letting Mig pick for you, check out the C<UseThumb> option in
 F<mig.cf> files.  See the F<mig_cf> document for more information.
+
+=back
+
+=head2 Common problems
+
+=over 4
+
+=item 1.  Why aren't there any thumbnails?
+
+You have to create thumbnails with F<mkGallery.pl>.  See the document on
+F<utilities>.  F<mkGallery.pl> requires Perl and the E<quot>convertE<quot>
+program from ImageMagick.
+
+If you can't do it that way, don't despair - you can make your own
+thumbnails in any image editing program.  Earlier in this document are
+instructions on how to name the files and where to put them.
+
+=item 2.  I am getting a bunch of errors in my browser!
+
+You (or your web server admin) probably have C<error_reporting> set
+incorrectly in the PHP configuration in your web server.  Put this line
+near the top of F<index.php> (but not before the E<quot>E<lt>?phpE<quot>
+line at the top).
+
+    error_reporting (E_ALL & ~E_NOTICE);    // for PHP3 systems
+
+    error_reporting (2039);                 // for PHP4 systems
 
 =back
 

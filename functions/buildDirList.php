@@ -193,8 +193,9 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
         if ($viewFolderCount &&
                 (($counts[$file] > 0) || ($countdir[$file] > 0)) )
         {
-            $directoryList .= $sep . '(' . $countdir[$file] . '/'
-                            . $counts[$file] . ')';
+            $directoryList .= $sep . '<acronym title="(folders/files)">('
+                            . $countdir[$file] . '/' . $counts[$file]
+                            . ')</acronym>';
         }
 
         // Don't forget to close the table cell

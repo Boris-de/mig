@@ -545,6 +545,7 @@ $exifFormatString = '|%c|';
 //       pl      Polish
 //       ee      Estonian
 //       jp      Japanese (ISO-2022-JP)
+//       pliso   Polish ISO-8859-2
 //
 //     If you want to translate Mig into another language, please contact
 //     me via email (dan@tangledhelix.com).

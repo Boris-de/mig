@@ -1,7 +1,5 @@
 =pod
 
-$Id$
-
 =head2 Mig and the Apache Server
 
 =head2 Security Considerations

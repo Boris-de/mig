@@ -3,36 +3,40 @@
 $mig_config['lang_lib']['koi8r'] = array (
     'am'            => 'AM',
     'pm'            => 'PM',
-    'backhome'      => '&#215;&#197;&#210;&#206;&#213;&#212;&#216;&#211;'
-                     . '&#209;&nbsp;&#203;',
-    'bytes'         => '&nbsp;&#194;&#193;&#202;&#212;',
+    'backhome'      => '&times;&Aring;&Ograve;&Icirc;&Otilde;&Ocirc;&Oslash;'
+                     . '&Oacute;&Ntilde;&nbsp;&Euml;',
+    'bytes'         => '&nbsp;&Acirc;&Aacute;&Ecirc;&Ocirc;',
     'flash_used'    => 'flash&nbsp;used',
-    'main'          => '&#236;&#201;&#195;&#197;&#215;&#193;&#209;',
-    'must_auth'     => '&#247;&#217; &#196;&#207;&#204;&#214;&#206;&#217;'
-                     . ' &#215;&#215;&#197;&#211;&#212;&#201; &#203;&#207;'
-                     . '&#210;&#210;&#197;&#203;&#212;&#206;&#207;&#197;'
-                     . ' &#201;&#205;&#209; &#208;&#207;&#204;&#216;&#218;'
-                     . '&#207;&#215;&#193;&#212;&#197;&#204;&#209; &#201;'
-                     . ' &#208;&#193;&#210;&#207;&#204;&#216;',
-    'nextimage'     => '&#211;&#204;&#197;&#196;&#213;&#193;&#221;&#193;'
-                     . '&#209;&nbsp;&#203;&#193;&#210;&#212;&#201;&#206;'
-                     . '&#203;&#193;',
-    'no_contents'   => '&#240;&#213;&#211;&#212;&#207;.',
-    'previmage'     => '&#208;&#210;&#197;&#196;&#217;&#196;&#213;&#221;'
-                     . '&#193;&#209;&nbsp;&#203;&#193;&#210;&#212;&#201;'
-                     . '&#206;&#203;&#193;',
-    'thumbview'     => '&#215;&#197;&#210;&#206;&#213;&#212;&#216;&#211;'
-                     . '&#209;&nbsp;&#203;&nbsp;&#213;&#205;&#197;&#206;'
-                     . '&#216;&#219;&#197;&#206;&#206;&#207;&#205;&#213;'
-                     . '&nbsp;&#215;&#201;&#196;&#213;',
+    'main'          => '&igrave;&Eacute;&Atilde;&Aring;&times;&Aacute;'
+                     . '&Ntilde;',
+    'must_auth'     => '&divide;&Ugrave; &Auml;&Iuml;&Igrave;&Ouml;&Icirc;'
+                     . '&Ugrave; &times;&times;&Aring;&Oacute;&Ocirc;&Eacute;'
+                     . ' &Euml;&Iuml;&Ograve;&Ograve;&Aring;&Euml;&Ocirc;'
+                     . '&Icirc;&Iuml;&Aring; &Eacute;&Iacute;&Ntilde; &ETH;'
+                     . '&Iuml;&Igrave;&Oslash;&Uacute;&Iuml;&times;&Aacute;'
+                     . '&Ocirc;&Aring;&Igrave;&Ntilde; &Eacute; &ETH;&Aacute;'
+                     . '&Ograve;&Iuml;&Igrave;&Oslash;',
+    'nextimage'     => '&Oacute;&Igrave;&Aring;&Auml;&Otilde;&Aacute;&Yacute;'
+                     . '&Aacute;&Ntilde;&nbsp;&Euml;&Aacute;&Ograve;&Ocirc;'
+                     . '&Eacute;&Icirc;&Euml;&Aacute;',
+    'no_contents'   => '&eth;&Otilde;&Oacute;&Ocirc;&Iuml;.',
+    'previmage'     => '&ETH;&Ograve;&Aring;&Auml;&Ugrave;&Auml;&Otilde;'
+                     . '&Yacute;&Aacute;&Ntilde;&nbsp;&Euml;&Aacute;&Ograve;'
+                     . '&Ocirc;&Eacute;&Icirc;&Euml;&Aacute;',
+    'thumbview'     => '&times;&Aring;&Ograve;&Icirc;&Otilde;&Ocirc;&Oslash;'
+                     . '&Oacute;&Ntilde;&nbsp;&Euml;&nbsp;&Otilde;&Iacute;'
+                     . '&Aring;&Icirc;&Oslash;&Ucirc;&Aring;&Icirc;&Icirc;'
+                     . '&Iuml;&Iacute;&Otilde;&nbsp;&times;&Eacute;&Auml;'
+                     . '&Otilde;',
     // total_images is special.  It has three elements you can use:
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
     'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
                      . '&nbsp;total<br />',
-    'up_one'        => '&#208;&#210;&#197;&#196;&#217;&#196;&#213;&#221;'
-                     . '&#193;&#209;&nbsp;&#208;&#193;&#208;&#203;&#193;',
+    'up_one'        => '&ETH;&Ograve;&Aring;&Auml;&Ugrave;&Auml;&Otilde;'
+                     . '&Yacute;&Aacute;&Ntilde;&nbsp;&ETH;&Aacute;&ETH;'
+                     . '&Euml;&Aacute;',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'May', '06' => 'Jun',
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',

@@ -4,14 +4,14 @@ $mig_config['lang_lib']['fi'] = array (
     'am'            => 'AM',
     'pm'            => 'PM',
     'backhome'      => 'takaisin',
-    'bytes'         => '&nbsp;byte&#228;',
+    'bytes'         => '&nbsp;byte&auml;',
     'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Etusivu',
-    'must_auth'     => 'Sinun&nbsp;pit&#228;&#228;&nbsp;antaa&nbsp;oikea'
+    'must_auth'     => 'Sinun&nbsp;pit&auml;&auml;&nbsp;antaa&nbsp;oikea'
                      . '&nbsp;tunnus&nbsp;ja&nbsp;salasana'
-                     . '&nbsp;jatkaasesi&nbsp;eteenp&nbsp;&#228;in',
+                     . '&nbsp;jatkaasesi&nbsp;eteenp&nbsp;&auml;in',
     'nextimage'     => 'seuraava&nbsp;kuva',
-    'no_contents'   => 'Albumi&nbsp;on&nbsp;tyhj&#228;',
+    'no_contents'   => 'Albumi&nbsp;on&nbsp;tyhj&auml;',
     'previmage'     => 'edellinen&nbsp;kuva',
     'thumbview'     => 'takaisin&nbsp;kuva&nbsp;valikkoon',
     // total_images is special.  It has three elements you can use:

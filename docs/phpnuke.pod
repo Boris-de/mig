@@ -1,7 +1,5 @@
 =pod
 
-$Id$
-
 =head2 PHP-Nuke, PostNuke, PHPWebSite and PHPWebThings compatibility
 
 Mig can be configured to try to fit into PHP-Nuke, PostNuke, PHPWebSite

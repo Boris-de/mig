@@ -3,24 +3,24 @@
 $mig_config['lang_lib']['dk'] = array (
     'am'            => 'AM',
     'pm'            => 'PM',
-    'backhome'      => 'tilbage&nbsp;til',
+    'backhome'      => 'Tilbage&nbsp;til',
     'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'flash&nbsp;brugt',
+    'flash_used'    => 'Flash&nbsp;brugt',
     'main'          => 'Hovedside',
     'must_auth'     => 'Du&nbsp;skal&nbsp;skrive&nbsp;et&nbsp;gyldigt'
                      . '&nbsp;brugernavn&nbsp;og&nbsp;password'
                      . '&nbsp;for&nbsp;at&nbsp;komme&nbsp;ind',
-    'nextimage'     => 'n&#230;ste&nbsp;billed',
-    'no_contents'   => 'intet&nbsp;inhold.',
-    'previmage'     => 'forrige&nbsp;billed',
-    'thumbview'     => 'tilbage&nbsp;til&nbsp;oversigten',
+    'nextimage'     => 'N&aelig;ste&nbsp;billede',
+    'no_contents'   => 'Intet&nbsp;indhold.',
+    'previmage'     => 'Forrige&nbsp;billede',
+    'thumbview'     => 'Tilbage&nbsp;til&nbsp;oversigten',
     // total_images is special.  It has three elements you can use:
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
-    'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                     . '&nbsp;total<br />',
-    'up_one'        => 'tilbage',
+    'total_images'  => 'Viser&nbsp;%s-%e&nbsp;af&nbsp;%t'
+                     . '&nbsp;billeder<br />',
+    'up_one'        => 'Tilbage',
     'month'         => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                                '04' => 'Apr', '05' => 'Maj', '06' => 'Jun',
                                '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',

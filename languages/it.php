@@ -1,5 +1,6 @@
 
 // Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
+// Updated by Fabio Fioravanti <fioravanti@iasi.rm.cnr.it>
 $mig_config['lang_lib']['it'] = array (
     'am'           => 'AM',
     'pm'           => 'PM',
@@ -18,12 +19,12 @@ $mig_config['lang_lib']['it'] = array (
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
-    'total_images' => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                    . '&nbsp;total<br />',
+    'total_images' => 'Immagini&nbsp;%s-%e&nbsp;di&nbsp;%t'
+                    . '&nbsp;totali<br />',
     'up_one'       => 'torna&nbsp;al&nbsp;livello&nbsp;superiore',
-    'month'        => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
-                              '04' => 'Apr', '05' => 'May', '06' => 'Jun',
-                              '07' => 'Jul', '08' => 'Aug', '09' => 'Sep',
-                              '10' => 'Oct', '11' => 'Nov', '12' => 'Dec')
+    'month'        => array ( '01' => 'Gen', '02' => 'Feb', '03' => 'Mar',
+                              '04' => 'Apr', '05' => 'Mag', '06' => 'Giu',
+                              '07' => 'Lug', '08' => 'Ago', '09' => 'Set',
+                              '10' => 'Ott', '11' => 'Nov', '12' => 'Dic')
 );
 

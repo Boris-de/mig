@@ -1,7 +1,5 @@
 =pod
 
-$Id$
-
 =head2 Credits
 
 This is where I thank people who have contributed things to Mig.  I hope I
@@ -90,6 +88,12 @@ and XHTML compliance, and for removing a lot of the hard-coded HTML from
 the PHP code, moving it into the templates where it belonged to begin with.
 
 Yannick MassE<eacute>, for an updated French translation.
+
+Fabio Fioravanti (fioravanti at iasi.rm.cnr.it) for an updated Italian
+translation.
+
+Krzysztof Wojtas (krzysin at cyklon.chemia.pk.edu.pl) for the Polish
+ISO-8859-2 translation.
 
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.

@@ -38,4 +38,4 @@ clean:
 	rm -f pod2htm*
 
 publish:
-	scp html/changelog.html html/install.html mig.sf.net:web/htdocs
+	scp html/*.html mig.sf.net:web/docs

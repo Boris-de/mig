@@ -1,8 +1,19 @@
 =pod
 
-$Id$
-
 =head2 MIG Change Log
+
+=head2 Version 1.3.6 (NOT YET RELEASED)
+
+Updated Danish translation.
+
+Added E<lt>acronymE<gt> tag to files/folders counts.
+
+Changed numeric character entities (i.e. E<amp>#225;) to alphabetic
+references (i.e. E<amp>aacute;).
+
+Updated Italian translation.
+
+Added Polish ISO-8859-2 translation (pliso).
 
 =head2 Version 1.3.5 (Sun, 07 Jul 2002)
 

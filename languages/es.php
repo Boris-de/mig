@@ -9,11 +9,11 @@ $mig_config['lang_lib']['es'] = array (
     'flash_used'   => 'flash&nbsp;usado',
     'main'         => 'Principal',
     'must_auth'    => 'Debes&nbsp;introducir&nbsp;un&nbsp;usuario&nbsp;y'
-                    . '&nbsp;clave&nbsp;v&#225;lidas&nbsp;para'
+                    . '&nbsp;clave&nbsp;v&aacute;lidas&nbsp;para'
                     . '&nbsp;acceder',
-    'nextimage'    => 'siguiente&nbsp;im&#225;gen',
+    'nextimage'    => 'siguiente&nbsp;im&aacute;gen',
     'no_contents'  => 'Sin&nbsp;contenidos.',
-    'previmage'    => 'anterior&nbsp;im&#225;gen',
+    'previmage'    => 'anterior&nbsp;im&aacute;gen',
     'thumbview'    => 'volver&nbsp;a&nbsp;vista&nbsp;por&nbsp;iconos',
     // total_images is special.  It has three elements you can use:
     //     %t :    Total images in folder
