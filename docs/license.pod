@@ -2,6 +2,10 @@
 
 =head2 Mig License
 
+NOTICE:  The following license is in effect as of the release of
+         Mig version 1.4.1.  Prior versions of Mig were released
+         under the GNU General Public License.
+
 Copyright (c) 2000-2005, Daniel M. Lowe
 
 All rights reserved.
