@@ -9,6 +9,15 @@ Z<>
 
 Z<>
 
+=head2 Version 1.3.1 (NOT YET RELEASED)
+
+[Sourceforge bug report #467122] -
+Fixed sorting bug (if C<$sortType> was set to anything other than
+C<default>, the thumbnails would be sorted, but the images would
+actually be out of order as far as the next/previous links were
+concerned.  Turns out the sorting had made it into C<buildImageList()>
+but not C<buildNextPrevLinks()>.
+
 =head2 Version 1.3.0 (Tue 23 Apr 2002)
 
 Added TITLE tags in thumbnail views so when hovering over a thumbnail,

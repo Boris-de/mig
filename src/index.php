@@ -410,7 +410,8 @@ if ($pageType == 'folder' or $pageType == '') {
     $Links = array ();
     $Links = buildNextPrevLinks($baseURL, $albumDir, $currDir, $image,
                                 $markerType, $markerLabel, $mig_language,
-                                $mig_messages, $hidden, $presort_img);
+                                $mig_messages, $hidden, $presort_img,
+                                $sortType);
     list($nextLink, $prevLink, $currPos) = $Links;
 
     // Get image description

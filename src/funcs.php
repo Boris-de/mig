@@ -808,7 +808,7 @@ function buildImageURL( $baseURL, $baseDir, $albumDir, $currDir,
 
 function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
                              $markerType, $markerLabel, $language,
-                             $mig_messages, $hidden, $presorted )
+                             $mig_messages, $hidden, $presorted, $sortType )
 {
 
     // newCurrDir is currDir without the leading './'
@@ -841,6 +841,11 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
         // and make sure it isn't presorted
         if (is_file("$albumDir/$currDir/$file") and ! $presorted[$file]) {
             $fileList[$file] = TRUE;
+            // Store a date, too, if needed
+            if (ereg("bydate.*", $sortType)) {
+                $timestamp = filemtime("$albumDir/$currDir/$file");
+                $filedates["$timestamp-$file"] = $file;
+            }
         }
     }
 
@@ -849,10 +854,30 @@ function buildNextPrevLinks( $baseURL, $albumDir, $currDir, $image,
     ksort($fileList);       // sort, so we see sorted results
     reset($fileList);       // reset array pointer
 
-    // snatch each element from $filelist and shove it on the end of
-    // $presorted
-    while (list($file,$junk) = each($fileList)) {
-        $presorted[$file] = TRUE;
+    if ($sortType == "bydate-ascend") {
+        ksort($filedates);
+        reset($filedates);
+
+    } elseif ($sortType == "bydate-descend") {
+        krsort($filedates);
+        reset($filedates);
+    }
+
+    // Generated final sorted list
+    if (ereg("bydate.*", $sortType)) {
+        // since $filedates is sorted by date, and date is
+        // the key, the key is pointless to put in the list now.
+        // so we store the value, not the key, in $presorted
+        while (list($junk,$file) = each($filedates)) {
+            $presorted[$file] = TRUE;
+        }
+
+    } else {
+        // however, here we have real data in the key, so we push
+        // the key, not the value, into $presorted.
+        while (list($file,$junk) = each($fileList)) {
+            $presorted[$file] = TRUE;
+        }
     }
 
     reset($presorted);      // reset array pointer
