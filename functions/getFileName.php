@@ -1,4 +1,4 @@
-
+<?
 
 // getFileName() - Figure out a file's name sans extension.
 
@@ -11,3 +11,4 @@ function getFileName ( $file )
 
 }   // -- End of getFileName()
 
+?>

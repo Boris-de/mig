@@ -1,15 +1,16 @@
-
+<?
 
 // German - courtesy of "Burckhard Loeh" <lb@loeh.cx>
 // Updated by Ekkehard Dörre <ekke@doerre.net>
+// Updated by Werner M. Krauß <werner.krauss@hallstatt.net>
 $mig_config['lang_lib']['de'] = array (
     'am'            => 'AM',
     'pm'            => 'PM',
     'backhome'      => 'zur&uuml;ck&nbsp;zu',
     'bytes'         => '&nbsp;bytes',
     'flash_used'    => 'Blitz&nbsp;benutzt',
-    'largelink'     => 'view&nbsp;full-size&nbsp;image',
-    'largeview'     => 'back&nbsp;to&nbsp;web-sized&nbsp;view',
+    'largelink'     => 'Bild&nbsp;in&nbsp;voller&nbsp;Gr&ouml;&szlig;e&nbsp;betrachten',
+    'largeview'     => 'zur&uuml;ck&nbps;zur&nbps;Webseitendarstellung',
     'main'          => 'Hauptverzeichnis',
     'must_auth'     => 'F&uuml;r&nbsp;den&nbsp;Zugang&nbsp;m&uuml;ssen&nbsp;'
                      . 'Sie&nbsp;eine&nbsp;g&uuml;ltige&nbsp;Benutzerkennung'
@@ -32,4 +33,4 @@ $mig_config['lang_lib']['de'] = array (
                                '10' => 'Okt', '11' => 'Nov', '12' => 'Dez')
 );
 
-
+?>

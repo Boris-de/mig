@@ -1,4 +1,4 @@
-
+<?
 
 // getNumberOfDirs() - Counts subdirectories in a given folder.
 
@@ -45,3 +45,4 @@ function getNumberOfDirs ( $folder, $currDir )
 
 }   // -- End of getNumberOfDirs()
 
+?>

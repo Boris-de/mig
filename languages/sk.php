@@ -1,4 +1,4 @@
-
+<?
 
 // Slovak - courtesy of Juro Polak <polak@axon.sk>
 $mig_config['lang_lib']['sk'] = array (
@@ -32,3 +32,4 @@ $mig_config['lang_lib']['sk'] = array (
 );
 
 
+?>

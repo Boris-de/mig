@@ -1,4 +1,4 @@
-
+<?
 
 // printTemplate() - Prints HTML page from a template file.
 
@@ -137,3 +137,4 @@ function printTemplate ( $templateFile, $version, $maintAddr,
 
 }    // -- End of printTemplate()
 
+?>

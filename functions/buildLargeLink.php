@@ -1,4 +1,4 @@
-
+<?
 
 // buildLargeLink() - Builds the text used for template keyword "largeLink".
 
@@ -23,3 +23,4 @@ function buildLargeLink( $currDir )
 
 }   // -- End of buildLargeLink()
 
+?>

@@ -386,6 +386,24 @@ $suppressAltTags = FALSE;
 
 $suppressImageInfo = FALSE;
 
+//
+// $FileInfoFormatString
+//     Defines the format of the ImageInfo:
+//
+//     Valid items are:
+//       %n = Filename
+//       %s = FileSize
+//       %i = ImageSize
+//
+// Examples:
+//   Everything is shown (old mig behaviour)
+//   $FileInfoFormatString = "%n<br>(%i, %s)";
+//
+// Default to %n<br>(%i, %s)
+//
+// FIXME: is $suppressImageInfo needed any more? just set $ImageInfoFormatString to ""...
+
+$FileInfoFormatString = "[%i, %s]";
 
 //
 // $showShortOnThumbPage

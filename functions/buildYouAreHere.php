@@ -1,4 +1,4 @@
-
+<?
 
 // buildYouAreHere() - Build the "You are here" line for the top of each page.
 
@@ -68,3 +68,4 @@ function buildYouAreHere ( $currDir )
 
 }   // -- End of buildYouAreHere()
 
+?>

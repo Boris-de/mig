@@ -1,4 +1,4 @@
-
+<?
 
 // buildNextPrevLinks() - Build links to the "next" and "previous" images.
 
@@ -184,3 +184,4 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
 }   // -- End of buildNextPrevLinks()
 
+?>

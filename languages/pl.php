@@ -1,4 +1,4 @@
-
+<?
 
 // Polish - courtesy of martvin@box43.pl
 $mig_config['lang_lib']['pl'] = array (
@@ -31,3 +31,4 @@ $mig_config['lang_lib']['pl'] = array (
 );
 
 
+?>

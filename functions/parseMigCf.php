@@ -1,4 +1,4 @@
-
+<?
 
 // parseMigCf() - Parse a mig.cf file.
 
@@ -167,3 +167,4 @@ function parseMigCf ( $directory )
 
 }   //  -- End of parseMigCf()
 
+?>

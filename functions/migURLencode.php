@@ -1,4 +1,4 @@
-
+<?
 
 // migURLencode() - Fixes a problem where "/" turns into "%2F" when using rawurlencode().
 
@@ -14,3 +14,4 @@ function migURLencode ( $string )
 
 }   // -- End of migURLencode()
 
+?>

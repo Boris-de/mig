@@ -47,6 +47,7 @@ $showShortOnThumbPage       = FALSE;
 $sortType                   = 'default';
 $suppressAltTags            = FALSE;
 $suppressImageInfo          = FALSE;
+$FileInfoFormatString		= '%n<br>(%i, %s)';
 $thumbSubdir                = 'thumbs';
 $useLargeImages             = FALSE;
 $useRealRandThumbs          = TRUE;

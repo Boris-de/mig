@@ -62,12 +62,12 @@ index:
 	rm -f index.php
 	( echo "<?php" ; sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
 	  cat main/pathConvert.php; cat main/defaults.php; \
-	  echo "//"; echo "// Function library"; echo "//"; \
+	  echo "//"; echo "// Function library"; echo "//?>"; \
 	  cat functions/*.php; \
-	  echo "//"; echo "// Language library"; echo "//"; \
+	  echo "<?//"; echo "// Language library"; echo "//?>"; \
 	  cat languages/*.php; \
-	  echo "//"; echo "// Main logic"; echo "//"; \
-	  cat main/body.php; echo "?>" \
+	  echo "<?//"; echo "// Main logic"; echo "//?>"; \
+	  cat main/body.php;  \
 	) > index.php
 
 docpublish:

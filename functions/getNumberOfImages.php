@@ -1,4 +1,4 @@
-
+<?
 
 // getNumberOfImages() - Counts images in a given folder.
 
@@ -52,3 +52,4 @@ function getNumberOfImages ( $folder )
 
 }   // -- End of getNumberOfImages()
 
+?>

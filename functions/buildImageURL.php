@@ -1,4 +1,4 @@
-
+<?
 
 // buildImageURL() - Create HTML link for a particular image.
 
@@ -180,9 +180,54 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         // If $suppressImageInfo is FALSE, show the file info
         if (!$mig_config['suppressimageinfo']) {
             $url .= '<br />';
+            
+           //replace variables of the fileinfoformatstring
+            //       %n = Filename
+            //       %s = FileSize
+            //       %i = ImageSize
+                 
+            $fileinfotable = array ( 'n' => $fname . '.' . $ext,
+                                     's' => $imageSize,
+                                     'i' => $imageWidth.'x'.$imageHeight);
+                                     
+        // $changeflag is used to tell us if we should bother
+        // printing this block at all.  If none of the format
+        // characters in this block can be expanded, we never set
+        // $changeflag to TRUE.  If it's not TRUE at the end of this
+        // while(), the block is just dumped.
+        $changeflag = FALSE;
+
+        // Keep on going until every %X atom has been examined and
+        // expanded.
+        
+        $val = $mig_config['fileinfoformatstring'];
+
+        while (ereg('%([a-zA-Z])', $val , $lettermatch)) {
+
+            // which letter matched?
+            $letter = $lettermatch[1];
+
+            // If this can be expanded, do so.  If it can be,
+            // set $changeflag to TRUE so we know to include this
+            // block instead of dumping it.
+            if ($fileinfotable[$letter]) {
+                $newtext = $fileinfotable[$letter];
+                $changeflag = TRUE;
+            }
+
+            // Do interpolation
+            $val = str_replace("%$letter", $newtext, $val);
+        }
+
+        // Only if $changeflag is TRUE do we bother tacking this
+        // onto the final product.
+        if ($changeflag) {
+            $newstr = $val;
+        }                                
+            
+            
             if (!$mig_config['nothumbs']) {
-                $url .= $fname . '.' . $ext . '<br />'
-                      . '(' . $type . ')<br />';
+                $url .= $newstr;
             }
         }
 
@@ -277,12 +322,53 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         // If $suppressImageInfo is FALSE, show the image info
         if (!$mig_config['suppressimageinfo']) {
             $url .= '<br />';
-            if (!$mig_config['nothumbs']) {
-                $url .= $fname . '.' . $ext . '<br />';
+           //replace variables of the fileinfoformatstring
+            //       %n = Filename
+            //       %s = FileSize
+            //       %i = ImageSize
+                 
+            $fileinfotable = array ( 'n' => $fname . '.' . $ext,
+                                     's' => $imageSize,
+                                     'i' => $imageWidth.'x'.$imageHeight);
+                                     
+        // $changeflag is used to tell us if we should bother
+        // printing this block at all.  If none of the format
+        // characters in this block can be expanded, we never set
+        // $changeflag to TRUE.  If it's not TRUE at the end of this
+        // while(), the block is just dumped.
+        $changeflag = FALSE;
+
+        // Keep on going until every %X atom has been examined and
+        // expanded.
+        
+        $val = $mig_config['fileinfoformatstring'];
+
+        while (ereg('%([a-zA-Z])', $val , $lettermatch)) {
+
+            // which letter matched?
+            $letter = $lettermatch[1];
+
+            // If this can be expanded, do so.  If it can be,
+            // set $changeflag to TRUE so we know to include this
+            // block instead of dumping it.
+            if ($fileinfotable[$letter]) {
+                $newtext = $fileinfotable[$letter];
+                $changeflag = TRUE;
             }
 
-            $url .= '(' . $imageWidth . 'x' . $imageHeight . ', '
-                  . $imageSize . ')';
+            // Do interpolation
+            $val = str_replace("%$letter", $newtext, $val);
+        }
+
+        // Only if $changeflag is TRUE do we bother tacking this
+        // onto the final product.
+        if ($changeflag) {
+            $newstr = $val;
+        }                                
+            
+             if (!$mig_config['nothumbs']) {
+                $url .= $newstr;
+            }
         }
 
         // If $showShortOnThumbPage is TRUE, show short comment
@@ -297,3 +383,4 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
 }   // -- End of buildImageURL()
 
+?>

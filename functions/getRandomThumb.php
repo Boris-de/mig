@@ -1,4 +1,4 @@
-
+<?
 
 // getRandomThumb() - Find a random thumbnail to show instead of the folder icon.
 
@@ -221,3 +221,4 @@ function getRandomThumb ( $file, $folder, $currDir )
 
 }   // -- End of getRandomThumb()
 
+?>

@@ -1,4 +1,4 @@
-
+<?
 
 // Norwegian
 // Translated by Joffer aka Christopher Thorjussen - January 8th, 2000
@@ -32,3 +32,4 @@ $mig_config['lang_lib']['no'] = array (
 );
 
 
+?>

@@ -1,4 +1,4 @@
-
+<?
 
 // Romanian - courtesy of Eugen Dedu <dedu@ese-metz.fr>
 $mig_config['lang_lib']['ro'] = array (
@@ -32,3 +32,4 @@ $mig_config['lang_lib']['ro'] = array (
 );
 
 
+?>

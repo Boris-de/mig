@@ -1,4 +1,4 @@
-
+<?
 
 // getFileExtension() - Figure out a file's extension and return it.
 
@@ -11,3 +11,4 @@ function getFileExtension ( $file )
 
 }   // -- End of getFileExtension()
 
+?>

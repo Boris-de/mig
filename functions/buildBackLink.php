@@ -1,4 +1,4 @@
-
+<?
 
 // buildBackLink() - Create a "back one step" link.
 
@@ -60,3 +60,4 @@ function buildBackLink ( $currDir, $type )
 
 }   // -- End of buildBackLink()
 
+?>

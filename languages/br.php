@@ -1,4 +1,4 @@
-
+<?
 
 // Portugese - courtesy of Fadel <fadel@fee.unicamp.br>
 $mig_config['lang_lib']['br'] = array (
@@ -32,3 +32,4 @@ $mig_config['lang_lib']['br'] = array (
 );
 
 
+?>

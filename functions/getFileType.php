@@ -1,4 +1,4 @@
-
+<?
 
 // getFileType() - Returns TRUE if filetype is supported by Mig.  More specifically, returns
 //                 a string filetype.
@@ -46,3 +46,4 @@ function getFileType ( $filename )
 
 }   // -- End of getFileType()
 
+?>

@@ -1,4 +1,4 @@
-
+<?
 
 // Traditional Chinese (big5)
 // Courtesy of Belle Liu <belle@belleliu.com>
@@ -31,3 +31,4 @@ $mig_config['lang_lib']['zh'] = array (
 );
 
 
+?>

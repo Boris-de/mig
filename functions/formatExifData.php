@@ -1,4 +1,4 @@
-
+<?
 
 // formatExifData() - Formats EXIF data according to $exifFormatString.
 
@@ -75,3 +75,4 @@ function formatExifData ( $formatString, $exifData )
 
 }   // -- End of formatExifData()
 
+?>

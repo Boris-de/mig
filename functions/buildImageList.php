@@ -1,4 +1,4 @@
-
+<?
 
 // buildImageList() - Creates a list of images for display.
 
@@ -254,3 +254,4 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
 
 }   // -- End of buildImageList()
 
+?>

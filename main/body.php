@@ -1,4 +1,4 @@
-
+<?
 
 // URL to use to call myself again
 if ($_SERVER['PHP_SELF']) {
@@ -96,6 +96,7 @@ $mig_config['showshortonthumbpage']		= $showShortOnThumbPage;
 $mig_config['sorttype']				= $sortType;
 $mig_config['suppressalttags']			= $suppressAltTags;
 $mig_config['suppressimageinfo']		= $suppressImageInfo;
+$mig_config['fileinfoformatstring']			= $FileInfoFormatString;
 $mig_config['thumbext']				= $thumbExt;
 $mig_config['thumbsubdir']			= $thumbSubdir;
 $mig_config['uselargeimages']			= $useLargeImages;
@@ -769,3 +770,4 @@ if ($phpNukeCompatible) {
 
 }
 
+?>

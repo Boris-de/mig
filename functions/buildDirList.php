@@ -1,4 +1,4 @@
-
+<?
 
 // buildDirList() - Build list of directories for display.
 
@@ -270,3 +270,4 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 
 }   // -- End of buildDirList()
 
+?>

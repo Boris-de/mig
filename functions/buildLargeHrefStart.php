@@ -1,4 +1,4 @@
-
+<?
 
 // buildLargeHrefStart() - Builds the text used for template keyword "largeHrefStart".
 
@@ -22,3 +22,4 @@ function buildLargeHrefStart ( $currDir )
 
 }   // -- End of buildLargeHrefStart()
 
+?>

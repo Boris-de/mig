@@ -1,4 +1,4 @@
-
+<?
 
 // English (default)
 $mig_config['lang_lib']['en'] = array (
@@ -31,3 +31,4 @@ $mig_config['lang_lib']['en'] = array (
 );
 
 
+?>

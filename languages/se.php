@@ -1,4 +1,4 @@
-
+<?
 
 // Swedish - courtesy of Sebastian Djupsjöbacka <basse@iki.fi>
 $mig_config['lang_lib']['se'] = array (
@@ -33,3 +33,4 @@ $mig_config['lang_lib']['se'] = array (
 );
 
 
+?>
