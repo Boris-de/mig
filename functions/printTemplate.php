@@ -5,7 +5,9 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $maintAddr, $folderList, $imageList, $backLink,
                          $albumURLroot, $image, $currDir, $newCurrDir,
                          $pageTitle, $prevLink, $nextLink, $currPos,
-                         $description, $youAreHere, $distURL, $albumDir )
+                         $description, $youAreHere, $distURL, $albumDir,
+                         $pathConvertFlag, $pathConvertRegex,
+                         $pathConvertTarget )
 {
     // Only prepend a path if one isn't there.  For unix-like systems this
     // checks for a leading slash, for Windows-like system it checks for
@@ -49,7 +51,9 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                         $tmplDir = ereg_replace("^.*/", "", $templateDir);
                         virtual("$tmplDir/$incl_file");
                     } else {
-                        include("$templateDir/$incl_file");
+                        include( convertIncludePath($pathConvertFlag,
+                                   "$templateDir/$incl_file",
+                                   $pathConvertRegex, $pathConvertTarget));
                     }
 
                 } else {

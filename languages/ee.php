@@ -1,8 +1,8 @@
 
 // Estonian - courtesy of Jan Jasinski <jan@sps.ee>
 $mig_config['lang_lib']['ee'] = array (
-    'am'            => 'AM',
-    'pm'            => 'PM',
+    'am'           => 'AM',
+    'pm'           => 'PM',
     'backhome'     => 'tagasi',
     'bytes'        => '&nbsp;baiti',
     'flash_used'   => 'kasutatud&nbsp;v&auml;lku',

@@ -111,7 +111,9 @@ $maxThumbColumns = 4;
 //      in a gallery.
 //
 //      If you don't want to use "pages" at all, set this to some
-//      very large value like 1000.
+//      very large value like 1000.  If you pages of more than 20,
+//      increase the value of $maxThumbRows and/or $maxThumbColumns
+//      as appropriate.
 //
 // Defaults to 5.
 //
@@ -156,8 +158,8 @@ $thumbSubdir = 'thumbs';
 //      thumbnail from the folder is shown.  If Mig is unable to find a
 //      thumbnail to use, it will use the generic folder icon instead.
 //      Unless there are folders whose subfolders and there subfolders
-//      and so on have no thumbnails, the generic folder icon shouldn't
-//      ever show up.
+//      and so on have no thumbnails, the generic folder icon should
+//      never be used.
 //
 // Defaults to FALSE.
 //
@@ -266,8 +268,8 @@ $suppressAltTags = FALSE;
 
 //
 // $viewFolderCount
-//     Boolean to determine whether or not to count images in each folder
-//     and display this, in folder views, next to the folder name.
+//     Boolean to determine whether or not to show number of images and
+//     subdirectories in a given folder when in thumbnail views.
 //
 // Defaults to FALSE.
 //
@@ -331,7 +333,8 @@ $sortType = 'default';
 //
 // $imagePopup
 //     If $imagePopup is set to TRUE, any time a thumbnail is clicked on,
-//     a pop-up window will be opened.  See also $imagePopType.
+//     a pop-up window will be opened.  See also $imagePopType,
+//     $imagePopLocationBar, $imagePopMenuBar, and $imagePopToolBar.
 //
 // Defaults to FALSE.
 //
@@ -355,6 +358,51 @@ $imagePopup = FALSE;
 //
 
 $imagePopType = 'reuse';
+
+
+//
+// $imagePopLocationBar
+//      If TRUE, a location bar will be visible in pop-up windows.
+//      A location bar is the box where one can type a URL into a
+//      web browser.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $imagePopLocationBar = FALSE;
+//
+
+$imagePopLocationBar = FALSE;
+
+
+//
+// $imagePopMenuBar
+//      If TRUE, a menu bar will be visible in pop-up windows.
+//      Note that this has no real effect on a Mac, since Macs
+//      use shared menubars.
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $imagePopMenuBar = FALSE;
+//
+
+$imagePopMenuBar = FALSE;
+
+
+//
+// $imagePopToolBar
+//      If TRUE, a toolbar will be visible in pop-up windows.
+//      This is sometimes called the navigation bar (where the back,
+//      reload buttons are found, and so forth).
+//
+// Defaults to FALSE.
+//
+// Example:
+//      $imagePopToolBar = FALSE;
+//
+
+$imagePopToolBar = FALSE;
 
 
 //
@@ -432,9 +480,6 @@ $commentFilePerImage = FALSE;
 //  What used to be $viewCamInfo and $viewDateInfo together is:
 //     '|%c<hr>|%M %D %Y, %T - |%m<br>|ISO %i |%l |%s |%a |(%f)|';
 //
-//  That last example is also the full range of what Mig currently
-//  understands how to parse from EXIF blocks.
-//
 
 $exifFormatString = '|%c|';
 
@@ -443,6 +488,7 @@ $exifFormatString = '|%c|';
 // $mig_language
 //     What language to use.
 //
+//     Currently available languages:
 //       en      English
 //       fr      French
 //       de      German
@@ -450,8 +496,8 @@ $exifFormatString = '|%c|';
 //       br      Portugese
 //       fi      Finnish
 //       ro      Romanian
-//       ru      Russian Windows-1251
-//       koi8r   Russian KOI8-R
+//       ru      Russian (Windows-1251)
+//       koi8r   Russian (KOI8-R)
 //       tr      Turkish
 //       se      Swedish
 //       dk      Danish
@@ -460,9 +506,11 @@ $exifFormatString = '|%c|';
 //       sk      Slovak
 //       nl      Dutch
 //       pl      Polish
+//       ee      Estonian
+//       jp      Japanese (ISO-2022-JP)
 //
 //     If you want to translate Mig into another language, please contact
-//     me at dan@tangledhelix.com.
+//     me via email (dan@tangledhelix.com).
 //
 //     (Note: this variable used to be called $language, but that is
 //     deprecated and it should be used as $mig_language as of
@@ -493,12 +541,12 @@ $mig_language = 'en';
 // -----------------------------------------------------------------
 //
 // If you are using PHP-Nuke (www.phpnuke.org), PostNuke (www.postnuke.com)
-// or phpWebThings (http://www.phpdbform.com/), you can tell Mig to try to
-// cooperate with your content system.  See the "phpnuke" document for more
-// information.
+// phpWebThings (www.phpdbform.com) or phpWebSite (phpwebsite.appstate.edu),
+// you can tell Mig to try to cooperate with your content system.  See the
+// "phpnuke" document for more information.
 //
 // $phpNukeCompatible
-//      Set to TRUE if you're using either PHP-Nuke or PostNuke.
+//      Set to TRUE if you're using PHP-Nuke, PostNuke or phpWebSite.
 // $phpWebThingsCompatible
 //      Set to TRUE if you're using phpWebThings.
 //
@@ -516,10 +564,10 @@ $phpWebThingsCompatible = FALSE;
 
 //
 // $phpNukeRoot
-//      Set to the root directory of your PHP-Nuke or PostNuke
-//      system.  Ignored if $phpNukeCompatible is set to FALSE.
-//      This should be the folder where your PHP-Nuke or PostNuke
-//      site is installed.  Do not include a trailing slash.
+//      Set to the root directory of your PHP-Nuke, PostNuke or
+//      phpWebSite system.  Ignored if $phpNukeCompatible is set
+//      to FALSE.  This should be the folder where your Nuke site
+//      is installed.  Do not include a trailing slash.
 // $phpWebThingsRoot
 //      Same thing, only for phpWebThings.
 //
@@ -553,6 +601,82 @@ $phpWebThingsRoot = '';
 // THIS FEATURE IS NOT REALLY SECURE.  Please don't rely on it for your
 // security needs unless they're fairly superficial.
 //
+
+
+// -----------------------------------------------------------------
+//                    MODIFYING THE INCLUDE PATH
+// -----------------------------------------------------------------
+//
+// This is not normally required, but in some peculiar setups you
+// are forced to use non-real paths in order to use the include()
+// function.  That is, you have a real path, for instance:
+//      /u25/vhost/www12345/www/mig/myfile.php
+// but the ISP has PHP installed such that you need to tell include()
+// to use this virtual path instead to the same file:
+//     /mig/myfile.php
+//
+// To address this, the following three options exist.  Do not use
+// these unless you have to, and know you have to.  If you don't
+// need to use them and do anyway, you'll probably break Mig.
+//
+// $convertPathFlag
+//     This is a boolean to determine if conversion is needed.  Only
+//     set this to TRUE if you know you need to do so.
+//
+// Defaults to FALSE.
+//
+// Example:
+//     $convertPathFlag = FALSE;
+//
+
+$convertPathFlag = FALSE;
+
+//
+// $convertPathRegex
+//     This is a regular expression string, used to tell Mig how to
+//     modify your include path.  If you don't know regular expressions,
+//     here's probably all you need to know:
+//     
+//     ^    means "beginning of string"
+//     .*   is a wildcard for any number of characters of any kind
+//          (note - it will also match 0 characters in some cases)
+//
+//     Going back to the earlier example, if you want to start out
+//     with this:
+//         /u25/vhost/www12345/www/mig/myfile.php
+//     and end up with this:
+//         /mig/myfile.php
+//
+//     You could define:
+//         $convertPathFlag = TRUE;
+//         $convertPathRegex = '^.*/www/';
+//         $convertPathTarget = '/';
+//
+//     So the regex would match this:  /u25/vhost/www12345/www/
+//     and replace it with a single slash... resulting in:
+//         /mig/myfile.php
+//
+// Defaults to an empty string.
+//
+// Example:
+//     $convertPathRegex = '^.*/www/';
+//
+
+$convertPathRegex = '';
+
+//
+// $convertPathTarget
+//     This is the target string, which replaces the portion matched by
+//     the regex.  Usually this should be '/', but it can be changed.
+//     See the notes for $convertPathRegex (above) for more details.
+//
+// Defaults to an empty string.
+//
+// Example:
+//     $convertPathTarget = '/';
+//
+
+$convertPathTarget = '';
 
 
 ?>

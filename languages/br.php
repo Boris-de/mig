@@ -5,10 +5,12 @@ $mig_config['lang_lib']['br'] = array (
     'pm'            => 'PM',
     'backhome'      => 'voltar&nbsp;para',
     'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'flash usado',
+    'flash_used'    => 'flash&nbsp;usado',
     'main'          => 'Principal',
-    'must_auth'     => 'Voc&#234; deve entrar com um login e senha'
-                     . ' v&#225;lido para acessar este conte&#250;do',
+    'must_auth'     => 'Voc&#234;&nbsp;deve&nbsp;entrar&nbsp;com&nbsp;um'
+                     . '&nbsp;login&nbsp;e&nbsp;senha&nbsp;v&#225;lido'
+                     . '&nbsp;para&nbsp;acessar&nbsp;este&nbsp;'
+                     . 'conte&#250;do',
     'nextimage'     => 'pr&#243;xima&nbsp;imagem',
     'no_contents'   => 'Sem&nbsp;conte&#250;do.',
     'previmage'     => 'imagem&nbsp;anterior',

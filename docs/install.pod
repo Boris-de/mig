@@ -27,6 +27,7 @@ A copy of the GPL can be found at http://www.gnu.org/copyleft/gpl.html
 =head2 Requirements
 
 Mig requires a web server which supports PHP [ http://www.php.net/ ].
+At least PHP 3.0.6 is required, or any version of PHP4.
 The development platform is Apple OSX, so the code tends to assume
 a unix-like environment.  As such it may or may not work (and has not
 been tested by the author) on non-unix-like platforms.  Mig has been tested
@@ -298,10 +299,10 @@ languages someone has supplied translations for.  If you want to translate
 it to another language, please get in touch with me and I'll be glad to add
 your translations to the available list of languages.
 
-(see F<config.php.default> for more information - Mig now supports English,
+See F<config.php.default> for more information - Mig now supports English,
 French, German, Norwegian, Portugese, Finnish, Romanian, Russian
-Windows-1251, Russian KOI8-R, Turkish, Swedish, Danish, Italian, Spanish,
-Slovak, Dutch and Polish).
+(Windows-1251 and KOI8-R), Turkish, Swedish, Danish, Italian, Spanish,
+Slovak, Dutch, Polish, Estonian and Japanese (ISO-2022-JP).
 
 =item 6. Pop-up windows
 

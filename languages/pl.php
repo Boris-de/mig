@@ -7,10 +7,11 @@ $mig_config['lang_lib']['pl'] = array (
     'bytes'         => '&nbsp;bajt&#243;w',
     'flash_used'    => 'u&#191;yto&nbsp;Flash',
     'main'          => 'G&#179;&#243;wna',
-    'must_auth'     => 'Musisz wpisa&#230; prawid&#179;ow&#185; nazw&#234;'
-                     . 'u&#191;ytkownika i has&#179;o by wejœ&#230;',
+    'must_auth'     => 'Musisz&nbsp;wpisa&#230;&nbsp;prawid&#179;ow&#185;'
+                     . '&nbsp;nazw&#234;&nbsp;u&#191;ytkownika&nbsp;i'
+                     . '&nbsp;has&#179;o&nbsp;by&nbsp;wejœ&#230;',
     'nextimage'     => 'nast&#234;pny&nbsp;obrazek',
-    'no_contents'   => 'nie&nbsp;ma zawartoœci.',
+    'no_contents'   => 'nie&nbsp;ma&nbsp;zawartoœci.',
     'previmage'     => 'poprzedni&nbsp;obrazek',
     'thumbview'     => 'powr&#243;t&nbsp;do&nbsp;widoku&nbsp;miniatur',
     // total_images is special.  It has three elements you can use:

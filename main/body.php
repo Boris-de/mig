@@ -25,7 +25,8 @@ if (file_exists($baseDir . '/mig/config.php')) {
     print "FATAL ERROR: Can't find Mig configuration!";
     exit;
 }
-include($configFile);
+include(convertIncludePath($pathConvertFlag, $configFile, $pathConvertRegex,
+            $pathConvertTarget));
 
 // Return an error if too many modes are set at once
 if ($phpNukeCompatible && $phpWebThingsCompatible) {
@@ -309,15 +310,17 @@ if ($pageType == 'folder') {
                                 $useThumbSubdir, $thumbSubdir, $noThumbs,
                                 $thumbExt, $suppressAltTags, $sortType,
                                 $hidden, $presort_img, $desc, $imagePopup,
-                                $imagePopType, $commentFilePerImage,
-                                $startFrom);
+                                $imagePopType, $imagePopLocationBar,
+                                $imagePopMenuBar, $imagePopToolBar,
+                                $commentFilePerImage, $startFrom);
 
     // Only frame the lists in table code when appropriate
 
     // no folders or images - print the "no contents" line
     if ($folderList == 'NULL' && $imageList == 'NULL') {
         $folderList = $mig_config['lang']['no_contents'];
-        $folderList = folderFrame($folderList, $randomFolderThumbs);
+        $folderList = folderFrame($folderList, $randomFolderThumbs,
+                                  $maxFolderColumns);
         $imageList = '';
 
     // images, no folders.  Frame the imagelist in a table
@@ -328,11 +331,13 @@ if ($pageType == 'folder') {
     // folders but no images.  Frame the folderlist in a table
     } elseif ($imageList == 'NULL' && $folderList != 'NULL') {
         $imageList = '';
-        $folderList = folderFrame($folderList, $randomFolderThumbs);
+        $folderList = folderFrame($folderList, $randomFolderThumbs,
+                                  $maxFolderColumns);
 
     // We have folders and we have images, so frame both in tables.
     } else {
-        $folderList = folderFrame($folderList, $randomFolderThumbs);
+        $folderList = folderFrame($folderList, $randomFolderThumbs,
+                                  $maxFolderColumns);
         $imageList = imageFrame($imageList);
     }
 
@@ -343,19 +348,20 @@ if ($pageType == 'folder') {
 
     // build the "back" link
     $backLink = buildBackLink($baseURL, $currDir, 'back', $homeLink,
-                              $homeLabel, $noThumbs, NULL);
+                              $homeLabel, $noThumbs, '');
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, NULL);
+    $youAreHere = buildYouAreHere($baseURL, $currDir, '');
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
 
     // parse the template file and print to stdout
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
-                  $folderList, $imageList, $backLink, NULL, NULL, NULL,
-                  $newCurrDir, $pageTitle, NULL, NULL, NULL, $bulletin,
-                  $youAreHere, $distURL, $albumDir);
+                  $folderList, $imageList, $backLink, '', '', '',
+                  $newCurrDir, $pageTitle, '', '', '', $bulletin,
+                  $youAreHere, $distURL, $albumDir, $pathConvertFlag,
+                  $pathConvertRegex, $pathConvertTarget);
 
 
 // If pageType is "image", show an image
@@ -364,7 +370,7 @@ if ($pageType == 'folder') {
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', NULL, NULL,
+    $backLink = buildBackLink($baseURL, "$currDir/blah", 'up', '', '',
                               $noThumbs, $startFrom);
 
     // Get the "next image" and "previous image" links, and the current
@@ -418,9 +424,10 @@ if ($pageType == 'folder') {
 
     // Send it all to the template printer to dump to stdout
     printTemplate($baseURL, $templateDir, $templateFile, $version, $maintAddr,
-                  NULL, NULL, $backLink, $albumURLroot, $image, $currDir,
+                  '', '', $backLink, $albumURLroot, $image, $currDir,
                   $newCurrDir, $pageTitle, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $albumDir);
+                  $description, $youAreHere, $distURL, $albumDir,
+                  $pathConvertFlag, $pathConvertRegex, $pathConvertTarget);
 }
 
 // If in PHPNuke mode, finish up the tables and such needed for PHPNuke

@@ -5,11 +5,12 @@ $mig_config['lang_lib']['fr'] = array (
     'pm'            => 'PM',
     'backhome'      => 'Retour&nbsp;vers',
     'bytes'         => '&nbsp;octets',
-    'flash_used'    => 'flash utilis&#233;',
+    'flash_used'    => 'flash&nbsp;utilis&#233;',
     'main'          => 'Liste&nbsp;des&nbsp;albums&nbsp;par&nbsp;classements'
                      . '&nbsp;(r&#233;pertoires)',
-    'must_auth'     => 'Vous devez entrer un username et un mot de passe'
-                     . ' valides pour entrer',
+    'must_auth'     => 'Vous&nbsp;devez&nbsp;entrer&nbsp;un&nbsp;username'
+                     . '&nbsp;et&nbsp;un&nbsp;mot&nbsp;de&nbsp;passe'
+                     . '&nbsp;valides&nbsp;pour&nbsp;entrer',
     'nextimage'     => 'Image&nbsp;suivante',
     'no_contents'   => 'VIDE',
     'previmage'     => 'Image&nbsp;pr&#233;c&#233;dente',

@@ -5,10 +5,11 @@ $mig_config['lang_lib']['sk'] = array (
     'pm'            => 'PM',
     'backhome'      => 'sp&#228;?&nbsp;na',
     'bytes'         => '&nbsp;bytov',
-    'flash_used'    => 'flash used',
+    'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Hlavn&#225;&nbsp;str&#225;nka',
-    'must_auth'     => 'Mus&#237;te uvies? u?&#237;vate&#190;sk&#233; meno'
-                     . ' a heslo na vstup',
+    'must_auth'     => 'Mus&#237;te&nbsp;uvies?&nbsp;u?&#237;vate&#190;'
+                     . 'sk&#233; meno&nbsp;a&nbsp;heslo&nbsp;na'
+                     . '&nbsp;vstup',
     'nextimage'     => '&#239;al?&#237;&nbsp;obr&#225;zok',
     'no_contents'   => 'Pr&#225;zdny&nbsp;adres&#225;r.',
     'previmage'     => 'predch&#225;dzaj&#250;ci&nbsp;obr&#225;zok',

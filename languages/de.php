@@ -5,10 +5,11 @@ $mig_config['lang_lib']['de'] = array (
     'pm'            => 'PM',
     'backhome'      => 'zurueck&nbsp;zu',
     'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'blitz benutzt',
+    'flash_used'    => 'blitz&nbsp;benutzt',
     'main'          => 'Hauptverzeichnis',
-    'must_auth'     => 'Fuer den Zugang muessen Sie eine gueltige'
-                     . ' Benutzerkennung und Passwort eingeben',
+    'must_auth'     => 'Fuer&nbsp;den&nbsp;Zugang&nbsp;muessen&nbsp;Sie'
+                     . '&nbsp;eine&nbsp;gueltige&nbsp;Benutzerkennung'
+                     . '&nbsp;und&nbsp;Passwort&nbsp;eingeben',
     'nextimage'     => 'naechstes&nbsp;Bild',
     'no_contents'   => 'Keinen&nbsp;Inhalt.',
     'previmage'     => 'vorheriges&nbsp;Bild',

@@ -79,6 +79,12 @@ Pawel Dylik (pawel at pavel.toya.net.pl) for contributing a patch which
 resulted in the pagination of large galleries and the the random thumbnail
 display in place of the generic folder icon.
 
+Jan Jasinski (jan at sps.ee) for contributing a patch to C<folderFrame()>
+and for the Estonian translation.
+
+Masaru Onozawa (masy at webmasters.gr.jp) for the Japanese (ISO-2022-JP)
+translation.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.
 

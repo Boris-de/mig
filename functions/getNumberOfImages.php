@@ -5,6 +5,7 @@ function getNumberOfImages ( $folder, $useThumbSubdir, $markerType,
                              $markerLabel )
 {
     $dir = opendir($folder);    // Open directory handle
+    $count = 0;
 
     while ($file = readdir($dir)) {
         // Skip over thumbnails

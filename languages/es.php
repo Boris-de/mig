@@ -2,14 +2,15 @@
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
 // with some adjustments from JMN <umjumasa@terra.es>
 $mig_config['lang_lib']['es'] = array (
-    'am'            => 'AM',
-    'pm'            => 'PM',
+    'am'           => 'AM',
+    'pm'           => 'PM',
     'backhome'     => 'regresar&nbsp;inicio',
     'bytes'        => '&nbsp;bytes',
-    'flash_used'   => 'flash usado',
+    'flash_used'   => 'flash&nbsp;usado',
     'main'         => 'Principal',
-    'must_auth'    => 'Debes introducir un usuario y clave v&#225;lidas'
-                    . ' para acceder',
+    'must_auth'    => 'Debes&nbsp;introducir&nbsp;un&nbsp;usuario&nbsp;y'
+                    . '&nbsp;clave&nbsp;v&#225;lidas&nbsp;para'
+                    . '&nbsp;acceder',
     'nextimage'    => 'siguiente&nbsp;im&#225;gen',
     'no_contents'  => 'Sin&nbsp;contenidos.',
     'previmage'    => 'anterior&nbsp;im&#225;gen',
@@ -18,8 +19,8 @@ $mig_config['lang_lib']['es'] = array (
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
-    'total_images'  => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
-                     . '&nbsp;total<br>',
+    'total_images' => 'Showing&nbsp;images&nbsp;%s-%e&nbsp;of&nbsp;%t'
+                    . '&nbsp;total<br>',
     'up_one'       => 'subir&nbsp;un&nbsp;nivel',
     'month'        => array ( '01' => 'Jan', '02' => 'Feb', '03' => 'Mar',
                               '04' => 'Apr', '05' => 'May', '06' => 'Jun',

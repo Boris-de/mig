@@ -5,10 +5,11 @@ $mig_config['lang_lib']['dk'] = array (
     'pm'            => 'PM',
     'backhome'      => 'tilbage&nbsp;til',
     'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'flash brugt',
+    'flash_used'    => 'flash&nbsp;brugt',
     'main'          => 'Hovedside',
-    'must_auth'     => 'Du skal skrive et gyldigt brugernavn og password'
-                     . ' for at komme ind',
+    'must_auth'     => 'Du&nbsp;skal&nbsp;skrive&nbsp;et&nbsp;gyldigt'
+                     . '&nbsp;brugernavn&nbsp;og&nbsp;password'
+                     . '&nbsp;for&nbsp;at&nbsp;komme&nbsp;ind',
     'nextimage'     => 'n&#230;ste&nbsp;billed',
     'no_contents'   => 'intet&nbsp;inhold.',
     'previmage'     => 'forrige&nbsp;billed',

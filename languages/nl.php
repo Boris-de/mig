@@ -5,10 +5,11 @@ $mig_config['lang_lib']['nl'] = array (
     'pm'            => 'PM',
     'backhome'      => 'Terug&nbsp;naar',
     'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'flash used',
+    'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Hoofdmenu',
-    'must_auth'     => 'Je moet een geldige naam en wachtwoord invoeren'
-                     . 'om hier naar binnen te gaan',
+    'must_auth'     => 'Je&nbsp;moet&nbsp;een&nbsp;geldige&nbsp;naam&nbsp;en'
+                     . '&nbsp;wachtwoord&nbsp;invoeren&nbsp;om&nbsp;hier'
+                     . '&nbsp;naar&nbsp;binnen&nbsp;te&nbsp;gaan',
     'nextimage'     => 'volgende&nbsp;foto',
     'no_contents'   => 'Geen&nbsp;commentaar.',
     'previmage'     => 'vorige&nbsp;foto',

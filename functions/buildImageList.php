@@ -7,8 +7,9 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                           $directoryList, $suppressImageInfo, $useThumbSubdir,
                           $thumbSubdir, $noThumbs, $thumbExt, $suppressAltTags,
                           $sortType, $hidden, $presorted, $description,
-                          $imagePopup, $imagePopType, $commentFilePerImage,
-                          $startFrom )
+                          $imagePopup, $imagePopType, $imagePopLocationBar,
+                          $imagePopMenuBar, $imagePopToolBar,
+                          $commentFilePerImage, $startFrom )
 {
     global $mig_config;
 
@@ -188,7 +189,9 @@ function buildImageList ( $baseURL, $baseDir, $albumDir, $currDir,
                                      $thumbSubdir, $noThumbs, $thumbExt,
                                      $suppressAltTags, $description,
                                      $imagePopup, $imagePopType,
-                                     $commentFilePerImage, $startFrom);
+                                     $imagePopLocationBar, $imagePopMenuBar,
+                                     $imagePopToolBar, $commentFilePerImage,
+                                     $startFrom);
                 $imageList .= $img;
 
                 // Keep track of what row and column we are on

@@ -14,7 +14,10 @@ function getImageDescFromFile ( $image, $albumDir, $currDir )
         $file = fopen("$albumDir/$currDir/$fname.txt", 'r');
         $line = fgets($file, 4096);     // get first line
 
-        while (!feof($file)) {
+        // This double-check exists so that files ending without
+        // a proper newline character are not truncated.
+        // This says "while (not EOF) and ($line is not empty)"...
+        while ( $line || ! feof($file)) {
             $line = trim($line);
             $imageDesc .= "$line ";
             $line = fgets($file, 4096); // get next line

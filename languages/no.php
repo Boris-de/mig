@@ -7,9 +7,10 @@ $mig_config['lang_lib']['no'] = array (
     'pm'            => 'PM',
     'backhome'      => 'tilbake',
     'bytes'         => '&nbsp;bytes',
-    'flash_used'    => 'flash used',
+    'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Galleriet',
-    'must_auth'     => 'Du m&#229; oppgi gyldig brukernavn og passord',
+    'must_auth'     => 'Du&nbsp;m&#229;&nbsp;oppgi&nbsp;gyldig'
+                     . '&nbsp;brukernavn&nbsp;og&nbsp;passord',
     'nextimage'     => 'neste&nbsp;bilde',
     'no_contents'   => 'Tom&nbsp;katalog',
     'previmage'     => 'forrige&nbsp;bilde',

@@ -5,10 +5,11 @@ $mig_config['lang_lib']['tr'] = array (
     'pm'            => 'PM',
     'backhome'      => 'geri&nbsp;d&#246;n:',
     'bytes'         => '&nbsp;bit',
-    'flash_used'    => 'flash used',
+    'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Ana',
-    'must_auth'     => 'Ge&#231;erli bir kullan&#253;c&#253; ad&#253; ve'
-                     . ' &#254;ifre girmelisiniz.',
+    'must_auth'     => 'Ge&#231;erli&nbsp;bir&nbsp;kullan&#253;c&#253;'
+                     . '&nbsp;ad&#253;&nbsp;ve&nbsp;&#254;ifre'
+                     . '&nbsp;girmelisiniz.',
     'nextimage'     => 'sonraki&nbsp;resim',
     'no_contents'   => 'i&#231;erik&nbsp;yok.',
     'previmage'     => '&#246;nceki&nbsp;resim',

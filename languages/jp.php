@@ -1,4 +1,5 @@
 
+// Japanese (ISO-2022-JP) courtesy of Masaru Onozawa <masy@webmasters.gr.jp>
 $mig_config['lang_lib']['jp'] = array (
     'am'            => '午前',
     'pm'            => '午後',
@@ -16,7 +17,7 @@ $mig_config['lang_lib']['jp'] = array (
     //     %t :    Total images in folder
     //     %s :    First image shown this page
     //     %e :    Last image shown this page
-    'total_images'  => '表示中 %s 枚目 - %e 枚目 /'
+    'total_images'  => '表示中 %s 枚目 - %e 枚目 / '
                      . '全画像数 %t 枚<br>',
     'up_one'        => '一つ上に行く',
     'month'      => array ( '01' => '1 月', '02' => '2 月',

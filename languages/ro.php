@@ -5,10 +5,12 @@ $mig_config['lang_lib']['ro'] = array (
     'pm'            => 'PM',
     'backhome'      => '&#238;napoi&nbsp;la',
     'bytes'         => '&nbsp;octeti',
-    'flash_used'    => 'flash used',
+    'flash_used'    => 'flash&nbsp;used',
     'main'          => 'Principal',
-    'must_auth'     => 'Pentru a intra, trebuie sa introduceti un nume de'
-                     . ' utilizator si o parola valide',
+    'must_auth'     => 'Pentru&nbsp;a&nbsp;intra,&nbsp;trebuie&nbsp;sa'
+                     . '&nbsp;introduceti&nbsp;un&nbsp;nume&nbsp;de'
+                     . '&nbsp;utilizator&nbsp;si&nbsp;o&nbsp;parola'
+                     . '&nbsp;valide',
     'nextimage'     => 'imaginea&nbsp;urmatoare',
     'no_contents'   => 'Repertoriu&nbsp;GOL',
     'previmage'     => 'imaginea&nbsp;precedenta',

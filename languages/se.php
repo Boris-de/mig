@@ -5,10 +5,11 @@ $mig_config['lang_lib']['se'] = array (
     'pm'            => 'PM',
     'backhome'      => 'tillbaka',
     'bytes'         => '&nbsp;byte',
-    'flash_used'    => 'flash used',
+    'flash_used'    => 'flash&nbsp;used',
     'main'          => 'F&ouml;rsta&nbsp;sidan',
-    'must_auth'     => 'Du m&aring;ste ange korrekt anv&auml;ndarnamn och'
-                     . ' l&ouml;senord f&ouml;r att komma vidare',
+    'must_auth'     => 'Du&nbsp;m&aring;ste&nbsp;ange&nbsp;korrekt'
+                     . '&nbsp;anv&auml;ndarnamn&nbsp;och&nbsp;l&ouml;senord'
+                     . '&nbsp;f&ouml;r&nbsp;att&nbsp;komma&nbsp;vidare',
     'nextimage'     => 'n&auml;sta&nbsp;bild',
     'no_contents'   => 'Det&nbsp;h&auml;r&nbsp;albumet&nbsp;&auml;r'
                      . '&nbsp;tomt',

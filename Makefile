@@ -14,10 +14,10 @@ SPOOLDIR=mig-$(ver)
 ARCHIVE=$(DISTDIR)/$(SPOOLDIR).tar.gz
 
 default:
-	@echo "make dist ver={version}"
-	@echo "make index ver={version}"
-	@echo "make docpublish"
-	@echo "make snoopy"
+	@echo "make dist ver={version}        Builds distribution bundle"
+	@echo "make index ver={version}       Builds just index.php"
+	@echo "make docpublish                Publishes docs to mig.sf.net"
+	@echo "make snoopy                    Pushes index2.php to snoopy"
 
 mig: dist
 

@@ -17,6 +17,7 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
 
     $directories = array ();                    // prototypes
     $counts = array ();
+    $countdir = array ();
     $samples = array ();
 
     $dir = opendir("$albumDir/$currDir");       // Open directory handle
@@ -56,6 +57,8 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
         // Calculate how many images in the folder if desired
         if ($viewFolderCount) {
             $counts[$file] = getNumberOfImages($folder, $useThumbSubdir,
+                                               $markerType, $markerLabel);
+            $countdir[$file] = getNumberOfDirs($folder, $useThumbSubdir,
                                                $markerType, $markerLabel);
         }
 
@@ -129,8 +132,11 @@ function buildDirList ( $baseURL, $albumDir, $albumURLroot, $currDir,
                        . $linkURL . '<font size="-2">' . $nbspfile
                        . '</font></a>';
 
-        if ($viewFolderCount && $counts[$file] > 0) {
-            $directoryList .= ' (' . $counts[$file] . ')';
+        if ($viewFolderCount &&
+                (($counts[$file] > 0) || ($countdir[$file] > 0)) )
+        {
+            $directoryList .= $sep . '(' . $countdir[$file] . '/'
+                            . $counts[$file] . ')';
         }
 
         $directoryList .= '</td>';

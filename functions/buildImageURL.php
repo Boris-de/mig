@@ -6,7 +6,9 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
                          $markerType, $markerLabel,
                          $useThumbSubdir, $thumbSubdir, $noThumbs, $thumbExt,
                          $suppressAltTags, $description, $imagePopup,
-                         $imagePopType, $commentFilePerImage, $startFrom )
+                         $imagePopType, $imagePopLocationBar,
+                         $imagePopMenuBar, $imagePopToolBar,
+                         $commentFilePerImage, $startFrom )
 {
     global $mig_config;
 
@@ -165,7 +167,21 @@ function buildImageURL ( $baseURL, $baseDir, $albumDir, $currDir,
         }
 
         $url .= "','width=$popup_width,height=$popup_height,"
-              . "resizable=yes,scrollbars=1');";
+              . "resizable=yes,scrollbars=1";
+
+        // Set up various toolbar options if requested
+
+        if ($imagePopLocationBar) {
+            $url .= ",location=1";
+        }
+        if ($imagePopToolBar) {
+            $url .= ",toolbar=1";
+        }
+        if ($imagePopMenuBar) {
+            $url .= ",menubar=1";
+        }
+
+        $url .= "');";
     }
 
     $url .= '">';
