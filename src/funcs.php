@@ -287,9 +287,9 @@ function buildDirList( $baseURL, $albumDir, $currDir, $imageDir,
     // If there aren't any subfolders to look at, then just say so.
     if ($directoryList == '') {
         return 'NULL';
-    }
 
-    elseif (!eregi('</tr>$', $directoryList)) {
+    } elseif (!eregi('</tr>$', $directoryList)) {
+
         // Stick a </tr> on the end if it isn't there already
         $directoryList .= '</tr>';
     }
