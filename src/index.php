@@ -46,7 +46,7 @@
 
 
 // Version number - Do not change
-$version = '1.2.5';
+$version = '1.2.7';
 
 // URL to call myself again
 if ($PHP_SELF)      // if using register_globals
@@ -219,7 +219,7 @@ if ($markerType != 'prefix' and $markerType != 'suffix')
 if (!$markerLabel)
     $markerLabel = 'th';
 
-// Get around the track_vars vs. register_globals problem
+// (Try to) get around the track_vars vs. register_globals problem
 if (!$SERVER_NAME)
     $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
     $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
@@ -251,15 +251,16 @@ if ($phpNukeCompatible) {
     include('header.php');  // PHP-Nuke library
 
     // A table to nest MiG in, inside the PHPNuke framework
-    print '<table width="100%" border="0" cellspacing="0" cellpadding="2"';
-    print ' bgcolor="#000000"><tr><td>';
-    print '<table width="100%" border="0" cellspacing="1" cellpadding="7"';
-    print ' bgcolor="#FFFFFF"><tr><td>';
+    print '<table width="100%" border="0" cellspacing="0" cellpadding="2"'
+        . ' bgcolor="#000000"><tr><td>'
+        . '<table width="100%" border="0" cellspacing="1" cellpadding="7"'
+        . ' bgcolor="#FFFFFF"><tr><td>';
 }
 
 // Look at $currDir from a security angle.  Don't let folks go outside
 // the album directory base
-if (ereg('\.\.', $currDir)) {
+// if (ereg('\.\.', $currDir)) {
+if (strstr($currDir, '..')) {
     print "SECURITY VIOLATION";
     exit;
 }
