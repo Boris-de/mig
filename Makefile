@@ -8,7 +8,7 @@
 DISTDIR= ../bundles/mig
 
 # Webserver root
-WEB= /Library/WebServer/Documents
+WEB= /Users/dan/Sites
 
 # Temporary directory to build a Mig install in (this gets tarred up)
 SPOOLDIR= mig-$(ver)

@@ -24,11 +24,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = Portals;
+			passBuildSettingsInEnvironment = 1;
 			productName = Portals;
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F50CD440039F7BC301010203 = {
 			buildArgumentsString = contrib;
@@ -48,11 +48,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = Contrib;
+			passBuildSettingsInEnvironment = 1;
 			productName = Contrib;
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F50CD441039F7BE201010203 = {
 			buildArgumentsString = gallery;
@@ -72,11 +72,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = "Example Gallery";
+			passBuildSettingsInEnvironment = 1;
 			productName = "Example Gallery";
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F5825B1703A285D001010203 = {
 			buildArgumentsString = dist;
@@ -97,11 +97,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = "Bundle (edit ver)";
+			passBuildSettingsInEnvironment = 1;
 			productName = Bundle;
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F5825B1803A286A701010203 = {
 			buildArgumentsString = docpublish;
@@ -121,11 +121,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = "Publish Docs";
+			passBuildSettingsInEnvironment = 1;
 			productName = "Publich Docs";
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F5825B1903A286DC01010203 = {
 			buildArgumentsString = mig.sf.net;
@@ -145,13 +145,14 @@
 			);
 			isa = PBXLegacyTarget;
 			name = "sf.net (edit ver)";
+			passBuildSettingsInEnvironment = 1;
 			productName = "Install on mig.sf.net";
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 		F59704C103A185E001010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = cz.php;
 			refType = 4;
@@ -197,6 +198,7 @@
 				F5A326FA039CC0FC01010203,
 				F5A326FB039CC0FC01010203,
 			);
+			hasScannedForEncodings = 1;
 			isa = PBXProject;
 			mainGroup = F5A326F8039CC0FC01010203;
 			projectDirPath = "";
@@ -211,6 +213,7 @@
 			);
 		};
 		F5A326FD039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = config.php;
 			refType = 4;
@@ -226,16 +229,19 @@
 			refType = 4;
 		};
 		F5A326FF039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = Entries;
 			refType = 4;
 		};
 		F5A32700039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = Repository;
 			refType = 4;
 		};
 		F5A32701039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = Root;
 			refType = 4;
@@ -260,61 +266,73 @@
 			refType = 4;
 		};
 		F5A32704039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = apache.pod;
 			refType = 4;
 		};
 		F5A32705039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = changelog.pod;
 			refType = 4;
 		};
 		F5A32706039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = credits.pod;
 			refType = 4;
 		};
 		F5A32713039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = install.pod;
 			refType = 4;
 		};
 		F5A32714039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = jump.pod;
 			refType = 4;
 		};
 		F5A32715039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = license.pod;
 			refType = 4;
 		};
 		F5A32716039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = Makefile;
 			refType = 4;
 		};
 		F5A32717039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mig_cf.pod;
 			refType = 4;
 		};
 		F5A32718039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = passwords.pod;
 			refType = 4;
 		};
 		F5A32719039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = portals.pod;
 			refType = 4;
 		};
 		F5A3271A039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = templates.pod;
 			refType = 4;
 		};
 		F5A32727039CC13101010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = utilities.pod;
 			refType = 4;
@@ -330,6 +348,7 @@
 			refType = 4;
 		};
 		F5A3272A039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = Makefile;
 			refType = 4;
@@ -354,21 +373,25 @@
 			refType = 4;
 		};
 		F5A3272D039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = "convert-metafiles.sh";
 			refType = 4;
 		};
 		F5A3272E039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = crypt.pl;
 			refType = 4;
 		};
 		F5A3272F039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = featured.php;
 			refType = 4;
 		};
 		F5A32730039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = gallery.sh;
 			refType = 4;
@@ -379,36 +402,43 @@
 			refType = 4;
 		};
 		F5A32732039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = INDEX.txt;
 			refType = 4;
 		};
 		F5A32733039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mf_conv.pl;
 			refType = 4;
 		};
 		F5A32734039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = migPutCommentInFile.sh;
 			refType = 4;
 		};
 		F5A32735039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mkGallery.php;
 			refType = 4;
 		};
 		F5A32736039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mkthumbs.com;
 			refType = 4;
 		};
 		F5A32737039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = phpnuke_module.php;
 			refType = 4;
 		};
 		F5A32738039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = README.txt;
 			refType = 4;
@@ -463,6 +493,7 @@
 			refType = 4;
 		};
 		F5A32740039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = exif.inf;
 			refType = 4;
@@ -539,11 +570,13 @@
 			refType = 4;
 		};
 		F5A3274C039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = exif.inf;
 			refType = 4;
 		};
 		F5A3274D039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mig.cf;
 			refType = 4;
@@ -580,6 +613,7 @@
 			refType = 4;
 		};
 		F5A32753039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mig.cf;
 			refType = 4;
@@ -617,126 +651,151 @@
 			refType = 4;
 		};
 		F5A32756039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildBackLink.php;
 			refType = 4;
 		};
 		F5A32757039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildDirList.php;
 			refType = 4;
 		};
 		F5A32758039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildImageList.php;
 			refType = 4;
 		};
 		F5A32759039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildImageURL.php;
 			refType = 4;
 		};
 		F5A3275A039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildLargeHrefStart.php;
 			refType = 4;
 		};
 		F5A3275B039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildLargeLink.php;
 			refType = 4;
 		};
 		F5A3275C039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildNextPrevLinks.php;
 			refType = 4;
 		};
 		F5A3275D039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildTable.php;
 			refType = 4;
 		};
 		F5A3275E039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = buildYouAreHere.php;
 			refType = 4;
 		};
 		F5A3275F039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = convertIncludePath.php;
 			refType = 4;
 		};
 		F5A32760039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = formatExifData.php;
 			refType = 4;
 		};
 		F5A32761039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getExifDescription.php;
 			refType = 4;
 		};
 		F5A32762039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getFileExtension.php;
 			refType = 4;
 		};
 		F5A32763039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getFileName.php;
 			refType = 4;
 		};
 		F5A32764039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getFileType.php;
 			refType = 4;
 		};
 		F5A32765039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getImageDescFromFile.php;
 			refType = 4;
 		};
 		F5A32766039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getImageDescription.php;
 			refType = 4;
 		};
 		F5A32767039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getNewCurrDir.php;
 			refType = 4;
 		};
 		F5A32768039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getNumberOfDirs.php;
 			refType = 4;
 		};
 		F5A32769039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getNumberOfImages.php;
 			refType = 4;
 		};
 		F5A3276A039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = getRandomThumb.php;
 			refType = 4;
 		};
 		F5A3276B039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = migURLencode.php;
 			refType = 4;
 		};
 		F5A3276C039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = parseExifDate.php;
 			refType = 4;
 		};
 		F5A3276D039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = parseMigCf.php;
 			refType = 4;
 		};
 		F5A3276E039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = printTemplate.php;
 			refType = 4;
@@ -802,106 +861,127 @@
 			refType = 4;
 		};
 		F5A32775039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = br.php;
 			refType = 4;
 		};
 		F5A32776039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = de.php;
 			refType = 4;
 		};
 		F5A32777039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = dk.php;
 			refType = 4;
 		};
 		F5A32778039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = ee.php;
 			refType = 4;
 		};
 		F5A32779039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = en.php;
 			refType = 4;
 		};
 		F5A3277A039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = es.php;
 			refType = 4;
 		};
 		F5A3277B039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = fi.php;
 			refType = 4;
 		};
 		F5A3277C039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = fr.php;
 			refType = 4;
 		};
 		F5A3277D039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = it.php;
 			refType = 4;
 		};
 		F5A3277E039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = jp.php;
 			refType = 4;
 		};
 		F5A3277F039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = koi8r.php;
 			refType = 4;
 		};
 		F5A32780039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = nl.php;
 			refType = 4;
 		};
 		F5A32781039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = no.php;
 			refType = 4;
 		};
 		F5A32782039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = pl.php;
 			refType = 4;
 		};
 		F5A32783039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = pliso.php;
 			refType = 4;
 		};
 		F5A32784039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = ro.php;
 			refType = 4;
 		};
 		F5A32785039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = ru.php;
 			refType = 4;
 		};
 		F5A32786039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = se.php;
 			refType = 4;
 		};
 		F5A32787039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = sk.php;
 			refType = 4;
 		};
 		F5A32788039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = tr.php;
 			refType = 4;
 		};
 		F5A32789039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = zh.php;
 			refType = 4;
@@ -918,26 +998,31 @@
 			refType = 4;
 		};
 		F5A3278B039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = body.php;
 			refType = 4;
 		};
 		F5A3278C039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = defaults.php;
 			refType = 4;
 		};
 		F5A3278D039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = pathConvert.php;
 			refType = 4;
 		};
 		F5A3278E039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = preamble.php;
 			refType = 4;
 		};
 		F5A3278F039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = Makefile;
 			refType = 4;
@@ -957,36 +1042,43 @@
 			refType = 4;
 		};
 		F5A32792039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = folder.html;
 			refType = 4;
 		};
 		F5A32793039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = image.html;
 			refType = 4;
 		};
 		F5A32794039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = large.html;
 			refType = 4;
 		};
 		F5A32795039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mig_folder.php;
 			refType = 4;
 		};
 		F5A32796039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mig_image.php;
 			refType = 4;
 		};
 		F5A32797039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mig_large.php;
 			refType = 4;
 		};
 		F5A32798039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = style.css;
 			refType = 4;
@@ -1006,6 +1098,7 @@
 			refType = 4;
 		};
 		F5A3279B039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = mkGallery.pl;
 			refType = 4;
@@ -1026,11 +1119,13 @@
 			refType = 4;
 		};
 		F5A3279E039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = modinfo.php;
 			refType = 4;
 		};
 		F5A3279F039CC13201010203 = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			path = xoops_version.php;
 			refType = 4;
@@ -1054,11 +1149,11 @@
 			);
 			isa = PBXLegacyTarget;
 			name = Test;
+			passBuildSettingsInEnvironment = 1;
 			productName = Test;
 			settingsToExpand = 6;
 			settingsToPassInEnvironment = 287;
 			settingsToPassOnCommandLine = 280;
-			shouldUseHeadermap = 0;
 		};
 	};
 	rootObject = F5A326FC039CC0FC01010203;
