@@ -7,6 +7,7 @@
 #
 # jhead is NOT my software.  It was written by Matthias Wendel.
 # You can find the official jhead web page at
+#
 #     http://www.sentex.net/~mwandel/jhead/index.html
 #
 
