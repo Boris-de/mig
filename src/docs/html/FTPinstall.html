@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<TITLE>MiG Documentation</TITLE>
+<LINK REV="made" HREF="mailto:perl-bugs@sun.com">
+</HEAD>
+
+<BODY>
+
+<!-- INDEX BEGIN -->
+<!--
+
+<UL>
+
+	<LI><A HREF="#Installing_MIG_without_unix_shel">Installing MIG without unix shell access (i.e. via FTP)</A>
+</UL>
+-->
+<!-- INDEX END -->
+
+<P>
+
+
+
+
+<P>
+<HR>
+<H1><A NAME="Installing_MIG_without_unix_shel">Installing MIG without unix shell access (i.e. via FTP)</A></H1>
+<P>
+
+
+
+
+<P>
+This document tries to explain how to install MiG by hand (for people with
+FTP access only, not shell access, to their web server).
+
+<P>
+1. Unpack the distribution. If you're on a Unix or Linux system you can do
+this with the command:
+
+<P>
+<PRE>    tar xvfz mig-VERSION.tar.gz
+</PRE>
+<P>
+Where ``VERSION'' is the version (such as ``1.2.3''). If you're on a
+Windows system, try Winzip at <A
+HREF="http://www.winzip.com/">http://www.winzip.com/</A>
+
+<P>
+2. Create a directory on the server to place your MiG installation in (or
+if you are upgrading, just know where the current installation is). I'll
+use <EM>/www/site.com/htdocs/gallery</EM> as an example in this document, but you can put it anywhere you want as
+long as you know your web server can find the files there.
+
+<P>
+3. Copy the <EM>index.php</EM>, <EM>funcs.php</EM> and <EM>lang.php</EM> file to your server's new Mig directory. This document assumes .php as the
+extension your web server uses to recognize PHP files. If that isn't the
+case then rename <EM>index.php</EM> to <EM>index.php3</EM> (or whatever extension is appropriate). Do NOT rename the other PHP files
+(their names are hardcoded into the program)!
+
+<P>
+4. Create the subdirectories <CODE>images</CODE> and <CODE>templates</CODE> (i.e.
+<EM>/www/site.com/htdocs/gallery/images</EM> and
+<EM>/www/site.com/htdocs/gallery/templates</EM>), and copy the files in the
+<EM>images</EM> and <EM>templates</EM> subdirectories to those directories, respectively.
+
+<P>
+5. Create subdirectory <CODE>albums</CODE> (i.e.
+<EM>/www/site.com/htdocs/gallery/albums</EM>). This is where your albums will live. If you want to install the example
+gallery, copy the
+<EM>Example_Gallery</EM> folder into the albums folder you just created. (Installing the example
+gallery is optional)
+
+<P>
+6. Copy the <EM>mig.cfg.default</EM> file to <EM>mig.cfg</EM> in your Mig directory. Edit it to taste. If you are upgrading, you may not
+need to do this (just see if there's anything new in <EM>mig.cfg.default</EM> and update your existing
+<EM>mig.cfg</EM>).
+
+<P>
+7. Start putting your images in the <EM>albums</EM> subdirectory (i.e.
+<EM>/www/site.com/htdocs/gallery/albums</EM>) and there you have it.
+
+</BODY>
+
+</HTML>
