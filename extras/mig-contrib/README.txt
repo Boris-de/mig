@@ -2,6 +2,8 @@
 This package contains scripts and things that Mig users have contributed
 back to the community.  They are for you to use and enjoy.
 
+For a description of the different files, see the file INDEX.txt
+
 I make no guarantees about anything in this package.  Please exercise your
 own judgement before blindly using them.  I will make an effort to validate
 them and make sure they aren't blatantly destructive, but I didn't write
