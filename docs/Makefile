@@ -9,10 +9,12 @@ tcmd=	pod2text
 hargs=	--noindex --title="Mig Documentation"
 
 # HTML files
-html=	changelog.html credits.html install.html license.html
+html=	changelog.html credits.html install.html license.html \
+	passwords.html
 
 # Text files
-text=	changelog.txt credits.txt install.txt license.txt
+text=	changelog.txt credits.txt install.txt license.txt \
+	passwords.txt
 
 # Default is to rebuild doc files
 docs: $(html) $(text) sort clean

@@ -1,8 +1,8 @@
 =pod
 
-=head2 MIG Change Log
-
 $Id$
+
+=head2 MIG Change Log
 
 =head2 Version 1.3.2 (NOT YET RELEASED)
 
