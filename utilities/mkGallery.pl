@@ -58,17 +58,17 @@ use File::Basename;
 use File::Find;
 use Getopt::Std;
 
-my $myself = File::Basename::basename($0);  # Program name
-my $mydir  = File::Basename::dirname($0);   # Directory $myself lives in
-my $myRoot = cwd;                           # Directory I was started in
+my $myself = File::Basename::basename($0);  	# Program name
+my $mydir  = File::Basename::dirname($0);   	# Directory $myself lives in
+my $myRoot = cwd;                           	# Directory I was started in
 
 # Add this to the exec path - easier to find jhead than with relative paths.
 # This will not modify the path outside of mkGallery.pl.
 $ENV{"PATH"} .= ":$myRoot/$mydir";
 
-my $exifProg = "jhead";                     # Name of jhead program
-my $exifArgs = "";                          # Pass no args to jhead
-my $exifFile = "exif.inf";                  # File to store exif data in
+my $exifProg = "jhead";                     	# Name of jhead program
+my $exifArgs = "";                          	# Pass no args to jhead
+my $exifFile = "exif.inf";                  	# File to store exif data in
 
 # Defaults for boolean command-line flags
 my $allFlag             = 0;        # -a: Process all images
@@ -111,11 +111,9 @@ $globalConfig = $opt{"f"} if $opt{"f"};
 
 # Parse global config file, if it exists.
 if (-r $globalConfig) {
-    ($markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir,
-     $defaultThumbExt) =
-                &parseMyConfig($globalConfig, $markerType, $defaultMarker,
-                               $thumbDirFlag, $defaultThumbDir,
-                               $defaultThumbExt);
+    ($markerType, $defaultMarker, $thumbDirFlag, $defaultThumbDir, $defaultThumbExt)
+    = &parseMyConfig($globalConfig, $markerType, $defaultMarker,
+                     $thumbDirFlag, $defaultThumbDir, $defaultThumbExt);
 }
 
 # Prototypes
@@ -144,8 +142,8 @@ $thumbDirFlag       = 1 if $opt{"d"};   # set "use thumb subdir" flag
 $keepProfilesFlag   = 1 if $opt{"K"};   # set "keep profiles" flag
 
 # For "convert"
-$size       = $opt{"s"};    # thumbnail size in pixels
-$quality    = $opt{"q"};    # quality level for thumbnails
+$size       = $opt{"s"};    		# thumbnail size in pixels
+$quality    = $opt{"q"};    		# quality level for thumbnails
 
 # Thumbnail naming rules
 $markerLabel = $defaultMarker;
@@ -228,8 +226,8 @@ if ($interactFlag and not $commentsFlag) {
 if ($markerType eq "prefix") {
     $markerLabel .= "_";
     $marktestpat = "^" . $markerLabel;
-}
-if ($markerType eq "suffix") {
+
+} elsif ($markerType eq "suffix") {
     $markerLabel = "_" . $markerLabel;
     $marktestpat = $markerLabel . "$";
 }
@@ -256,8 +254,9 @@ if ($recurseFlag) {
     }
     $File::Find::mkGalleryThumbDirFlag = $thumbDirFlag;
     $File::Find::mkGalleryThumbDir = $thumbDir;
-    find(\&dirfind, $myRoot); # do the find itself
-    @processDirs = @File::Find::mkGalleryDirs;  # stash in @processDirs
+    find(\&dirfind, $myRoot); 				# do the find itself
+    @processDirs = @File::Find::mkGalleryDirs;  	# stash in @processDirs
+    
 } else {
     # otherwise, just do the current directory (default behavior)
     @processDirs = ( $myRoot );
@@ -404,6 +403,7 @@ foreach (@processDirs) {
 }
 
 
+#########################################################################
 ##
 ##  Subroutines
 ##
@@ -442,6 +442,7 @@ sub testFileType {
     } else {
         return 0;
     }
+    
 }   # -- End of testFileType()
 
 
@@ -599,14 +600,14 @@ sub parseMyConfig {
     while (<CF>) {
         chomp;
         if (/^[\s]*\$markerType/) {
-            s/^.*\$markerType[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  #"
+            s/^.*\$markerType[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;		#"
             $type = lc $_;          # just in case
             if ($type eq "prefix" or $type eq "suffix") {
                 $markerType = $type;
             }
         }
         if (/^[\s]*\$markerLabel/) {
-            s/^.*\$markerLabel[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  #"
+            s/^.*\$markerLabel[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  	#"
             $defaultMarker = $1 if $1;
         }
         if (/^[\s]*\$useThumbSubdir/) {
@@ -615,11 +616,11 @@ sub parseMyConfig {
             $thumbDirFlag = 0 if /^FALSE$/;
         }
         if (/^[\s]*\$thumbSubdir/) {
-            s/^.*\$thumbSubdir[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  #"
+            s/^.*\$thumbSubdir[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  	#"
             $defaultThumbDir = $1 if $1;
         }
         if (/^[\s]*\$thumbExt/) {
-            s/^.*\$thumbExt[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  #"
+            s/^.*\$thumbExt[\s]*=[\s]*["']([^'"]*)["'][\s]*;.*$/$1/i;  		#"
             $defaultThumbExt = $1 if $1;
         }
     }
@@ -667,7 +668,7 @@ sub processComments {
         while (<CF>) {
             chomp;
             if (/^<comment/i) {
-                s/^<comment[\s]+\"([^"]+)\"[\s]*>.*$/$1/i;  #"
+                s/^<comment[\s]+\"([^"]+)\"[\s]*>.*$/$1/i;  			#"
                 $noadd{$_} = 1 if $_ ne "";
             }
             if (/^<bulletin/i) {

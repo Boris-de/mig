@@ -71,22 +71,10 @@ index:
 docpublish:
 	cd docs ; make publish
 
-#index2: index
-#	scp index.php snoopy.net:/www/ingeni.us/html/gallery/index2.php
-#	@echo "URL: http://ingeni.us/gallery/index2.php"
-
 mig.sf.net: index
 	scp index.php mig.sf.net:web/gallery
 	scp templates/*html templates/*.css mig.sf.net:web/gallery/templates
 	@echo "URL: http://mig.sf.net/gallery/"
-
-#ingeni.us: index
-#	scp index.php snoopy.net:/www/ingeni.us/html/gallery
-#	@echo "URL: http://tangledhelix.com/gallery/"
-
-#monkeysr.us: index
-#	scp index.php snoopy.net:/www/monkeysr.us/html/gallery
-#	@echo "URL: http://monkeysr.us/gallery/"
 
 test: local_gallery gallery_subdir gallery_th
 
