@@ -11,13 +11,15 @@ HTML= ../src/docs/html/Apache.html ../src/docs/html/ChangeLog.html \
       ../src/docs/html/mig_cf.html ../src/docs/html/License.html \
       ../src/docs/html/Passwords.html ../src/docs/html/phpNuke.html \
       ../src/docs/html/Templates.html ../src/docs/html/Windows.html \
-      ../src/docs/html/Utilities.html ../src/docs/html/Readme.html
+      ../src/docs/html/Utilities.html ../src/docs/html/Readme.html \
+      ../src/docs/html/FTPinstall.html
 
 TEXT= ../src/docs/Apache.txt ../src/docs/CHANGELOG ../src/docs/CREDITS \
       ../src/docs/FEATURES ../src/docs/INSTALL ../src/docs/Jump.txt \
       ../src/docs/LICENSE ../src/docs/mig_cf.txt ../src/docs/Passwords.txt \
       ../src/docs/phpNuke.txt ../src/docs/Templates.txt \
-      ../src/docs/Utilities.txt ../src/docs/Windows.txt ../src/README
+      ../src/docs/Utilities.txt ../src/docs/Windows.txt ../src/README \
+      ../src/docs/FTPinstall.txt
 
 default: all
 
@@ -106,6 +108,12 @@ all: $(HTML) $(TEXT) cleanup
 
 ../src/README: Readme.pod
 	pod2text Readme.pod > $@
+
+../src/docs/html/FTPinstall.html: FTPinstall.pod
+	pod2html $(HARGS) < FTPinstall.pod > $@
+
+../src/docs/FTPinstall.txt: FTPinstall.pod
+	pod2text FTPinstall.pod > $@
 
 cleanup:
 	/bin/rm -f pod2html*cache

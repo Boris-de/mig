@@ -59,6 +59,11 @@ Anatoly Ropotov (lynx@rulez.lv) for the Russian translations.
 
 Dogan Sariguzel (dogan@procam.com.tr) for the Turkish translation.
 
+Sebastian Djupsjöbacka (basse@iki.fi) for the Swedish translation.
+
+Mikkel Mondrup Kristensen (hh00d-mmk@uv.horshs.dk) for the Danish
+translation.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with MiG.
 

@@ -9,7 +9,24 @@ Z<>
 
 Z<>
 
-=head2 Version 1.2.3 ()
+=head2 Version 1.2.5 ()
+
+Added Danish translation
+
+Modified template parser so that you can use #include to include PHP files
+(files with extensions ".php" or ".php3")
+
+Added docs/FTPinstall.txt for people who have only FTP access to their
+server and no shell access (i.e. they can't run F<install.sh>).
+
+=head2 Version 1.2.4 (Mon Apr 09 2001)
+
+Added Swedish translation
+
+Removed all calls to die() since they seemed to not work in all versions
+of PHP.
+
+=head2 Version 1.2.3 (Mon Apr 09 2001)
 
 Removed install.bat, rewrote docs/Windows.txt to match.
 
