@@ -2,6 +2,35 @@
 
 =head2 MIG Change Log
 
+=head2 Version 1.3.8 (NOT YET RELEASED)
+
+If Mig is called with no parameters, it will redirect to itself with
+C<currDir=.> appended.  This makes it easier to tack on more parameters
+later - no need to worry about the difference between & and ?.
+
+Added C<newLang> to the template parser.  This makes it trivial to add
+links to your templates which switch between languages on the fly.  See the
+install documentation for more details.
+
+Added C<$omitImageName> to F<config.php>.  When C<TRUE> it will cause the
+image name to be omitted from the path line in image views.
+
+[Sourceforge bug report #626032] -
+Fixed the '..' check for C<currDir>.  At some point it had been moved down
+so far in the code it was no longer effective and Mig went into an endless
+loop when encountering '/..' in a URL.  Now it will properly exit.
+
+Updated to work with PHPWebThings 0.5test7.  Tested against PHP-Nuke 6.0,
+PostNuke 0.7.2.1_Phoenix, PHPWebSite 0.8.3, PHPWebThings 0.5test7.
+
+Renamed the F<phpnuke> document to F<portals>.
+
+Added integration with Xoops content management system using patches
+provided by Marius Scurtescu.  See the F<portals> document.
+
+Files formerly found in F<templates/phpnuke> will now be in
+F<templates/portals>.
+
 =head2 Version 1.3.7 (Sat, 19 Oct 2002)
 
 Fixed some table code and default templates - Mig's default layout now

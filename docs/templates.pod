@@ -169,6 +169,37 @@ URL of Mig home page
 Description of the image, taken from the comments file(s).  For folders,
 this is E<lt>BulletinE<gt>.
 
+=item newLang
+
+Lets you switch from one language to another.  For example, if your default
+language is English (en) but you choose to publish also in Spanish and
+Italian, you can add links like these to your template files:
+
+    <a href="%%newLang%%=es">Espanol</a>
+
+    <a href="%%newLang%%=it">Italiano</a>
+
+Then, anyone visiting your pages would be given a default page in English
+(or whatever C<$mig_language> is set to in F<config.php>) but clicking on
+the links as shown above would tell Mig to switch over to the new language
+(in this case either Spanish or Italian).
+
+You can also link directly to a version of your site before the visitor
+ever gets there (so they don't have to get English first, then switch).  To
+directly link you'd add a "mig_dl=LANG" parameter to your URL.  So if your
+usual link looks like this:
+
+    http://my.gallery.com/mig/index.php
+
+You'd instead use this:
+
+    http://my.gallery.com/mig/index.php?mig_dl=es
+
+Or you can link even if there are already parameters in the URL; just use
+an & instead of ?
+
+    http://my.gallery.com/mig/index.php?currDir=./My_Stuff&mig_dl=es
+
 =back
 
 =item 2.

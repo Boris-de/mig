@@ -9,12 +9,12 @@ tcmd=	pod2text
 
 # HTML files
 html=	changelog.html credits.html install.html license.html \
-	passwords.html jump.html apache.html phpnuke.html \
+	passwords.html jump.html apache.html portals.html \
 	utilities.html mig_cf.html templates.html
 
 # Text files
 text=	changelog.txt credits.txt install.txt license.txt \
-	passwords.txt jump.txt apache.txt phpnuke.txt \
+	passwords.txt jump.txt apache.txt portals.txt \
 	utilities.txt mig_cf.txt templates.txt
 
 # Default is to rebuild doc files

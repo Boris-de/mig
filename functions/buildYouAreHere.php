@@ -2,7 +2,7 @@
 // buildYouAreHere() - build the "You are here" line for the top
 //                     of each page
 
-function buildYouAreHere ( $baseURL, $currDir, $image )
+function buildYouAreHere ( $baseURL, $currDir, $image, $omitImageName )
 {
 
     global $mig_config;
@@ -61,7 +61,8 @@ function buildYouAreHere ( $baseURL, $currDir, $image )
     }
 
     // If there's an image, tack it onto the end of the hereString
-    if ($image != '') {
+    // unless we have $omitImageName set to TRUE
+    if ($image != '' && ! $omitImageName) {
         $hereString .= '&nbsp;&gt;&nbsp;' . $image;
     }
 

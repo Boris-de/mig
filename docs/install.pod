@@ -49,8 +49,14 @@ Wandel's site at http://www.sentex.net/~mwandel/jhead/
 See the E<quot>utilitiesE<quot> document for more information about
 F<mkGallery.pl> and F<jhead>.
 
-PHP-Nuke, PostNuke, PHPWebSite and PHPWebThings users:
-see the F<phpnuke> document.
+If you are using one of the following Portal / Content Management systems,
+make sure to read the F<portals> document.
+
+    PHP-Nuke
+    PostNuke
+    PHPWebSite
+    PHPWebThings
+    Xoops
 
 =head2 New Installation
 
@@ -342,14 +348,12 @@ Spanish by doing this:
 
     http://mysite.com/gallery/index.php?currDir=./MyStuff&mig_dl=es
 
-To do this at the root of your page (i.e. to have links to your site in
-different languages for example) you can do this:
+You can add links to your template files which switch languages on the fly
+using the template keyword C<newLang> like this:
 
-    http://mysite.com/gallery/index.php?mig_dl=no   (Norwegian)
+    <a href="%%newLang%%=es">Espanol</a>
 
-    http://mysite.com/gallery/index.php?mig_dl=fi   (Finnish)
-
-    http://mysite.com/gallery/index.php?mig_dl=ro   (Romanian)
+    <a href="%%newLang%%=it">Italiano</a>
 
 =item 6. Pop-up windows
 

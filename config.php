@@ -307,10 +307,27 @@ $suppressImageInfo = FALSE;
 // Defaults to FALSE.
 //
 // Example:
-//      $showShortOnThumbPage = FALSE
+//      $showShortOnThumbPage = FALSE;
 //
 
 $showShortOnThumbPage = FALSE;
+
+
+//
+// $omitImageName
+//      If set to FALSE, the image name is shown in the "path" line
+//      at the top of each page.  If set TRUE, the image name is
+//      omitted.  The "(#x of y)" in the same line in image views
+//      is not affected by this setting.  If you don't want that to
+//      show up, get rid of %%currPos%% in your image.html template.
+//
+// Defaults to FALSE.
+//
+// Example:
+//     $omitImageName = FALSE;
+//
+
+$omitImageName = FALSE;
 
 
 //
@@ -620,6 +637,10 @@ $exifFormatString = '|%c|';
 //     In this way you can have multiple translations of your site by just
 //     having a different hyperlink for each one.  See the install document
 //     for more information.
+//     
+//     See the template document for information on the 'newLang' template
+//     keyword which lets you easily build links into your templates for
+//     other languages.
 //
 //     If you want to translate Mig into another language, please contact
 //     me via email (dan@tangledhelix.com).
@@ -649,30 +670,38 @@ $mig_language = 'en';
 
 
 // -----------------------------------------------------------------
-// PHPNUKE / POSTNUKE / PHPWEBTHINGS COMPATIBILITY
-// -----------------------------------------------------------------
+// CONTENT MANAGEMENT SYSTEMS
 //
-// If you are using PHP-Nuke (www.phpnuke.org), PostNuke (www.postnuke.com)
-// phpWebThings (www.phpdbform.com) or phpWebSite (phpwebsite.appstate.edu),
-// you can tell Mig to try to cooperate with your content system.  See the
-// "phpnuke" document for more information.
+// Compatible with:
+//
+//      PHP-Nuke                http://phpnuke.org/
+//      PostNuke                http://postnuke.com/
+//      phpWebSite              http://phpwebsite.appstate.edu/
+//      phpWebThings            http://phpdbform.com/
+//      Xoops                   http://xoops.org/
+//
+// -----------------------------------------------------------------
 //
 // $phpNukeCompatible
 //      Set to TRUE if you're using PHP-Nuke, PostNuke or phpWebSite.
 // $phpWebThingsCompatible
 //      Set to TRUE if you're using phpWebThings.
+// $mig_xoopsCompatible
+//      Set to TRUE if you're using XOOPS.
 //
-//      Obviously you only want to set ONE of these two to TRUE.
+//      Obviously you only want to set ONE of these to TRUE.
 //
-// Both default to FALSE.
+// All of them default to FALSE.
 // 
 // Example:
 //      $phpNukeCompatible = FALSE;
 //      $phpWebThingsCompatible = FALSE;
+//      $mig_xoopsCompatible = FALSE;
 //
 
 $phpNukeCompatible = FALSE;
 $phpWebThingsCompatible = FALSE;
+$mig_xoopsCompatible = FALSE;
 
 //
 // $phpNukeRoot
@@ -681,17 +710,42 @@ $phpWebThingsCompatible = FALSE;
 //      to FALSE.  This should be the folder where your Nuke site
 //      is installed.  Do not include a trailing slash.
 // $phpWebThingsRoot
-//      Same thing, only for phpWebThings.
+//      Same thing, only for phpWebThings.  Ignored if
+//      $phpWebThingsCompatible is FALSE.
+// $mig_xoopsRoot
+//      Same thing, only for XOOPS.  Ignored if $mig_xoopsCompatible is
+//      FALSE.
 //
-// Both default to ''.
+// $phpNukeRoot and $phpWebThingsRoot default to ''.
 //
-// Example:
+// $mig_xoopsRoot defaults to '../..'.
+//
+// Examples:
 //      $phpNukeRoot = '/www/mysite.com/nuke';
 //      $phpWebThingsRoot = '/www/mysite.com/webthings';
+//      $mig_xoopsRoot = '/www/mysite.com/xoops';
 //
 
 $phpNukeRoot = '';
 $phpWebThingsRoot = '';
+$mig_xoopsRoot = '../..';
+
+//      
+// $mig_xoopsRBlockForImage
+// $mig_xoopsRBlockForFolder
+//      Flags to show or hide the right hand side blocks in image and
+//      folder modes
+//      
+// They default to 0 and 1, show right block for folders and hide
+// it for images.
+//
+// Examples:
+//      $mig_xoopsRBlockForImage = 0;
+//      $mig_xoopsRBlockForFolder = 1;
+//
+
+$mig_xoopsRBlockForImage = 0;
+$mig_xoopsRBlockForFolder = 1;
 
 
 // -----------------------------------------------------------------

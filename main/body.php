@@ -46,9 +46,15 @@ include(convertIncludePath($pathConvertFlag, $configFile, $pathConvertRegex,
             $pathConvertTarget));
 
 // Return an error if too many modes are set at once
-if ($phpNukeCompatible && $phpWebThingsCompatible) {
-    print "FATAL ERROR: both \$phpNukeCompatible and"
-        . " \$phpWebThingsCompatible are TRUE!\n";
+$cms_count = 0;
+
+if ($phpNukeCompatible)             ++$cms_count;
+if ($phpWebThingsCompatible)        ++$cms_count;
+if ($mig_xoopsCompatible)           ++$cms_count;
+
+if ($cms_count > 1) {
+    print "FATAL ERROR: more than one content management system ";
+    print "is defined.";
     exit;
 }
 
@@ -89,6 +95,25 @@ if ($phpNukeCompatible) {
         print "FATAL ERROR: phpWebThings lib missing!\n";
         exit;
     }
+
+// or for XOOPS...
+} elseif ($mig_xoopsCompatible) {
+    if (! $mig_xoopsRoot) {
+        print "FATAL ERROR: \$mig_xoopsRoot not defined!\n";
+        exit;
+    }
+    $result = chdir($mig_xoopsRoot);
+    if (! $result) {
+        print "FATAL ERROR: can not chdir() to \$mig_xoopsRoot!\n";
+        exit;
+    }
+    // XOOPS library
+    if (file_exists('mainfile.php')) {
+        include('mainfile.php');
+    } else {
+        print "FATAL ERROR: XOOPS lib missing!\n";
+        exit;
+    }
 }
 
 // Get currDir.  If there isn't one, default to '.'
@@ -97,7 +122,23 @@ if ($_GET['currDir']) {
 } elseif ($HTTP_GET_VARS['currDir']) {
     $currDir = $HTTP_GET_VARS['currDir'];
 } elseif (! $currDir) {
-    $currDir = '.';
+    if ($_SERVER['SERVER_NAME']) {
+        $SERVER_NAME = $_SERVER['SERVER_NAME'];
+    } elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
+        $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
+    }
+
+    if ($SERVER_NAME) {
+        header("Location: http://$SERVER_NAME$baseURL?currDir=.");
+        exit;
+    }
+}
+
+// Look at currDir from a security angle.  Don't let folks go outside
+// the album directory base
+if (strstr($currDir, '..')) {
+    print "SECURITY VIOLATION - ABANDON SHIP";
+    exit;
 }
 
 // Strip URL encoding
@@ -328,14 +369,18 @@ if ($phpNukeCompatible) {
 // Is this a phpWebThings site?
 } elseif ($phpWebThingsCompatible) {
     draw_header();
-    theme_draw_center_box_open($pageTitle);
-}
+    if (function_exists('theme_draw_center_box_open')) {
+        theme_draw_center_box_open($pageTitle);
+    } elseif (function_exists('theme_draw_box_open')) {
+        theme_draw_box_open($pageTitle);
+    } else {
+        print "ERROR: Can't find relevant drawing function";
+        exit;
+    }
 
-// Look at currDir from a security angle.  Don't let folks go outside
-// the album directory base
-if (strstr($currDir, '..')) {
-    print "SECURITY VIOLATION - ABANDON SHIP";
-    exit;
+// Is this a XOOPS site?
+} elseif ($mig_xoopsCompatible) {
+    include(XOOPS_ROOT_PATH."/header.php");
 }
 
 // strip URL encoding here too
@@ -348,7 +393,8 @@ if ($pageType == 'folder') {
     // Determine which template to use
     if ($folderTemplate) {
         $templateFile = $folderTemplate;
-    } elseif ($phpNukeCompatible || $phpWebThingsCompatible) {
+    } elseif ($phpNukeCompatible || $phpWebThingsCompatible
+              || $mig_xoopsCompatible) {
         $templateFile = $templateDir . '/mig_folder.php';
     } else {
         $templateFile = $templateDir . '/folder.html';
@@ -442,7 +488,7 @@ if ($pageType == 'folder') {
                               $homeLabel, $noThumbs, '');
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, '');
+    $youAreHere = buildYouAreHere($baseURL, $currDir, '', $omitImageName);
 
     // newcurrdir is currdir without the leading './'
     $newCurrDir = getNewCurrDir($currDir);
@@ -512,10 +558,11 @@ if ($pageType == 'folder') {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($baseURL, $currDir, $image);
+    $youAreHere = buildYouAreHere($baseURL, $currDir, $image, $omitImageName);
 
-    // Which template to use.
-    if ($phpNukeCompatible || $phpWebThingsCompatible) {
+    // Which template to use
+    if ($phpNukeCompatible || $phpWebThingsCompatible
+                || $mig_xoopsCompatible) {
         $templateFile = $templateDir . '/mig_image.php';
     } else {
         $templateFile = $templateDir . '/image.html';
@@ -532,13 +579,31 @@ if ($pageType == 'folder') {
                   $pathConvertFlag, $pathConvertRegex, $pathConvertTarget);
 }
 
-// If in PHPNuke mode, finish up the tables and such needed for PHPNuke
+// Finish up for content management systems
+
 if ($phpNukeCompatible) {
     print '</tbody></table></center></td></tr></tbody></table>';
     include('footer.php');
+
 } elseif ($phpWebThingsCompatible) {
-    theme_draw_center_box_close();
-    draw_news(true);
+    if (function_exists('theme_draw_center_box_close')) {
+        theme_draw_center_box_close();
+    } elseif (function_exists('theme_draw_box_close')) {
+        theme_draw_box_close();
+    } else {
+        print "Can't find relevant drawing function";
+        exit;
+    }
+    //if($modules["news"]) draw_news(true);
+    //draw_news(true);
     draw_footer();
+
+} elseif ($mig_xoopsCompatible) {
+    if ($pageType == 'image') {
+        $xoopsOption['show_rblock'] = $mig_xoopsRBlockForImage;
+    } else {
+        $xoopsOption['show_rblock'] = $mig_xoopsRBlockForFolder;
+    }
+    include(XOOPS_ROOT_PATH."/footer.php");
 }
 

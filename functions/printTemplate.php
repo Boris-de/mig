@@ -9,6 +9,22 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                          $pathConvertFlag, $pathConvertRegex,
                          $pathConvertTarget )
 {
+    global $REQUEST_URI;
+    global $HTTP_SERVER_VARS;
+
+    // Get URL for %%newLang%% variable
+    if ($_SERVER['REQUEST_URI']) {
+        $newLang = $_SERVER['REQUEST_URI'];
+    } elseif ($HTTP_SERVER_VARS['REQUEST_URI']) {
+        $newLang = $HTTP_SERVER_VARS['REQUEST_URI'];
+    } elseif ($REQUEST_URI) {
+        $newLang = $REQUEST_URI;
+    }
+    if (ereg('mig_dl=',$newLang)) {
+        $newLang = ereg_replace('[?&]mig_dl=[^?&]*', '', $newLang);
+    }
+    $newLang .= '&mig_dl';
+
     // Only prepend a path if one isn't there.  For unix-like systems this
     // checks for a leading slash, for Windows-like system it checks for
     // a leading drive letter or an SMB share.
@@ -83,7 +99,7 @@ function printTemplate ( $baseURL, $templateDir, $templateFile, $version,
                 'imageList', 'backLink', 'currDir', 'newCurrDir',
                 'image', 'albumURLroot', 'pageTitle', 'nextLink',
                 'prevLink', 'currPos', 'description', 'youAreHere',
-                'distURL', 'encodedImageURL', 'imageSize'
+                'distURL', 'encodedImageURL', 'imageSize', 'newLang'
             );
 
             // Do substitution for various variables

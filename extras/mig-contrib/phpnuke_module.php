@@ -19,7 +19,19 @@
 // Munge base reference
 $baseHref = ereg_replace('/modules.*$', '', $PHP_SELF);
 
-// Redirect browser
-header("Location: http://$SERVER_NAME$baseHref/mig.php");
+if ($_SERVER['SERVER_NAME']) {
+    $SERVER_NAME = $_SERVER['SERVER_NAME'];
+} elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
+    $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
+}
+
+if ($SERVER_NAME) {
+    // Redirect browser
+    header("Location: http://$SERVER_NAME$baseHref/mig.php");
+    exit;
+} else {
+    print "ERROR: Can't find SERVER_NAME!";
+    exit;
+}
 
 ?>

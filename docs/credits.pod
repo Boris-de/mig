@@ -95,6 +95,8 @@ translation.
 Krzysztof Wojtas (krzysin at cyklon.chemia.pk.edu.pl) for the Polish
 ISO-8859-2 translation.
 
+Marius Scurtescu (marius at scurtescu.com) for the Xoops integration patch.
+
 A special note to recognize Matthias Wendel, author of the F<jhead>
 utility, which is bundled with Mig.
 
