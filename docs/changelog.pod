@@ -2,6 +2,12 @@
 
 =head2 MIG Change Log
 
+=head2 Version 1.5.0_pre1
+
+introduce $imageFilenameRegexpr and $currDirNameRegexpr (php 3.0.9!)
+
+various XHTML-compatiblity-fixes
+
 =head2 Version 1.4.1 (Wed, 06 Apr 2005)
 
 [Sourceforge bug report #974964] - Fixed bug in C<buildDirList()>
@@ -473,7 +479,7 @@ Fixed bug in ALT tag (there was no space before the SRC and ALT bits).
 
 Added Italian and Spanish translations.
 
-[Sourceforge feature request #416337] - 
+[Sourceforge feature request #416337] -
 Modified the ALT tag code such that HTML entities within E<lt>commentE<gt>
 blocks should be OK now even if hover-over comments are being used
 in thumbnail views.
@@ -1016,7 +1022,7 @@ folder table isn't printed.  If no images, the images table isn't printed.
 If there are both, you see both tables.  The result is less confusing.
 
 If F<mig.cfg> is missing, F<mig.cfg.default> will be read instead, to avoid
-any errors popping up. 
+any errors popping up.
 
 =head2 Version 0.34 (Mon, 31 Jul 2000)
 

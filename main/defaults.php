@@ -57,6 +57,8 @@ $useLargeImages             = FALSE;
 $useRealRandThumbs          = TRUE;
 $useThumbSubdir             = TRUE;
 $viewFolderCount            = FALSE;
+$imageFilenameRegexpr       = '=^[\._-\d\w]*$=';
+$currDirNameRegexpr         = '=^\.?[/_-\d\w]*$=';
 
 //for old compatibility: remove in mig 2.0:
 if ($suppressImageInfo = 'true') $fileInfoFormatString="";

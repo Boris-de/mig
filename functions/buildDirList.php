@@ -28,13 +28,13 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     }
 
     while ($file = readdir($dir)) {
-    
+
         // Only pay attention to directories
         $x = $mig_config['albumdir'].'/'.$currDir.'/'.$file;
         if (! is_dir($x)) {
             continue;
         }
-            
+
         // Ignore . and ..
         if ($file == '.' || $file == '..') {
             continue;
@@ -48,6 +48,11 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         // Ignore directories whose name begins with "." if the
         // appropriate option is set
         if ($mig_config['ignoredotdirectories'] && ereg('^\.', $file)) {
+            continue;
+        }
+
+        // Ignore directories whose name does not match currDirNameRegexpr
+        if (!preg_match($mig_config['currDirNameRegexpr'], $file)) {
             continue;
         }
 

@@ -43,7 +43,7 @@ $mig_config['basedir'] = dirname($mig_config['basedir']);
 // This is basically for Windows SMB shares
 if (eregi('^[\\]{2}', $mig_config['basedir'])) {
     $mig_config['basedir'] = stripslashes($mig_config['basedir']);
-}    
+}
 
 // Locate and load configuration
 if (file_exists($mig_config['basedir'].'/mig/config.php')) {
@@ -59,7 +59,7 @@ if ($configFile) {
     include(convertIncludePath($pathConvertFlag, $configFile,
                                $pathConvertRegex, $pathConvertTarget));
 }
-            
+
 // Return an error if too many modes are set at once
 $usePortal = 0;
 
@@ -106,11 +106,13 @@ $mig_config['uselargeimages']                   = $useLargeImages;
 $mig_config['userealrandthumbs']                = $useRealRandThumbs;
 $mig_config['usethumbsubdir']                   = $useThumbSubdir;
 $mig_config['viewfoldercount']                  = $viewFolderCount;
+$mig_config['imageFilenameRegexpr']             = $imageFilenameRegexpr;
+$mig_config['currDirNameRegexpr']               = $currDirNameRegexpr;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
     $mig_config['basedir'] .= '/mig';
-    if (! $phpNukeRoot) {      
+    if (! $phpNukeRoot) {
         print "FATAL ERROR: \$phpNukeRoot not defined!\n";
         exit;
     }
@@ -258,7 +260,7 @@ if ($_GET['currDir']) {
 
 // Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
-if (strstr($currDir, '..')) {
+if (strstr($currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $currDir)) {
     print 'SECURITY VIOLATION - ABANDON SHIP';
     exit;
 }
@@ -290,6 +292,15 @@ if (! $image) {
         $image = $HTTP_GET_VARS['image'];
     }
 }
+
+// Look at $image from a security angle.
+// Don't let folks go outside the album directory base
+// Don't let folks define ANY directory here
+if (strstr($image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $image)) {
+    print 'ERROR: $imageis invalid.  Exiting.';
+    exit;
+}
+
 $mig_config['image'] = $image;
 
 // check if the image exists...
@@ -312,7 +323,19 @@ if (! $pageType) {
         $pageType = 'folder';
     }
 }
+
+// only allow one of the predefined values
+$allowedTypes = array( "image" => 1, "folder" => 1, "large" => 1, "" => 1);
+
+if(!isset($allowedTypes[$pageType])) {
+	echo 'ERROR: $pageType is invalid.  Exiting.';
+	exit;
+}
+
+unset($allowedTypes);
+
 $mig_config['pagetype'] = $pageType;
+
 
 if (! $startFrom) {
     if ($_GET['startFrom']) {
@@ -321,7 +344,9 @@ if (! $startFrom) {
         $startFrom = $HTTP_GET_VARS['startFrom'];
     }
 }
-$mig_config['startfrom'] = $startFrom;
+
+// only allow digits for $startFrom
+$mig_config['startfrom'] = isset($startFrom) ? $startFrom+0 : 0;
 
 // use language set specified in URL, if one was.
 if (! $mig_dl) {
@@ -536,7 +561,7 @@ if ($mig_config['pagetype'] == 'folder') {
                                 $folderList, $presort_img, $desc, $short_desc);
 
     // Only frame the lists in table code when appropriate
-    
+
     // Set style of table, either with text or thumbnails
     if ($mig_config['randomfolderthumbs']) {
         $folderTableClass = 'folderthumbs';
