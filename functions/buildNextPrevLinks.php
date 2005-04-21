@@ -6,13 +6,13 @@
 */
 function _greyLink($text)
 {
-    return '<font color="#999999">'.$text.'</font>';
+    return '<span class="inactivelink">'.$text.'</span>';
 }
 
 function _prevNextLink($text,$currDir,$imgNr)
 {
     global $mig_config;
-    
+
         $link = '<a href="' . $mig_config['baseurl']
                . '?pageType=' . $mig_config['pagetype'] . '&amp;currDir=' . $currDir
                . '&amp;image=' . $imgNr;
@@ -50,7 +50,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     // Gather all files into an array
     $fileList = array ();
     while ($file = readdir($dir)) {
-    
+
         $markerLabel = $mig_config['markerlabel'];
 
         // Ignore thumbnails
@@ -65,7 +65,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
         // Only look at valid image formats
         if (! getFileType($file)) {
-            continue; 
+            continue;
         }
 
         // Ignore the hidden images
@@ -85,7 +85,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
         }
     }
 
-    closedir($dir); 
+    closedir($dir);
 
     ksort($fileList);       // sort, so we see sorted results
     reset($fileList);       // reset array pointer
@@ -123,10 +123,10 @@ function buildNextPrevLinks ( $currDir, $presorted )
     $i = 1;                 // iteration counter, etc
 
     // Yes, position 0 is garbage.  Makes the math easier later.
-    $fList = array ( 'blah' ); 
+    $fList = array ( 'blah' );
 
     while (list($file, $junk) = each($presorted)) {
-    
+
         // If "this" is the one we're looking for, mark it as such.
         if ($file == $mig_config['image']) {
             $ThisImagePos = $i;
@@ -134,7 +134,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
         $fList[$i] = $file;     // Stash filename in the array
         ++$i;                   // increment the counter, of course.
-    } 
+    }
     reset($fList);
 
     --$i;                       // Get rid of the last increment...
@@ -150,11 +150,11 @@ function buildNextPrevLinks ( $currDir, $presorted )
     // Previous must always be one less than the current index.  If
     // that has a value, that is.  Unless the current index is "1" in
     // which case we know there is no previous.
-    
+
     if ($ThisImagePos == 1) {
         $prev = 'NA';
     } elseif ($fList[$ThisImagePos-1]) {
-        $prev = migURLencode($fList[$ThisImagePos-1]); 
+        $prev = migURLencode($fList[$ThisImagePos-1]);
     }
 
     // URL-encode currDir
@@ -162,15 +162,15 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
     // newCurrDir is currDir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
-    
+
     //build the links:
-    
+
     //first parse the prev/nextFormatStrings...
-    
+
     $fileinfotable = array ( 'l' => $mig_config['lang']['previmage']
                            );
     $prevtext = replaceString($mig_config['prevformatstring'],$fileinfotable);
-    
+
     $fileinfotable = array ( 'l' => $mig_config['lang']['nextimage']
                            );
     $nexttext = replaceString($mig_config['nextformatstring'],$fileinfotable);
@@ -179,7 +179,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     if ($prev == 'NA') $pLink = _greyLink($prevtext);
     // else show a real link
     else $pLink = _prevNextLink($prevtext,$currDir,$prev);
- 
+
 
     // If there is no next image, show a greyed-out link
     if ($next == 'NA') $nLink = _greyLink($nexttext);

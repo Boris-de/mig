@@ -1,8 +1,8 @@
 /* Default typeface */
-A, B, P, TABLE, SMALL, BODY, TD, OL, UL, MENU, BLOCKQUOTE, DIV {
+a, b, p, table, small, body, td, ol, ul, menu, blockquote, div {
     font-family: Arial, Helvetica, sans-serif;
 }
-PRE, TT, INPUT, TEXTAREA {
+pre, tt, input, textarea {
     font-family: Courier, fixed;
 }
 
@@ -11,12 +11,12 @@ body {
 }
 
 /* Link appearance */
-A:link, A:visited { text-decoration: none }
-A:active, A:hover { text-decoration: underline }
-A:hover { color: blue }
+a:link, a:visited { text-decoration: none }
+a:active, a:hover { text-decoration: underline }
+a:hover { color: blue }
 
 /* Folder table (text) */
-TD.foldertext {
+td.foldertext {
     color: #000000;        padding-top: 0px;
     background: #f0f0f0;   padding-bottom: 1px;
     font-size: .75em;      padding-left: 3px;
@@ -24,7 +24,7 @@ TD.foldertext {
 }
 
 /* Folder table (thumbnails) */
-TD.folderthumbs {
+td.folderthumbs {
     color: #000000;        padding-top: 2px;
     background: #f0f0f0;   padding-bottom: 2px;
     font-size: .7em;       padding-left: 4px;
@@ -32,7 +32,7 @@ TD.folderthumbs {
 }
 
 /* Image table */
-TD.image {
+td.image {
     color: #000000;          padding-top: 2px;
     background: #f0f0f0;     padding-bottom: 2px;
     font-size: .8em;         padding-left: 4px;
@@ -40,9 +40,17 @@ TD.image {
 }
 
 /* Description table */
-TD.desc {
+td.desc {
     color: #333333;          padding-top: 4px;
     background: #f0f0f0;     padding-bottom: 3px;
     font-size: .9em;         padding-left: 4px;
     text-align: center;      padding-right: 6px;
+}
+
+.inactivelink {
+    color: #999999;
+}
+
+img.imagethumb {
+    border: 0;
 }

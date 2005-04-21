@@ -5,7 +5,7 @@
 function buildImageURL ( $currDir, $filename, $description, $short_desc )
 {
     global $mig_config;
-    
+
     $markerLabel = $mig_config['markerlabel'];
 
     // Collect information about this object.
@@ -28,10 +28,10 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     if ($type == 'image') {
         if ($mig_config['usethumbsubdir']) {
-        
+
             $thumbFile = $mig_config['albumdir'] . "/$oldCurrDir/"
                        . $mig_config['thumbsubdir'] . "/$fname.";
-                       
+
             if ($mig_config['thumbext']) {
                 $thumbFile .= $mig_config['thumbext'];
             } else {
@@ -143,7 +143,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         $imageProps = GetImageSize($imageFile);
         $imageWidth = $imageProps[0];
         $imageHeight = $imageProps[1];
-     
+
 
         // Figure out the bytes
         $imageFileSize = filesize($imageFile);
@@ -155,7 +155,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
         $imageFileSize=filesize($scriptpath.$mig_config['albumurlroot'].'/'.$currDir.'/'.$filename);
     }
-    
+
     if ($imageFileSize > 1048576) {
        $imageFileSize = sprintf('%01.1f', $imageFileSize / 1024 / 1024) . 'MB';
     } elseif ($imageFileSize > 1024) {
@@ -163,7 +163,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     } else {
        $imageFileSize = $imageFileSize . $mig_config['lang']['bytes'];
     }
-    
+
 
     // Figure out thumbnail geometry
     $thumbHTML = '';
@@ -177,14 +177,14 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     if ($type != 'image') {
 
         $url = "\n" . '    <td align="center" class="image"><a';
-        if (! $mig_config['suppressalttags']) { 
+        if (! $mig_config['suppressalttags']) {
             $url .= ' title="' . $alt_desc . '"';
         }
 
         $url .= ' href="' . $mig_config['albumurlroot'] . '/' . $currDir . '/'
               . $fname . '.' . $ext . '">'
-              . '<img src="' . $thumbImage . '"></a>';
-              
+              . '<img src="' . $thumbImage . '" /></a>';
+
 
         $fileinfotable = array ( 'n' => $filename,
                                      's' => $imageFileSize
@@ -193,9 +193,9 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         // If $fileInfoFormatString is set, show the file info
         if ($mig_config['fileinfoformatstring']) {
             $url .= '<br />';
-                   
+
             $newstr=replaceString($mig_config['fileinfoformatstring'][$type],$fileinfotable);
-            
+
             if (!$mig_config['nothumbs']) {
                 $url .= $newstr;
             }
@@ -221,7 +221,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         if ($mig_config['imagepopup']) {
             $popup_width = $imageWidth + 30;
             $popup_height = $imageHeight + 150;
-        
+
             // Add max size for popup window
             if ($popup_width > $mig_config['imagepopmaxwidth']) {
                 $popup_width = $mig_config['imagepopmaxwidth'];
@@ -284,7 +284,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
                     $url .= ' alt="' . $alt_desc . '"';
                 }
 
-            $url .= ' border="0" ' . $thumbHTML . '/>';
+            $url .= ' class="imagethumb" ' . $thumbHTML . ' />';
         }
 
         $url .= '</a>';     // End the <A> element
@@ -296,14 +296,14 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
             //       %n = Filename
             //       %s = FileSize
             //       %i = ImageSize
-                 
+
             $fileinfotable = array ( 'n' => $fname . '.' . $ext,
                                      's' => $imageFileSize,
                                      'i' => $imageWidth.'x'.$imageHeight);
-                                     
+
              $newstr=replaceString($mig_config['fileinfoformatstring'][$type],$fileinfotable);
 
-            
+
              if (!$mig_config['nothumbs']) {
                 $url .= $newstr;
             }
