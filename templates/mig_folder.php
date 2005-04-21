@@ -19,7 +19,11 @@
 
 <!-- image list -->
 <center>
-%%imageList%%
+<table summary="Images Frame" border="0" cellpadding="0" cellspacing="0"><tbody>
+ <tr><td class="image">
+  %%imageList%%
+ </td></tr>
+</tbody></table>
 <br />
 </center>
 
