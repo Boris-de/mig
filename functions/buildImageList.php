@@ -154,7 +154,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
         $phrase = str_replace('%s', $start_img, $phrase);
         // %e is end image
         $phrase = str_replace('%e', $end_img, $phrase);
-        
+
 
         $pageBlock .= "\n" . '   <tr>' . "\n" . '    <td colspan="'
                     . $max_col . '" align="center"><small>' . $phrase;
@@ -168,7 +168,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
             if ($mig_config['mig_dl']) {
                 $pageBlock .= '&amp;mig_dl=' . $mig_config['mig_dl'];
             }
-            $pageBlock .= '">&laquo;</A>&nbsp;&nbsp;';
+            $pageBlock .= '">&laquo;</a>&nbsp;&nbsp;';
         }
 
         for ($i = 1; $i <= $pages; ++$i) {
@@ -197,12 +197,12 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
             if ($mig_config['mig_dl']) {
                 $pageBlock .= '&amp;mig_dl=' . $mig_config['mig_dl'];
             }
-            $pageBlock .= '">&raquo;</A>';
+            $pageBlock .= '">&raquo;</a>';
         }
 
         $pageBlock .= "</small></td>\n   </tr>";
     }
-    
+
     $imageList .= $pageBlock;
 
     $thumbCounter = -1;
@@ -237,7 +237,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     }
 
     closedir($dir);
-    
+
     $imageList .= $pageBlock;
 
     // If there aren't any images to work with, just say so.
