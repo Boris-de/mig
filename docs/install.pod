@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =head2 Requirements
 
 Mig requires a web server which supports PHP [ http://www.php.net/ ].
-At least PHP 3.0.6 is required, or any version of PHP4.
+At least PHP 3.0.9 is required, or any version of PHP4.
 The development platform is Apple OSX, so the code tends to assume
 a unix-like environment.  As such it may or may not work (and has not
 been tested by the author) on non-unix-like platforms.  Mig has been tested
