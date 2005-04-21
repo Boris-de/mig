@@ -4,9 +4,13 @@
 
 =head2 Version 1.5.0_pre1
 
-introduce $imageFilenameRegexpr and $currDirNameRegexpr (php 3.0.9!)
+introduce C<$imageFilenameRegexpr> and C<$currDirNameRegexpr> (php 3.0.9!)
 
 various XHTML-compatiblity-fixes
+
+moved the outer table in folder-view from source to template (allows more flexible layouts)
+
+moved the table around the description in large- and image-view from source to template (allows more flexible layouts)
 
 =head2 Version 1.4.1 (Wed, 06 Apr 2005)
 

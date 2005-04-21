@@ -580,9 +580,9 @@ if ($mig_config['pagetype'] == 'folder') {
     // images, no folders.  Frame the imagelist in a table
     } elseif ($folderList == 'NULL' && $imageList != 'NULL') {
         $folderList = '';
-        $tablesummary = 'Images Frame';
+        /*$tablesummary = 'Images Frame';
         $tableclass = 'image';
-        $imageList = buildTable($imageList, $tableclass, $tablesummary);
+        $imageList = buildTable($imageList, $tableclass, $tablesummary);*/
 
     // folders but no images.  Frame the folderlist in a table
     } elseif ($imageList == 'NULL' && $folderList != 'NULL') {
@@ -596,9 +596,9 @@ if ($mig_config['pagetype'] == 'folder') {
         $tablesummary = 'Folders Frame';
         $folderList = buildTable($folderList, $folderTableClass,
                                  $tablesummary);
-        $tablesummary = 'Images Frame';
+        /*$tablesummary = 'Images Frame';
         $tableclass = 'image';
-        $imageList = buildTable($imageList, $tableclass, $tablesummary);
+        $imageList = buildTable($imageList, $tableclass, $tablesummary);*/
     }
 
     // We have a bulletin
@@ -665,14 +665,6 @@ if ($mig_config['pagetype'] == 'folder') {
     if ($description && $exifDescription) {
         $description .= '<hr>';
         $description .= $exifDescription;
-    }
-
-    // If there's a description at all, frame it in a table.
-    if ($description != '') {
-        $tablesummary = 'Description Frame" width="60%'; //<-- kludge for now
-        $tableclass = 'desc';
-        $description = '<center>' . $description . '</center>';
-        $description = buildTable($description, $tableclass, $tablesummary);
     }
 
     // Build the "you are here" line
@@ -753,14 +745,6 @@ if ($mig_config['pagetype'] == 'folder') {
     if ($description && $exifDescription) {
         $description .= '<hr />';
         $description .= $exifDescription;
-    }
-
-    // If there's a description at all, frame it in a table.
-    if ($description != '') {
-        $tablesummary = 'Description Frame" width="60%'; //<-- kludge for now
-        $tableclass = 'desc';
-        $description = '<center>' . $description . '</center>';
-        $description = buildTable($description, $tableclass, $tablesummary);
     }
 
     // Build the "you are here" line
