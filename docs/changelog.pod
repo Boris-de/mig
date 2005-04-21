@@ -4,13 +4,15 @@
 
 =head2 Version 1.5.0_pre1
 
-introduce C<$imageFilenameRegexpr> and C<$currDirNameRegexpr> (php 3.0.9!)
+introduce C<$imageFilenameRegexpr> and C<$currDirNameRegexpr> (php 3.0.9!) (Boris)
 
-various XHTML-compatiblity-fixes
+various XHTML-compatiblity-fixes (Boris)
 
-moved the outer table in folder-view from source to template (allows more flexible layouts)
+moved the outer table in folder-view from source to template (allows more flexible layouts) (Boris)
 
-moved the table around the description in large- and image-view from source to template (allows more flexible layouts)
+moved the table around the description in large- and image-view from source to template (allows more flexible layouts) (Boris)
+
+never show an empty folder list, if C<startfrom> is bigger then the amount of pages (Boris)
 
 =head2 Version 1.4.1 (Wed, 06 Apr 2005)
 

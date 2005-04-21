@@ -126,6 +126,12 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     // This rounds off any fractional part
     $pages = ceil($thumbsInFolder / ($max_col * $max_row));
 
+    // show last page if $startfrom to big
+    if ($thumbsInFolder<$firstThumb) {
+        $mig_config['startfrom']=$pages-1;
+        $firstThumb = $mig_config['startfrom'] * $max_col * $max_row;
+    }
+
     // Handle pagination
     if ($thumbsInFolder > ($max_col * $max_row)) {
 
