@@ -139,22 +139,30 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
     --$i;                       // Get rid of the last increment...
 
-    // Next is one more than $ThisImagePos.  Test if that has a value
-    // and if it does, consider it "next".
-    if ($fList[$ThisImagePos+1]) {
-        $next = migURLencode($fList[$ThisImagePos+1]);
+    // Next is the next with a valid imageFilenameRegexpr behind $ThisImagePos.
+    $tempThisImagePos = $ThisImagePos;
+    while(isset($fList[$tempThisImagePos+1])
+            && !preg_match($mig_config['imageFilenameRegexpr'], $fList[$tempThisImagePos+1])) {
+        ++$tempThisImagePos;
+    }
+    if ($fList[$tempThisImagePos+1]) {
+        $next = migURLencode($fList[$tempThisImagePos+1]);
     } else {
         $next = 'NA';
     }
 
-    // Previous must always be one less than the current index.  If
-    // that has a value, that is.  Unless the current index is "1" in
-    // which case we know there is no previous.
+    // Previous is the first image with a valid imageFilenameRegexpr
+    // before $ThisImagePos
 
-    if ($ThisImagePos == 1) {
+    $tempThisImagePos = $ThisImagePos;
+    while(isset($fList[$tempThisImagePos-1])
+            && !preg_match($mig_config['imageFilenameRegexpr'], $fList[$tempThisImagePos-1])) {
+        --$tempThisImagePos;
+    }
+    if ($tempThisImagePos == 1) {
         $prev = 'NA';
-    } elseif ($fList[$ThisImagePos-1]) {
-        $prev = migURLencode($fList[$ThisImagePos-1]);
+    } elseif ($fList[$tempThisImagePos-1]) {
+        $prev = migURLencode($fList[$tempThisImagePos-1]);
     }
 
     // URL-encode currDir
