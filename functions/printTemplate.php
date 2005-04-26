@@ -87,11 +87,18 @@ function printTemplate ( $templateFile, $version, $maintAddr,
 
         } else {
 
+            $albumURLroot		= $mig_config['albumurlroot'];
+            $baseURL			= $mig_config['baseurl'];
+            $image			= $mig_config['image'];
+            $largeSubdir		= $mig_config['largesubdir'];
+            $pageTitle			= $mig_config['pagetitle'];
+
             // Make sure this is URL encoded
             $encodedImageURL = migURLencode($mig_config['image']);
 
+            $filetype=getFileType($mig_config['image']);
             // If pagetype is large, add largeSubdir to path.
-            if ($mig_config['image']) {
+            if ($filetype=='image' && $mig_config['image']) {
                 // Get image pixel size for <IMG> element
                 if ($mig_config['pagetype'] == 'image') {
                     $imageProps = GetImageSize($mig_config['albumdir']."/$currDir/"
@@ -103,13 +110,18 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                                  . '/'.$mig_config['image']);
                 }
                 $imageSize = $imageProps[3];
+            } elseif ($filetype) { // known and !image -> display icon with link
+                $largeHrefStart =
+                       "<a href=\"$albumURLroot/$newCurrDir/$encodedImageURL\">";
+                $largeHrefEnd = "</a><br />$encodedImageURL";
+                $albumURLroot='.';
+                $newCurrDir='images';
+                switch ($filetype) {
+                    case 'video': $encodedImageURL='movie.gif'; break;
+                    case 'audio': $encodedImageURL='audio.gif'; break;
+                    default: $encodedImageURL='no_thumb.gif'; break;
+                }
             }
-            
-            $albumURLroot		= $mig_config['albumurlroot'];
-            $baseURL			= $mig_config['baseurl'];
-            $image			= $mig_config['image'];
-            $largeSubdir		= $mig_config['largesubdir'];
-            $pageTitle			= $mig_config['pagetitle'];
 
             // List of valid tags
             $replacement_list = array (
