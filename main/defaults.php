@@ -59,6 +59,8 @@ $useThumbSubdir             = TRUE;
 $viewFolderCount            = FALSE;
 $imageFilenameRegexpr       = '=^[\._-\d\w]*$=';
 $currDirNameRegexpr         = '=^\.?[/_-\d\w]*$=';
+$httpContentType            = 'text/html; charset=us-ascii';
+$onlySendIfXhtmlIsAccepted  = FALSE;
 
 //for old compatibility: remove in mig 2.0:
 if ($suppressImageInfo = 'true') $fileInfoFormatString="";

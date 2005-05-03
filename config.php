@@ -194,7 +194,7 @@ $randomFolderThumbs = FALSE;
 //      set to FALSE.
 //
 // Defaults to TRUE.
-// 
+//
 // Example:
 //      $useRealRandThumbs = TRUE;
 //
@@ -266,7 +266,7 @@ $largeSubdir = "large";
 //      In either case, if the template tag %%largeLink%% is used, a link
 //      to the image will be printed along with the other navigational
 //      links on the page.
-//      
+//
 // Defaults to TRUE.
 //
 // Example:
@@ -414,7 +414,7 @@ $fileInfoFormatString['video'] = "%n<br />(%s)";
 //
 // $prevFormatString
 // $nextFormatString
-//     Defines the format of the "previous" and 
+//     Defines the format of the "previous" and
 //     "next image" links in the image-view.
 //
 //     Valid items are:
@@ -628,7 +628,7 @@ $imagePopToolBar = FALSE;
 //
 // $imagePopMaxWidth
 //      The maximum initial width for a popup window (in pixels).
-//      
+//
 // Defaults to 640.
 //
 // Example:
@@ -711,7 +711,7 @@ $ignoreDotDirectories = FALSE;
 // $exifFormatString
 //     Defines the display format for EXIF data blocks.  Sections are
 //     separated by | characters.  For example:
-//     
+//
 //         "|%c<hr>|%M %D %Y, %T - |%m<br>|%l |%s |%a|"
 //
 //     Each block is contained between two | characters.  If any one
@@ -804,13 +804,13 @@ $exifFormatString = "|%c|";
 //         http://mysite.com/gallery/index.php?currDir=./My_Stuff
 //
 //     Change to:
-//     
+//
 //         http://mysite.com/gallery/index.php?currDir=./My_Stuff&mig_dl=es
 //
 //     In this way you can have multiple translations of your site by just
 //     having a different hyperlink for each one.  See the install document
 //     for more information.
-//     
+//
 //     See the template document for information on the 'newLang' template
 //     keyword which lets you easily build links into your templates for
 //     other languages.
@@ -868,7 +868,7 @@ $mig_language = "en";
 //      Obviously you only want to set ONE of these to TRUE.
 //
 // All of them default to FALSE.
-// 
+//
 // Example:
 //      $phpNukeCompatible = FALSE;
 //      $phpWebThingsCompatible = FALSE;
@@ -913,12 +913,12 @@ $phpWebThingsRoot = "";
 $mig_xoopsRoot = "../..";
 $mig_GeeklogRoot = "";
 
-//      
+//
 // $mig_xoopsRBlockForImage
 // $mig_xoopsRBlockForFolder
 //      Flags to show or hide the right-hand side blocks in image and
 //      folder modes (in XOOPS)
-//      
+//
 // They default to 0 and 1, show right block for folders, hide for images.
 //
 // Examples:
@@ -966,6 +966,33 @@ $mig_GeeklogRBlockForFolder = 1;
 // security needs unless they're fairly superficial.
 //
 
+// -----------------------------------------------------------------
+//                         HTTP-Headers
+// -----------------------------------------------------------------
+//
+// $httpContentType
+//      This sets the values, that is send as Content-Type
+//      in the HTTP-header
+//
+// Defaults to 'text/html; charset=us-ascii'
+//
+// Examples:
+//      $httpContentType = 'text/html; charset=utf-8';
+//      $httpContentType = 'application/xhtml+xml; charset=iso-8859-1';
+
+$httpContentType = 'text/html; charset=us-ascii';
+
+//
+// $onlySendIfXhtmlIsAccepted
+//      This defines if Mig should check if the Client supports the
+//      application/xhtml+xml MIME-Type before sending the
+//      Content-Type-Header.
+//      This is only useful for XHTML-Users, because some Browsers do not
+//      support application/xhtml+xml
+//
+// Defaults to FALSE
+
+$onlySendIfXhtmlIsAccepted = FALSE;
 
 // -----------------------------------------------------------------
 //                    MODIFYING THE INCLUDE PATH

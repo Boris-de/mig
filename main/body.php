@@ -297,7 +297,7 @@ if (! $image) {
 // Don't let folks go outside the album directory base
 // Don't let folks define ANY directory here
 if (strstr($image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $image)) {
-    print 'ERROR: $imageis invalid.  Exiting.';
+    print 'ERROR: $image is invalid.  Exiting.';
     exit;
 }
 
@@ -443,6 +443,14 @@ while ($workCopy) {
     }
 }
 
+// send Content-Type
+if($httpContentType) {
+    if( strstr($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml') ) {
+        header('Content-Type: '.$httpContentType);
+    } elseif (! $onlySendIfXhtmlIsAccepted) {
+        header('Content-Type: '.$httpContentType);
+    }
+}
 
 // Where templates live
 $mig_config['templatedir'] = $mig_config['basedir'] . '/templates';

@@ -16,6 +16,8 @@ never show an empty folder list, if C<startfrom> is bigger then the amount of pa
 
 If an non-image is viewed with pageType=image or pageType=large, a generic will be displayed and link to the file. (Boris)
 
+added support for user-defined Content-Type with C<$httpContentType> (Boris)
+
 =head2 Version 1.4.1 (Wed, 06 Apr 2005)
 
 [Sourceforge bug report #974964] - Fixed bug in C<buildDirList()>
