@@ -437,7 +437,7 @@ while ($workCopy) {
     if ($workCopy == '.') {
         $workCopy = FALSE;
     } else {
-        // pare $workCopy down one directory at a time
+        // parse $workCopy down one directory at a time
         // so we can check back all the way to "."
         $workCopy = ereg_replace('/[^/]+$', '', $workCopy);
     }
@@ -445,11 +445,7 @@ while ($workCopy) {
 
 // send Content-Type
 if($httpContentType) {
-    if( strstr($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml') ) {
-        header('Content-Type: '.$httpContentType);
-    } elseif (! $onlySendIfXhtmlIsAccepted) {
-        header('Content-Type: '.$httpContentType);
-    }
+    header('Content-Type: '.$httpContentType);
 }
 
 // Where templates live

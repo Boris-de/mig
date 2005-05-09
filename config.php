@@ -978,21 +978,12 @@ $mig_GeeklogRBlockForFolder = 1;
 //
 // Examples:
 //      $httpContentType = 'text/html; charset=utf-8';
-//      $httpContentType = 'application/xhtml+xml; charset=iso-8859-1';
+//
+//      if(strstr($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')) {
+//          $httpContentType = 'application/xhtml+xml; charset=iso-8859-1';
+//      }
 
 $httpContentType = 'text/html; charset=us-ascii';
-
-//
-// $onlySendIfXhtmlIsAccepted
-//      This defines if Mig should check if the Client supports the
-//      application/xhtml+xml MIME-Type before sending the
-//      Content-Type-Header.
-//      This is only useful for XHTML-Users, because some Browsers do not
-//      support application/xhtml+xml
-//
-// Defaults to FALSE
-
-$onlySendIfXhtmlIsAccepted = FALSE;
 
 // -----------------------------------------------------------------
 //                    MODIFYING THE INCLUDE PATH
