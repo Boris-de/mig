@@ -1,4 +1,8 @@
 <?
+function dirListSort($a, $b) {
+	return ($a[1]<$b[1]) ? -1 : 1;
+}
+
 function buildRSS($currDir, $mig_language, $SERVER) {
 	global $mig_config;
 
@@ -49,30 +53,29 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		}
 
 		// get mtime of the file/dir
-		$time = filemtime("${x}/$file" . ($type=='dir')? '/.' : '');
+		$time = filemtime("${x}/$file" . (($type=='dir')? '/.' : ''));
 
-		// set link depending on dir/file
+		$folderLink = $SERVER.$mig_config['baseurl']
+				. "?pageType=folder&amp;currDir=$currDir";
+
+		// set link to subdir
 		if($type == 'dir') {
-			$folderLink = $SERVER . $mig_config['baseurl'] .
-					"?pageType=folder&amp;currDir=$currDir/$file";
-		} else {
-			$folderLink = $SERVER . $mig_config['baseurl'] .
-					"?pageType=folder&amp;currDir=$currDir";
+			$folderLink .= "/$file";
 		}
 
 		$files[] = array( $file, $time, $folderLink );
 	}
 
-	// get last modification time
-	foreach($files as $cur) {
-		$maxTime = ($cur[1]>$maxTime)? $cur[1] : $maxTime;
-	}
-	$lastModified = date('D, d M Y H:i:s T', $maxTime);
+	// sort by date
+	usort($files, "dirListSort");
+
+	// lastModified = modification time of the newest file
+	$lastModified = date('D, d M Y H:i:s T', $files[count($files)-1][1]);
 
 	// send header
 	header('Content-Type: text/xml; charset=ISO-8859-1');
 	header("Last-Modified: $lastModified");
-	header("ETag: \"$lastModified\"");
+	header("ETag: \"$lastModified\""); // using date as unique string
 	echo '<?xml version="1.0" encoding="ISO-8859-1" ?>'."\n";
 ?>
 <rss version="2.0">
@@ -85,8 +88,8 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		<lastBuildDate><? echo $lastModified; ?></lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 <?
-	foreach($files as $cur) {
-		list($file, $filetime, $folderLink) = $cur;
+	reset($files);
+	while(list($junk, list($file, $filetime, $folderLink)) = each($files)) {
 ?>
 		<item>
 			<title><? echo $file; ?></title>
