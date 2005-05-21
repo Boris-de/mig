@@ -258,6 +258,11 @@ if ($_GET['currDir']) {
     }
 }
 
+// Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
+if (get_magic_quotes_gpc() == 1) {
+    $currDir = stripslashes($currDir);
+}
+
 // Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
 if (strstr($currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $currDir)) {
@@ -291,6 +296,11 @@ if (! $image) {
     } elseif ($HTTP_GET_VARS['image']) {
         $image = $HTTP_GET_VARS['image'];
     }
+}
+
+// Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
+if ((get_magic_quotes_gpc() == 1) && ($image)) {
+        $image = stripslashes($image);
 }
 
 // Look at $image from a security angle.
@@ -373,13 +383,6 @@ if ($maxColumns) {
     $maxThumbColumns = $maxColumns;
 }
 
-// Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
-if (get_magic_quotes_gpc() == 1) {
-    $currDir = stripslashes($currDir);
-    if ($mig_config['image']) {
-        $mig_config['image'] = stripslashes($mig_config['image']);
-    }
-}
 
 // Turn off magic_quotes_runtime (causes trouble with some installations)
 set_magic_quotes_runtime(0);
