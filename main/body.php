@@ -383,9 +383,21 @@ if ($maxColumns) {
     $maxThumbColumns = $maxColumns;
 }
 
-
 // Turn off magic_quotes_runtime (causes trouble with some installations)
 set_magic_quotes_runtime(0);
+
+
+// first catch RSS-Requests
+if ($_GET['getrss'] && $_GET['getrss']=='true') {
+	$sendRSS = TRUE;
+}
+elseif ($HTTP_GET_VARS['getrss'] && $HTTP_GET_VARS['getrss']=='true') {
+	$sendRSS = TRUE;
+}
+if($sendRSS) {
+	buildRSS($currDir, $mig_language, "http://$SERVER_NAME:$SERVER_PORT");
+	exit;
+}
 
 //
 // Handle any password authentication needs

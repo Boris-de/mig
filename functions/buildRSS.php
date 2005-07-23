@@ -3,19 +3,18 @@ function dirListSort($a, $b) {
 	return ($a[1]<$b[1]) ? -1 : 1;
 }
 
-function buildRSS($currDir, $mig_language, $SERVER) {
+function getDirListRecursive($currDir, $SERVER, &$files, $depth) {
 	global $mig_config;
 
-	$x = $mig_config['albumdir'].'/'.$currDir;
-	if (is_dir($x)) {
+	$fullDirName = $mig_config['albumdir'].'/'.$currDir;
+	if (is_dir($fullDirName)) {
 		// Open directory handle
-		$dir = opendir($x);
+		$dir = opendir($fullDirName);
 	} else {
 		print "ERROR: no such currDir '$currDir'<br>";
 		exit;
 	}
 
-	// $currDir abarbeiten
 	while ($file = readdir($dir)) {
 
 		// Ignore . and ..
@@ -39,6 +38,10 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		if ($mig_config['ignoredotdirectories'] && ereg('^\.', $file)) {
 			continue;
 		}
+		
+		if ($mig_config['usethumbsubdir'] && $mig_config['thumbsubdir']==$file) {
+			continue;
+		}
 
 		// Ignore directories whose name does not match currDirNameRegexpr
 		if ($type == 'dir'
@@ -53,7 +56,7 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		}
 
 		// get mtime of the file/dir
-		$time = filemtime("${x}/$file" . (($type=='dir')? '/.' : ''));
+		$time = filemtime("$fullDirName/$file" . (($type=='dir')? '/.' : ''));
 
 		$folderLink = $SERVER.$mig_config['baseurl']
 				. "?pageType=folder&amp;currDir=$currDir";
@@ -61,10 +64,22 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		// set link to subdir
 		if($type == 'dir') {
 			$folderLink .= "/$file";
+			if($depth>0) {
+				getDirListRecursive("$currDir/$file", $SERVER, $files, $depth-1);
+			}
 		}
 
 		$files[] = array( $file, $time, $folderLink );
 	}
+
+}
+
+function buildRSS($currDir, $mig_language, $SERVER) {
+	global $mig_config;
+
+	$i=0;
+
+	getDirListRecursive($currDir, $SERVER, $files, 5);
 
 	// sort by date
 	usort($files, "dirListSort");
@@ -88,7 +103,6 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		<lastBuildDate><? echo $lastModified; ?></lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 <?
-	reset($files);
 	while(list($junk, list($file, $filetime, $folderLink)) = each($files)) {
 ?>
 		<item>
@@ -96,9 +110,11 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 			<link><? echo $folderLink; ?></link>
 			<description>TODO</description>
 			<pubDate><? echo date('D, d M Y H:i:s O', $filetime);?></pubDate>
-			<guid><? echo $folderLink; ?></guid>
 		</item>
 <?
+	if(++$i>10) {
+		break;
+	}
 	}
 ?>
 	</channel>
