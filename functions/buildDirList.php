@@ -10,7 +10,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 
     // Create a URL-encoded version of $currDir
     $enc_currdir = $currDir;
-    $currDir = rawurldecode($enc_currdir);
+    $currDir = htmlentities(rawurldecode($enc_currdir));
 
     $directories = array ();                    // prototypes
     $counts = array ();

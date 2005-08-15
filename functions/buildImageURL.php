@@ -153,7 +153,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         if ($_SERVER[DOCUMENT_ROOT]) $scriptpath= $_SERVER[DOCUMENT_ROOT];
         else $scriptpath= DOCUMENT_ROOT;
 
-        $imageFileSize=filesize($scriptpath.$mig_config['albumurlroot'].'/'.$currDir.'/'.$filename);
+        $imageFileSize=@filesize($scriptpath.$mig_config['albumurlroot'].'/'.$currDir.'/'.$filename);
     }
 
     if ($imageFileSize > 1048576) {

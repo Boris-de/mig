@@ -249,6 +249,10 @@ F<movie.gif> and F<music.gif> icons from the F<images> folder to your Mig
 installation's F<images> folder, if you plan to have any audio or video
 content on your site.
 
+=item 8.
+
+Please be aware, that 1.5.0 has changed the templates, so that it can be customized better.
+
 =back
 
 =head2 Running Mig Under Windows
@@ -477,6 +481,10 @@ I'm not exactly sure, but it appears to happen with certain versions of
 the F<convert> program.  If it is happening to you, try running
 F<mkGallery.pl> using the C<-K> flag and see if your images come out
 properly then.
+
+=item 4. Some of my images and folders are not displayed
+
+From 1.5.0 a new way of handeling file- and directorynames is used. Several non-ascii-letters are not allowed in the default configuration. If you want to use files with these names be shure that you add these letters to C<$imageFilenameRegexpr> and C<$currDirNameRegexpr> in your F<config.php>.
 
 =back
 

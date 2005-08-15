@@ -2,9 +2,15 @@
 
 =head2 MIG Change Log
 
-=head2 Version 1.5.0_pre1
+=head2 Version 1.5.0 (Mon, 15 Aug 2005)
 
-introduce C<$imageFilenameRegexpr> and C<$currDirNameRegexpr> (php 3.0.9!) (Boris)
+=head3 Security
+
+merged fixes from "SecWatch 13/08/2005 - Mig Remote Cross-Site Scripting and Information Disclosure Vulnerabilities", see http://secwatch.org/advisories/secwatch/20050813_Mig.txt (Boris)
+
+introduce C<$imageFilenameRegexpr> and C<$currDirNameRegexpr> for a more secure handling of file- and directorynames (now PHP 3.0.9 is required!) (Boris)
+
+=head3 Improvements
 
 various XHTML-compatiblity-fixes (Boris)
 
@@ -19,6 +25,8 @@ If an non-image is viewed with pageType=image or pageType=large, a generic will 
 added support for user-defined Content-Type with C<$httpContentType> (Boris)
 
 fixed handling of magic_quotes_gpc to solve a bug with inverted commas in file- and foldernames (Boris; bug pointed out by Werner and Samuel)
+
+added new-file types .swf, .flv, .rm, .divx, .wma, .ogg, .flac, .aac, .mpc, .mp+ (Boris)
 
 =head2 Version 1.4.1 (Wed, 06 Apr 2005)
 

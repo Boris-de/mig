@@ -100,6 +100,9 @@ function printTemplate ( $templateFile, $version, $maintAddr,
             // If pagetype is large, add largeSubdir to path.
             if ($filetype=='image' && $mig_config['image']) {
                 // Get image pixel size for <IMG> element
+				if(!is_file($mig_config['albumdir']."/$currDir/".$mig_config['image'])) {
+					die("ERROR: Image file does not exist!");
+				}
                 if ($mig_config['pagetype'] == 'image') {
                     $imageProps = GetImageSize($mig_config['albumdir']."/$currDir/"
                                                .$mig_config['image']);

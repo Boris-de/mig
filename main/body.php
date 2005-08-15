@@ -311,7 +311,7 @@ if (strstr($image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $im
     exit;
 }
 
-$mig_config['image'] = $image;
+$mig_config['image'] = htmlentities($image);
 
 // check if the image exists...
 
@@ -386,18 +386,6 @@ if ($maxColumns) {
 // Turn off magic_quotes_runtime (causes trouble with some installations)
 set_magic_quotes_runtime(0);
 
-
-// first catch RSS-Requests
-if ($_GET['getrss'] && $_GET['getrss']=='true') {
-	$sendRSS = TRUE;
-}
-elseif ($HTTP_GET_VARS['getrss'] && $HTTP_GET_VARS['getrss']=='true') {
-	$sendRSS = TRUE;
-}
-if($sendRSS) {
-	buildRSS($currDir, $mig_language, "http://$SERVER_NAME:$SERVER_PORT");
-	exit;
-}
 
 //
 // Handle any password authentication needs
