@@ -120,9 +120,9 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                 $albumURLroot='.';
                 $newCurrDir='images';
                 switch ($filetype) {
-                    case 'video': $encodedImageURL='movie.gif'; break;
-                    case 'audio': $encodedImageURL='audio.gif'; break;
-                    default: $encodedImageURL='no_thumb.gif'; break;
+                    case 'video': $encodedImageURL='movie.png'; break;
+                    case 'audio': $encodedImageURL='music.png'; break;
+                    default: $encodedImageURL='no_thumb.png'; break;
                 }
             }
 

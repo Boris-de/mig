@@ -216,7 +216,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         } else {
             // Otherwise, we're out a thumbnail; use the generic
             // folder icon as a last resort
-            $directoryList .= $mig_config['imagedir'] . '/folder.gif';
+            $directoryList .= $mig_config['imagedir'] . '/folder.png';
         }
 
         // Define a separator of either a space or a line break,

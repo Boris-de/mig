@@ -503,14 +503,14 @@ $noThumbs = FALSE;
 //
 // $thumbExt
 //     If you wish you can define a filetype for all thumbnails.  For
-//     example, all thumbnails could be GIF files.  Define the extension
+//     example, all thumbnails could be PNG files.  Define the extension
 //     here (without the leading ".").  Case matters, so don't define
-//     'gif' and then upload foo.GIF files.
+//     'png' and then upload foo.PNG files.
 //
 // No default.
 //
 // Example:
-//     $thumbExt = "gif";
+//     $thumbExt = "png";
 //
 
 $thumbExt = "";

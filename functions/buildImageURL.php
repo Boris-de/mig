@@ -6,8 +6,6 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 {
     global $mig_config;
 
-    $markerLabel = $mig_config['markerlabel'];
-
     // Collect information about this object.
     $fname  = getFileName($filename);
     $ext    = getFileExtension($filename);
@@ -23,96 +21,71 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     // URL-encoded the filename
     $newFname = rawurlencode($fname);
 
-    // Only show a thumbnail if one exists.  Otherwise use a default
-    // "generic" thumbnail image.
+    // Filename of the thumb
+    $thumbFile = '';
 
     if ($type == 'image') {
         if ($mig_config['usethumbsubdir']) {
-
             $thumbFile = $mig_config['albumdir'] . "/$oldCurrDir/"
                        . $mig_config['thumbsubdir'] . "/$fname.";
 
+        } elseif ($mig_config['markertype'] == 'prefix') {
+            $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/"
+                        . $mig_config['markerlabel'] . "_$fname.";
+
+        } elseif ($mig_config['markertype'] == 'suffix') {
+                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname"
+                            . "_{$mig_config['markerlabel']}.";
+        }
+
+        // if a thumbnail could be there
+        if($thumbFile) {
             if ($mig_config['thumbext']) {
                 $thumbFile .= $mig_config['thumbext'];
             } else {
                 $thumbFile .= $ext;
             }
-
-        } else {
-
-            if ($mig_config['markertype'] == 'prefix') {
-                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/"
-                            . $mig_config['markerlabel'] . "_$fname.";
-
-                if ($mig_config['thumbext']) {
-                    $thumbFile .= $mig_config['thumbext'];
-                } else {
-                    $thumbFile .= $ext;
-                }
-            }
-
-            if ($mig_config['markertype'] == 'suffix') {
-                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname"
-                            . "_$markerLabel.";
-
-                if ($mig_config['thumbext']) {
-                    $thumbFile .= $mig_config['thumbext'];
-                } else {
-                    $thumbFile .= $ext;
-                }
-            }
         }
     }
+
+    // Only show a thumbnail if one exists.  Otherwise use a default
+    // "generic" thumbnail image.
 
     if (file_exists($thumbFile) && $type == 'image') {
         if ($mig_config['usethumbsubdir']) {
             $thumbImage  = $mig_config['albumurlroot'] . "/$currDir/"
                          . $mig_config['thumbsubdir'] . "/$fname.";
+        } elseif ($mig_config['markertype'] == 'prefix') {
+                $thumbImage  = $mig_config['albumurlroot']
+                             . "/$currDir/".$mig_config['markerlabel']
+                             . "_$fname.";
+        } elseif ($mig_config['markertype'] == 'suffix') {
+                $thumbImage  = $mig_config['albumurlroot']
+                             . "/$currDir/${fname}_{$mig_config['markerlabel']}.";
+        }
 
+        // if a thumbnail could be there
+        if ($thumbImage) {
             if ($mig_config['thumbext']) {
                 $thumbImage .= $mig_config['thumbext'];
             } else {
                 $thumbImage .= $ext;
             }
-
-        } else {
-
-            if ($mig_config['markertype'] == 'prefix') {
-                $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/".$mig_config['markerlabel']
-                             . "_$fname.";
-
-                if ($mig_config['thumbext']) {
-                    $thumbImage .= $mig_config['thumbext'];
-                } else {
-                    $thumbImage .= $ext;
-                }
-            }
-
-            if ($mig_config['markertype'] == 'suffix') {
-                $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/${fname}_$markerLabel.";
-
-                if ($mig_config['thumbext']) {
-                    $thumbImage .= $mig_config['thumbext'];
-                } else {
-                    $thumbImage .= $ext;
-                }
-            }
         }
+
         $thumbImage = migURLencode($thumbImage);
 
     } else {
         $newRoot = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
         switch ($type) {
             case 'image':
-                $thumbImage = $newRoot . '/images/no_thumb.gif';
+                $thumbImage = $newRoot . '/images/no_thumb.png';
                 break;
             case 'audio':
-                $thumbImage = $newRoot . '/images/music.gif';
+                $thumbImage = $newRoot . '/images/music.png';
                 break;
             case 'video':
-                $thumbImage = $newRoot . '/images/movie.gif';
+                $thumbImage = $newRoot . '/images/movie.png';
                 break;
         }
     }
