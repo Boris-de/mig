@@ -29,7 +29,7 @@ http://xoops.org/ (tested with RC3.0.5)
 
 =item Geeklog
 
-http://geeklog.sourceforge.net/ (tested with 1.3.6)
+http://www.geeklog.net/ (tested with 1.3.11sr1)
 
 =back
 
