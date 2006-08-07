@@ -816,7 +816,7 @@ $exifFormatString = "|%c|";
 //     other languages.
 //
 //     If you want to translate Mig into another language, please contact
-//     me via email (dan@tangledhelix.com).
+//     Boris via email (sirro.mig `at` gmail.com).
 //
 //     (Note: this variable used to be called $language, but that is
 //     deprecated and it should be used as $mig_language as of

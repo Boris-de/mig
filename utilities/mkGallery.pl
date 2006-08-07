@@ -110,7 +110,7 @@ my $thumbDirMode    = 0755;
 # For the help routine
 my $pkgName = 'Mig';
 my $url = 'http://mig.sourceforge.net/';
-my $email = 'dan@tangledhelix.com';
+my $email = 'sirro.mig \'at\' gmail.com';
 
 my $migConfig = 'mig.cf';       # Name of per-directory configuration file
 
