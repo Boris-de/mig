@@ -229,8 +229,11 @@ unless ($allFlag or $ARGV[0]) {
 }
 
 # If "-e" is specified but $exifProg isn't executable, bail out.
-if ($exifFlag) {
-    unless (-x "$mydir/$exifProg") {
+if ($exifFlag && !(-x "$mydir/$exifProg")) {
+    open(WHICH, "which \"$exifProg\" 2>&1 |");
+    chomp(my $exifProgFound = <WHICH>);
+    close(WHICH);
+    unless (-x "$exifProgFound") {
         print "\nERROR: \"-e\" specified, but $exifProg not found.\n";
         print "See the file docs/Utilities.txt for more information.\n\n";
         exit(1);
