@@ -104,11 +104,11 @@ function printTemplate ( $templateFile, $version, $maintAddr,
 					die("ERROR: Image file does not exist!");
 				}
                 if ($mig_config['pagetype'] == 'image') {
-                    $imageProps = GetImageSize($mig_config['albumdir']."/$currDir/"
+                    $imageProps = @GetImageSize($mig_config['albumdir']."/$currDir/"
                                                .$mig_config['image']);
                 } elseif ($mig_config['pagetype'] == 'large') {
                     $imageProps =
-                      GetImageSize($mig_config['albumdir']."/$currDir/"
+                      @GetImageSize($mig_config['albumdir']."/$currDir/"
                                  . $mig_config['largesubdir']
                                  . '/'.$mig_config['image']);
                 }

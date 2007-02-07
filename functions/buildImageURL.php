@@ -113,7 +113,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         $imageFile = $mig_config['albumdir']."/$oldCurrDir/$fname.$ext";
 
         // Figure out the pixels
-        $imageProps = GetImageSize($imageFile);
+        $imageProps = @GetImageSize($imageFile);
         $imageWidth = $imageProps[0];
         $imageHeight = $imageProps[1];
 
@@ -141,7 +141,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     // Figure out thumbnail geometry
     $thumbHTML = '';
     if (file_exists($thumbFile) && $type == 'image') {
-        $thumbProps = GetImageSize($thumbFile);
+        $thumbProps = @GetImageSize($thumbFile);
         $thumbHTML = $thumbProps[3];
     }
 
