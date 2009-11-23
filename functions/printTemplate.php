@@ -92,6 +92,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
             $image			= $mig_config['image'];
             $largeSubdir		= $mig_config['largesubdir'];
             $pageTitle			= $mig_config['pagetitle'];
+            $httpContentType            = $mig_config['httpContentType'];
 
             // Make sure this is URL encoded
             $encodedImageURL = migURLencode($mig_config['image']);
@@ -134,7 +135,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                 'prevLink', 'currPos', 'description', 'youAreHere',
                 'distURL', 'encodedImageURL', 'imageSize', 'newLang',
                 'largeSubdir', 'largeLink', 'largeHrefStart',
-                'largeHrefEnd', 'largeLinkBorder'
+                'largeHrefEnd', 'largeLinkBorder', 'httpContentType'
             );
 
             // Do substitution for various variables

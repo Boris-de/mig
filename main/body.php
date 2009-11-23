@@ -108,6 +108,7 @@ $mig_config['usethumbsubdir']                   = $useThumbSubdir;
 $mig_config['viewfoldercount']                  = $viewFolderCount;
 $mig_config['imageFilenameRegexpr']             = $imageFilenameRegexpr;
 $mig_config['currDirNameRegexpr']               = $currDirNameRegexpr;
+$mig_config['httpContentType']                  = $httpContentType;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {
