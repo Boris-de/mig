@@ -4,6 +4,7 @@
 
 =head2 Mercurial Tip
 
+fixed HTML-markup in default templates, <link> and <meta> do not have an end-tag (Boris)
 more liberal C<$imageFilenameRegexpr> and C<$currDirNameRegexpr>, which made problems with special foreign characters (Boris)
 made php-tags more portable for PHP 5.3, which has short open tags disabled by default (Boris)
 disable warnings for image-files, which aren't images (Boris)
