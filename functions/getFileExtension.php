@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getFileExtension() - Figure out a file's extension and return it.
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildDirList() - Build list of directories for display.
 

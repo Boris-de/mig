@@ -1,4 +1,4 @@
-<?
+<?php
 // buildNextPrevLinks() - Build links to the "next" and "previous" images.
 
 /**

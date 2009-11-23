@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildImageList() - Creates a list of images for display.
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getImageDescription() - Fetches an image description from the comment file (mig.cf).
 

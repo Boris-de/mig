@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getImageDescFromFile() - Fetches an image description from a per-image comment file
 //                          (only used if $commentFilePerImage is TRUE).

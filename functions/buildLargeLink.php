@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildLargeLink() - Builds the text used for template keyword "largeLink".
 

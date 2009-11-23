@@ -1,4 +1,4 @@
-<?
+<?php
 
 // parseMigCf() - Parse a mig.cf file.
 

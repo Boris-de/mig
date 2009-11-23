@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildYouAreHere() - Build the "You are here" line for the top of each page.
 

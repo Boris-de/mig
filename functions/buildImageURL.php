@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildImageURL() - Create HTML link for a particular image.
 

@@ -1,4 +1,4 @@
-<?
+<?php
 function replaceString($val, $formattable){
 
         // $changeflag is used to tell us if we should bother

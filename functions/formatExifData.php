@@ -1,4 +1,4 @@
-<?
+<?php
 
 // formatExifData() - Formats EXIF data according to $exifFormatString.
 

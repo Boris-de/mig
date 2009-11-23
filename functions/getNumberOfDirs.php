@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getNumberOfDirs() - Counts subdirectories in a given folder.
 

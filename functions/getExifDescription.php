@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getExifDescription() - Fetches a comment if available from the Exif comments file (exif.inf)
 //                        as well as fetching EXIF data.

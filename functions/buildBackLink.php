@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildBackLink() - Create a "back one step" link.
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // printTemplate() - Prints HTML page from a template file.
 

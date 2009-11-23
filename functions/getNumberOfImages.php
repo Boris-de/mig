@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getNumberOfImages() - Counts images in a given folder.
 

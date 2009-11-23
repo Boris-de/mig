@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildTable() - Frames stuff in HTML table code so it's ready to use as a stand-alone
 //                element in a template.

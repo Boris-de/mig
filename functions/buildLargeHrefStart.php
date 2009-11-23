@@ -1,4 +1,4 @@
-<?
+<?php
 
 // buildLargeHrefStart() - Builds the text used for template keyword "largeHrefStart".
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // parseExifDate() - Parses an EXIF date string and returns it in a more human-readable format.
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // getFileName() - Figure out a file's name sans extension.
 

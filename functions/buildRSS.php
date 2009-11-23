@@ -1,4 +1,4 @@
-<?
+<?php
 function dirListSort($a, $b) {
 	return ($a[1]<$b[1]) ? -1 : 1;
 }
@@ -102,7 +102,7 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 		<generator>Mig <? echo $version; ?></generator>
 		<lastBuildDate><? echo $lastModified; ?></lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
-<?
+<?php
 	while(list($junk, list($file, $filetime, $folderLink)) = each($files)) {
 ?>
 		<item>
@@ -111,7 +111,7 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 			<description>TODO</description>
 			<pubDate><? echo date('D, d M Y H:i:s O', $filetime);?></pubDate>
 		</item>
-<?
+<?php
 	if(++$i>10) {
 		break;
 	}
@@ -119,7 +119,7 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 ?>
 	</channel>
 </rss>
-<?
+<?php
 	exit;
 }
 ?>
