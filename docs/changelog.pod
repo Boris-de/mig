@@ -2,8 +2,10 @@
 
 =head2 MIG Change Log
 
-=head2 CVS HEAD
+=head2 Mercurial Tip
 
+disable warnings for image-files, which aren't images (Boris)
+added logic to find jhead on the PATH (patch send in)
 new PNG images (public domain, taken from http://www.openclipart.org) (Boris)
 
 =head2 Version 1.5.0 (Mon, 15 Aug 2005)
