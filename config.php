@@ -992,15 +992,13 @@ $httpContentType = 'text/html; charset=us-ascii';
 // These two variables control which file- and directorynames are allowed.
 // Be carful when changing these, special chracters like / or < and > may
 // lead into possible XSS-exploits or exposure of system information
-// you can add german umlauts or similar characters here, if yout files
-// have these in the names.
 //
 // Examples:
 //       $imageFilenameRegexpr       = '=^[\._-\d\w \']*$=';
 //       $currDirNameRegexpr         = '=^\.?[/_-\d\w\(\)\'%]*$=';
 
-$imageFilenameRegexpr       = '=^[\._-\d\w \']*$=';
-$currDirNameRegexpr         = '=^\.?[/_-\d\w\(\)\'%]*$=';
+$imageFilenameRegexpr       = '=^[^<>/]*$=';
+$currDirNameRegexpr         = '=^([^<>]|\.\.)*$=';
 
 // -----------------------------------------------------------------
 //                    MODIFYING THE INCLUDE PATH
