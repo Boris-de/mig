@@ -7,7 +7,7 @@
 made php-tags more portable for PHP 5.3, which has short open tags disabled by default (Boris)
 disable warnings for image-files, which aren't images (Boris)
 added logic to find jhead on the PATH (patch send in)
-new PNG images (public domain, taken from http://www.openclipart.org) (Boris)
+new PNG images (public domain) taken from http://tango.freedesktop.org/ Thanks to the people from the Tango Project (Boris)
 
 =head2 Version 1.5.0 (Mon, 15 Aug 2005)
 

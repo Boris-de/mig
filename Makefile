@@ -34,7 +34,7 @@ dist: index
 	cp config.php $(SPOOLDIR)/config.php.default
 	cp utilities/mkGallery.pl $(SPOOLDIR)/utilities
 	cd $(SPOOLDIR)/utilities; tar xfz ../../utilities/jhead.tar.gz; cd ..
-	cp images/*.gif $(SPOOLDIR)/images
+	cp images/*.png $(SPOOLDIR)/images
 	cp templates/*.[hc]* $(SPOOLDIR)/templates
 	cp templates/*.php $(SPOOLDIR)/templates/portals
 	cp docs/html/*.html $(SPOOLDIR)/docs/html
