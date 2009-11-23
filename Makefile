@@ -5,7 +5,7 @@
 #
 
 # Where to keep distributions (directory)
-DISTDIR= ../bundles/mig
+DISTDIR= bundles/mig
 
 # Temporary directory to build a Mig install in (this gets tarred up)
 SPOOLDIR= mig-$(ver)
@@ -14,7 +14,7 @@ SPOOLDIR= mig-$(ver)
 ARCHIVE= $(DISTDIR)/$(SPOOLDIR).tar.gz
 
 default:
-	@echo "    make dist ver=X            Builds distribution bundle"
+	@echo "    make dist ver=X            Builds distribution bundle (in $(DISTDIR))"
 	@echo "    make index ver=X           Builds just index.php"
 	@echo "    make docpublish            Publishes docs to mig.sf.net"
 	@echo "    make clean"

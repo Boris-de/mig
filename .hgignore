@@ -1,0 +1,7 @@
+syntax:glob
+docs/html/*
+docs/text/*
+bundles
+
+syntax: regexp
+mig-[0-9.]+
