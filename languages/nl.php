@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Dutch - courtesy of Erik@Braindisorder.org
 $mig_config['lang_lib']['nl'] = array (

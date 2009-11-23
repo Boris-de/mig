@@ -1,4 +1,4 @@
-<?
+<?php
 
 // German - courtesy of "Burckhard Loeh" <lb@loeh.cx>
 // Updated by Ekkehard Dörre <ekke@doerre.net>

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Czech - encoding iso8859-2
 // courtesy of Pavel XPJ Jisl <pavel@cetoraz.info>

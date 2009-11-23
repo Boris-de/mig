@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Spanish - courtesy of Alex Dantart <alex@pixar.es>
 // with some adjustments from JMN <umjumasa@terra.es>

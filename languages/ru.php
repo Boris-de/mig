@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Russian Windows-1251 - courtesy of Anatoly Ropotov <lynx@rulez.lv>
 $mig_config['lang_lib']['ru'] = array (

@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Estonian - courtesy of Jan Jasinski <jan@sps.ee>
 $mig_config['lang_lib']['ee'] = array (

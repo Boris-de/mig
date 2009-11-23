@@ -95,21 +95,21 @@ function buildRSS($currDir, $mig_language, $SERVER) {
 ?>
 <rss version="2.0">
 	<channel>
-		<title><? echo $mig_config['pagetitle']; ?></title>
-		<description><? echo $mig_config['pagetitle']; ?></description>
-		<link><? echo $mig_config['homelink']; ?></link>
-		<language><? echo $mig_language; ?></language>
-		<generator>Mig <? echo $version; ?></generator>
-		<lastBuildDate><? echo $lastModified; ?></lastBuildDate>
+		<title><?php echo $mig_config['pagetitle']; ?></title>
+		<description><?php echo $mig_config['pagetitle']; ?></description>
+		<link><?php echo $mig_config['homelink']; ?></link>
+		<language><?php echo $mig_language; ?></language>
+		<generator>Mig <?php echo $version; ?></generator>
+		<lastBuildDate><?php echo $lastModified; ?></lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 <?php
 	while(list($junk, list($file, $filetime, $folderLink)) = each($files)) {
 ?>
 		<item>
-			<title><? echo $file; ?></title>
-			<link><? echo $folderLink; ?></link>
+			<title><?php echo $file; ?></title>
+			<link><?php echo $folderLink; ?></link>
 			<description>TODO</description>
-			<pubDate><? echo date('D, d M Y H:i:s O', $filetime);?></pubDate>
+			<pubDate><?php echo date('D, d M Y H:i:s O', $filetime);?></pubDate>
 		</item>
 <?php
 	if(++$i>10) {

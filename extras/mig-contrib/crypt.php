@@ -1,6 +1,6 @@
 <html><body>
 
-<?
+<?php
 
     // Contributed by Todd Eddy <vrillusions@neo.rr.com>
 
@@ -41,11 +41,11 @@
     <input type="text" name="text"><br>
     <br>
     Enter the salt value (what it's encrypted against).  A random salt value has been generated for you: <br>
-    <input type="text" name="salt" size="2" value="<? echo RandSalt(2); ?>"><br>
+    <input type="text" name="salt" size="2" value="<?php echo RandSalt(2); ?>"><br>
     <input type="submit" value="submit">
     </form>
 
-<?
+<?php
     }  // End of else block
 ?>
 

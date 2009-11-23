@@ -1,4 +1,4 @@
-<?
+<?php
 
 //
 // Mig - A general purpose photo gallery management system.

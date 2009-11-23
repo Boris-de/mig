@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Slovenian courtesy - of Martin Vichar Donaj <martinvd@klaretinci.net>
 

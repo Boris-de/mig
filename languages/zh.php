@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Traditional Chinese (big5)
 // Courtesy of Belle Liu <belle@belleliu.com>

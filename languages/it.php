@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Italian - courtesy of Marco Ermini <markoer@firenze.linux.it>
 // Updated by Fabio Fioravanti <fioravanti@iasi.rm.cnr.it>

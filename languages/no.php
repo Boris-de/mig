@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Norwegian
 // Translated by Joffer aka Christopher Thorjussen - January 8th, 2000

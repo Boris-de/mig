@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Polish ISO-8859-2
 // courtesy of Krzysztof Wojtas <krzysin@cyklon.chemia.pk.edu.pl>

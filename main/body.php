@@ -1,4 +1,4 @@
-<?
+<?php
 
 // URL to use to call myself again
 if ($_SERVER['PHP_SELF']) {

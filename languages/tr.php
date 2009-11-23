@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Turkish - courtesy of Dogan Sariguzel <dogan@procam.com.tr>
 $mig_config['lang_lib']['tr'] = array (

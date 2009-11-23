@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Courtesy of Tamas Buti <buty@axelero.hu>
 $mig_config['lang_lib']['hu'] = array (

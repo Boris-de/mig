@@ -1,4 +1,4 @@
-<?
+<?php
 
 // Japanese (UTF-8) - courtesy of Masaru Onozawa <masy@webmasters.gr.jp>
 $mig_config['lang_lib']['jp'] = array (

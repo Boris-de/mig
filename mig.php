@@ -1,4 +1,4 @@
-<?
+<?php
 //mig.php
 //just for internal use for development. not meant for public use.
 //run the makefile instead
