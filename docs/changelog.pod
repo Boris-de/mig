@@ -2,19 +2,32 @@
 
 =head2 MIG Change Log
 
-=head2 Mercurial Tip
+=head2 Version 1.5.1 (Tue, 24 Nov 2009)
 
 =head3 Bug-fixes
 
 made httpContentType available for templates, so that meta and http do not differ anymore (Boris)
+
 fixed HTML-markup in default templates, <link> and <meta> do not have an end-tag (Boris)
+
 more liberal C<$imageFilenameRegexpr> and C<$currDirNameRegexpr>, which made problems with special foreign characters (Boris)
+
 made php-tags more portable for PHP 5.3, which has short open tags disabled by default (Boris)
+
 disable warnings for image-files, which aren't images (Boris)
+
 added logic to find jhead on the PATH (patch send in)
 
 =head3 Improvements
-new PNG images (public domain) taken from http://tango.freedesktop.org/ Thanks to the people from the Tango Project (Boris)
+
+new PNG images (public domain) taken from http://tango.freedesktop.org/ Thanks to the people from the Tango Project.
+The old images (or any other) however can still be enabled with the config variables C<$movie_icon>, C<$folder_icon>, C<$music_icon> and C<$nothumb_icon> (Boris)
+
+=head3 Organisational
+
+Switched Source Code Management from CVS to Mercurial. The history of the default branch was imported
+The CVS is still available and I intent to integrate the release-patches for users that update their version from CVS.
+But I<live>-changes will only happen in Mercurial. Mercurial is very easy with simple workflows, just give it a try. (Boris)
 
 =head2 Version 1.5.0 (Mon, 15 Aug 2005)
 
