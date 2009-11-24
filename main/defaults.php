@@ -61,6 +61,10 @@ $imageFilenameRegexpr       = '=^[\._-\d\w]*$=';
 $currDirNameRegexpr         = '=^\.?[/_-\d\w]*$=';
 $httpContentType            = 'text/html; charset=us-ascii';
 $onlySendIfXhtmlIsAccepted  = FALSE;
+$music_icon                 = 'music.png';
+$movie_icon                 = 'movie.png';
+$folder_icon                = 'folder.png';
+$nothumb_icon               = 'no_thumb.png';
 
 //for old compatibility: remove in mig 2.0:
 if ($suppressImageInfo = 'true') $fileInfoFormatString="";

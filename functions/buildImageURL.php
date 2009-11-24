@@ -79,13 +79,13 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         $newRoot = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
         switch ($type) {
             case 'image':
-                $thumbImage = $newRoot . '/images/no_thumb.png';
+                $thumbImage = $newRoot . '/images/' . $mig_config['nothumb_icon'];
                 break;
             case 'audio':
-                $thumbImage = $newRoot . '/images/music.png';
+                $thumbImage = $newRoot . '/images/' . $mig_config['music_icon'];
                 break;
             case 'video':
-                $thumbImage = $newRoot . '/images/movie.png';
+                $thumbImage = $newRoot . '/images/' . $mig_config['movie_icon'];
                 break;
         }
     }

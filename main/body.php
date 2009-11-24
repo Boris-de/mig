@@ -109,6 +109,10 @@ $mig_config['viewfoldercount']                  = $viewFolderCount;
 $mig_config['imageFilenameRegexpr']             = $imageFilenameRegexpr;
 $mig_config['currDirNameRegexpr']               = $currDirNameRegexpr;
 $mig_config['httpContentType']                  = $httpContentType;
+$mig_config['music_icon']                       = $music_icon;
+$mig_config['movie_icon']                       = $movie_icon;
+$mig_config['folder_icon']                      = $folder_icon;
+$mig_config['nothumb_icon']                     = $nothumb_icon;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {

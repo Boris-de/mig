@@ -121,9 +121,9 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                 $albumURLroot='.';
                 $newCurrDir='images';
                 switch ($filetype) {
-                    case 'video': $encodedImageURL='movie.png'; break;
-                    case 'audio': $encodedImageURL='music.png'; break;
-                    default: $encodedImageURL='no_thumb.png'; break;
+                    case 'video': $encodedImageURL=$mig_config['movie_icon']; break;
+                    case 'audio': $encodedImageURL=$mig_config['music_icon']; break;
+                    default: $encodedImageURL=$mig_config['nothumb_icon']; break;
                 }
             }
 
