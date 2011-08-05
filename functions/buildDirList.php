@@ -47,7 +47,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 
         // Ignore directories whose name begins with "." if the
         // appropriate option is set
-        if ($mig_config['ignoredotdirectories'] && ereg('^\.', $file)) {
+        if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $file)) {
             continue;
         }
 
@@ -60,7 +60,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         $directories[$file] = TRUE;
 
         // And stash a timestamp
-        if (ereg('bydate.*', $mig_config['foldersorttype'])) {
+        if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
             $timestamp = filemtime($mig_config['albumdir'].'/'.$currDir
                                    .'/'.$file);
             $filedates["$timestamp-$file"] = $file;
@@ -88,7 +88,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     }
 
     // Join the two sorted lists together into a single list
-    if (ereg('bydate.*', $mig_config['foldersorttype'])) {
+    if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
         while (list($junk,$file) = each($filedates)) {
             $presorted[$file] = TRUE;
         }
@@ -261,9 +261,9 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     }
 
     // If there aren't any subfolders to look at, then just say so.
-    if ($directoryList == '' || ereg('<tbody>$', $directoryList)) {
+    if ($directoryList == '' || preg_match('#<tbody>$#', $directoryList)) {
         return 'NULL';
-    } elseif (!eregi('</tr>$', $directoryList)) {
+    } elseif (!preg_match('#</tr>$#i', $directoryList)) {
         // Stick a </tr> on the end if it isn't there already, and close
         // the table.
         $directoryList .= "\n   </tr>\n  </tbody></table>";

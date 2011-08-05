@@ -37,9 +37,9 @@ function parseMigCf ( $directory )
         while (! feof($file)) {
 
             // Parse <hidden> blocks
-            if (eregi('^<hidden>', $line)) {
+            if (stripos($line, '<hidden>') === 0) {
                 $line = fgets($file, 4096);
-                while (! eregi('^</hidden>', $line)) {
+                while (stripos($line, '</hidden>') !== 0) {
                     $line = trim($line);
                     $mig_config['hidden'][$line] = TRUE;
                     $line = fgets($file, 4096);
@@ -47,9 +47,9 @@ function parseMigCf ( $directory )
             }
 
             // Parse <sort> structure
-            if (eregi('^<sort>', $line)) {
+            if (stripos($line, '<sort>') === 0) {
                 $line = fgets($file, 4096);
-                while (! eregi('^</sort>', $line)) {
+                while (stripos($line, '</sort>') !== 0) {
                     $line = trim($line);
 
                     if (is_file("$directory/$line")) {
@@ -63,21 +63,21 @@ function parseMigCf ( $directory )
             }
 
             // Parse <bulletin> structure
-            if (eregi('^<bulletin>', $line)) {
+            if (stripos($line, '<bulletin>') === 0) {
                 $line = fgets($file, 4096);
-                while (! eregi('^</bulletin>', $line)) {
+                while (stripos($line, '</bulletin>') !== 0) {
                     $bulletin .= $line;
                     $line = fgets($file, 4096);
                 }
             }
 
             // Parse <comment> structure
-            if (eregi('^<comment', $line)) {
+            if (stripos($line, '<comment') === 0) {
                 $commfilename = trim($line);
                 $commfilename = str_replace('">', '', $commfilename);
-                $commfilename = eregi_replace('^<comment "','',$commfilename);
+                $commfilename = preg_replace('#^<comment "#i','',$commfilename);
                 $line = fgets($file, 4096);
-                while (! eregi('^</comment', $line)) {
+                while (stripos($line, '</comment') !== 0) {
                     $line = trim($line);
                     $mycomment .= "$line ";
                     $line = fgets($file, 4096);
@@ -88,12 +88,12 @@ function parseMigCf ( $directory )
             }
 
             // Parse <short> structure
-            if (eregi('^<short', $line)) {
+            if (stripos($line, '<short') === 0) {
                 $shortfilename = trim($line);
                 $shortfilename = str_replace('">', '', $shortfilename);
-                $shortfilename = eregi_replace('^<short "','',$shortfilename);
+                $shortfilename = preg_replace('#^<short "#i','',$shortfilename);
                 $line = fgets($file, 4096);
-                while (! eregi('^</short', $line)) {
+                while (stripos($line, '^</short') !== 0) {
                     $line = trim($line);
                     $myshort .= "$line ";
                     $line = fgets($file, 4096);
@@ -104,51 +104,51 @@ function parseMigCf ( $directory )
             }
 
             // Parse FolderIcon lines
-            if (eregi('^foldericon ', $line)) {
+            if (stripos($line, 'foldericon ') === 0) {
                 $x = trim($line);
                 list($y, $folder, $icon) = explode(' ', $x);
                 $ficons[$folder] = $icon;
             }
 
             // Parse UseThumb lines
-            if (eregi('^usethumb ', $line)) {
+            if (stripos($line, 'usethumb ') === 0) {
                 $x = trim($line);
                 list($y, $folder, $thumbnail) = explode(' ', $x);
                 $mig_config['usethumbfile'][$folder] = $thumbnail;
             }
 
             // Parse FolderTemplate lines
-            if (eregi('^foldertemplate ', $line)) {
+            if (stripos($line, 'foldertemplate ') === 0) {
                 $x = trim($line);
                 list($y, $template) = explode(' ', $x);
             }
 
             // Parse PageTitle lines
-            if (eregi('^pagetitle ', $line)) {
+            if (stripos($line, 'pagetitle ') === 0) {
                 $x = trim($line);
-                $mig_config['pagetitle'] = eregi_replace('^pagetitle ', '', $x);
+                $mig_config['pagetitle'] = preg_replace('#^pagetitle #i', '', $x);
             }
 
             // Parse MaintAddr lines
-            if (eregi('^maintaddr ', $line)) {
+            if (stripos($line, 'maintaddr ') === 0) {
                 $x = trim($line);
-                $maintaddr = eregi_replace('^maintaddr ', '', $x);
+                $maintaddr = preg_replace('#^maintaddr #i', '', $x);
             }
 
             // Parse MaxFolderColumns lines
-            if (eregi('^maxfoldercolumns ', $line)) {
+            if (stripos($line, 'maxfoldercolumns ') === 0) {
                 $x = trim($line);
                 list($y, $fcols) = explode(' ', $x);
             }
 
             // Parse MaxThumbColumns lines
-            if (eregi('^maxthumbcolumns ', $line)) {
+            if (stripos($line, 'maxthumbcolumns ') === 0) {
                 $x = trim($line);
                 list($y, $tcols) = explode(' ', $x);
             }
 
             // Parse MaxThumbRows lines
-            if (eregi('^maxthumbrows ', $line)) {
+            if (stripos($line, 'maxthumbrows ') === 0) {
                 $x = trim($line);
                 list($y, $trows) = explode(' ', $x);
             }

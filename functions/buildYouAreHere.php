@@ -13,7 +13,7 @@ function buildYouAreHere ( $currDir )
     while ($workingCopy != '.') {
 
         // $label is the "last" thing in the path. Strip up to that
-        $label = ereg_replace('^.*/', '', $workingCopy);
+        $label = preg_replace('#^.*/#', '', $workingCopy);
 
         // Render underscores as spaces and turn spaces into &nbsp;
         $label = str_replace('_', '&nbsp;', $label);
@@ -34,7 +34,7 @@ function buildYouAreHere ( $currDir )
         }
 
         // Strip the last piece off of $workingCopy to go to next loop
-        $workingCopy = ereg_replace('/[^/]+$', '', $workingCopy);
+        $workingCopy = preg_replace('#/[^/]+$#', '', $workingCopy);
 
         // Build up the final path over each loop iteration
         $x = $hereString;

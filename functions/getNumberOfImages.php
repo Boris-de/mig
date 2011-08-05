@@ -26,11 +26,11 @@ function getNumberOfImages ( $folder )
                                  // unless $useThumbSubdir is set,
                                  // then don't waste time on this check
 
-            if ($mig_config['markertype'] == 'suffix' && ereg("_$markerLabel\.[^.]+$",$file)
+            if ($mig_config['markertype'] == 'suffix' && preg_match("#_$markerLabel\.[^.]+$#",$file)
                 && getFileType($file)) {
                     continue;
             }
-            if ($mig_config['markertype'] == 'prefix' && ereg("^$markerLabel\_", $file)) {
+            if ($mig_config['markertype'] == 'prefix' && preg_match("#^$markerLabel\_#", $file)) {
                 continue;
             }
 

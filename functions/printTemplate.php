@@ -23,15 +23,15 @@ function printTemplate ( $templateFile, $version, $maintAddr,
     } elseif ($REQUEST_URI) {
         $newLang = $REQUEST_URI;
     }
-    if (ereg('mig_dl=',$newLang)) {
-        $newLang = ereg_replace('[?&]mig_dl=[^?&]*', '', $newLang);
+    if (strpos($newLang, 'mig_dl=') !== FALSE) {
+        $newLang = preg_replace('#[?&]mig_dl=[^?&]*#', '', $newLang);
     }
     $newLang .= '&mig_dl';
 
     // Only prepend a path if one isn't there.  For unix-like systems this
     // checks for a leading slash, for Windows-like system it checks for
     // a leading drive letter or an SMB share.
-    if (! eregi('^(/|[a-z]:|[\\]{2})', $templateFile)) {
+    if (! preg_match('#^(/|[a-z]:|[\\\\]{2})#i', $templateFile)) {
         $templateFile = $mig_config['albumdir'] . '/' . $newCurrDir . '/' . $templateFile;
     }
 
@@ -47,7 +47,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
     while (! feof($file)) {             // Loop until EOF
 
         // Look for include directives and process them
-        if (ereg('^#include', $line)) {
+        if (strpos($line, '#include') === 0) {
             $orig_line = $line;
             $line = trim($line);
             $line = str_replace('#include "', '', $line);
@@ -67,7 +67,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                     if (function_exists('virtual')) {
                         // virtual() doesn't like absolute paths,
                         // apparently, so just pass it a relative one.
-                        $tmplDir = ereg_replace('^.*/', '', $mig_config['templatedir']);
+                        $tmplDir = preg_replace('#^.*/#', '', $mig_config['templatedir']);
                         virtual("$tmplDir/$incl_file");
                     } else {
                         include( convertIncludePath($pathConvertFlag,

@@ -46,7 +46,7 @@ $pathConvertFlag = FALSE;
 //         
 //     You could define:
 //         $pathConvertFlag = TRUE;
-//         $pathConvertRegex = "^.*/www/";
+//         $pathConvertRegex = "#^.*/www/#";
 //         $pathConvertTarget = "/";
 //         
 //     So the regex would match this:  /u25/vhost/www12345/www/
@@ -56,7 +56,7 @@ $pathConvertFlag = FALSE;
 // Defaults to an empty string.
 //         
 // Example:
-//     $pathConvertRegex = "^.*/www/";
+//     $pathConvertRegex = "#^.*/www/#";
 //     
 
 $pathConvertRegex = "";

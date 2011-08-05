@@ -54,11 +54,11 @@ function buildNextPrevLinks ( $currDir, $presorted )
         $markerLabel = $mig_config['markerlabel'];
 
         // Ignore thumbnails
-        if ($mig_config['markertype'] == 'prefix' && ereg("^$markerLabel\_", $file)) {
+        if ($mig_config['markertype'] == 'prefix' && preg_match("#^$markerLabel\_#", $file)) {
             continue;
         }
 
-        if ($mig_config['markertype'] == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
+        if ($mig_config['markertype'] == 'suffix' && preg_match("#_$markerLabel\.[^.]+$#", $file)
             && getFileType($file)) {
                 continue;
         }
@@ -78,7 +78,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
         if (is_file($mig_config['albumdir']."/$currDir/$file") && ! $presorted[$file]) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
-            if (ereg('bydate.*', $mig_config['sorttype'])) {
+            if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
                 $timestamp = filemtime($mig_config['albumdir']."/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
             }
@@ -100,7 +100,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     }
 
     // Generated final sorted list
-    if (ereg('bydate.*', $mig_config['sorttype'])) {
+    if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
         // since $filedates is sorted by date, and date is
         // the key, the key is pointless to put in the list now.
         // so we store the value, not the key, in $presorted

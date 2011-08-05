@@ -48,12 +48,12 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
                          // unless $useThumbSubdir is set,
                          // then don't waste time on this check
 
-            if ($mig_config['markertype'] == 'suffix' && ereg("_$markerLabel\.[^.]+$", $file)
+            if ($mig_config['markertype'] == 'suffix' && preg_match("#_$markerLabel\.[^.]+$#", $file)
                 && getFileType($file)) {
                     continue;
             }
 
-            if ($mig_config['markertype'] == 'prefix' && ereg("^$markerLabel\_", $file)) {
+            if ($mig_config['markertype'] == 'prefix' && preg_match("#^$markerLabel\_#", $file)) {
                 continue;
             }
 
@@ -72,7 +72,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
             $imagefiles[$file] = TRUE;
 
             // and stash a timestamp as well if needed
-            if (ereg('bydate.*', $mig_config['sorttype'])) {
+            if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
                 $timestamp = filemtime($mig_config['albumdir']
                                        . "/$currDir/$file");
                 $filedates["$timestamp-$file"] = $file;
@@ -95,7 +95,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     }
 
     // Join the two sorted lists together into a single list
-    if (ereg('bydate.*', $mig_config['sorttype'])) {
+    if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
         while (list($junk,$file) = each($filedates)) {
             $presorted[$file] = TRUE;
         }
@@ -250,7 +250,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     // If there aren't any images to work with, just say so.
     if ($imageList == '') {
         $imageList = 'NULL';
-    } elseif (!eregi('</tr>$', $imageList)) {
+    } elseif (!preg_match('#</tr>$#i', $imageList)) {
         // Stick a </tr> on the end if it isn't there already and close
         // the table
         $imageList .= "\n  </tr>\n  </tbody></table>";

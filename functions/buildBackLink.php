@@ -40,7 +40,7 @@ function buildBackLink ( $currDir, $type )
     }
 
     // Trim off the last directory, so we go "back" one.
-    $junk = ereg_replace('/[^/]+$', '', $currDir);
+    $junk = preg_replace('#/[^/]+$#', '', $currDir);
     $newCurrDir = migURLencode($junk);
 
     $retval = '<a href="'

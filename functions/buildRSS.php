@@ -35,7 +35,7 @@ function getDirListRecursive($currDir, $SERVER, &$files, $depth) {
 
 		// Ignore files and directories whose name begins with "."
 		// if the appropriate option is set
-		if ($mig_config['ignoredotdirectories'] && ereg('^\.', $file)) {
+		if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $file)) {
 			continue;
 		}
 		

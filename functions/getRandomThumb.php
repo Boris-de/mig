@@ -78,7 +78,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                     }
 
                     // Ignore dot directories if appropriate
-                    if ($mig_config['ignoredotdirectories'] && ereg('^\.', $item)) {
+                    if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $item)) {
                         continue;
                     }
 
@@ -133,13 +133,13 @@ function getRandomThumb ( $file, $folder, $currDir )
             // figure out if this is a thumbnail or not.
             // This is so we skip over regular images.
             if ($mig_config['markertype'] == 'prefix') {
-                if (ereg("^$markerLabel\_", $sample)
+                if (preg_match("#^$markerLabel\_#", $sample)
                     && getFileType($sample))
                 {
                     $mySample = $sample;
                 }
             } elseif ($mig_config['markertype'] == 'suffix') {
-                if (ereg("_$markerLabel\.[^.]+$", $sample)
+                if (preg_match("#_$markerLabel\.[^.]+$#", $sample)
                     && getFileType($sample))
                 {
                     $mySample = $sample;
@@ -177,7 +177,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                         }
 
                         // Ignore dot directories if appropriate
-                        if ($mig_config['ignoredotdirectories'] && ereg('^\.', $item)) {
+                        if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $item)) {
                             continue;
                         }
 

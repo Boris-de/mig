@@ -17,7 +17,7 @@
 //
 
 // Munge base reference
-$baseHref = ereg_replace('/modules.*$', '', $PHP_SELF);
+$baseHref = preg_replace('#/modules.*$#', '', $PHP_SELF);
 
 if ($_SERVER['SERVER_NAME']) {
     $SERVER_NAME = $_SERVER['SERVER_NAME'];

@@ -25,56 +25,56 @@ function getExifDescription ( $currDir, $formatString )
         $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
 
-            if (ereg('^File name    : ', $line)) {
+            if (strpos($line, 'File name    : ') === 0) {
                 $fname = str_replace('File name    : ', '', $line);
                 $fname = chop($fname);
 
-            } elseif (ereg('^Comment      : ', $line)) {
+            } elseif (strpos($line, 'Comment      : ') === 0) {
                 $comment = str_replace('Comment      : ', '', $line);
                 $comment = chop($comment);
                 $desc[$fname] = $comment;
 
-            } elseif (ereg('^Camera model : ', $line)) {
+            } elseif (strpos($line, 'Camera model : ') === 0) {
                 $x = str_replace('Camera model : ', '', $line);
                 $x = chop($x);
                 $model[$fname] = $x;
 
             // This one apparently sometimes has a space after
             // the colon, sometimes not.  Try to work either way.
-            } elseif (ereg('^Exposure time: ?', $line)) {
-                $x = ereg_replace('^Exposure time: ?', '', $line);
-                if (ereg('\(', $x)) {
-                    $x = ereg_replace('^.*\(', '', $x);
-                    $x = ereg_replace(').*$', '', $x);
+            } elseif (preg_match('#^Exposure time: ?#', $line)) {
+                $x = preg_replace('#^Exposure time: ?#', '', $line);
+                if (preg_match('#\(#', $x)) {
+                    $x = preg_replace('#^.*\(#', '', $x);
+                    $x = preg_replace('#).*$#', '', $x);
                 }
                 $x = chop($x);
                 $shutter[$fname] = $x;
 
-            } elseif (ereg('^Aperture     : ', $line)) {
+            } elseif (strpos($line, 'Aperture     : ') === 0) {
                 $x = str_replace('Aperture     : ', '', $line);
                 // make it fN.N instead of f/N.N
-                $x = ereg_replace('/', '', $x);
+                $x = preg_replace('#/#', '', $x);
                 $x = chop($x);
                 $aperture[$fname] = $x;
 
-            } elseif (ereg('^Focal length : ', $line)) {
+            } elseif (strpos($line, 'Focal length : ') === 0) {
                 $x = str_replace('Focal length : ', '', $line);
-                if (ereg('35mm equiv', $x)) {
-                    $x = ereg_replace('^.*alent: ', '', $x);
+                if (stripos($x, '35mm equiv') !== FALSE) {
+                    $x = preg_replace('#^.*alent: #', '', $x);
                     $x = chop($x);
-                    $x = ereg_replace(')$', '', $x);
+                    $x = preg_replace('#)$#', '', $x);
                 }
                 $foclen[$fname] = $x;
 
-            } elseif (ereg('^ISO equiv.   : ', $line)) {
+            } elseif (strpos($line, 'ISO equiv.   : ') === 0) {
                 $x = str_replace('ISO equiv.   : ', '', $line);
                 $x = chop($x);
                 $iso[$fname] = $x;
 
-            } elseif (ereg('^Flash used   : Yes', $line)) {
+            } elseif (strpos($line, 'Flash used   : Yes') === 0) {
                 $flash[$fname] = $mig_config['lang']['flash_used'];
 
-            } elseif (ereg('^Date/Time    : ', $line)) {
+            } elseif (strpos($line, '^Date/Time    : ') === 0) {
                 $x = str_replace('Date/Time    : ', '', $line);
                 $x = chop($x);
 

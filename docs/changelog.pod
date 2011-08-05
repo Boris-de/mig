@@ -2,6 +2,17 @@
 
 =head2 MIG Change Log
 
+=head2 Version 1.5.2
+
+=head3 Bug-fixed
+
+Handle functions that are deprecated in PHP 5.3 so that Mig will still work with PHP 6.0 and not produce E_DEPRECATED on PHP 5.3
+
+=head3 Incompatilities
+
+If you use C<$pathConvertRegex> (which should be very few), you'll have to take care that your regex will work with preg_replace!
+This should affect very few installations, that have to modify index.php on every update anyway.
+
 =head2 Version 1.5.1 (Tue, 24 Nov 2009)
 
 =head3 Bug-fixes

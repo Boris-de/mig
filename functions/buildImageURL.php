@@ -76,7 +76,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         $thumbImage = migURLencode($thumbImage);
 
     } else {
-        $newRoot = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
+        $newRoot = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
         switch ($type) {
             case 'image':
                 $thumbImage = $newRoot . '/images/' . $mig_config['nothumb_icon'];

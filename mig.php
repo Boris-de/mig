@@ -16,7 +16,7 @@ while ($file = readdir ($handle)) {
     
     //include just .php-files, no other files...
 
-     if (ereg(".php$", $file)){ 
+     if (preg_match("#.php$#", $file)) {
       require($dir."/".$file); 
       }
     }
@@ -46,7 +46,7 @@ while ($file = readdir ($handle)) {
     
     //include just .php-files, no other files...
 
-     if (ereg(".php$", $file)){ 
+     if (preg_match("#.php$#", $file)) {
       include($lang_dir."/".$file); 
       }
     }

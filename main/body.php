@@ -41,7 +41,7 @@ $mig_config['basedir'] = dirname($mig_config['basedir']);
 
 // Strip extra slashes out of basedir if appropriate
 // This is basically for Windows SMB shares
-if (eregi('^[\\]{2}', $mig_config['basedir'])) {
+if (preg_match('#^[\\\\]{2}#i', $mig_config['basedir'])) {
     $mig_config['basedir'] = stripslashes($mig_config['basedir']);
 }
 
@@ -280,13 +280,13 @@ if (strstr($currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $cu
 //     must begin with "./" and dot or slash can't follow that
 //     for at least two positions.
 //
-if ( $currDir != '.' && ! ereg('^./[^/][^/]*', $currDir) ) {
+if ( $currDir != '.' && ! preg_match('#^./[^/][^/]*#', $currDir) ) {
     print 'ERROR: \$currDir is invalid.  Exiting.';
     exit;
 }
 
 // currDir may not end in / unless it is './' in its entirety
-if ( $currDir != './' && ereg('/$', $currDir) ) {
+if ( $currDir != './' && preg_match('#/$#', $currDir) ) {
     print "ERROR: \$currDir is invalid.  Exiting.";
     exit;
 }
@@ -450,7 +450,7 @@ while ($workCopy) {
     } else {
         // parse $workCopy down one directory at a time
         // so we can check back all the way to "."
-        $workCopy = ereg_replace('/[^/]+$', '', $workCopy);
+        $workCopy = preg_replace('#/[^/]+$#', '', $workCopy);
     }
 }
 
@@ -463,7 +463,7 @@ if($httpContentType) {
 $mig_config['templatedir'] = $mig_config['basedir'] . '/templates';
 
 // baseURL with the scriptname torn off the end
-$baseHref = ereg_replace('/[^/]+$', '', $mig_config['baseurl']);
+$baseHref = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
 // Adjust for Nuke mode if appropriate
 if ($phpNukeCompatible || $phpWebThingsCompatible) {
     $baseHref .= '/mig';

@@ -88,7 +88,7 @@ such as F<Photo_Gallery> and put this in a file called F<index.php> inside
 the module directory:
 
     <?php
-        $baseHref = ereg_replace('/modules.*$', '', $PHP_SELF);
+        $baseHref = preg_replace('#/modules.*$#', '', $PHP_SELF);
         header("Location: http://$SERVER_NAME$baseHref/mig.php");
     ?>
 
