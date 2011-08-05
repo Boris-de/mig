@@ -4,8 +4,6 @@
 # Makefile for Mig documentation
 #
 
-MIG_SF_NET_DIR=../../mig.sf.net
-
 hcmd=	pod2html --noindex
 tcmd=	pod2text
 
@@ -42,6 +40,9 @@ clean:
 	test ! -d $(html_dir) || rmdir $(html_dir)
 	test ! -d $(text_dir) || rmdir $(text_dir)
 
-publish: docs
+$(MIG_SF_NET_DIR)/docs:
+	mkdir -p $(MIG_SF_NET_DIR)/docs
+
+publish: docs | $(MIG_SF_NET_DIR)/docs
 	cp html/*.html $(MIG_SF_NET_DIR)/docs
 	cd $(MIG_SF_NET_DIR) ; make

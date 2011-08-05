@@ -13,17 +13,22 @@ SPOOLDIR= mig-$(ver)
 # Archive name (output file)
 ARCHIVE= $(DISTDIR)/$(SPOOLDIR).tar.gz
 
+RELEASE_TAG=RELEASE_$(shell echo ${ver} | sed "s/\./_/g")
+
+PHP_FILES=main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
+
 default:
 	@echo "    make dist ver=X            Builds distribution bundle (in $(DISTDIR))"
-	@echo "    make index ver=X           Builds just index.php"
+	@echo "    make release ver=X         Builds distribution bundle (in $(DISTDIR)), tags and signs it"
+	@echo "    make index.php ver=X       Builds just index.php"
 	@echo "    make docpublish            Publishes docs to mig.sf.net"
 	@echo "    make clean"
 	@echo " "
-	@echo "    make mig.sf.net ver=X      index & templates to mig.sf.net"
+	@echo "    make mig.sf.net ver=X      index.php & templates to mig.sf.net"
 
 mig: dist
 
-dist: index
+dist: index.php
 	cd docs; make; cd ..
 	rm -rf $(SPOOLDIR) $(ARCHIVE)
 	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
@@ -51,20 +56,39 @@ dist: index
 	@echo " "
 	@echo "=> Mig $(ver) bundle complete <="
 
-index:
+index.php: $(PHP_FILES) main/preamble.php
 	rm -f index.php
 	( sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
-	  cat main/pathConvert.php main/defaults.php \
-	      functions/*.php languages/*.php main/body.php \
+	  cat $(PHP_FILES) \
 	) > index.php
+
+release:
+	@if hg status -m -a -r -d; then \
+		echo "The working copy has uncommited changes (see above)"; \
+		false; \
+	fi
+	@if test -z "${ver}"; then \
+		echo "Please specify a version for dist!"; \
+		false; \
+	fi
+	@if test -z "$(MIG_GPG_KEY)"; then \
+		echo "Please specify a key you want to use to sign this release (MIG_GPG_KEY=...)"; \
+		false; \
+	fi
+	hg tag $(RELEASE_TAG)
+	hg sign --key "$(MIG_GPG_KEY)" $(RELEASE_TAG)
+	make dist
+	make docpublish
+	make mig.sf.net
+	gpg --default-key "$(MIG_GPG_KEY)" --detach-sign --sign $(ARCHIVE)
 
 docpublish:
 	cd docs ; make publish
 
-mig.sf.net: index
-	cp index.php ../mig.sf.net/gallery
-	cp templates/*html templates/*.css ../mig.sf.net/gallery/templates
-	cd ../mig.sf.net ; make
+mig.sf.net: index.php
+	cp index.php $(MIG_SF_NET_DIR)/gallery/
+	cp templates/*html templates/*.css $(MIG_SF_NET_DIR)/gallery/templates/
+	cd $(MIG_SF_NET_DIR) ; make
 	@echo "URL: http://mig.sf.net/gallery/"
 
 clean:

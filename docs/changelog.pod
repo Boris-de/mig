@@ -10,6 +10,11 @@ Handle functions that are deprecated in PHP 5.3 so that Mig will still work with
 
 A bit of refactoring "under the hood" (Boris)
 
+=head3 Improvements
+
+Releases and release-tags in the SCM will now be signed with GPG. You can find the current key at http://mig.sf.net/mig.asc
+The fingerprint of the current key is C<F5A4 0D2C 0DFF 4E5B 4908 198B 4709 198D 7464 C7A7> and it should be signed by cacert.
+
 =head3 Incompatilities
 
 If you use C<$pathConvertRegex> (which should be very few), you'll have to take care that your regex will work with preg_replace!
