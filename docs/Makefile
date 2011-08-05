@@ -4,39 +4,44 @@
 # Makefile for Mig documentation
 #
 
+MIG_SF_NET_DIR=../../mig.sf.net
+
 hcmd=	pod2html --noindex
 tcmd=	pod2text
 
-# HTML files
-html=	changelog.html credits.html install.html license.html \
-	passwords.html jump.html apache.html portals.html \
-	utilities.html mig_cf.html templates.html
+html_dir = html
+text_dir = text
 
-# Text files
-text=	changelog.txt credits.txt install.txt license.txt \
-	passwords.txt jump.txt apache.txt portals.txt \
-	utilities.txt mig_cf.txt templates.txt
+pods=	changelog.pod credits.pod install.pod license.pod \
+	passwords.pod jump.pod apache.pod portals.pod \
+	utilities.pod mig_cf.pod templates.pod
+
+html = $(addsuffix .html, $(basename $(pods)))
+text =$(addsuffix .txt, $(basename $(pods)))
+html_with_dir = $(patsubst %,$(html_dir)/%,$(html))
+text_with_dir = $(patsubst %,$(text_dir)/%,$(text))
 
 # Default is to rebuild doc files
-docs: mkdirs $(html) $(text) sort clean
+docs: mkdirs $(html_with_dir) $(text_with_dir)
 
-$(html): %.html: %.pod
+$(html_dir)/%.html: %.pod
 	$(hcmd) --title="Mig Documentation - $@" \
 		--infile=$< --outfile=$@
-
-$(text): %.txt: %.pod
-	$(tcmd) $< $@
-
-mkdirs:
-	mkdir -p html text
-
-sort:
-	mv *.html html
-	mv *.txt text
-
-clean:
 	rm -f pod2htm*
 
-publish:
-	cp html/*.html ../../mig.sf.net/docs
-	cd ../../mig.sf.net ; make
+$(text_dir)/%.txt: %.pod
+	$(tcmd) $< $@
+
+$(html_dir) $(text_dir):
+	mkdir -p $@
+
+mkdirs: | $(html_dir) $(text_dir)
+
+clean:
+	rm -f $(html_dir)/*.html $(text_dir)/*.txt
+	test ! -d $(html_dir) || rmdir $(html_dir)
+	test ! -d $(text_dir) || rmdir $(text_dir)
+
+publish: docs
+	cp html/*.html $(MIG_SF_NET_DIR)/docs
+	cd $(MIG_SF_NET_DIR) ; make
