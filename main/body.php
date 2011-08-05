@@ -191,44 +191,39 @@ if ($phpNukeCompatible) {
     }
 }
 
-// Jump has to come before currDir redirect to work
-
-if (! isset($jump) || ! $jump) {
-    if (isset($_GET['jump'])) {
-        $jump = $_GET['jump'];
-    } elseif (isset($HTTP_GET_VARS['jump'])) {
-        $jump = $HTTP_GET_VARS['jump'];
-    } else {
-        $jump = FALSE;
+function getVariable($name, $arr1, $arr2, $default = NULL) {
+    $result = $default;
+    if (isset($arr1[$name])) {
+        $result = $arr1[$name];
+    } elseif (isset($arr2[$name])) {
+        $result = $arr2[$name];
     }
+    return $result;
+}
+
+function getHttpGetVariable($name, $default = NULL) {
+    return getVariable($name, $_GET, $HTTP_GET_VARS, $default);
+}
+
+function getHttpServerVariable($name, $default = NULL) {
+    return getVariable($name, $_SERVER, $HTTP_SERVER_VARS, $default);
+}
+
+// Jump has to come before currDir redirect to work
+if (! isset($jump) || ! $jump) {
+    $jump = getHttpGetVariable('jump', FALSE);
 }
 
 if (! isset($SERVER_NAME)) {
-    if (isset($_SERVER['SERVER_NAME'])) {
-        $SERVER_NAME = $_SERVER['SERVER_NAME'];
-    } elseif (isset($HTTP_SERVER_VARS['SERVER_NAME'])) {
-        $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
-    }
+    $SERVER_NAME = getHttpServerVariable('SERVER_NAME');
 }
 
 if (! isset($SERVER_PORT)) {
-    if (isset($_SERVER['SERVER_PORT'])) {
-        $SERVER_PORT = $_SERVER['SERVER_PORT'];
-    } elseif (isset($HTTP_SERVER_VARS['SERVER_PORT'])) {
-        $SERVER_PORT = $HTTP_SERVER_VARS['SERVER_PORT'];
-    }
-}
-
-if (! isset($SERVER_PORT)) {
-    $SERVER_PORT = "80";
+    $SERVER_PORT = getHttpServerVariable('SERVER_PORT', '80');
 }
 
 if (! isset($PATH_INFO)) {
-    if (isset($_SERVER['PATH_INFO'])) {
-        $PATH_INFO = $_SERVER['PATH_INFO'];
-    } elseif (isset($HTTP_SERVER_VARS['PATH_INFO'])) {
-        $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
-    }
+    $PATH_INFO = getHttpServerVariable('PATH_INFO');
 }
 
 // Is this a jump-tag URL?
@@ -253,11 +248,8 @@ $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums 
 
 
 // Get currDir.  If there isn't one, default to "."
-if (isset($_GET['currDir'])) {
-    $currDir = $_GET['currDir'];
-} elseif (isset($HTTP_GET_VARS['currDir'])) {
-    $currDir = $HTTP_GET_VARS['currDir'];
-} elseif (! $currDir) {
+$currDir = getHttpGetVariable('currDir');
+if (! $currDir) {
     if ($SERVER_NAME) {
         header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
              . '?currDir=.');
@@ -298,13 +290,7 @@ $currDir = rawurldecode($currDir);
 
 // Get image, if there is one.
 if (! isset($image)) {
-    if (isset($_GET['image'])) {
-        $image = $_GET['image'];
-    } elseif (isset($HTTP_GET_VARS['image'])) {
-        $image = $HTTP_GET_VARS['image'];
-    } else {
-        $image = NULL;
-    }
+    $image = getHttpGetVariable('image');
 }
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
@@ -334,13 +320,7 @@ if (($mig_config['image'])AND(!file_exists($mig_config['albumdir']."/$currDir/".
 
 // Get pageType.  If there isn't one, default to "folder"
 if (! isset($pageType)) {
-    if (isset($_GET['pageType'])) {
-        $pageType = $_GET['pageType'];
-    } elseif (isset($HTTP_GET_VARS['pageType'])) {
-        $pageType = $HTTP_GET_VARS['pageType'];
-    } else {
-        $pageType = 'folder';
-    }
+    $pageType = getHttpGetVariable('pageType', 'folder');
 }
 
 // only allow one of the predefined values
@@ -357,25 +337,15 @@ $mig_config['pagetype'] = $pageType;
 
 
 if (! isset($startFrom)) {
-    if (isset($_GET['startFrom'])) {
-        $startFrom = $_GET['startFrom'];
-    } elseif (isset($HTTP_GET_VARS['startFrom'])) {
-        $startFrom = $HTTP_GET_VARS['startFrom'];
-    }
+    $startFrom = getHttpGetVariable('startFrom', 0) + 0;
 }
 
 // only allow digits for $startFrom
-$mig_config['startfrom'] = isset($startFrom) ? $startFrom+0 : 0;
+$mig_config['startfrom'] = $startFrom;
 
 // use language set specified in URL, if one was.
 if (! isset($mig_dl)) {
-    if (isset($_GET['mig_dl'])) {
-        $mig_dl = $_GET['mig_dl'];
-    } elseif (isset($HTTP_GET_VARS['mig_dl'])) {
-        $mig_dl = $HTTP_GET_VARS['mig_dl'];
-    } else {
-        $mig_dl = NULL;
-    }
+    $mig_dl = getHttpGetVariable('mig_dl');
 }
 // Only use it if we find it - otherwise fall back to default language
 if ($mig_dl && $mig_config['lang_lib'][$mig_dl]) {
@@ -411,19 +381,11 @@ while ($workCopy) {
 
     if (isset($protect[$workCopy])) {
 
-        if (! $PHP_AUTH_USER) {
-            if ($_SERVER['PHP_AUTH_USER']) {
-                $PHP_AUTH_USER = $_SERVER['PHP_AUTH_USER'];
-            } elseif ($HTTP_SERVER_VARS['PHP_AUTH_USER']) {
-                $PHP_AUTH_USER = $HTTP_SERVER_VARS['PHP_AUTH_USER'];
-            }
+        if (! isset($PHP_AUTH_USER)) {
+            $PHP_AUTH_USER = getHttpServerVariable('PHP_AUTH_USER');
         }
-        if (! $PHP_AUTH_PW) {
-            if ($_SERVER['PHP_AUTH_PW']) {
-                $PHP_AUTH_PW = $_SERVER['PHP_AUTH_PW'];
-            } elseif ($HTTP_SERVER_VARS['PHP_AUTH_PW']) {
-                $PHP_AUTH_PW = $HTTP_SERVER_VARS['PHP_AUTH_PW'];
-            }
+        if (! isset($PHP_AUTH_PW)) {
+            $PHP_AUTH_USER = getHttpServerVariable('PHP_AUTH_PW');
         }
 
         // If there's not a username yet, fetch one by popping up a

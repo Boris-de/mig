@@ -6,7 +6,9 @@
 
 =head3 Bug-fixed
 
-Handle functions that are deprecated in PHP 5.3 so that Mig will still work with PHP 6.0 and not produce E_DEPRECATED on PHP 5.3
+Handle functions that are deprecated in PHP 5.3 so that Mig will still work with PHP 6.0 and not produce E_DEPRECATED on PHP 5.3 (Boris)
+
+A bit of refactoring "under the hood" (Boris)
 
 =head3 Incompatilities
 
