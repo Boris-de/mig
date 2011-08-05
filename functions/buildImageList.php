@@ -30,6 +30,8 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     $filedates      = array ();
 
     $thumbsInFolder = 0;
+    $imageList      = '';
+    $pageBlock      = '';
 
     // Count presorted images for pagination purposes
     if ($presorted) {
@@ -62,7 +64,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
         // We'll look at this one only if it's a file
         // and it matches our list of approved extensions
         if (is_file($mig_config['albumdir'].'/'.$currDir.'/'.$file)
-                        && ! $presorted[$file] && getFileType($file)
+                        && ! isset($presorted[$file]) && getFileType($file)
                         && preg_match($mig_config['imageFilenameRegexpr'], $file))
         {
             // Increase thumb counter

@@ -69,13 +69,13 @@ function buildNextPrevLinks ( $currDir, $presorted )
         }
 
         // Ignore the hidden images
-        if ($mig_config['hidden'][$file]) {
+        if (isset($mig_config['hidden'][$file])) {
             continue;
         }
 
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
-        if (is_file($mig_config['albumdir']."/$currDir/$file") && ! $presorted[$file]) {
+        if (is_file($mig_config['albumdir']."/$currDir/$file") && ! isset($presorted[$file])) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
             if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
@@ -145,7 +145,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
             && !preg_match($mig_config['imageFilenameRegexpr'], $fList[$tempThisImagePos+1])) {
         ++$tempThisImagePos;
     }
-    if ($fList[$tempThisImagePos+1]) {
+    if (isset($fList[$tempThisImagePos+1])) {
         $next = migURLencode($fList[$tempThisImagePos+1]);
     } else {
         $next = 'NA';

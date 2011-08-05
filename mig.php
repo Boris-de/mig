@@ -6,6 +6,7 @@
 //
 //werner
 
+$version = 'dev';
 
 function include_all_files($dir){
  //includes all files in a directory...

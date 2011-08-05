@@ -6,6 +6,8 @@ function buildYouAreHere ( $currDir )
 {
     global $mig_config;
 
+    $hereString = '';
+
     // Use $workingCopy so we don't trash value of $currDir
     $workingCopy = $currDir;
 

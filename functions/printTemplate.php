@@ -140,7 +140,8 @@ function printTemplate ( $templateFile, $version, $maintAddr,
 
             // Do substitution for various variables
             while (list($key,$val) = each($replacement_list)) {
-                $line = str_replace("%%$val%%", $$val, $line);
+                $value = isset($$val) ? $$val : '';
+                $line = str_replace("%%$val%%", $value, $line);
             }
 
             print $line;                // Print resulting line

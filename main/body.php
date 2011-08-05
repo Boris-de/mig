@@ -1,17 +1,17 @@
 <?php
 
 // URL to use to call myself again
-if ($_SERVER['PHP_SELF']) {
+if (isset($_SERVER['PHP_SELF'])) {
     $mig_config['baseurl'] = $_SERVER['PHP_SELF'];
-} elseif ($HTTP_SERVER_VARS['PHP_SELF']) {
+} elseif (isset($HTTP_SERVER_VARS['PHP_SELF'])) {
     $mig_config['baseurl'] = $HTTP_SERVER_VARS['PHP_SELF'];
-} elseif ($PHP_SELF) {
+} elseif (isset($PHP_SELF)) {
     $mig_config['baseurl'] = $PHP_SELF;
-} elseif ($_SERVER['SCRIPT_NAME']) {
+} elseif (isset($_SERVER['SCRIPT_NAME'])) {
     $mig_config['baseurl'] = $_SERVER['SCRIPT_NAME'];
-} elseif ($HTTP_SERVER_VARS['SCRIPT_NAME']) {
+} elseif (isset($HTTP_SERVER_VARS['SCRIPT_NAME'])) {
     $mig_config['baseurl'] = $HTTP_SERVER_VARS['SCRIPT_NAME'];
-} elseif ($SCRIPT_NAME) {
+} elseif (isset($SCRIPT_NAME)) {
     $mig_config['baseurl'] = $SCRIPT_NAME;
 } else {
     print 'FATAL ERROR: Could not set baseurl';
@@ -19,17 +19,17 @@ if ($_SERVER['PHP_SELF']) {
 }
 
 // Base directory of installation
-if ($_SERVER['PATH_TRANSLATED']) {
+if (isset($_SERVER['PATH_TRANSLATED'])) {
     $mig_config['basedir'] = $_SERVER['PATH_TRANSLATED'];
-} elseif ($HTTP_SERVER_VARS['PATH_TRANSLATED']) {
+} elseif (isset($HTTP_SERVER_VARS['PATH_TRANSLATED'])) {
     $mig_config['basedir'] = $HTTP_SERVER_VARS['PATH_TRANSLATED'];
-} elseif ($PATH_TRANSLATED) {
+} elseif (isset($PATH_TRANSLATED)) {
     $mig_config['basedir'] = $PATH_TRANSLATED;
-} elseif ($_SERVER['SCRIPT_FILENAME']) {
+} elseif (isset($_SERVER['SCRIPT_FILENAME'])) {
     $mig_config['basedir'] = $_SERVER['SCRIPT_FILENAME'];
-} elseif ($HTTP_SERVER_VARS['SCRIPT_FILENAME']) {
+} elseif (isset($HTTP_SERVER_VARS['SCRIPT_FILENAME'])) {
     $mig_config['basedir'] = $HTTP_SERVER_VARS['SCRIPT_FILENAME'];
-} elseif ($SCRIPT_FILENAME) {
+} elseif (isset($SCRIPT_FILENAME)) {
     $mig_config['basedir'] = $SCRIPT_FILENAME;
 } else {
     print 'FATAL ERROR: Can not set basedir';
@@ -193,38 +193,40 @@ if ($phpNukeCompatible) {
 
 // Jump has to come before currDir redirect to work
 
-if (! $jump) {
-    if ($_GET['jump']) {
+if (! isset($jump) || ! $jump) {
+    if (isset($_GET['jump'])) {
         $jump = $_GET['jump'];
-    } elseif ($HTTP_GET_VARS['jump']) {
+    } elseif (isset($HTTP_GET_VARS['jump'])) {
         $jump = $HTTP_GET_VARS['jump'];
+    } else {
+        $jump = FALSE;
     }
 }
 
-if (! $SERVER_NAME) {
-    if ($_SERVER['SERVER_NAME']) {
+if (! isset($SERVER_NAME)) {
+    if (isset($_SERVER['SERVER_NAME'])) {
         $SERVER_NAME = $_SERVER['SERVER_NAME'];
-    } elseif ($HTTP_SERVER_VARS['SERVER_NAME']) {
+    } elseif (isset($HTTP_SERVER_VARS['SERVER_NAME'])) {
         $SERVER_NAME = $HTTP_SERVER_VARS['SERVER_NAME'];
     }
 }
 
-if (! $SERVER_PORT) {
-    if ($_SERVER['SERVER_PORT']) {
+if (! isset($SERVER_PORT)) {
+    if (isset($_SERVER['SERVER_PORT'])) {
         $SERVER_PORT = $_SERVER['SERVER_PORT'];
-    } elseif ($HTTP_SERVER_VARS['SERVER_PORT']) {
+    } elseif (isset($HTTP_SERVER_VARS['SERVER_PORT'])) {
         $SERVER_PORT = $HTTP_SERVER_VARS['SERVER_PORT'];
     }
 }
 
-if (! $SERVER_PORT) {
+if (! isset($SERVER_PORT)) {
     $SERVER_PORT = "80";
 }
 
-if (! $PATH_INFO) {
-    if ($_SERVER['PATH_INFO']) {
+if (! isset($PATH_INFO)) {
+    if (isset($_SERVER['PATH_INFO'])) {
         $PATH_INFO = $_SERVER['PATH_INFO'];
-    } elseif ($HTTP_SERVER_VARS['PATH_INFO']) {
+    } elseif (isset($HTTP_SERVER_VARS['PATH_INFO'])) {
         $PATH_INFO = $HTTP_SERVER_VARS['PATH_INFO'];
     }
 }
@@ -237,7 +239,7 @@ if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
-if ($PATH_INFO && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
+if (isset($PATH_INFO) && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
     header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$PATH_INFO]");
     exit;
@@ -251,9 +253,9 @@ $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums 
 
 
 // Get currDir.  If there isn't one, default to "."
-if ($_GET['currDir']) {
+if (isset($_GET['currDir'])) {
     $currDir = $_GET['currDir'];
-} elseif ($HTTP_GET_VARS['currDir']) {
+} elseif (isset($HTTP_GET_VARS['currDir'])) {
     $currDir = $HTTP_GET_VARS['currDir'];
 } elseif (! $currDir) {
     if ($SERVER_NAME) {
@@ -295,11 +297,13 @@ if ( $currDir != './' && preg_match('#/$#', $currDir) ) {
 $currDir = rawurldecode($currDir);
 
 // Get image, if there is one.
-if (! $image) {
-    if ($_GET['image']) {
+if (! isset($image)) {
+    if (isset($_GET['image'])) {
         $image = $_GET['image'];
-    } elseif ($HTTP_GET_VARS['image']) {
+    } elseif (isset($HTTP_GET_VARS['image'])) {
         $image = $HTTP_GET_VARS['image'];
+    } else {
+        $image = NULL;
     }
 }
 
@@ -329,10 +333,10 @@ if (($mig_config['image'])AND(!file_exists($mig_config['albumdir']."/$currDir/".
 
 
 // Get pageType.  If there isn't one, default to "folder"
-if (! $pageType) {
-    if ($_GET['pageType']) {
+if (! isset($pageType)) {
+    if (isset($_GET['pageType'])) {
         $pageType = $_GET['pageType'];
-    } elseif ($HTTP_GET_VARS['pageType']) {
+    } elseif (isset($HTTP_GET_VARS['pageType'])) {
         $pageType = $HTTP_GET_VARS['pageType'];
     } else {
         $pageType = 'folder';
@@ -352,10 +356,10 @@ unset($allowedTypes);
 $mig_config['pagetype'] = $pageType;
 
 
-if (! $startFrom) {
-    if ($_GET['startFrom']) {
+if (! isset($startFrom)) {
+    if (isset($_GET['startFrom'])) {
         $startFrom = $_GET['startFrom'];
-    } elseif ($HTTP_GET_VARS['startFrom']) {
+    } elseif (isset($HTTP_GET_VARS['startFrom'])) {
         $startFrom = $HTTP_GET_VARS['startFrom'];
     }
 }
@@ -364,18 +368,20 @@ if (! $startFrom) {
 $mig_config['startfrom'] = isset($startFrom) ? $startFrom+0 : 0;
 
 // use language set specified in URL, if one was.
-if (! $mig_dl) {
-    if ($_GET['mig_dl']) {
+if (! isset($mig_dl)) {
+    if (isset($_GET['mig_dl'])) {
         $mig_dl = $_GET['mig_dl'];
-    } elseif ($HTTP_GET_VARS['mig_dl']) {
+    } elseif (isset($HTTP_GET_VARS['mig_dl'])) {
         $mig_dl = $HTTP_GET_VARS['mig_dl'];
+    } else {
+        $mig_dl = NULL;
     }
 }
 // Only use it if we find it - otherwise fall back to default language
 if ($mig_dl && $mig_config['lang_lib'][$mig_dl]) {
     $mig_language = $mig_dl;
 } else {
-    unset ($mig_dl);        // destroy it so it isn't used in URLs
+    $mig_dl = NULL;        // destroy it so it isn't used in URLs
 }
 $mig_config['mig_dl'] = $mig_dl;
 
@@ -384,7 +390,7 @@ $mig_config['mig_dl'] = $mig_dl;
 $mig_config['lang'] = $mig_config['lang_lib'][$mig_language];
 
 // Backward compatibility with older config.php/mig.cfg versions
-if ($maxColumns) {
+if (isset($maxColumns)) {
     $maxThumbColumns = $maxColumns;
 }
 
@@ -403,7 +409,7 @@ $workCopy = $currDir;     // temporary copy of currDir
 
 while ($workCopy) {
 
-    if ($protect[$workCopy]) {
+    if (isset($protect[$workCopy])) {
 
         if (! $PHP_AUTH_USER) {
             if ($_SERVER['PHP_AUTH_USER']) {
