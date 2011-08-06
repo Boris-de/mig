@@ -62,7 +62,7 @@ index.php: $(PHP_FILES) main/preamble.php
 	  cat $(PHP_FILES) \
 	) > index.php
 
-release:
+release: clean
 	@if test `hg status -m -a -r -d | wc -l` -gt 0; then \
 		hg status -m -a -r -d; \
 		echo "The working copy has uncommited changes (see above)"; \
