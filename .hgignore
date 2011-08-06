@@ -2,6 +2,9 @@ syntax:glob
 docs/html/*
 docs/text/*
 bundles
+index.php
+nbproject
+albums
 
 syntax: regexp
 mig-[0-9.]+
