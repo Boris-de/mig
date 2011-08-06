@@ -63,8 +63,13 @@ index.php: $(PHP_FILES) main/preamble.php
 	) > index.php
 
 release:
-	@if hg status -m -a -r -d; then \
+	@if test `hg status -m -a -r -d | wc -l` -gt 0; then \
+		hg status -m -a -r -d; \
 		echo "The working copy has uncommited changes (see above)"; \
+		false; \
+	fi
+	@if hg outgoing -q; then \
+		echo "The working copy has outgoing changes"; \
 		false; \
 	fi
 	@if test -z "${ver}"; then \
