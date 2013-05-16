@@ -202,11 +202,13 @@ function getVariable($name, $arr1, $arr2, $default = NULL) {
 }
 
 function getHttpGetVariable($name, $default = NULL) {
-    return getVariable($name, $_GET, $HTTP_GET_VARS, $default);
+    $get_vars = isset($HTTP_GET_VARS) ? $HTTP_GET_VARS : array();
+    return getVariable($name, $_GET, $get_vars, $default);
 }
 
 function getHttpServerVariable($name, $default = NULL) {
-    return getVariable($name, $_SERVER, $HTTP_SERVER_VARS, $default);
+    $server_vars = isset($HTTP_SERVER_VARS) ? $HTTP_SERVER_VARS : array();
+    return getVariable($name, $_SERVER, $server_vars, $default);
 }
 
 // Jump has to come before currDir redirect to work

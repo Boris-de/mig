@@ -17,6 +17,12 @@ function parseMigCf ( $directory )
     $short_desc     = array ();
     $desc           = array ();
     $ficons         = array ();
+    $bulletin       = NULL;
+    $template       = NULL;
+    $fcols          = NULL;
+    $tcols          = NULL;
+    $trows          = NULL;
+    $maintaddr      = NULL;
     
     $mig_config['usethumbfile'] = array ();
 
