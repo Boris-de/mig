@@ -156,14 +156,17 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
         }
 
         // Fetch template phrase to work with.
-        $phrase = $mig_config['lang']['total_images'];
-        // %t is total images in folder
-        $phrase = str_replace('%t', $thumbsInFolder, $phrase);
-        // %s is start image
-        $phrase = str_replace('%s', $start_img, $phrase);
-        // %e is end image
-        $phrase = str_replace('%e', $end_img, $phrase);
-
+        if ($mig_config['showTotalImagesString']) {
+            $phrase = $mig_config['lang']['total_images'];
+            // %t is total images in folder
+            $phrase = str_replace('%t', $thumbsInFolder, $phrase);
+            // %s is start image
+            $phrase = str_replace('%s', $start_img, $phrase);
+            // %e is end image
+            $phrase = str_replace('%e', $end_img, $phrase);
+        } else {
+            $phrase = '';
+        }
 
         $pageBlock .= "\n" . '   <tr>' . "\n" . '    <td colspan="'
                     . $max_col . '" align="center"><small>' . $phrase;

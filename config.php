@@ -1000,6 +1000,18 @@ $httpContentType = 'text/html; charset=us-ascii';
 $imageFilenameRegexpr       = '=^[^<>/]*$=';
 $currDirNameRegexpr         = '=^([^<>]|\.\.)*$=';
 
+//  -----------------------------------------------------------------
+//                      SHOW TOTAL FILE-COUNT
+// -----------------------------------------------------------------
+//
+// Mig 1.4.0 introduced an error which caused the "total_images"
+// string (like "Showing images 21-40 of 47 total") to not be
+// displayed anymore. This was fixed in 1.5.3.
+// If you want the old behavior back where this string was not
+// displayed, please set this to false.
+//
+// $showTotalImagesString = true;
+
 // -----------------------------------------------------------------
 //                    MODIFYING THE INCLUDE PATH
 // -----------------------------------------------------------------

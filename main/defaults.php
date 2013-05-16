@@ -65,6 +65,7 @@ $music_icon                 = 'music.png';
 $movie_icon                 = 'movie.png';
 $folder_icon                = 'folder.png';
 $nothumb_icon               = 'no_thumb.png';
+$showTotalImagesString      = true;
 
 //for old compatibility: remove in mig 2.0:
 if ($suppressImageInfo = 'true') $fileInfoFormatString="";

@@ -113,6 +113,7 @@ $mig_config['music_icon']                       = $music_icon;
 $mig_config['movie_icon']                       = $movie_icon;
 $mig_config['folder_icon']                      = $folder_icon;
 $mig_config['nothumb_icon']                     = $nothumb_icon;
+$mig_config['showTotalImagesString']            = $showTotalImagesString;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {

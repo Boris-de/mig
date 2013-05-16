@@ -8,7 +8,11 @@
 
 When being called on a https-URL like https://example.com mig would redirect to http://example.com:443/index.php... which resulted in an error because the browser would do a plain GET on an https port. This is now fixed, mig will redirect to https://example.com in these cases.
 
-The access to the lang array was incorrect for 'total_images' resulting in this text (e.g.: "Showing images 21-40 of 47 total") not being displayed in the folder-view. This bug was introduced in 1.4.0, so it has been around for some time.
+The access to the lang array was incorrect for 'total_images' resulting in this text (e.g.: "Showing images 21-40 of 47 total") not being displayed in the folder-view. This bug was introduced in 1.4.0, so it has been around for some time, which is why this fix is optional in case you thought of this bug as a feature (see below).
+
+=head3 Improvements
+
+A feature has been added to optinally restore the old behavior regarding 'total_images'. If you set C<$showTotalImagesString = false> in your config, the total_images text will not be generated, which is effectivly the same behavior that existed between 1.4.0 and 1.5.2.
 
 =head2 Version 1.5.2 (Sat, 06 Aug 2011)
 
