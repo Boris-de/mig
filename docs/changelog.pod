@@ -2,9 +2,15 @@
 
 =head2 MIG Change Log
 
+=head2 tip
+
+=head3 Bugs-fixes
+
+When being called on a https-URL like https://example.com mig would redirect to http://example.com:443/index.php... which resulted in an error because the browser would do a plain GET on an https port. This is now fixed, mig will redirect to https://example.com in these cases.
+
 =head2 Version 1.5.2 (Sat, 06 Aug 2011)
 
-=head3 Bug-fixed
+=head3 Bug-fixes
 
 Handle functions that are deprecated in PHP 5.3 so that Mig will still work with PHP 6.0 and not produce E_DEPRECATED on PHP 5.3 (Boris)
 

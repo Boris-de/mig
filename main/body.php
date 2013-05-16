@@ -226,16 +226,18 @@ if (! isset($PATH_INFO)) {
     $PATH_INFO = getHttpServerVariable('PATH_INFO');
 }
 
+$URI_SCHEME = getHttpServerVariable('HTTPS') === 'on' ? 'https' : 'http';
+
 // Is this a jump-tag URL?
 if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
+    header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$jump]");
     exit;
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
 if (isset($PATH_INFO) && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
-    header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
+    header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$PATH_INFO]");
     exit;
 }
@@ -251,8 +253,8 @@ $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums 
 $currDir = getHttpGetVariable('currDir');
 if (! $currDir) {
     if ($SERVER_NAME) {
-        header("Location: http://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
-             . '?currDir=.');
+        header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" 
+             . $mig_config['baseurl'] . '?currDir=.');
         exit;
     }
 }
