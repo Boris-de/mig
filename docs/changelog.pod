@@ -8,6 +8,8 @@
 
 When being called on a https-URL like https://example.com mig would redirect to http://example.com:443/index.php... which resulted in an error because the browser would do a plain GET on an https port. This is now fixed, mig will redirect to https://example.com in these cases.
 
+The access to the lang array was incorrect for 'total_images' resulting in this text (e.g.: "Showing images 21-40 of 47 total") not being displayed in the folder-view. This bug was introduced in 1.4.0, so it has been around for some time.
+
 =head2 Version 1.5.2 (Sat, 06 Aug 2011)
 
 =head3 Bug-fixes

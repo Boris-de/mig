@@ -156,7 +156,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
         }
 
         // Fetch template phrase to work with.
-        $phrase = $mig_config[$lang]['total_images'];
+        $phrase = $mig_config['lang']['total_images'];
         // %t is total images in folder
         $phrase = str_replace('%t', $thumbsInFolder, $phrase);
         // %s is start image
