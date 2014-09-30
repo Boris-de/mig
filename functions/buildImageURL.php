@@ -108,28 +108,16 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     $alt_desc = strip_tags($alt_desc);
 
-    if ($type == 'image') {
-        // Figure out the image's size (in bytes and pixels) for display
-        $imageFile = $mig_config['albumdir']."/$oldCurrDir/$fname.$ext";
+    $localFilename = $mig_config['albumdir'] . "/$oldCurrDir/$filename";
 
-        // Figure out the pixels
-        $imageProps = @GetImageSize($imageFile);
+    // Figure out the size in bytes for display
+    $imageFileSize = filesize($localFilename);
+
+    if ($type == 'image') {
+        // Figure out the size in pixels for display
+        $imageProps = @GetImageSize($localFilename);
         $imageWidth = $imageProps[0];
         $imageHeight = $imageProps[1];
-
-
-        // Figure out the bytes
-        $imageFileSize = filesize($imageFile);
-        }
-    else {
-        // get the filesize...
-        if ($_SERVER[DOCUMENT_ROOT]) {
-            $scriptpath= $_SERVER[DOCUMENT_ROOT];
-        } else {
-            $scriptpath= DOCUMENT_ROOT;
-        }
-
-        $imageFileSize=@filesize($scriptpath.$mig_config['albumurlroot'].'/'.$currDir.'/'.$filename);
     }
 
     if ($imageFileSize > 1048576) {

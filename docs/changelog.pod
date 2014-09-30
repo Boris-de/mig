@@ -5,10 +5,13 @@
 
 =head2 Version 1.5.4 (???)
 
+=head3 Bugs-fixes
+
+The file-size calculation did not work properly for non-images (audio and video), the text would always be " bytes" in these cases
+
 =head3 Improvements
 
 Fixed some code-style issues
-
 
 
 =head2 Version 1.5.3 (Thu, 16 May 2013)
