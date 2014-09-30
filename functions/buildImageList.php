@@ -2,7 +2,7 @@
 
 // buildImageList() - Creates a list of images for display.
 
-function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
+function buildImageList ( $currDir, $maxColumns, $maxRows,
                           $presorted, $description, $short_desc )
 {
     global $mig_config;

@@ -556,7 +556,7 @@ if ($mig_config['pagetype'] == 'folder') {
     $folderList = buildDirList($currDir, $maxFolderColumns, $presort_dir, $ficons);
     // list of available images
     $imageList = buildImageList($currDir, $maxThumbColumns, $maxThumbRows,
-                                $folderList, $presort_img, $desc, $short_desc);
+                                $presort_img, $desc, $short_desc);
 
     // Only frame the lists in table code when appropriate
 
