@@ -3,12 +3,12 @@
 // getImageDescFromFile() - Fetches an image description from a per-image comment file
 //                          (only used if $commentFilePerImage is TRUE).
 
-function getImageDescFromFile ( $currDir )
+function getImageDescFromFile ( $currDir, $image )
 {
     global $mig_config;
 
     $imageDesc = '';
-    $fname = getFileName($mig_config['image']);
+    $fname = getFileName($image);
     $fname = rawurldecode($fname);
 
     $short_flag = $mig_config['commentfileshortcomments'];
@@ -21,6 +21,7 @@ function getImageDescFromFile ( $currDir )
         // This double-check exists so that files ending without
         // a proper newline character are not truncated.
         // This says "while (not EOF) and ($line is not empty)"...
+        $short_desc = FALSE;
         while ( $line || ! feof($file)) {
             $line = trim($line);
 

@@ -92,7 +92,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     // Get description, if any
     if ($mig_config['commentfileperimage']) {
-        list($alt_desc, $x) = getImageDescFromFile($currDir);
+        list($alt_desc, $desc) = getImageDescFromFile($currDir, "$fname.$ext");
         // Get a conventional comment if there isn't one here.
         if (! $alt_desc) {
             list($alt_desc, $desc) = getImageDescription("$fname.$ext", $description, $short_desc);

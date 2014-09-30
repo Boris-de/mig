@@ -640,7 +640,7 @@ if ($mig_config['pagetype'] == 'folder') {
 
     // Get image description
     if ($mig_config['commentfileperimage']) {
-        list($x, $description) = getImageDescFromFile($currDir);
+        list($x, $description) = getImageDescFromFile($image, $currDir);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
@@ -720,7 +720,7 @@ if ($mig_config['pagetype'] == 'folder') {
 
     // Get image description
     if ($mig_config['commentfileperimage']) {
-        list($x, $description) = getImageDescFromFile($currDir);
+        list($x, $description) = getImageDescFromFile($currDir, $image);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (! $description) {
