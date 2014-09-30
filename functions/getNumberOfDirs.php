@@ -22,14 +22,14 @@ function getNumberOfDirs ( $folder, $currDir )
         if ($file != '.' && $file != '..' && is_dir("$folder/$file"))
         {
             // Ignore thumbnail subdirectories if in use
-            if ($mig_config['usethumbsubdir']
-                && $file == $mig_config['thumbsubdir'])
+            if ($mig_config['usethumbsubdir'] && $file == $mig_config['thumbsubdir']) {
                 continue;
+            }
 
             // And full-size directories too
-            if ($mig_config['uselargeimages']
-                && $file == $mig_config['largesubdir'])
+            if ($mig_config['uselargeimages'] && $file == $mig_config['largesubdir']) {
                 continue;
+            }
 
             // Ignore hidden items
             if ($mig_config['hidden'][$file]) {

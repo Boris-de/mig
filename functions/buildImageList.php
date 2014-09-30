@@ -109,8 +109,9 @@ function buildImageList ( $currDir, $maxColumns, $maxRows, $directoryList,
     }
 
     // Make sure hidden items don't show up
-    while (list($file,$junk) = each($mig_config['hidden']))
+    while (list($file,$junk) = each($mig_config['hidden'])) {
         unset ($presorted[$file]);
+    }
 
     reset($presorted);              // reset array pointers
     reset($mig_config['hidden']);

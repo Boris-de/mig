@@ -2,6 +2,15 @@
 
 =head2 MIG Change Log
 
+
+=head2 Version 1.5.4 (???)
+
+=head3 Improvements
+
+Fixed some code-style issues
+
+
+
 =head2 Version 1.5.3 (Thu, 16 May 2013)
 
 =head3 Bugs-fixes

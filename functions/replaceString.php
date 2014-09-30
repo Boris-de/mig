@@ -32,7 +32,9 @@ function replaceString($val, $formattable){
          
         // Only if $changeflag is TRUE do we bother tacking this
         // onto the final product.
-        if ($changeflag) $newstr = $val;
+        if ($changeflag) {
+            $newstr = $val;
+        }
         
         return $newstr;
  }           

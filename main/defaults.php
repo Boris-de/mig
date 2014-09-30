@@ -68,5 +68,8 @@ $nothumb_icon               = 'no_thumb.png';
 $showTotalImagesString      = true;
 
 //for old compatibility: remove in mig 2.0:
-if ($suppressImageInfo = 'true') $fileInfoFormatString="";
+if ($suppressImageInfo = 'true') {
+    $fileInfoFormatString="";
+}
+
 ?>

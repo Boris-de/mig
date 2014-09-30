@@ -184,15 +184,19 @@ function buildNextPrevLinks ( $currDir, $presorted )
     $nexttext = replaceString($mig_config['nextformatstring'],$fileinfotable);
 
     // If there is no previous image, show a greyed-out link
-    if ($prev == 'NA') $pLink = _greyLink($prevtext);
-    // else show a real link
-    else $pLink = _prevNextLink($prevtext,$currDir,$prev);
+    if ($prev == 'NA') {
+        $pLink = _greyLink($prevtext);
+    } else { // else show a real link
+        $pLink = _prevNextLink($prevtext,$currDir,$prev);
+    }
 
 
     // If there is no next image, show a greyed-out link
-    if ($next == 'NA') $nLink = _greyLink($nexttext);
-    // else show a real link
-    else $nLink = _prevNextLink($nexttext,$currDir,$next);
+    if ($next == 'NA') {
+        $nLink = _greyLink($nexttext);
+    } else { // else show a real link
+        $nLink = _prevNextLink($nexttext,$currDir,$next);
+    }
 
     // Current position in the list
     $currPos = '#' . $ThisImagePos . '&nbsp;of&nbsp;' . $i;

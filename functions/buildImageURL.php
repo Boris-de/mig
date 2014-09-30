@@ -123,8 +123,11 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         }
     else {
         // get the filesize...
-        if ($_SERVER[DOCUMENT_ROOT]) $scriptpath= $_SERVER[DOCUMENT_ROOT];
-        else $scriptpath= DOCUMENT_ROOT;
+        if ($_SERVER[DOCUMENT_ROOT]) {
+            $scriptpath= $_SERVER[DOCUMENT_ROOT];
+        } else {
+            $scriptpath= DOCUMENT_ROOT;
+        }
 
         $imageFileSize=@filesize($scriptpath.$mig_config['albumurlroot'].'/'.$currDir.'/'.$filename);
     }
