@@ -678,6 +678,10 @@ if ($mig_config['pagetype'] == 'folder') {
     // newcurrdir is currdir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
 
+    $largeLink = '';
+    $largeHrefStart = '';
+    $largeHrefEnd = '';
+    $largeLinkBorder = '';
     if ($mig_config['uselargeimages'] &&
             file_exists($mig_config['albumdir']."/$currDir/"
                       . $mig_config['largesubdir']
