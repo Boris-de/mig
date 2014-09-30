@@ -9,7 +9,7 @@
 
 The file-size calculation did not work properly for non-images (audio and video), the text would always be " bytes" in these cases
 
-The config option C<$suppressImageInfo> did not work anymore since 1.4.0. This is fixed now. Please note that this option is deprecated anyway and can easily be replaced with C<$fileInfoFormatString>.
+The config option C<$suppressImageInfo> did not work anymore since 1.4.0. This is fixed now. Please note that this option is deprecated anyway and can easily be replaced with C<$fileInfoFormatString>. The documentation for that is now fixed too in config.php.
 
 =head3 Improvements
 

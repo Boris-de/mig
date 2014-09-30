@@ -383,9 +383,9 @@ $suppressAltTags = FALSE;
 // Example:
 //     $suppressImageInfo = FALSE;
 //
-// NOTE: $suppressImageInfo is now replaced by $fileFormatString and will
+// NOTE: $suppressImageInfo is now replaced by $fileInfoFormatString and will
 //            be removed in Mig 2.0. If you don't want image information in
-//            thumbnail pages just make $fileFormatString=""
+//            thumbnail pages just set all $fileInfoFormatString to ""
 //
 
 $suppressImageInfo = FALSE;
