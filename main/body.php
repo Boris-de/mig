@@ -74,6 +74,13 @@ if ($usePortal > 1) {
     exit;
 }
 
+//for old compatibility: remove in mig 2.0:
+if ($suppressImageInfo == TRUE) {
+    $fileInfoFormatString['image'] = "%n";
+    $fileInfoFormatString['audio'] = "%n";
+    $fileInfoFormatString['video'] = "%n";
+}
+
 // Fetch some settings into $mig_config
 $mig_config['commentfileperimage']              = $commentFilePerImage;
 $mig_config['commentfileshortcomments']         = $commentFileShortComments;

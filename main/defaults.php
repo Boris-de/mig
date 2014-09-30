@@ -89,9 +89,4 @@ $audio_extensions           = array(
         'mpc', 'mp+',      // Musepack
     );
 
-//for old compatibility: remove in mig 2.0:
-if ($suppressImageInfo = 'true') {
-    $fileInfoFormatString="";
-}
-
 ?>

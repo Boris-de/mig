@@ -9,6 +9,8 @@
 
 The file-size calculation did not work properly for non-images (audio and video), the text would always be " bytes" in these cases
 
+The config option C<$suppressImageInfo> did not work anymore since 1.4.0. This is fixed now. Please note that this option is deprecated anyway and can easily be replaced with C<$fileInfoFormatString>.
+
 =head3 Improvements
 
 Changed file-type detection to use the new config options C<$image_extensions>, C<$video_extensions> and C<$audio_extensions>. You can use these options to add currently unhandled or new file formats.
