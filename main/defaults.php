@@ -66,6 +66,28 @@ $movie_icon                 = 'movie.png';
 $folder_icon                = 'folder.png';
 $nothumb_icon               = 'no_thumb.png';
 $showTotalImagesString      = true;
+$image_extensions           = array('jpg', 'jpeg', 'jpe', 'gif', 'png');
+$video_extensions           = array(
+        'mov',             // Apple Quicktime
+        'avi',             // AVI-container
+        'mpg', 'mpeg',     // MPEG video
+        'wmv',             // Windows Media video
+        'mp4',             // MPEG-4 video
+        'swf',             // Shockwave Flash
+        'flv',             // Flash Video
+        'rm',              // Realvideo
+        'divx',            // DivX
+    );
+$audio_extensions           = array(
+        'mp3',             // MPEG-3 audio
+        'wav',             // WAV audio
+        'ra', 'ram',       // Realaudio
+        'wma',             // Microsoft Media Audio
+        'ogg',             // ogg-container (flac, vorbis)
+        'flac',            // Free Lossless Audio Codec
+        'aac',             // Advanced Audio Coding
+        'mpc', 'mp+',      // Musepack
+    );
 
 //for old compatibility: remove in mig 2.0:
 if ($suppressImageInfo = 'true') {

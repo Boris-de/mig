@@ -10,45 +10,14 @@ function getFileType ( $filename )
     $ext = getFileExtension($filename);
     $ext = strtolower($ext);
 
-    switch ($ext) {
-
-        case 'jpg':
-        case 'gif':
-        case 'png':
-        case 'jpeg': case 'jpe':// Alternate JPEG
-
-            return 'image';
-            break;
-
-        case 'mov':             // Apple Quicktime
-        case 'avi':             // AVI-container
-        case 'mpg': case 'mpeg':// MPEG video
-        case 'wmv':             // Windows Media video
-        case 'mp4':             // MPEG-4 video
-        case 'swf':             // Shockwave Flash
-        case 'flv':             // Flash Video
-        case 'rm':              // Realvideo
-        case 'divx':            // DivX
-
-            return 'video';
-            break;
-
-        case 'mp3':             // MPEG-3 audio
-        case 'wav':             // WAV audio
-        case 'ra':              // Realaudio
-        case 'ram':             // Realaudio
-        case 'wma':             // Microsoft Media Audio
-        case 'ogg':             // ogg-container (flac, vorbis)
-        case 'flac':            // Free Lossless Audio Codec
-        case 'aac':             // Advanced Audio Coding
-        case 'mpc': case 'mp+': // Musepack
-
-            return 'audio';
-            break;
-
-        default:
-            return FALSE;       // No valid match - failure.
-            break;
+    if (in_array($ext, $mig_config['image_extensions'])) {
+        return "image";
+    } else if (in_array($ext, $mig_config['video_extensions'])) {
+        return "video";
+    } else if (in_array($ext, $mig_config['audio_extensions'])) {
+        return "audio";
+    } else {
+        return FALSE;
     }
 
 }   // -- End of getFileType()

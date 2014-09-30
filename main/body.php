@@ -114,6 +114,9 @@ $mig_config['movie_icon']                       = $movie_icon;
 $mig_config['folder_icon']                      = $folder_icon;
 $mig_config['nothumb_icon']                     = $nothumb_icon;
 $mig_config['showTotalImagesString']            = $showTotalImagesString;
+$mig_config['image_extensions']                 = $image_extensions;
+$mig_config['video_extensions']                 = $video_extensions;
+$mig_config['audio_extensions']                 = $audio_extensions;
 
 // Change settings for Nuke mode if appropriate
 if ($phpNukeCompatible) {

@@ -1021,4 +1021,24 @@ $currDirNameRegexpr         = '=^([^<>]|\.\.)*$=';
 // include config.php, so obviously they can't be INSIDE it.
 //
 
+
+// -----------------------------------------------------------------
+//                        FILE EXTENSION MAPPINGS
+// -----------------------------------------------------------------
+//
+// These options allow to configure which file-extensions are mapped
+// to which file type. You can use the options to add currently
+// unhandled or new file formats.
+//
+// The order in which the extension-lists are checked is
+//   1. $image_extensions
+//   2. $video_extensions
+//   3. $audio_extensions
+// so if you have the same in extension in both $image_extensions
+// and $video_extensions, then Mig will use "image" for this extension
+
+// $image_extensions           = array('jpg', 'jpeg', 'gif', 'png');
+// $video_extensions           = array();
+// $audio_extensions           = array();
+
 ?>

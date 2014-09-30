@@ -11,6 +11,8 @@ The file-size calculation did not work properly for non-images (audio and video)
 
 =head3 Improvements
 
+Changed file-type detection to use the new config options C<$image_extensions>, C<$video_extensions> and C<$audio_extensions>. You can use these options to add currently unhandled or new file formats.
+
 Fixed some code-style issues
 
 
