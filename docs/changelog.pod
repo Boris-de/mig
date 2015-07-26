@@ -13,6 +13,9 @@ The config option C<$suppressImageInfo> did not work anymore since 1.4.0. This i
 
 Reading image descriptions from files per image did not work anymore, apparently since 1.4.0 too. This is fixed now.
 
+Use the same values in the defaults.php that are used in config.php for C<$imageFilenameRegexpr> and C<$currDirNameRegexpr>. This also fixes an error with PHP 5.6 installations which choke on the default regex because of their use of an unescaped hyphen in the middle of the expression, which was accepted in previous versions.
+
+
 =head3 Improvements
 
 Changed file-type detection to use the new config options C<$image_extensions>, C<$video_extensions> and C<$audio_extensions>. You can use these options to add currently unhandled or new file formats.
