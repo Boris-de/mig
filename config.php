@@ -1041,4 +1041,17 @@ $currDirNameRegexpr         = '=^([^<>]|\.\.)*$=';
 // $video_extensions           = array();
 // $audio_extensions           = array();
 
+
+//  -----------------------------------------------------------------
+//                         ERROR REPORTING
+// -----------------------------------------------------------------
+//
+// By default the error-reporting level is set so that notices are
+// not displayed, because otherwise the legacy code could generate
+// lots of notices for undefined variables.
+// If you want to go ahead and fix them, feel free to configure
+// just E_ALL.
+//
+
+// $error_reporting = E_ALL & ~E_NOTICE;
 ?>

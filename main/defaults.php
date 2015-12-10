@@ -66,6 +66,7 @@ $movie_icon                 = 'movie.png';
 $folder_icon                = 'folder.png';
 $nothumb_icon               = 'no_thumb.png';
 $showTotalImagesString      = true;
+$error_reporting            = error_reporting() & ~E_NOTICE;
 $image_extensions           = array('jpg', 'jpeg', 'jpe', 'gif', 'png');
 $video_extensions           = array(
         'mov',             // Apple Quicktime

@@ -1,5 +1,7 @@
 <?php
 
+error_reporting($error_reporting);
+
 // URL to use to call myself again
 if (isset($_SERVER['PHP_SELF'])) {
     $mig_config['baseurl'] = $_SERVER['PHP_SELF'];
