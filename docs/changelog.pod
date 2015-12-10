@@ -15,6 +15,8 @@ Reading image descriptions from files per image did not work anymore, apparently
 
 Use the same values in the defaults.php that are used in config.php for C<$imageFilenameRegexpr> and C<$currDirNameRegexpr>. This also fixes an error with PHP 5.6 installations which choke on the default regex because of their use of an unescaped hyphen in the middle of the expression, which was accepted in previous versions.
 
+Fix unescaped closing brackets in regular expressions for exif.inf parsing. This bug caused PHP 5.6 and above to generate errors while parsing the exif data.
+
 
 =head3 Improvements
 

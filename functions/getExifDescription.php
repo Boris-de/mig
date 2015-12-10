@@ -45,7 +45,7 @@ function getExifDescription ( $currDir, $formatString )
                 $x = preg_replace('#^Exposure time: ?#', '', $line);
                 if (preg_match('#\(#', $x)) {
                     $x = preg_replace('#^.*\(#', '', $x);
-                    $x = preg_replace('#).*$#', '', $x);
+                    $x = preg_replace('#\).*$#', '', $x);
                 }
                 $x = chop($x);
                 $shutter[$fname] = $x;
@@ -62,7 +62,7 @@ function getExifDescription ( $currDir, $formatString )
                 if (stripos($x, '35mm equiv') !== FALSE) {
                     $x = preg_replace('#^.*alent: #', '', $x);
                     $x = chop($x);
-                    $x = preg_replace('#)$#', '', $x);
+                    $x = preg_replace('#\)$#', '', $x);
                 }
                 $foclen[$fname] = $x;
 
