@@ -159,5 +159,7 @@ Use the public docs directory, not the private admin directory.  Do not use
 a trailing slash ("/").  Optionally set C<$mig_GeeklogRBlockForImage> and
 C<$mig_GeeklogRBlockForFolder> as you wish.
 
+=back
+
 =cut
 
