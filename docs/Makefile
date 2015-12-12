@@ -23,7 +23,7 @@ text_with_dir = $(patsubst %,$(text_dir)/%,$(text))
 docs: mkdirs $(html_with_dir) $(text_with_dir)
 
 $(html_dir)/%.html: %.pod
-	$(hcmd) --title="Mig Documentation - $@" \
+	$(hcmd) --title="Mig Documentation - $(shell basename $@ .html)" \
 		--infile=$< --outfile=$@
 	rm -f pod2htm*
 
