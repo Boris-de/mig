@@ -1,5 +1,7 @@
 =pod
 
+=encoding utf8
+
 =head2 Templates
 
 Page layout is handled using template files wherever possible.

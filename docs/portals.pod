@@ -1,5 +1,7 @@
 =pod
 
+=encoding utf8
+
 =head2 Compatibility with content management systems ("portals")
 
 Mig can be configured to work with a number of content management systems,

@@ -1,5 +1,7 @@
 =pod
 
+=encoding utf8
+
 =head2 Mig - A general purpose photo gallery
 
 Copyright (c) 2000-2005, Daniel M. Lowe

@@ -1,5 +1,7 @@
 =pod
 
+=encoding utf8
+
 =head2 General
 
 This document aims to explain how F<mig.cf> works and what it is.

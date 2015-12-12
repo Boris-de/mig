@@ -1,5 +1,8 @@
 =pod
 
+=encoding utf8
+
+
 =head2 Credits
 
 This is where I thank people who have contributed things to Mig.  I hope I

@@ -1,5 +1,7 @@
 =pod
 
+=encoding utf8
+
 =head2 MIG Change Log
 
 
@@ -956,7 +958,7 @@ C<rawurlencode()> on it.
 
 Added C<-c> option to F<mkGallery> - this will populate the F<mig.cf> file
 with blank E<lt>CommentE<gt> elements.  It was adapted from F<mkComments>,
-which was contributed by André Fadel (fadel at fee.unicamp.br).  See
+which was contributed by AndrÃ© Fadel (fadel at fee.unicamp.br).  See
 F<docs/Utilities.txt> for information.
 
 Fixed bug in C<getExifDescription()> which was returning incorrect values.
