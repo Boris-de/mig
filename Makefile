@@ -86,6 +86,7 @@ release: clean
 	make docpublish
 	make mig.sf.net
 	gpg --default-key "$(MIG_GPG_KEY)" --detach-sign --sign $(ARCHIVE)
+	gpg --default-key "$(MIG_GPG_KEY)" --detach-sign --sign --armor $(ARCHIVE)
 
 docpublish:
 	cd docs ; make publish
