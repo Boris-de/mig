@@ -88,7 +88,7 @@ F<mkGallery.pl> has not been tested under Microsoft Windows by the author.
  * The "-e" feature only supports JPEG files.
  * See the "utilities" document for more information.
 
-   Mig - http://mig.sourceforge.net/
+   Mig - https://mig.wcht.de/
    
 For people who don't like to type in the same options to F<mkGallery.pl>
 every time they use it, you may store memorized options in the file

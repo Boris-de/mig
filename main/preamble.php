@@ -4,9 +4,10 @@
 // Mig - A general purpose photo gallery management system.
 //
 // Copyright (c) 2000-2005, Daniel M. Lowe
+// Copyright (c) 2005-2016, Boris Wachtmeister
 // All rights reserved.
 //
-// http://mig.sourceforge.net/
+// https://mig.wcht.de/
 //
 
 $version = 'VeRsIoN';

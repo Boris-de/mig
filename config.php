@@ -5,8 +5,9 @@
 // config.php - Configuration file for Mig
 //
 // Copyright 2000-2005 Daniel M. Lowe <dan@tangledhelix.com>
+// Copyright 2005-2016 Boris Wachtmeister
 //
-// http://mig.sourceforge.net/
+// https://mig.wcht.de/
 //
 // Lines starting with // are comments.
 //

@@ -5,7 +5,7 @@
 
 $commentFilePerImage        = FALSE;
 $commentFileShortComments   = FALSE;
-$distURL                    = 'http://mig.sourceforge.net/';
+$distURL                    = 'https://mig.wcht.de/';
 $exifFormatString           = '|%c|';
 $fileInfoFormatString['image'] = "%n<br>(%i, %s)";
 $fileInfoFormatString['audio'] = "%n<br>(%s)";

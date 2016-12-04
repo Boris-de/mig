@@ -2,7 +2,7 @@
 #
 # mkGallery.pl - turns a directory full of image files into a "gallery".
 #
-# http://mig.sourceforge.net/
+# https://mig.wcht.de/
 #
 # $Id$
 #
@@ -109,7 +109,7 @@ my $thumbDirMode    = 0755;
 
 # For the help routine
 my $pkgName = 'Mig';
-my $url = 'http://mig.sourceforge.net/';
+my $url = 'https://mig.wcht.de/';
 my $email = 'sirro.mig \'at\' gmail.com';
 
 my $migConfig = 'mig.cf';       # Name of per-directory configuration file
