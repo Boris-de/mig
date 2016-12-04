@@ -493,15 +493,7 @@ From 1.5.0 a new way of handeling file- and directorynames is used. Several non-
 
 =head2 Bug Reporting
 
-To report a bug, or view existing bug reports, go to:
-
-    http://sourceforge.net/tracker/?group_id=24365
-
-=head2 Feature Requests
-
-To request a feature, or view existing feature requests, go to:
-
-    http://sourceforge.net/tracker/?group_id=24365
+To report a bug, drop me a mail at mig-thih7aija7ona9ei@wcht.de
 
 =head2 Email Lists
 
@@ -513,20 +505,7 @@ mig-announce is an announcements-only list.  Generally speaking that
 means the only traffic it gets are announcements of new versions posted
 by the author.
 
-    http://lists.sourceforge.net/lists/listinfo/mig-announce
-
-=item 2. mig-users
-
-mig-users is a general discussion list.  Any Mig-related topic can be
-discussed on this list.
-
-    http://lists.sourceforge.net/lists/listinfo/mig-users
-
-=item 3. mig-devel
-
-mig-devel is for people interested in development work related to Mig.
-
-    http://lists.sourceforge.net/lists/listinfo/mig-devel
+    https://lists.sourceforge.net/lists/listinfo/mig-announce
 
 =back
 

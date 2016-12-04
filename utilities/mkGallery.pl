@@ -58,11 +58,6 @@
 # never have to modify actual code to use the software - everything is
 # taken care of either automatically, or using configuration files.
 #
-# Please submit any bug reports or feature requests to the Sourceforge
-# Tracker:
-#
-#     http://sourceforge.net/tracker/?group_id=24365
-#
 
 use strict;
 use Cwd;
