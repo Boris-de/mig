@@ -493,7 +493,7 @@ From 1.5.0 a new way of handeling file- and directorynames is used. Several non-
 
 =head2 Bug Reporting
 
-To report a bug, drop me a mail at mig-thih7aija7ona9ei@wcht.de
+To report a bug, just drop me a mail. See L<https://mig.wcht.de/> for the current address (it changes due to spam)
 
 =head2 Email Lists
 
