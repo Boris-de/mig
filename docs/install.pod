@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =head2 Requirements
 
-Mig requires a web server which supports PHP [ http://www.php.net/ ].
+Mig requires a web server which supports L<PHP|http://www.php.net/>.
 At least PHP 3.0.9 is required, or any version of PHP4.
 The development platform is Apple OSX, so the code tends to assume
 a unix-like environment.  As such it may or may not work (and has not
@@ -47,9 +47,9 @@ with Apache (and reportedly it works with Microsoft's IIS server).
 Windows users, please see the section labeled
 E<quot>Running Mig Under WindowsE<quot> below.
 
-The F<mkGallery.pl> utility requires Perl [ http://www.perl.com ].  To
-generate thumbnail images, it also requires ImageMagick
-[ http://www.imagemagick.org/ ].  Neither are required to use Mig itself.
+The F<mkGallery.pl> utility requires L<Perl|http://www.perl.com>.  To
+generate thumbnail images, it also requires L<ImageMagick|http://www.imagemagick.org/>.
+Neither are required to use Mig itself.
 
 The F<jhead> utility which is called by F<mkGallery.pl> for EXIF header
 parsing is a C source code file - it must be compiled before use.  On most
@@ -57,7 +57,7 @@ unix-like systems this is as easy as going into the F<jhead> directory and
 typing E<quot>makeE<quot> (GNU make is recommended).
 
 Windows users can download the pre-built F<jhead> program from Mathias
-Wandel's site at http://www.sentex.net/~mwandel/jhead/
+Wandel's site ata L<http://www.sentex.net/~mwandel/jhead/>
 
 See the E<quot>utilitiesE<quot> document for more information about
 F<mkGallery.pl> and F<jhead>.
@@ -261,7 +261,7 @@ Please be aware, that 1.5.0 has changed the templates, so that it can be customi
 =head2 Running Mig Under Windows
 
 Mig can run under Windows (so I'm told) as long as the web server supports
-PHP.  The Windows version of PHP is available from http://www.php.net/
+PHP.  The Windows version of PHP is available from L<https://www.php.net/>
 
 Mig is reported to work with IIS, Personal Web Server, and the Windows port
 of Apache.  One user noted that a fairly recent version of PHP is needed
@@ -280,17 +280,16 @@ line character after the last E<quot>realE<quot> line.
 =head2 The Example Gallery
 
 If you want to see an example gallery (that is, install one on your system
-and examine the files that it contains), you can download one from the Mig
-project page at http://sf.net/projects/mig/ (look in the
-E<quot>ExtrasE<quot> section in the project files listing).  After
-downloading the file, unpack it in the albums sub directory and it should
+and examine the files that it contains), you can download one in the
+L<Download-Section|https://mig.wcht.de/downloads/archive/extras/Example_Gallery_1.2/>.
+After downloading the file, unpack it in the albums sub directory and it should
 appear as E<quot>Mig Example GalleryE<quot>.
 
 =head2 Other people using Mig
 
-You can see a list of sites using Mig at: http://mig.sf.net/users.php
+You can see a list of sites using Mig at: L<https://mig.wcht.de/users.php>
 
-If you'd like to list your site there, email me: at dan@tangledhelix.com
+If you'd like to list your site there, you can find my email on that page too.
 
 =head2 How much does Mig cost?
 
@@ -392,12 +391,12 @@ F<config.php> in the C<$mig_language> variable.  To change the language,
 simply add the parameter C<mig_dl=LANG> to a URL as a parameter.  For
 example, take this URL:
 
-    http://mysite.com/gallery/index.php?currDir=./MyStuff
+    https://example.com/gallery/index.php?currDir=./MyStuff
 
 Assuming the default is something else, you can tell Mig to display it in
 Spanish by doing this:
 
-    http://mysite.com/gallery/index.php?currDir=./MyStuff&mig_dl=es
+    https://example.com/gallery/index.php?currDir=./MyStuff&mig_dl=es
 
 You can add links to your template files which switch languages on the fly
 using the template keyword C<newLang> like this:
@@ -505,7 +504,7 @@ mig-announce is an announcements-only list.  Generally speaking that
 means the only traffic it gets are announcements of new versions posted
 by the author.
 
-    https://lists.sourceforge.net/lists/listinfo/mig-announce
+L<https://lists.sourceforge.net/lists/listinfo/mig-announce>
 
 =back
 

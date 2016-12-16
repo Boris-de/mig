@@ -33,7 +33,7 @@ read:
 With this rule in place, someone can't for example go to a URL like this
 one:
 
-    http://tangledhelix.com/gallery/albums/Miscellaneous/mig.cf
+    https://example.com/gallery/albums/Miscellaneous/mig.cf
 
 It would be met with an access denial from the server.
 
@@ -53,8 +53,8 @@ Then, add a rule or two like this to F<httpd.conf>:
 
 Now URLs like these will work:
 
-  http://tangledhelix.com/photo/kate
-  http://tangledhelix.com/go/kate
+  https://example.com/photo/kate
+  https://example.com/go/kate
 
 Further shortening can be done if desired:
 
@@ -62,7 +62,7 @@ Further shortening can be done if desired:
   RewriteRule ^/house          /gallery/index.php?jump=house    [R]
   RewriteRule ^/europe         /gallery/index.php?jump=europe   [R]
 
-For example, now http://tangledhelix.com/kate/ will work.  Of course, doing
+For example, now https://example.com/kate/ will work.  Of course, doing
 things this way would require more maintenance than the more general
 jump-based rules shown above.
 

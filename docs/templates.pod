@@ -20,8 +20,8 @@ In this case, E<quot>pageTitleE<quot> is the relevant tag name.
 There is a glossary of tags later in this document.
 
 If you don't know anything about HTML you can try checking out
-http://www.htmlhelp.com/ or looking for some other online help sites by
-using a search engine such as Google [ http://www.google.com ].
+L<htmlhelp.com|http://www.htmlhelp.com/> or looking for some other
+online help sites by using a search engine such as L<Google|http://www.google.com>.
 
 Make backups of template files before modifying them in case things don't
 work out as expected.
@@ -193,16 +193,16 @@ ever gets there (so they don't have to get English first, then switch).  To
 directly link you'd add a "mig_dl=LANG" parameter to your URL.  So if your
 usual link looks like this:
 
-    http://my.gallery.com/mig/index.php
+    https://example.com/mig/index.php
 
 You'd instead use this:
 
-    http://my.gallery.com/mig/index.php?mig_dl=es
+    https://example.com/mig/index.php?mig_dl=es
 
 Or you can link even if there are already parameters in the URL; just use
 an & instead of ?
 
-    http://my.gallery.com/mig/index.php?currDir=./My_Stuff&mig_dl=es
+    https://example.com/mig/index.php?currDir=./My_Stuff&mig_dl=es
 
 =back
 
@@ -296,7 +296,7 @@ colorization.  Things like the page background, background colors for table
 cells, all are managed by the CSS file F<templates/style.css>.
 
 I don't have the inclination or time to write a tutorial on how CSS works,
-so please see http://www.htmlhelp.com/reference/css/ or whatever else you
+so please see L<http://www.htmlhelp.com/reference/css/> or whatever else you
 come across to figure out how CSS works.  There are some books on this
 topic available as well (try searching for E<quot>CSSE<quot> at Amazon.com).
 A basic example follows, though.

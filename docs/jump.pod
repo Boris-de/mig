@@ -12,7 +12,7 @@ difficult to do and certainly not backward-compatible.
 Jump tags were invented to address this problem.  Take this URL for
 example:
 
-http://tangledhelix.com/gallery/index.php?pageType=folder&currDir=./Our%20House/Before%20We%20Redecorated
+https://example.com/gallery/index.php?pageType=folder&currDir=./Our%20House/Before%20We%20Redecorated
 
 At 105 characters long, and having tons of URL-encoded C<%xx> entities
 in it, it's an ugly URL to send someone.  But the pain can be alleviated.
@@ -31,7 +31,7 @@ would look like this:
 All that is needed is the value of C<currDir> (which can be copied from the
 address bar in most web browsers).  Now this URL will go to the same place:
 
-    http://tangledhelix.com/gallery/?jump=house
+    https://example.com/gallery/?jump=house
 
 Much shorter and nicer.  If an album has four or five levels deep (such as
 some of the albums I maintain), the URLs can be very long.
@@ -39,13 +39,13 @@ some of the albums I maintain), the URLs can be very long.
 There are two ways to do this, too.  The first is shown above.  Another way
 is a URL like this:
 
-    http://tangledhelix.com/gallery/index.php/house
+    https://example.com/gallery/index.php/house
 
 Which avoids clumsy stuff like the ? in the URL.  It's a matter of
 preference which one to use.  Note that with the second method it can't
 be shortened like this:
 
-    http://tangledhelix.com/gallery/house
+    https://example.com/gallery/house
 
 Because the web server will look for that directory, not find it, and
 return an error.  So that F<index.php> or F<index.php3> has to be in

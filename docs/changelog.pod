@@ -49,7 +49,7 @@ A bit of refactoring "under the hood" (Boris)
 
 =head3 Improvements
 
-Releases and release-tags in the SCM will now be signed with GPG. You can find the current key at http://mig.sf.net/mig.asc
+Releases and release-tags in the SCM will now be signed with GPG. You can find the current key at L<https://mig.wcht.de/downloads/KEYS>
 The fingerprint of the current key is C<F5A4 0D2C 0DFF 4E5B 4908 198B 4709 198D 7464 C7A7> and it should be signed by cacert.
 
 =head3 Incompatilities
@@ -75,7 +75,7 @@ added logic to find jhead on the PATH (patch send in)
 
 =head3 Improvements
 
-new PNG images (public domain) taken from http://tango.freedesktop.org/ Thanks to the people from the Tango Project.
+new PNG images (public domain) taken from L<http://tango.freedesktop.org/> Thanks to the people from the Tango Project.
 The old images (or any other) however can still be enabled with the config variables C<$movie_icon>, C<$folder_icon>, C<$music_icon> and C<$nothumb_icon> (Boris)
 
 =head3 Organisational
@@ -805,7 +805,7 @@ Removed a hard-coded value from C<buildImageURL()> which broke things for
 folks who had changed the value of C<$albumDir>.
 
 Made the terms of the licensing clearer according to the FSF GNU
-guidelines at http://www.gnu.org/copyleft/gpl.html .
+guidelines at L<https://www.gnu.org/copyleft/gpl.html>.
 
 Did a code review looking for potential problems, made minor adjustments.
 
