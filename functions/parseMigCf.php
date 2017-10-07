@@ -99,7 +99,7 @@ function parseMigCf ( $directory )
                 $shortfilename = str_replace('">', '', $shortfilename);
                 $shortfilename = preg_replace('#^<short "#i','',$shortfilename);
                 $line = fgets($file, 4096);
-                while (stripos($line, '^</short') !== 0) {
+                while (stripos($line, '</short') !== 0) {
                     $line = trim($line);
                     $myshort .= "$line ";
                     $line = fgets($file, 4096);
