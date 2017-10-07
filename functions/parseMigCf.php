@@ -2,6 +2,10 @@
 
 // parseMigCf() - Parse a mig.cf file.
 
+function _isEndOfBlock($line, $needle) {
+    return $line === FALSE || stripos($line, $needle) === 0;
+}
+
 function parseMigCf ( $directory )
 {
     global $mig_config;
@@ -45,7 +49,7 @@ function parseMigCf ( $directory )
             // Parse <hidden> blocks
             if (stripos($line, '<hidden>') === 0) {
                 $line = fgets($file, 4096);
-                while (stripos($line, '</hidden>') !== 0) {
+                while (!_isEndOfBlock($line, '</hidden>')) {
                     $line = trim($line);
                     $mig_config['hidden'][$line] = TRUE;
                     $line = fgets($file, 4096);
@@ -55,7 +59,7 @@ function parseMigCf ( $directory )
             // Parse <sort> structure
             if (stripos($line, '<sort>') === 0) {
                 $line = fgets($file, 4096);
-                while (stripos($line, '</sort>') !== 0) {
+                while (!_isEndOfBlock($line, '</sort>')) {
                     $line = trim($line);
 
                     if (is_file("$directory/$line")) {
@@ -71,7 +75,7 @@ function parseMigCf ( $directory )
             // Parse <bulletin> structure
             if (stripos($line, '<bulletin>') === 0) {
                 $line = fgets($file, 4096);
-                while (stripos($line, '</bulletin>') !== 0) {
+                while (!_isEndOfBlock($line, '</bulletin>')) {
                     $bulletin .= $line;
                     $line = fgets($file, 4096);
                 }
@@ -83,14 +87,13 @@ function parseMigCf ( $directory )
                 $commfilename = str_replace('">', '', $commfilename);
                 $commfilename = preg_replace('#^<comment "#i','',$commfilename);
                 $line = fgets($file, 4096);
-                while (stripos($line, '</comment') !== 0) {
+                $mycomment = '';
+                while (!_isEndOfBlock($line, '</comment')) {
                     $line = trim($line);
                     $mycomment .= "$line ";
                     $line = fgets($file, 4096);
                 }
                 $desc[$commfilename] = $mycomment;
-                $commfilename = '';
-                $mycomment = '';
             }
 
             // Parse <short> structure
@@ -99,14 +102,13 @@ function parseMigCf ( $directory )
                 $shortfilename = str_replace('">', '', $shortfilename);
                 $shortfilename = preg_replace('#^<short "#i','',$shortfilename);
                 $line = fgets($file, 4096);
-                while (stripos($line, '</short') !== 0) {
+                $myshort = '';
+                while (!_isEndOfBlock($line, '</short')) {
                     $line = trim($line);
                     $myshort .= "$line ";
                     $line = fgets($file, 4096);
                 }
                 $short_desc[$shortfilename] = $myshort;
-                $shortfilename = '';
-                $myshort = '';
             }
 
             // Parse FolderIcon lines
