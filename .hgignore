@@ -1,10 +1,14 @@
 syntax:glob
+.idea
+*.iml
 docs/html/*
 docs/text/*
 bundles
 index.php
 nbproject
 albums
+test-album
+*-private
 
 syntax: regexp
 mig-[0-9.]+

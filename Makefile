@@ -17,6 +17,16 @@ RELEASE_TAG=RELEASE_$(shell echo ${ver} | sed "s/\./_/g")
 
 PHP_FILES=main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
 
+DOCKER_NAME=mig-php-app
+DOCKER_PHP_VERSION=''
+
+USED_DOCKER_PHP_VERSION=$(DOCKER_PHP_VERSION)
+ifneq ($(DOCKER_PHP_VERSION), '')
+  # append "-" to get something like "7.1-apache"
+  USED_DOCKER_PHP_VERSION=$(DOCKER_PHP_VERSION)-
+endif
+
+
 default:
 	@echo "    make dist ver=X            Builds distribution bundle (in $(DISTDIR))"
 	@echo "    make release ver=X         Builds distribution bundle (in $(DISTDIR)), tags and signs it"
@@ -97,6 +107,25 @@ mig.sf.net: index.php
 	cd $(MIG_SF_NET_DIR) ; make
 	@echo "URL: http://mig.sf.net/gallery/"
 
+test-album: create-random-album.sh
+	rm -rf test-album
+	./create-random-album.sh test-album
+
+docker: index.php test-album
+	@echo "This target uses \"sudo\" to run docker, abort now if you don't want this. Press Enter to continue"
+	@read UNUSED
+	sudo docker build --build-arg PHP_VERSION=$(USED_DOCKER_PHP_VERSION) -t $(DOCKER_NAME) .
+	sudo docker run --publish=127.0.0.1::80 -d --name $(DOCKER_NAME) $(DOCKER_NAME)
+	@set -e ;\
+	PORT=$$(sudo docker inspect --format '{{ (index (index .NetworkSettings.Ports "80/tcp") 0).HostPort }}' $(DOCKER_NAME)) ;\
+	echo -e "\nContainer \"$(DOCKER_NAME)\" is started" ;\
+	echo -e " find the application at http://localhost:$${PORT}/index.php" ;\
+	echo -e " find the PHP-version at http://localhost:$${PORT}/phpinfo.php" ;\
+	echo -e "Press enter to shut it down"
+	@read UNUSED
+	sudo docker stop $(DOCKER_NAME)
+	sudo docker rm $(DOCKER_NAME)
+
 clean:
-	rm -rf docs/html docs/text index.php
+	rm -rf docs/html docs/text index.php test-album
 
