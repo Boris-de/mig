@@ -42,9 +42,9 @@ function parseMigCf ( $directory )
 
     if (file_exists("$directory/$cfgfile")) {
         $file = fopen("$directory/$cfgfile", 'r');
-        $line = fgets($file, 4096);         // get first line
 
         while (! feof($file)) {
+            $line = fgets($file, 4096);
 
             // Parse <hidden> blocks
             if (stripos($line, '<hidden>') === 0) {
@@ -160,9 +160,6 @@ function parseMigCf ( $directory )
                 $x = trim($line);
                 list($y, $trows) = explode(' ', $x);
             }
-
-            // Get next line
-            $line = fgets($file, 4096);
 
         } // end of main while() loop
 
