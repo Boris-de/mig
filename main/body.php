@@ -610,7 +610,7 @@ if ($mig_config['pagetype'] == 'folder') {
     }
 
     // build the "back" link
-    $backLink = buildBackLink($currDir, 'back', '');
+    $backLink = buildBackLink($currDir, 'back');
 
     // build the "you are here" line
     $youAreHere = buildYouAreHere($currDir, '', $mig_config['omitimagename']);
@@ -716,7 +716,7 @@ if ($mig_config['pagetype'] == 'folder') {
 
     // Trick the back link into going to the right place by adding
     // a bogus directory at the end
-    $backLink = buildBackLink("$currDir/blah", 'up', '', '');
+    $backLink = buildBackLink("$currDir/blah", 'up');
 
     // Get the "next image" and "previous image" links, and the current
     // position (#x of y)

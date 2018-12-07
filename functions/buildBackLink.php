@@ -6,8 +6,10 @@ function buildBackLink ( $currDir, $type )
 {
     global $mig_config;
 
+    $label = '';
+
     // $type notes whether we want a "back" link or "up one level" link.
-    if ($type == 'back' or $mig_config['nothumbs']) {
+    if ($type == 'back' or !empty($mig_config['nothumbs'])) {
         $label = $mig_config['lang']['up_one'];
     } elseif ($type == 'up') {
         if ($mig_config['pagetype'] == 'large') {
@@ -19,9 +21,9 @@ function buildBackLink ( $currDir, $type )
 
     // don't send a link back if we're a the root of the tree
     if ($currDir == '.') {
-        if ($mig_config['homelink'] != '') {
+        if (!empty($mig_config['homelink'])) {
 
-            if ($mig_config['homelabel'] == '') {
+            if (empty($mig_config['homelabel'])) {
                 $homeLabel = $mig_config['homelink'];
             } else {
                 // Get rid of spaces due to silly formatting in MSIE
@@ -45,10 +47,10 @@ function buildBackLink ( $currDir, $type )
 
     $retval = '<a href="'
             . $mig_config['baseurl'] . '?currDir=' . $newCurrDir;
-    if ($mig_config['startfrom']) {
+    if (!empty($mig_config['startfrom'])) {
         $retval .= '&amp;startFrom=' . $mig_config['startfrom'];
     }
-    if ($mig_config['mig_dl']) {
+    if (!empty($mig_config['mig_dl'])) {
         $retval .= '&amp;mig_dl=' . $mig_config['mig_dl'];
     }
     if ($mig_config['pagetype'] == 'large') {

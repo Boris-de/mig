@@ -36,6 +36,9 @@ default:
 	@echo " "
 	@echo "    make mig.sf.net ver=X      index.php & templates to mig.sf.net"
 
+test:
+	phpunit --include-path functions/:main/:languages/ test; \
+
 mig: dist
 
 dist: index.php
@@ -129,3 +132,4 @@ docker: index.php test-album
 clean:
 	rm -rf docs/html docs/text index.php test-album
 
+.PHONY: test clean

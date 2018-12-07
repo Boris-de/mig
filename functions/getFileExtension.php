@@ -4,8 +4,6 @@
 
 function getFileExtension ( $file )
 {
-    global $mig_config;
-    
     // Strip off the extension part of filename
     return preg_replace('#^.*\.#', '', $file);
 

@@ -17,19 +17,21 @@ function replaceString($val, $formattable){
             // which letter matched?
             $letter = $lettermatch[1];
 
+            $newtext = '';
+
             // If this can be expanded, do so.  If it can be,
             // set $changeflag to TRUE so we know to include this
             // block instead of dumping it.
-            if ($formattable[$letter]) {
+            if (isset($formattable[$letter])) {
                 $newtext = $formattable[$letter];
                 $changeflag = TRUE;
             }
 
             // Do interpolation
             $val = str_replace("%$letter", $newtext, $val);
-            $newtext = "";
          }
-         
+
+        $newstr = '';
         // Only if $changeflag is TRUE do we bother tacking this
         // onto the final product.
         if ($changeflag) {

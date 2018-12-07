@@ -41,7 +41,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         }
 
         // Ignore presorted items
-        if ($presorted[$file]) {
+        if (isset($presorted[$file])) {
             continue;
         }
 
@@ -68,6 +68,8 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     }
 
     closedir($dir);
+
+    $directoryList = '';
 
     // If we have directories, start a table
     if ($directories) {
@@ -208,10 +210,10 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
                 }
                 $directoryList .= '.' . $fext;
             }
-        } elseif ($ficons[$file]) {
+        } elseif (isset($ficons[$file])) {
             // Found a FolderIcon line in mig.cf - process as such
             $directoryList .= $mig_config['imagedir'] . '/' . $ficons[$file];
-        } elseif ($samples[$file]) {
+        } elseif (isset($samples[$file])) {
             // Using a random thumbnail as the folder icon
             $directoryList .= $samples[$file];
         } else {
@@ -225,7 +227,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         // (Use a line break if random thumbnail is present so the name
         // appears underneath it - also use a line break if the thumbnail
         // was specified).
-        if ($samples[$file] || $mig_config['usethumbfile'][$file]) {
+        if (isset($samples[$file]) || $mig_config['usethumbfile'][$file]) {
             $sep = '<br />';
         } else {
             $sep = '&nbsp;';
@@ -262,7 +264,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     }
 
     // If there aren't any subfolders to look at, then just say so.
-    if (!isset($directoryList) || $directoryList == '' || preg_match('#<tbody>$#', $directoryList)) {
+    if ($directoryList == '' || preg_match('#<tbody>$#', $directoryList)) {
         return 'NULL';
     } elseif (!preg_match('#</tr>$#i', $directoryList)) {
         // Stick a </tr> on the end if it isn't there already, and close

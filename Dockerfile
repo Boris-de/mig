@@ -12,7 +12,7 @@ COPY images $WWW_DATA/images/
 COPY test-album $WWW_DATA/albums/
 COPY index.php config.php $WWW_DATA
 
-RUN /bin/bash -c 'set -e; \
+RUN /bin/sh -c 'set -e; \
 chown -R www-data ${WWW_DATA}; \
 echo "<?php phpinfo(); ?>" > ${WWW_DATA}/phpinfo.php \
 '
