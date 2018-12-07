@@ -4,8 +4,6 @@
 
 function getImageDescription ( $file, $description, $short_desc )
 {
-    global $mig_config;
-    
     $imageDesc = '';
 
     // "Long" description

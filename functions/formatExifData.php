@@ -4,8 +4,6 @@
 
 function formatExifData ( $formatString, $exifData )
 {
-    global $mig_config;
-    
     // %a   Aperture
     // %c   Comment
     // %f   Flash used?
