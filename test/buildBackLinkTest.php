@@ -12,6 +12,7 @@ final class BuildBackLinkTest extends TestCase
         include_once 'buildBackLink.php';
         include_once 'migURLencode.php';
         require 'en.php';
+        $mig_config['lang'] = $mig_config['lang_lib']['en'];
 
         $mig_config['basedir'] = '.';
         $mig_config['baseurl'] = 'https://example.com/baseurl';
@@ -21,7 +22,6 @@ final class BuildBackLinkTest extends TestCase
         $mig_config['startfrom'] = 0;
         $mig_config['pagetype'] = 'image';
         $mig_config['nothumbs'] = FALSE;
-        $mig_config['lang'] = $mig_config['lang_lib']['en'];
     }
 
     public function testTopHomeLink()

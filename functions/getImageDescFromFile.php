@@ -13,9 +13,10 @@ function getImageDescFromFile ( $currDir, $image )
 
     $short_flag = $mig_config['commentfileshortcomments'];
 
-    if (file_exists($mig_config['albumdir']."/$currDir/$fname.txt")) {
+    $descFileName = $mig_config['albumdir'] . "/$currDir/$fname.txt";
+    if (file_exists($descFileName)) {
 
-        $file = fopen($mig_config['albumdir']."/$currDir/$fname.txt", 'r');
+        $file = fopen($descFileName, 'r');
         $line = fgets($file, 4096);         // get first line
 
         // This double-check exists so that files ending without
