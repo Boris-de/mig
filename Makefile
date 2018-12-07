@@ -114,6 +114,9 @@ test-album: create-random-album.sh
 unittests:
 	make -C test unittests
 
+coverage:
+	make -C test coverage
+
 docker-unittests:
 	make -C test docker-unittests-php-versions
 
@@ -135,4 +138,4 @@ docker: index.php test-album
 clean:
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean unittests docker docker-unittests
+.PHONY: test clean unittests docker docker-unittests coverage

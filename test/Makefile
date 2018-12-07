@@ -15,6 +15,9 @@ default:
 unittests:
 	phpunit --include-path ../functions/:../main/:../languages/ .
 
+coverage:
+	phpunit --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .
+
 docker-unittests:
 	@if ! [[ $$MIG_DOCKER_SUDO_OK = 'true' ]]; then \
 	  echo "This target uses \"sudo\" to run docker, abort now if you don't want this. Press Enter to continue"; \
@@ -26,4 +29,4 @@ docker-unittests:
 docker-unittests-php-versions:
 	$(foreach version,5.6 7.0 7.1 7.2 7.3 rc, make docker-unittests DOCKER_PHP_VERSION=$(version);)
 
-.PHONY: unittests docker-unittests docker-unittests-php-versions
+.PHONY: unittests docker-unittests docker-unittests-php-versions coverage

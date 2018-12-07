@@ -9,6 +9,7 @@ nbproject
 albums
 test-album
 *-private
+coverage
 
 syntax: regexp
 mig-[0-9.]+
