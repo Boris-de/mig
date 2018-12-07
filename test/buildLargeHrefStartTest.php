@@ -9,6 +9,7 @@ final class BuildLargeHrefStartTest extends TestCase
         include_once 'migURLencode.php';
         include_once 'buildLargeHrefStart.php';
         global $mig_config;
+        $mig_config = array();
         $mig_config['baseurl'] = '/albums';
         $mig_config['image'] = 'test.jpg';
         $mig_config['mig_dl'] = NULL;

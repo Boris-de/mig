@@ -12,6 +12,7 @@ final class GetFileTypeTest extends TestCase
         include_once 'getFileExtension.php';
         include_once 'getFileType.php';
         global $mig_config;
+        $mig_config = array();
         $mig_config['image_extensions'] = array('jpg', 'jpeg');
         $mig_config['video_extensions'] = array('mp4', 'avi');
         $mig_config['audio_extensions'] = array('mp3', 'm4a');

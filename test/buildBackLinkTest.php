@@ -7,6 +7,7 @@ final class BuildBackLinkTest extends TestCase
     public function setUp()
     {
         global $mig_config;
+        $mig_config = array();
 
         include_once 'buildBackLink.php';
         include_once 'migURLencode.php';

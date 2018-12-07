@@ -6,9 +6,12 @@ final class BuildLargeLinkTest extends TestCase
 {
     public function setUp()
     {
+        global $mig_config;
+        $mig_config = array();
         include_once 'migURLencode.php';
         include_once 'buildLargeLink.php';
-        global $mig_config;
+        require 'en.php';
+        $mig_config['lang'] = $mig_config['lang_lib']['en'];
         $mig_config['baseurl'] = '/albums';
         $mig_config['image'] = 'test.jpg';
         $mig_config['mig_dl'] = NULL;

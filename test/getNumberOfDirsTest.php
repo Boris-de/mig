@@ -9,6 +9,7 @@ final class GetNumberOfDirsTest extends AbstractFileBasedTest
         include_once 'parseMigCf.php';
         include_once 'getNumberOfDirs.php';
         global $mig_config;
+        $mig_config = array();
         $mig_config['hidden'] = array();
         $mig_config['uselargeimages'] = FALSE;
         $mig_config['usethumbsubdir'] = FALSE;

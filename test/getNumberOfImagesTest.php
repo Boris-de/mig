@@ -9,6 +9,7 @@ final class GetNumberOfImagesTest extends AbstractFileBasedTest
         include_once 'parseMigCf.php';
         include_once 'getNumberOfImages.php';
         global $mig_config;
+        $mig_config = array();
         $mig_config['hidden'] = array();
         $mig_config['uselargeimages'] = FALSE;
         $mig_config['usethumbsubdir'] = FALSE;
@@ -16,6 +17,9 @@ final class GetNumberOfImagesTest extends AbstractFileBasedTest
         $mig_config['largesubdir'] = NULL;
         $mig_config['markertype'] = NULL;
         $mig_config['markerlabel'] = NULL;
+        $mig_config['image_extensions'] = array('jpg', 'jpeg');
+        $mig_config['video_extensions'] = array('mp4', 'avi');
+        $mig_config['audio_extensions'] = array('mp3', 'm4a');
     }
 
     public function test()

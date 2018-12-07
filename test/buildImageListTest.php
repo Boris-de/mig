@@ -6,6 +6,8 @@ final class BuildImageListTest extends AbstractFileBasedTest
 {
     protected function setupMigFake()
     {
+        global $mig_config;
+        $mig_config = array();
         include_once 'buildImageList.php';
         include_once 'getFileExtension.php';
         include_once 'migURLencode.php';
@@ -15,7 +17,8 @@ final class BuildImageListTest extends AbstractFileBasedTest
         include_once 'getNewCurrDir.php';
         include_once 'getImageDescription.php';
         include_once 'replaceString.php';
-        global $mig_config;
+        require 'en.php';
+        $mig_config['lang'] = $mig_config['lang_lib']['en'];
         $mig_config['basedir'] = $this->mig_dir;
         $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';
         $mig_config['foldersorttype'] = 'default';
@@ -57,6 +60,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $mig_config['imagepoplocationbar'] = NULL;
         $mig_config['imagepoptoolbar'] = NULL;
         $mig_config['imagepopmenubar'] = NULL;
+        $mig_config['startfrom'] = 0;
     }
 
     public function test()

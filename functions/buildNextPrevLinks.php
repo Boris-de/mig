@@ -125,10 +125,11 @@ function buildNextPrevLinks ( $currDir, $presorted )
     // Yes, position 0 is garbage.  Makes the math easier later.
     $fList = array ( 'blah' );
 
+    $ThisImagePos = NULL;
     while (list($file, $junk) = each($presorted)) {
 
         // If "this" is the one we're looking for, mark it as such.
-        if ($file == $mig_config['image']) {
+        if ($file === $mig_config['image']) {
             $ThisImagePos = $i;
         }
 
@@ -136,6 +137,10 @@ function buildNextPrevLinks ( $currDir, $presorted )
         ++$i;                   // increment the counter, of course.
     }
     reset($fList);
+
+    if (!is_int($ThisImagePos)) {
+        die('ABORT: image not found in $presorted');
+    }
 
     --$i;                       // Get rid of the last increment...
 
@@ -159,9 +164,10 @@ function buildNextPrevLinks ( $currDir, $presorted )
             && !preg_match($mig_config['imageFilenameRegexpr'], $fList[$tempThisImagePos-1])) {
         --$tempThisImagePos;
     }
-    if ($tempThisImagePos == 1) {
+
+    if ($tempThisImagePos <= 1) {
         $prev = 'NA';
-    } elseif ($fList[$tempThisImagePos-1]) {
+    } elseif (isset($fList[$tempThisImagePos-1])) {
         $prev = migURLencode($fList[$tempThisImagePos-1]);
     }
 

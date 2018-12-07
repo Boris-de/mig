@@ -8,9 +8,13 @@ final class ParseMigCfTest extends AbstractFileBasedTest
     {
         include_once 'parseMigCf.php';
         global $mig_config;
+        $mig_config = array();
         $mig_config['hidden'] = array();
         $mig_config['pagetitle'] = NULL;
         $mig_config['usethumbfile'] = array();
+        $mig_config['usethumbsubdir'] = FALSE;
+        $mig_config['uselargeimages'] = FALSE;
+        $mig_config['thumbsubdir'] = 'thumbs';
     }
 
     public function testMissingFile()

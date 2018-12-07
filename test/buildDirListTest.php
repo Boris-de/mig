@@ -14,6 +14,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         include_once 'getFileType.php';
         include_once 'migURLencode.php';
         global $mig_config;
+        $mig_config = array();
         $mig_config['basedir'] = $this->mig_dir;
         $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';
         $mig_config['foldersorttype'] = 'default';
