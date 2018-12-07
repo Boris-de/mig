@@ -16,8 +16,8 @@ function getNumberOfImages ( $folder )
 
     $count = 0;
 
-    // Get hidden item list from mig.cf
-    list($mig_config['hidden'], $x) = parseMigCf($folder);
+    // Get hidden item list from mig.cf, fills $mig_config['hidden']
+    parseMigCf($folder);
 
     while ($file = readdir($dir)) {
 
@@ -37,7 +37,7 @@ function getNumberOfImages ( $folder )
         }
 
         // Ignore hidden items
-        if ($mig_config['hidden'][$file]) {
+        if (!empty($mig_config['hidden'][$file])) {
             continue;
         }
 

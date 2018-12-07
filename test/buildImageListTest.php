@@ -1,27 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+require_once 'AbstractFileBasedTestCase.class.php';
 
-final class BuildImageListTest extends TestCase
+final class BuildImageListTest extends AbstractFileBasedTest
 {
-    private $mig_dir;
-    private $album_dir;
-
-    public function setUp()
-    {
-        $tempfile = tempnam(sys_get_temp_dir(), 'mig_phpunit_');
-        $this->assertTrue($tempfile !== FALSE);
-        unlink($tempfile);
-        $mig_dir = $tempfile . '.dir';
-        $this->assertTrue(mkdir($mig_dir, 0700) !== FALSE);
-        $this->mig_dir = $mig_dir;
-        $this->album_dir = $mig_dir . '/albums';
-        mkdir($this->album_dir);
-
-        $this->setupMigFake();
-    }
-
-    private function setupMigFake()
+    protected function setupMigFake()
     {
         include_once 'buildImageList.php';
         include_once 'getFileExtension.php';
@@ -78,7 +61,7 @@ final class BuildImageListTest extends TestCase
 
     public function test()
     {
-        mkdir($this->album_dir.'/test1'); // directory -> not shown
+        $this->mkdir($this->album_dir.'/test1'); // directory -> not shown
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/test3.jpg');
 
@@ -163,7 +146,7 @@ final class BuildImageListTest extends TestCase
     public function testHiding()
     {
         $this->set_mig_config('hidden', array('test-hidden.jpg' => true, '/test-hidden-dir' => true));
-        mkdir($this->album_dir.'/test-hidden-dir');
+        $this->mkdir($this->album_dir.'/test-hidden-dir');
         touch($this->album_dir.'/test-hidden.jpg');
 
         $this->assertNotContains('test-hidden', buildImageList('.', 4, 1, array(), array(), array()));
@@ -223,7 +206,7 @@ final class BuildImageListTest extends TestCase
 
     public function testThumbDir()
     {
-        mkdir($this->album_dir.'/thumbs');
+        $this->mkdir($this->album_dir.'/thumbs');
         touch($this->album_dir.'/test1.jpg');
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/thumbs/test1.jpg');
@@ -240,7 +223,7 @@ final class BuildImageListTest extends TestCase
     public function testThumbDirWithThumbExt()
     {
         $this->set_mig_config('thumbext', 'thumb.jpg');
-        mkdir($this->album_dir.'/thumbs');
+        $this->mkdir($this->album_dir.'/thumbs');
         touch($this->album_dir.'/test1.jpg');
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/thumbs/test1.thumb.jpg');
@@ -383,39 +366,5 @@ final class BuildImageListTest extends TestCase
         $this->set_mig_config('imagepoptoolbar', FALSE);
         $this->set_mig_config('imagepopmenubar', FALSE);
         touch($this->album_dir.'/test1.jpg');
-    }
-
-    private function set_mig_config($key, $value) {
-        global $mig_config;
-        $mig_config[$key] = $value;
-    }
-
-    private function touchWithSize($filename, $size) {
-        touch($filename);
-        $f = fopen($filename, 'w');
-        fwrite($f, str_pad('', $size));
-        fclose($f);
-    }
-
-    public function tearDown()
-    {
-        if ($this->mig_dir != '' && is_dir($this->mig_dir . '/albums')) {
-            $this->remove_recursive($this->mig_dir);
-        }
-    }
-
-    public function remove_recursive($dir)
-    {
-        $fs_nodes = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
-            RecursiveIteratorIterator::CHILD_FIRST
-        );
-
-        foreach ($fs_nodes as $node) {
-            $todo = $node->isDir() ? 'rmdir' : 'unlink';
-            $todo($node->getRealPath());
-        }
-
-        rmdir($dir);
     }
 }

@@ -117,7 +117,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         // Calculate how many images in the folder if desired
         if ($mig_config['viewfoldercount']) {
             $counts[$file] = getNumberOfImages($folder);
-            $countdir[$file] = getNumberOfDirs($folder, $currDir);
+            $countdir[$file] = getNumberOfDirs($folder);
         }
 
         // Handle random folder thumbnails if desired
@@ -187,7 +187,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
                         . $linkURL
                         . '<img src="';
 
-        if ($mig_config['usethumbfile'][$file]) {
+        if (!empty($mig_config['usethumbfile'][$file])) {
             // Found a UseThumb line in mig.cf - process as such
 
             $fname = getFileName($mig_config['usethumbfile'][$file]);
@@ -227,7 +227,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         // (Use a line break if random thumbnail is present so the name
         // appears underneath it - also use a line break if the thumbnail
         // was specified).
-        if (isset($samples[$file]) || $mig_config['usethumbfile'][$file]) {
+        if (isset($samples[$file]) || !empty($mig_config['usethumbfile'][$file])) {
             $sep = '<br />';
         } else {
             $sep = '&nbsp;';
