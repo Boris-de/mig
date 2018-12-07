@@ -91,18 +91,18 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 
     // Join the two sorted lists together into a single list
     if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
-        while (list($junk,$file) = each($filedates)) {
+        foreach ($filedates as $junk => $file) {
             $presorted[$file] = TRUE;
         }
 
     } else {
-        while (list($file,$junk) = each($directories)) {
+        foreach ($directories as $file => $junk) {
             $presorted[$file] = TRUE;
         }
     }
 
     // Make sure hidden items aren't displayed
-    while (list($file,$junk) = each($mig_config['hidden'])) {
+    foreach ($mig_config['hidden'] as $file => $junk) {
         unset ($presorted[$file]);
     }
 
@@ -110,7 +110,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     reset($mig_config['hidden']);
 
     // Iterate through all folders now that we have our final list.
-    while (list($file,$junk) = each($presorted)) {
+    foreach ($presorted as $file => $junk) {
 
         $folder = $mig_config['albumdir'].'/'.$currDir.'/'.$file;
 
@@ -134,7 +134,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     --$maxColumns;  // Tricks $maxColumns into working since it
                     // really starts at 0, not 1
 
-    while (list($file,$junk) = each($presorted)) {
+    foreach ($presorted as $file => $junk) {
 
         // Start a new row if appropriate
         if ($col == 0) {

@@ -35,7 +35,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
 
     // Count presorted images for pagination purposes
     if ($presorted) {
-        while (list($x,$y) = each($presorted)) {
+        foreach ($presorted as $x => $y) {
             ++$thumbsInFolder;
         }
     }
@@ -98,18 +98,18 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
 
     // Join the two sorted lists together into a single list
     if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
-        while (list($junk,$file) = each($filedates)) {
+        foreach ($filedates as $junk => $file) {
             $presorted[$file] = TRUE;
         }
 
     } else {
-        while (list($file,$junk) = each($imagefiles)) {
+        foreach ($imagefiles as $file => $junk) {
             $presorted[$file] = TRUE;
         }
     }
 
     // Make sure hidden items don't show up
-    while (list($file,$junk) = each($mig_config['hidden'])) {
+    foreach ($mig_config['hidden'] as $file => $junk) {
         unset ($presorted[$file]);
     }
 
@@ -220,7 +220,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
 
     $thumbCounter = -1;
 
-    while (list($file,$junk) = each($presorted)) {
+    foreach ($presorted as $file => $junk) {
 
         ++$thumbCounter;
 
