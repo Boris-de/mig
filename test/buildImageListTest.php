@@ -46,7 +46,10 @@ final class BuildImageListTest extends TestCase
         $mig_config['usethumbfile'] = FALSE;
         $mig_config['imagedir'] = 'imagedir';
         $mig_config['folder_icon'] = 'folder.png';
+        $mig_config['nothumbs'] = FALSE;
         $mig_config['nothumb_icon'] = 'nothumb_icon.png';
+        $mig_config['movie_icon'] = 'movie_icon.png';
+        $mig_config['music_icon'] = 'audio_icon.png';
         $mig_config['markerlabel'] = '';
         $mig_config['usethumbsubdir'] = TRUE;
         $mig_config['image_extensions'] = array('jpg', 'jpeg');
@@ -62,6 +65,15 @@ final class BuildImageListTest extends TestCase
         $mig_config['imagepopup'] = FALSE;
         $mig_config['showshortonthumbpage'] = FALSE;
         $mig_config['fileinfoformatstring'] = array('image' => '%n', 'audio' => '%n', 'video' => '%n');
+        $mig_config['albumurlroot'] = '/albums';
+        $mig_config['markertype'] = '';
+        $mig_config['markerlabel'] = '';
+        $mig_config['imagepopmaxwidth'] = NULL;
+        $mig_config['imagepopmaxheight'] = NULL;
+        $mig_config['imagepoptype'] = NULL;
+        $mig_config['imagepoplocationbar'] = NULL;
+        $mig_config['imagepoptoolbar'] = NULL;
+        $mig_config['imagepopmenubar'] = NULL;
     }
 
     public function test()
@@ -162,9 +174,227 @@ final class BuildImageListTest extends TestCase
         $this->assertEquals('NULL', buildImageList('.', 4, 1, array(), array(), array()));
     }
 
+    public function testVideo()
+    {
+        touch($this->album_dir.'/test.mp4');
+
+        $this->assertContains("
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"/albums/./test.mp4\"><img src=\"https://example.com/images/movie_icon.png\" /></a><br />test.mp4</td>",
+            buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
+    }
+
+    public function testAudio()
+    {
+        touch($this->album_dir.'/test.mp3');
+
+        $this->assertContains("
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"/albums/./test.mp3\"><img src=\"https://example.com/images/audio_icon.png\" /></a><br />test.mp3</td>",
+            buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
+    }
+
+    public function testUnknownFile()
+    {
+        touch($this->album_dir.'/test.foo');
+
+        $this->assertNotContains("test.foo",
+            buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
+    }
+
+    public function testFileSize()
+    {
+        $this->set_mig_config('fileinfoformatstring', array('image' => '%s %n', 'audio' => '%s %n', 'video' => '%s %n'));
+        $this->touchWithSize($this->album_dir.'/test1.jpg', 1024);
+        $this->touchWithSize($this->album_dir.'/test2.jpg', 1025);
+        $this->touchWithSize($this->album_dir.'/test3.jpg', 1048576);
+        $this->touchWithSize($this->album_dir.'/test4.jpg', 1048577);
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />1024&nbsp;bytes test1.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />1.0KB test2.jpg</td>
+   </tr>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test3.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />1024.0KB test3.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test4.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />1.0MB test4.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testThumbDir()
+    {
+        mkdir($this->album_dir.'/thumbs');
+        touch($this->album_dir.'/test1.jpg');
+        touch($this->album_dir.'/test2.jpg');
+        touch($this->album_dir.'/thumbs/test1.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\"><img src=\"/albums/./thumbs/test1.jpg\" alt=\"\" class=\"imagethumb\"  /></a><br />test1.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testThumbDirWithThumbExt()
+    {
+        $this->set_mig_config('thumbext', 'thumb.jpg');
+        mkdir($this->album_dir.'/thumbs');
+        touch($this->album_dir.'/test1.jpg');
+        touch($this->album_dir.'/test2.jpg');
+        touch($this->album_dir.'/thumbs/test1.thumb.jpg');
+        touch($this->album_dir.'/thumbs/test2.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\"><img src=\"/albums/./thumbs/test1.thumb.jpg\" alt=\"\" class=\"imagethumb\"  /></a><br />test1.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testThumbPrefix()
+    {
+        $this->set_mig_config('usethumbsubdir', FALSE);
+        $this->set_mig_config('markertype', 'prefix');
+        $this->set_mig_config('markerlabel', 'thumb');
+        touch($this->album_dir.'/test1.jpg');
+        touch($this->album_dir.'/test2.jpg');
+        touch($this->album_dir.'/thumb_test1.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\"><img src=\"/albums/./thumb_test1.jpg\" alt=\"\" class=\"imagethumb\"  /></a><br />test1.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testThumbSuffix()
+    {
+        $this->set_mig_config('usethumbsubdir', FALSE);
+        $this->set_mig_config('markertype', 'suffix');
+        $this->set_mig_config('markerlabel', 'thumb');
+        touch($this->album_dir.'/test1.jpg');
+        touch($this->album_dir.'/test2.jpg');
+        touch($this->album_dir.'/test1_thumb.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\"><img src=\"/albums/./test1_thumb.jpg\" alt=\"\" class=\"imagethumb\"  /></a><br />test1.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testJustThumbExtensionNotSupported()
+    {
+        $this->set_mig_config('usethumbsubdir', FALSE);
+        $this->set_mig_config('thumbext', 'thumb.jpg');
+        touch($this->album_dir.'/test1.jpg');
+        touch($this->album_dir.'/test1.thumb.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test1.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.thumb.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test1.thumb.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testNoThumbs()
+    {
+        $this->set_mig_config('nothumbs', TRUE);
+        touch($this->album_dir.'/test1.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\">test1.jpg</a><br /></td>
+  </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImagePopup()
+    {
+        $this->setUpPopupTest();
+        $this->assertContains("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+            buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImagePopupWithLargerSize()
+    {
+        $this->setUpPopupTest();
+        $this->set_mig_config('imagepopmaxwidth', 10);
+        $this->set_mig_config('imagepopmaxheight', 10);
+
+        $this->assertContains("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=10,height=10,resizable=yes,scrollbars=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+            buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImagePopupWithDisabledLocationBar()
+    {
+        $this->setUpPopupTest();
+        $this->set_mig_config('imagepoplocationbar', TRUE);
+
+        $this->assertContains("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,location=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+            buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImagePopupWithDisabledToolBar()
+    {
+        $this->setUpPopupTest();
+        $this->set_mig_config('imagepoptoolbar', TRUE);
+
+        $this->assertContains("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,toolbar=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+            buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImagePopupWithDisabledMenuBar()
+    {
+        $this->setUpPopupTest();
+        $this->set_mig_config('imagepopmenubar', TRUE);
+
+        $this->assertContains("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,menubar=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+            buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImagePopupWithRandomWindow()
+    {
+        $this->setUpPopupTest();
+        $this->set_mig_config('imagepoptype', NULL);
+
+        $imageList = buildImageList('.', 2, 2, array(), array(), array());
+        $this->assertContains("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_", $imageList);
+        $this->assertNotContains("mig_window_11190874", $imageList);
+    }
+
+    private function setUpPopupTest() {
+        $this->set_mig_config('imagepopup', TRUE);
+        $this->set_mig_config('imagepopmaxwidth', 640);
+        $this->set_mig_config('imagepopmaxheight', 480);
+        $this->set_mig_config('imagepoptype', 'reuse');
+        $this->set_mig_config('imagepoplocationbar', FALSE);
+        $this->set_mig_config('imagepoptoolbar', FALSE);
+        $this->set_mig_config('imagepopmenubar', FALSE);
+        touch($this->album_dir.'/test1.jpg');
+    }
+
     private function set_mig_config($key, $value) {
         global $mig_config;
         $mig_config[$key] = $value;
+    }
+
+    private function touchWithSize($filename, $size) {
+        touch($filename);
+        $f = fopen($filename, 'w');
+        fwrite($f, str_pad('', $size));
+        fclose($f);
     }
 
     public function tearDown()
