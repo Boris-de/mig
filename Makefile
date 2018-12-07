@@ -36,9 +36,6 @@ default:
 	@echo " "
 	@echo "    make mig.sf.net ver=X      index.php & templates to mig.sf.net"
 
-test:
-	phpunit --include-path functions/:main/:languages/ test; \
-
 mig: dist
 
 dist: index.php
@@ -114,6 +111,12 @@ test-album: create-random-album.sh
 	rm -rf test-album
 	./create-random-album.sh test-album
 
+unittests:
+	make -C test unittests
+
+docker-unittests:
+	make -C test docker-unittests-php-versions
+
 docker: index.php test-album
 	@echo "This target uses \"sudo\" to run docker, abort now if you don't want this. Press Enter to continue"
 	@read UNUSED
@@ -132,4 +135,4 @@ docker: index.php test-album
 clean:
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean
+.PHONY: test clean unittests docker docker-unittests
