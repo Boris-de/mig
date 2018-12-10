@@ -15,15 +15,16 @@ function printTemplate ( $templateFile, $version, $maintAddr,
     global $REQUEST_URI;
     global $HTTP_SERVER_VARS;
 
+    $newLang = '';
     // Get URL for %%newLang%% variable
-    if ($_SERVER['REQUEST_URI']) {
+    if (isset($_SERVER['REQUEST_URI'])) {
         $newLang = $_SERVER['REQUEST_URI'];
-    } elseif ($HTTP_SERVER_VARS['REQUEST_URI']) {
+    } elseif (isset($HTTP_SERVER_VARS['REQUEST_URI'])) {
         $newLang = $HTTP_SERVER_VARS['REQUEST_URI'];
-    } elseif ($REQUEST_URI) {
+    } elseif (isset($REQUEST_URI)) {
         $newLang = $REQUEST_URI;
     }
-    if (strpos($newLang, 'mig_dl=') !== FALSE) {
+    if ($newLang and strpos($newLang, 'mig_dl=') !== FALSE) {
         $newLang = preg_replace('#[?&]mig_dl=[^?&]*#', '', $newLang);
     }
     $newLang .= '&mig_dl';
@@ -62,16 +63,17 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                 print $line;
             } else {
                 $incl_file = $line;
-                if (file_exists($mig_config['templatedir'] ."/$incl_file")) {
+                $templatedir = $mig_config['templatedir'];
+                if (file_exists($templatedir . "/$incl_file")) {
 
                     if (function_exists('virtual')) {
                         // virtual() doesn't like absolute paths,
                         // apparently, so just pass it a relative one.
-                        $tmplDir = preg_replace('#^.*/#', '', $mig_config['templatedir']);
+                        $tmplDir = preg_replace('#^.*/#', '', $templatedir);
                         virtual("$tmplDir/$incl_file");
                     } else {
                         include( convertIncludePath($pathConvertFlag,
-                                            $mig_config['templatedir']."/$incl_file",
+                                            $templatedir ."/$incl_file",
                                             $pathConvertRegex, $pathConvertTarget));
                     }
 
@@ -89,29 +91,29 @@ function printTemplate ( $templateFile, $version, $maintAddr,
 
             $albumURLroot		= $mig_config['albumurlroot'];
             $baseURL			= $mig_config['baseurl'];
-            $image			= $mig_config['image'];
+            $image			    = isset($mig_config['image']) ? $mig_config['image'] : NULL;
             $largeSubdir		= $mig_config['largesubdir'];
             $pageTitle			= $mig_config['pagetitle'];
             $httpContentType            = $mig_config['httpContentType'];
 
             // Make sure this is URL encoded
-            $encodedImageURL = migURLencode($mig_config['image']);
+            $encodedImageURL = migURLencode($image);
 
-            $filetype=getFileType($mig_config['image']);
+            $filetype=getFileType($image);
             // If pagetype is large, add largeSubdir to path.
-            if ($filetype=='image' && $mig_config['image']) {
+            if ($filetype=='image' && $image) {
                 // Get image pixel size for <IMG> element
-				if(!is_file($mig_config['albumdir']."/$currDir/".$mig_config['image'])) {
+				if(!is_file($mig_config['albumdir']."/$currDir/".$image)) {
 					die("ERROR: Image file does not exist!");
 				}
                 if ($mig_config['pagetype'] == 'image') {
                     $imageProps = @GetImageSize($mig_config['albumdir']."/$currDir/"
-                                               .$mig_config['image']);
+                                               .$image);
                 } elseif ($mig_config['pagetype'] == 'large') {
                     $imageProps =
                       @GetImageSize($mig_config['albumdir']."/$currDir/"
                                  . $mig_config['largesubdir']
-                                 . '/'.$mig_config['image']);
+                                 . '/'.$image);
                 }
                 $imageSize = $imageProps[3];
             } elseif ($filetype) { // known and !image -> display icon with link

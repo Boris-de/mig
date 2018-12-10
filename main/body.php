@@ -613,7 +613,7 @@ if ($mig_config['pagetype'] == 'folder') {
     $backLink = buildBackLink($currDir, 'back');
 
     // build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir, '', $mig_config['omitimagename']);
+    $youAreHere = buildYouAreHere($currDir);
 
     // newcurrdir is currdir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
