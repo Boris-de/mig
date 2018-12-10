@@ -18,9 +18,11 @@ function getExifDescription ( $currDir, $formatString )
     $shutter    = array ();
     $time       = array ();
     $year       = array ();
+    $knownFiles = array ();
 
     if (file_exists($mig_config['albumdir']."/$currDir/exif.inf")) {
 
+        $fname = NULL;
         $file = fopen($mig_config['albumdir']."/$currDir/exif.inf", 'r');
         $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
@@ -28,6 +30,19 @@ function getExifDescription ( $currDir, $formatString )
             if (strpos($line, 'File name    : ') === 0) {
                 $fname = str_replace('File name    : ', '', $line);
                 $fname = chop($fname);
+
+                $knownFiles[$fname] = TRUE;
+                $desc[$fname] = '';
+                $model[$fname] = '';
+                $year[$fname] = '';
+                $month[$fname] = '';
+                $day[$fname] = '';
+                $time[$fname] = '';
+                $iso[$fname] = '';
+                $foclen[$fname] = '';
+                $shutter[$fname] = '';
+                $aperture[$fname] = '';
+                $flash[$fname] = '';
 
             } elseif (strpos($line, 'Comment      : ') === 0) {
                 $comment = str_replace('Comment      : ', '', $line);
@@ -58,7 +73,7 @@ function getExifDescription ( $currDir, $formatString )
                 $aperture[$fname] = $x;
 
             } elseif (strpos($line, 'Focal length : ') === 0) {
-                $x = str_replace('Focal length : ', '', $line);
+                $x = chop(str_replace('Focal length : ', '', $line));
                 if (stripos($x, '35mm equiv') !== FALSE) {
                     $x = preg_replace('#^.*alent: #', '', $x);
                     $x = chop($x);
@@ -74,7 +89,7 @@ function getExifDescription ( $currDir, $formatString )
             } elseif (strpos($line, 'Flash used   : Yes') === 0) {
                 $flash[$fname] = $mig_config['lang']['flash_used'];
 
-            } elseif (strpos($line, '^Date/Time    : ') === 0) {
+            } elseif (strpos($line, 'Date/Time    : ') === 0) {
                 $x = str_replace('Date/Time    : ', '', $line);
                 $x = chop($x);
 
@@ -94,6 +109,9 @@ function getExifDescription ( $currDir, $formatString )
         
         $image = $mig_config['image'];
 
+        if (empty($knownFiles[$image])) {
+            return '';
+        }
         $exifData = array ( 'comment'   => $desc[$image],
                             'model'     => $model[$image],
                             'year'      => $year[$image],

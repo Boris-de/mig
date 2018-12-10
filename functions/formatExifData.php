@@ -31,7 +31,8 @@ function formatExifData ( $formatString, $exifData )
                      
     // separate elements of format string
     $matches = explode('|', $formatString);
-    
+
+    $newstr = '';
     while (list($key,$val) = each($matches)) {
     
         // $changeflag is used to tell us if we should bother
@@ -52,21 +53,17 @@ function formatExifData ( $formatString, $exifData )
             // If this can be expanded, do so.  If it can be,
             // set $changeflag to TRUE so we know to include this
             // block instead of dumping it.
-            if ($table[$letter]) {
+            if (isset($table[$letter])) {
                 $newtext = $table[$letter];
-                $changeflag = TRUE;
+            } else {
+                $newtext = '';
             }
 
             // Do interpolation
             $val = str_replace("%$letter", $newtext, $val);
         }
 
-        // Only if $changeflag is TRUE do we bother tacking this
-        // onto the final product.
-        if ($changeflag) {
-            $newstr .= $val;
-        }
-            
+        $newstr .= $val;
     }
     
     return $newstr;

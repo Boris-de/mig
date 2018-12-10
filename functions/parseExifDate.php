@@ -7,51 +7,68 @@ function parseExifDate ( $stamp )
     global $mig_config;
 
     // Separate into a date and a time
-    list($date,$time) = split(' ', $stamp);
+    $explodedDateTime = explode(' ', $stamp);
+    if (count($explodedDateTime) < 2) {
+        $date = $stamp;
+        $time = '';
+    } else {
+        list($date, $time) = $explodedDateTime;
+    }
 
     // Parse date
-    list($year, $month, $day) = split(':', $date);
+    $explodedDate = explode(':', $date);
+    if (count($explodedDate) < 3) {
+        return array('', '', '', '', '');
+    }
+    list($year, $month, $day) = $explodedDate;
 
     // Turn numeric month into a 3-character month string
     $month = $mig_config['lang']['month'][$month];
 
     // Parse time
-    list($hour, $minute, $second) = split(':', $time);
+    $explodedTime = explode(':', $time);
+    if (count($explodedTime) == 3) {
+        list($hour, $minute, $second) = $explodedTime;
 
-    // Translate into 12-hour time
-    switch ($hour) {
-        case '00':
-            $time = '12:' . $minute . $mig_config['lang']['am'];
-            break;
-        case '01':
-        case '02':
-        case '03':
-        case '04':
-        case '05':
-        case '06':
-        case '07':
-        case '08':
-        case '09':
-        case '10':
-        case '11':
-            $time = $hour . ':' . $minute . $mig_config['lang']['am'];
-            break;
-        case '12':
-            $time = $hour . ':' . $minute . $mig_config['lang']['pm'];
-            break;
-        case '13':
-        case '14':
-        case '15':
-        case '16':
-        case '17':
-        case '18':
-        case '19':
-        case '20':
-        case '21':
-        case '22':
-        case '23':
-            $time = ($hour - 12) . ':' . $minute . $mig_config['lang']['pm'];
-            break;
+        // Translate into 12-hour time
+        switch ($hour) {
+            case '00':
+                $time = '12:' . $minute . $mig_config['lang']['am'];
+                break;
+            case '01':
+            case '02':
+            case '03':
+            case '04':
+            case '05':
+            case '06':
+            case '07':
+            case '08':
+            case '09':
+            case '10':
+            case '11':
+                $time = $hour . ':' . $minute . $mig_config['lang']['am'];
+                break;
+            case '12':
+                $time = $hour . ':' . $minute . $mig_config['lang']['pm'];
+                break;
+            case '13':
+            case '14':
+            case '15':
+            case '16':
+            case '17':
+            case '18':
+            case '19':
+            case '20':
+            case '21':
+            case '22':
+            case '23':
+                $tmp = $hour - 12;
+                if (strlen($tmp) == 1) {
+                    $tmp = '0' . $tmp;
+                }
+                $time = $tmp . ':' . $minute . $mig_config['lang']['pm'];
+                break;
+        }
     }
 
     return array ( $year, $month, $day, $time );
