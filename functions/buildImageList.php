@@ -40,9 +40,6 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
         }
     }
 
-    // Reset array pointer
-    reset($presorted);
-
     $markerLabel = $mig_config['markerlabel'];
     while ($file = readdir($dir)) {
         // Skip over thumbnails
@@ -85,25 +82,21 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
     ksort($imagefiles); // sort, so we get a sorted list to stuff onto the
                         // end of $presorted
 
-    reset($imagefiles); // reset array pointer
-
     if ($mig_config['sorttype'] == 'bydate-ascend') {
         ksort($filedates);
-        reset($filedates);
 
     } elseif ($mig_config['sorttype'] == 'bydate-descend') {
         krsort($filedates);
-        reset($filedates);
     }
 
     // Join the two sorted lists together into a single list
     if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
-        foreach ($filedates as $junk => $file) {
+        foreach (array_values($filedates) as $file) {
             $presorted[$file] = TRUE;
         }
 
     } else {
-        foreach ($imagefiles as $file => $junk) {
+        foreach (array_keys($imagefiles) as $file) {
             $presorted[$file] = TRUE;
         }
     }
@@ -112,9 +105,6 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
     foreach ($mig_config['hidden'] as $file => $junk) {
         unset ($presorted[$file]);
     }
-
-    reset($presorted);              // reset array pointers
-    reset($mig_config['hidden']);
 
     // If there are images, start the table
     if ($thumbsInFolder) {

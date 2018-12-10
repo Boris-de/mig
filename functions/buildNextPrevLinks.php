@@ -88,15 +88,11 @@ function buildNextPrevLinks ( $currDir, $presorted )
     closedir($dir);
 
     ksort($fileList);       // sort, so we see sorted results
-    reset($fileList);       // reset array pointer
 
     if ($mig_config['sorttype'] == 'bydate-ascend') {
         ksort($filedates);
-        reset($filedates);
-
     } elseif ($mig_config['sorttype'] == 'bydate-descend') {
         krsort($filedates);
-        reset($filedates);
     }
 
     // Generated final sorted list
@@ -104,19 +100,17 @@ function buildNextPrevLinks ( $currDir, $presorted )
         // since $filedates is sorted by date, and date is
         // the key, the key is pointless to put in the list now.
         // so we store the value, not the key, in $presorted
-        while (list($junk,$file) = each($filedates)) {
+        foreach (array_values($filedates) as $file) {
             $presorted[$file] = TRUE;
         }
 
     } else {
         // however, here we have real data in the key, so we push
         // the key, not the value, into $presorted.
-        while (list($file,$junk) = each($fileList)) {
+        foreach (array_keys($fileList) as $file) {
             $presorted[$file] = TRUE;
         }
     }
-
-    reset($presorted);      // reset array pointer
 
     // Gather all files into an array
 
@@ -126,7 +120,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     $fList = array ( 'blah' );
 
     $ThisImagePos = NULL;
-    while (list($file, $junk) = each($presorted)) {
+    foreach (array_keys($presorted) as $file) {
 
         // If "this" is the one we're looking for, mark it as such.
         if ($file === $mig_config['image']) {
@@ -136,7 +130,6 @@ function buildNextPrevLinks ( $currDir, $presorted )
         $fList[$i] = $file;     // Stash filename in the array
         ++$i;                   // increment the counter, of course.
     }
-    reset($fList);
 
     if (!is_int($ThisImagePos)) {
         die('ABORT: image not found in $presorted');

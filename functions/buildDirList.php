@@ -78,25 +78,22 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     }
 
     ksort($directories);    // sort so we can yank them in sorted order
-    reset($directories);    // reset array pointer to beginning
 
     if ($mig_config['foldersorttype'] == 'bydate-ascend') {
         ksort($filedates);
-        reset($filedates);
 
     } elseif ($mig_config['foldersorttype'] == 'bydate-descend') {
         krsort($filedates);
-        reset($filedates);
     }
 
     // Join the two sorted lists together into a single list
     if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
-        foreach ($filedates as $junk => $file) {
+        foreach (array_values($filedates) as $file) {
             $presorted[$file] = TRUE;
         }
 
     } else {
-        foreach ($directories as $file => $junk) {
+        foreach (array_keys($directories) as $file) {
             $presorted[$file] = TRUE;
         }
     }
@@ -105,9 +102,6 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     foreach ($mig_config['hidden'] as $file => $junk) {
         unset ($presorted[$file]);
     }
-
-    reset($presorted);              // reset array pointers
-    reset($mig_config['hidden']);
 
     // Iterate through all folders now that we have our final list.
     foreach ($presorted as $file => $junk) {
@@ -125,8 +119,6 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
             $samples[$file] = getRandomThumb($file, $folder, $currDir);
         }
     }
-
-    reset($presorted);
 
     // Track columns
     $row = 0;

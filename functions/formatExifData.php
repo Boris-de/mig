@@ -33,7 +33,7 @@ function formatExifData ( $formatString, $exifData )
     $matches = explode('|', $formatString);
 
     $newstr = '';
-    while (list($key,$val) = each($matches)) {
+    foreach ($matches as $key => $val) {
     
         // $changeflag is used to tell us if we should bother
         // printing this block at all.  If none of the format

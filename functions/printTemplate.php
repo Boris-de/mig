@@ -139,7 +139,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
             );
 
             // Do substitution for various variables
-            while (list($key,$val) = each($replacement_list)) {
+            foreach ($replacement_list as $key => $val) {
                 $value = isset($$val) ? $$val : '';
                 $line = str_replace("%%$val%%", $value, $line);
             }
