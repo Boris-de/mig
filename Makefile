@@ -17,13 +17,13 @@ RELEASE_TAG=RELEASE_$(shell echo ${ver} | sed "s/\./_/g")
 
 PHP_FILES=main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
 
-DOCKER_NAME=mig-php-app
-DOCKER_PHP_VERSION=''
+PODMAN_NAME=mig-php-app
+PODMAN_PHP_VERSION=''
 
-USED_DOCKER_PHP_VERSION=$(DOCKER_PHP_VERSION)
-ifneq ($(DOCKER_PHP_VERSION), '')
+USED_PODMAN_PHP_VERSION=$(PODMAN_PHP_VERSION)
+ifneq ($(PODMAN_PHP_VERSION), '')
   # append "-" to get something like "7.1-apache"
-  USED_DOCKER_PHP_VERSION=$(DOCKER_PHP_VERSION)-
+  USED_PODMAN_PHP_VERSION=$(PODMAN_PHP_VERSION)-
 endif
 
 
@@ -117,25 +117,23 @@ unittests:
 coverage:
 	make -C test coverage
 
-docker-unittests:
-	make -C test docker-unittests-php-versions
+podman-unittests:
+	make -C test podman-unittests-php-versions
 
-docker: index.php test-album
-	@echo "This target uses \"sudo\" to run docker, abort now if you don't want this. Press Enter to continue"
-	@read UNUSED
-	sudo docker build --build-arg PHP_VERSION=$(USED_DOCKER_PHP_VERSION) -t $(DOCKER_NAME) .
-	sudo docker run --publish=127.0.0.1::80 -d --name $(DOCKER_NAME) $(DOCKER_NAME)
+podman: index.php test-album
+	sudo podman build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
+	sudo podman run --publish=127.0.0.1::80 -d --name $(PODMAN_NAME) $(PODMAN_NAME)
 	@set -e ;\
-	PORT=$$(sudo docker inspect --format '{{ (index (index .NetworkSettings.Ports "80/tcp") 0).HostPort }}' $(DOCKER_NAME)) ;\
-	echo -e "\nContainer \"$(DOCKER_NAME)\" is started" ;\
+	PORT=$$(podman inspect --format '{{ (index (index .NetworkSettings.Ports "80/tcp") 0).HostPort }}' $(PODMAN_NAME)) ;\
+	echo -e "\nContainer \"$(PODMAN_NAME)\" is started" ;\
 	echo -e " find the application at http://localhost:$${PORT}/index.php" ;\
 	echo -e " find the PHP-version at http://localhost:$${PORT}/phpinfo.php" ;\
 	echo -e "Press enter to shut it down"
 	@read UNUSED
-	sudo docker stop $(DOCKER_NAME)
-	sudo docker rm $(DOCKER_NAME)
+	sudo podman stop $(PODMAN_NAME)
+	sudo podman rm $(PODMAN_NAME)
 
 clean:
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean unittests docker docker-unittests coverage
+.PHONY: test clean unittests podman podman-unittests coverage

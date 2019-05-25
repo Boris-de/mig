@@ -1,16 +1,16 @@
-DOCKER_NAME_PHPUNIT=mig-phpunit
+PODMAN_NAME_PHPUNIT=mig-phpunit
 
-DOCKER_PHP_VERSION='cli'
+PODMAN_PHP_VERSION='cli'
 
-USED_DOCKER_PHP_VERSION=$(DOCKER_PHP_VERSION)
-ifneq ($(DOCKER_PHP_VERSION), 'cli')
+USED_PODMAN_PHP_VERSION=$(PODMAN_PHP_VERSION)
+ifneq ($(PODMAN_PHP_VERSION), 'cli')
   # append "-cli"
-  USED_DOCKER_PHP_VERSION=$(DOCKER_PHP_VERSION)-cli
+  USED_PODMAN_PHP_VERSION=$(PODMAN_PHP_VERSION)-cli
 endif
 
 default:
 	@echo "    make unittests                                Run unittests with the default php-cli"
-	@echo "    make docker-unittests DOCKER_PHP_VERSION=7.0  Run unittests with in a docker container"
+	@echo "    make podman-unittests PODMAN_PHP_VERSION=7.0  Run unittests with in a docker container"
 
 unittests:
 	phpunit --include-path ../functions/:../main/:../languages/ .
@@ -18,15 +18,11 @@ unittests:
 coverage:
 	phpunit --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .
 
-docker-unittests:
-	@if ! [[ $$MIG_DOCKER_SUDO_OK = 'true' ]]; then \
-	  echo "This target uses \"sudo\" to run docker, abort now if you don't want this. Press Enter to continue"; \
-	  read UNUSED; \
-	fi
-	sudo docker build --build-arg PHP_VERSION=$(DOCKER_PHP_VERSION) -t $(DOCKER_NAME_PHPUNIT) .
-	sudo docker run -it --rm -v "$$PWD/..":/usr/src/mig -w /usr/src/mig $(DOCKER_NAME_PHPUNIT)
+podman-unittests:
+	podman build --build-arg PHP_VERSION=$(PODMAN_PHP_VERSION) -t $(PODMAN_NAME_PHPUNIT) .
+	podman run -it --rm -v "$$PWD/..":/usr/src/mig -w /usr/src/mig $(PODMAN_NAME_PHPUNIT)
 
-docker-unittests-php-versions:
-	$(foreach version,5.6 7.0 7.1 7.2 7.3, make docker-unittests DOCKER_PHP_VERSION=$(version) || exit;)
+podman-unittests-php-versions:
+	$(foreach version,5.6 7.0 7.1 7.2 7.3, make podman-unittests PODMAN_PHP_VERSION=$(version) || exit;)
 
-.PHONY: unittests docker-unittests docker-unittests-php-versions coverage
+.PHONY: unittests podman-unittests podman-unittests-php-versions coverage
