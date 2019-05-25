@@ -11,6 +11,7 @@ function getRandomThumb ( $file, $folder, $currDir )
     // SECTION ONE ...
     // If we're using thumbnail subdirectories.
 
+    $randThumbList = array ();          // initialize
     if ($mig_config['usethumbsubdir']) {
         $myThumbDir = $folder . '/' . $mig_config['thumbsubdir'];
 
@@ -20,7 +21,6 @@ function getRandomThumb ( $file, $folder, $currDir )
         // in which case we can't show any thumbs anyway.
         if (is_dir($myThumbDir)) {
             $readSample = opendir($myThumbDir);
-            $randThumbList = array ();          // initialize
 
             // Read each item in the directory...
             while ($sample = readdir($readSample)) {
@@ -89,9 +89,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                     if ($mig_config['userealrandthumbs']) {
                         $subfList[] = $item;
                     } else {
-                        $mySample = getRandomThumb($file.'/'.$item, $folder.'/'.$item,
-                                                   $currDir,
-                                                   $mig_config['userealrandthumbs']);
+                        $mySample = getRandomThumb($file.'/'.$item, $folder.'/'.$item, $currDir);
 
                         if ($mySample) {
                             return $mySample;
@@ -116,18 +114,18 @@ function getRandomThumb ( $file, $folder, $currDir )
 
     } else {
 
-        if (is_dir($folder)) {
-            // Open $folder as a directory handle
-            $readSample = opendir($folder);
-        } else {
+        if (!is_dir($folder)) {
             // If it's not a directory, just bail out now.
             return FALSE;
         }
 
+        // Open $folder as a directory handle
+        $readSample = opendir($folder);
+
         // Iterate through all files in this folder...
         while ($sample = readdir($readSample)) {
 
-            unset($mySample);    // Cleanup from last loop iteration
+            $mySample = NULL;    // Cleanup from last loop iteration
 
             // Using prefix/suffix and label settings,
             // figure out if this is a thumbnail or not.
@@ -195,7 +193,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                 }
                 closedir($dirlist);
 
-                if ($subfList[0]) {
+                if (isset($subfList[0])) {
                     srand((double)microtime()*1000000);     // get random folder
                     $randval = rand(0,(sizeof($subfList)-1));
                     $mySample = getRandomThumb($file.'/'.$subfList[$randval],
