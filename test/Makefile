@@ -27,6 +27,6 @@ docker-unittests:
 	sudo docker run -it --rm -v "$$PWD/..":/usr/src/mig -w /usr/src/mig $(DOCKER_NAME_PHPUNIT)
 
 docker-unittests-php-versions:
-	$(foreach version,5.6 7.0 7.1 7.2 7.3 rc, make docker-unittests DOCKER_PHP_VERSION=$(version);)
+	$(foreach version,5.6 7.0 7.1 7.2 7.3, make docker-unittests DOCKER_PHP_VERSION=$(version) || exit;)
 
 .PHONY: unittests docker-unittests docker-unittests-php-versions coverage
