@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 final class BuildBackLinkTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         global $mig_config;
         $mig_config = array();

@@ -7,7 +7,7 @@ abstract class AbstractFileBasedTest extends TestCase
     protected $mig_dir;
     protected $album_dir;
 
-    public function setUp()
+    public function setUp() : void
     {
         $tempfile = tempnam(sys_get_temp_dir(), 'mig_phpunit_');
         $this->assertTrue($tempfile !== FALSE);
@@ -28,7 +28,7 @@ abstract class AbstractFileBasedTest extends TestCase
         $mig_config[$key] = $value;
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         if ($this->mig_dir != '' && is_dir($this->mig_dir . '/albums')) {
             $this->remove_recursive($this->mig_dir);

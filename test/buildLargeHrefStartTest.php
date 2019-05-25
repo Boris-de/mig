@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 final class BuildLargeHrefStartTest extends TestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         include_once 'migURLencode.php';
         include_once 'buildLargeHrefStart.php';
