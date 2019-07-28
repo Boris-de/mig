@@ -23,6 +23,6 @@ podman-unittests:
 	podman run -it --rm -v "$$PWD/..":/usr/src/mig -w /usr/src/mig $(PODMAN_NAME_PHPUNIT)
 
 podman-unittests-php-versions:
-	$(foreach version,5.6 7.0 7.1 7.2 7.3, make podman-unittests PODMAN_PHP_VERSION=$(version) || exit;)
+	$(foreach version,5.6 7.0 7.1 7.2 7.3 7.4-rc, make podman-unittests PODMAN_PHP_VERSION=$(version) || exit;)
 
 .PHONY: unittests podman-unittests podman-unittests-php-versions coverage
