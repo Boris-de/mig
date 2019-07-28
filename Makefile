@@ -124,7 +124,7 @@ podman: index.php test-album
 	podman build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
 	podman run --publish=127.0.0.1::80 -d --name $(PODMAN_NAME) $(PODMAN_NAME)
 	@set -e ;\
-	PORT=$$(podman inspect --format '{{ (index (index .NetworkSettings.Ports "80/tcp") 0).HostPort }}' $(PODMAN_NAME)) ;\
+	PORT=$$(podman port $(PODMAN_NAME) | grep ^80/tcp|cut -d: -f 2) ;\
 	echo -e "\nContainer \"$(PODMAN_NAME)\" is started" ;\
 	echo -e " find the application at http://localhost:$${PORT}/index.php" ;\
 	echo -e " find the PHP-version at http://localhost:$${PORT}/phpinfo.php" ;\
