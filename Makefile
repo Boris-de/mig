@@ -121,8 +121,8 @@ podman-unittests:
 	make -C test podman-unittests-php-versions
 
 podman: index.php test-album
-	sudo podman build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
-	sudo podman run --publish=127.0.0.1::80 -d --name $(PODMAN_NAME) $(PODMAN_NAME)
+	podman build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
+	podman run --publish=127.0.0.1::80 -d --name $(PODMAN_NAME) $(PODMAN_NAME)
 	@set -e ;\
 	PORT=$$(podman inspect --format '{{ (index (index .NetworkSettings.Ports "80/tcp") 0).HostPort }}' $(PODMAN_NAME)) ;\
 	echo -e "\nContainer \"$(PODMAN_NAME)\" is started" ;\
@@ -130,8 +130,8 @@ podman: index.php test-album
 	echo -e " find the PHP-version at http://localhost:$${PORT}/phpinfo.php" ;\
 	echo -e "Press enter to shut it down"
 	@read UNUSED
-	sudo podman stop $(PODMAN_NAME)
-	sudo podman rm $(PODMAN_NAME)
+	podman stop $(PODMAN_NAME)
+	podman rm $(PODMAN_NAME)
 
 clean:
 	rm -rf docs/html docs/text index.php test-album
