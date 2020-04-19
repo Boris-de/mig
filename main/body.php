@@ -153,14 +153,14 @@ if (! isset($PATH_INFO)) {
 $URI_SCHEME = getHttpServerVariable('HTTPS') === 'on' ? 'https' : 'http';
 
 // Is this a jump-tag URL?
-if ($jump && $jumpMap[$jump] && $SERVER_NAME) {
+if ($jump && isset($jumpMap[$jump]) && $SERVER_NAME) {
     header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$jump]");
     exit;
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
-if (isset($PATH_INFO) && $jumpMap[$PATH_INFO] && $SERVER_NAME) {
+if (isset($PATH_INFO) && isset($jumpMap[$PATH_INFO]) && $SERVER_NAME) {
     header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
          . "?$jumpMap[$PATH_INFO]");
     exit;
@@ -293,7 +293,8 @@ if (isset($maxColumns)) {
 // Turn off magic_quotes_runtime (causes trouble with some installations)
 // (This method is deprecated as of 5.3, so only call it if the function exists)
 if (function_exists('set_magic_quotes_runtime')) {
-  @set_magic_quotes_runtime(0);
+    /** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
+    @set_magic_quotes_runtime(0);
 }
 
 
@@ -506,7 +507,7 @@ if ($mig_config['pagetype'] == 'folder') {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir, $mig_config['omitimagename']);
+    $youAreHere = buildYouAreHere($currDir);
 
     // Which template to use.
     $templateFile = $mig_config['templatedir'] . '/image.html';
@@ -586,7 +587,7 @@ if ($mig_config['pagetype'] == 'folder') {
     }
 
     // Build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir, $mig_config['omitimagename']);
+    $youAreHere = buildYouAreHere($currDir);
 
     // Which template to use
     $templateFile = $mig_config['templatedir'] . '/large.html';

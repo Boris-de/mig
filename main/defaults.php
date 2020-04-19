@@ -20,6 +20,7 @@ $imagePopMenuBar            = FALSE;
 $imagePopToolBar            = FALSE;
 $imagePopType               = 'reuse';
 $imagePopup                 = FALSE;
+$jumpMap                    = array();
 $largeLinkFromMedium        = TRUE;
 $largeLinkUseBorders        = FALSE;
 $largeSubdir                = 'large';
