@@ -306,36 +306,7 @@ $workCopy = $currDir;     // temporary copy of currDir
 while ($workCopy) {
 
     if (isset($protect[$workCopy])) {
-
-        if (! isset($PHP_AUTH_USER)) {
-            $PHP_AUTH_USER = getHttpServerVariable('PHP_AUTH_USER');
-        }
-        if (! isset($PHP_AUTH_PW)) {
-            $PHP_AUTH_USER = getHttpServerVariable('PHP_AUTH_PW');
-        }
-
-        // If there's not a username yet, fetch one by popping up a
-        // login dialog box
-        if (! $PHP_AUTH_USER) {
-            header('WWW-Authenticate: Basic realm="protected"');
-            header('HTTP/1.0 401 Unauthorized');
-            print $mig_config['lang']['must_auth'];
-            exit;
-
-        } else {
-            // Case #2: password/user are present but don't match up
-            // with our known user base.  Reject the attempt.
-            if ( crypt($PHP_AUTH_PW,
-                       substr($protect[$workCopy][$PHP_AUTH_USER],0,2))
-                 != $protect[$workCopy][$PHP_AUTH_USER] )
-            {
-                header('WWW-Authenticate: Basic realm="protected"');
-                header('HTTP/1.0 401 Unauthorized');
-                print $mig_config['lang']['must_auth'];
-                exit;
-            }
-        }
-        break;      // Since we had a match let's stop this loop
+        die('password protection is not supported anymore');
     }
 
     // if $workCopy is already down to "." just nullify to end loop

@@ -8,6 +8,12 @@
 
 =head3 Important changes
 
+Support for passwords was removed. This feature was not secure, as it was only working for PHP files, not for the actual
+image files - it was always advertised as insecure. The implementation was changed to return an error if password
+protection was used for a directory. This way the access will just stop working instead of opening access completely
+after an update.
+You could use Authentication from your webserver to replace this feature.
+
 Support for embedding into portals was removed. This feature hasn't been tested in over 15 years, some of the portals
 seemed to discontinued. If you are using mig in one of the portals that still get updated, please let me know and we can
 try to work something out.

@@ -842,26 +842,6 @@ $mig_language = "en";
 //
 
 // -----------------------------------------------------------------
-//                        PASSWORD PROTECTION
-// -----------------------------------------------------------------
-//
-// Password protection configuration
-//
-// Format:
-//     $protect[Directory][user] = password;
-//
-// Example:
-//     $protect["./Example_Gallery"]["joe"] = "IBDXWbkBirMfU";
-//
-// Passwords are in crypt() format.  See the "passwords" document.
-// Need more than one directory and/or user?  that's fine, just add more
-// than one line.
-//
-// THIS FEATURE IS NOT REALLY SECURE.  Please don't rely on it for your
-// security needs unless they're fairly superficial.
-//
-
-// -----------------------------------------------------------------
 //                         HTTP-Headers
 // -----------------------------------------------------------------
 //
