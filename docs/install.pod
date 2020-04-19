@@ -62,16 +62,6 @@ Wandel's site ata L<http://www.sentex.net/~mwandel/jhead/>
 See the E<quot>utilitiesE<quot> document for more information about
 F<mkGallery.pl> and F<jhead>.
 
-If you are using one of the following Portal / Content Management systems,
-make sure to read the F<portals> document.
-
-    PHP-Nuke
-    PostNuke
-    PHPWebSite
-    PHPWebThings
-    Xoops
-    Geeklog
-
 =head2 New Installation
 
 Read this section if you are installing Mig for the first time.  If you

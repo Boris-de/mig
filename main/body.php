@@ -62,20 +62,6 @@ if ($configFile) {
                                $pathConvertRegex, $pathConvertTarget));
 }
 
-// Return an error if too many modes are set at once
-$usePortal = 0;
-
-if ($phpNukeCompatible)             ++$usePortal;
-if ($phpWebThingsCompatible)        ++$usePortal;
-if ($mig_xoopsCompatible)           ++$usePortal;
-if ($mig_GeeklogCompatible)         ++$usePortal;
-
-if ($usePortal > 1) {
-    print 'FATAL ERROR: more than one content management system ';
-    print 'is defined.';
-    exit;
-}
-
 //for old compatibility: remove in mig 2.0:
 if ($suppressImageInfo == TRUE) {
     $fileInfoFormatString['image'] = "%n";
@@ -126,83 +112,6 @@ $mig_config['showTotalImagesString']            = $showTotalImagesString;
 $mig_config['image_extensions']                 = $image_extensions;
 $mig_config['video_extensions']                 = $video_extensions;
 $mig_config['audio_extensions']                 = $audio_extensions;
-
-// Change settings for Nuke mode if appropriate
-if ($phpNukeCompatible) {
-    $mig_config['basedir'] .= '/mig';
-    if (! $phpNukeRoot) {
-        print "FATAL ERROR: \$phpNukeRoot not defined!\n";
-        exit;
-    }
-    $result = chdir($phpNukeRoot);
-    if (! $result) {
-        print "FATAL ERROR: can not chdir() to \$phpNukeRoot!\n";
-        exit;
-    }
-    // Detect PostNuke if it's there
-    if (file_exists('includes/pnAPI.php')) {
-        include('includes/pnAPI.php');
-        pnInit();
-    }
-
-// or for PhpWebThings...
-} elseif ($phpWebThingsCompatible) {
-    $mig_config['basedir'] .= '/mig';
-    if (! $phpWebThingsRoot) {
-        print "FATAL ERROR: \$phpWebThingsRoot not defined!\n";
-        exit;
-    }
-    $result = chdir($phpWebThingsRoot);
-    if (! $result) {
-        print "FATAL ERROR: can not chdir() to \$phpWebThingsRoot!\n";
-        exit;
-    }
-    // phpWebThings library
-    if (file_exists('core/main.php')) {
-        include('core/main.php');
-    } else {
-        print "FATAL ERROR: phpWebThings lib missing!\n";
-        exit;
-    }
-
-// or for XOOPS...
-} elseif ($mig_xoopsCompatible) {
-    if (! $mig_xoopsRoot) {
-        print "FATAL ERROR: \$mig_xoopsRoot not defined!\n";
-        exit;
-    }
-    $result = chdir($mig_xoopsRoot);
-    if (! $result) {
-        print "FATAL ERROR: can not chdir() to \$mig_xoopsRoot!\n";
-        exit;
-    }
-    // XOOPS library
-    if (file_exists('mainfile.php')) {
-        include('mainfile.php');
-    } else {
-        print "FATAL ERROR: XOOPS lib missing!\n";
-        exit;
-    }
-
-// or for Geeklog...
-} elseif ($mig_GeeklogCompatible) {
-    if (! $mig_GeeklogRoot) {
-        print "FATAL ERROR: \$mig_GeeklogRoot not defined!\n";
-        exit;
-    }
-    $result = chdir($mig_GeeklogRoot);
-    if (! $result) {
-        print "FATAL ERROR: can not chdir() to \$mig_GeeklogRoot!\n";
-        exit;
-    }
-    // Geeklog library
-    if (file_exists('lib-common.php')) {
-        include('lib-common.php');
-    } else {
-        print "FATAL ERROR: lib-common.php missing!\n";
-        exit;
-    }
-}
 
 function getVariable($name, $arr1, $arr2, $default = NULL) {
     $result = $default;
@@ -449,10 +358,6 @@ $mig_config['templatedir'] = $mig_config['basedir'] . '/templates';
 
 // baseURL with the scriptname torn off the end
 $baseHref = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
-// Adjust for Nuke mode if appropriate
-if ($phpNukeCompatible || $phpWebThingsCompatible) {
-    $baseHref .= '/mig';
-}
 
 // Location of image library (for instance, where icons are kept)
 $mig_config['imagedir'] = $baseHref . '/images';
@@ -491,42 +396,6 @@ if ($folderMaintAddr) {
     $maintAddr = $folderMaintAddr;
 }
 
-// Is this a phpNuke compatible site?
-if ($phpNukeCompatible) {
-
-    if (! isset($mainfile)) {
-        include('mainfile.php');
-    }
-    include('header.php');
-
-    // A table to nest Mig in, inside the PHPNuke framework
-    print '<table width="100%" border="0" cellspacing="0" cellpadding="2"'
-        . ' bgcolor="#000000"><tr><td>'
-        . '<table width="100%" border="0" cellspacing="1" cellpadding="7"'
-        . ' bgcolor="#FFFFFF"><tr><td>';
-
-// Is this a phpWebThings site?
-} elseif ($phpWebThingsCompatible) {
-    draw_header();
-    if (function_exists('theme_draw_center_box_open')) {
-        theme_draw_center_box_open($mig_config['pagetitle']);
-    } elseif (function_exists('theme_draw_box_open')) {
-        theme_draw_box_open($mig_config['pagetitle']);
-    } else {
-        print 'ERROR: Unable to find relevant drawing function';
-        exit;
-    }
-
-// Is this a XOOPS site?
-} elseif ($mig_xoopsCompatible) {
-    include(XOOPS_ROOT_PATH.'/header.php');
-
-// is this a Geeklog site?
-} elseif ($mig_GeeklogCompatible) {
-    echo COM_siteHeader ('menu');
-
-}
-
 // strip URL encoding here too
 $mig_config['image'] = rawurldecode($mig_config['image']);
 
@@ -537,8 +406,6 @@ if ($mig_config['pagetype'] == 'folder') {
     // Determine which template to use
     if ($folderTemplate) {
         $templateFile = $folderTemplate;
-    } elseif ($usePortal) {    // portal is in use
-        $templateFile = $mig_config['templatedir'] . '/mig_folder.php';
     } else {
         $templateFile = $mig_config['templatedir'] . '/folder.html';
     }
@@ -671,11 +538,7 @@ if ($mig_config['pagetype'] == 'folder') {
     $youAreHere = buildYouAreHere($currDir, $mig_config['omitimagename']);
 
     // Which template to use.
-    if ($usePortal) {           // portal is in use
-        $templateFile = $mig_config['templatedir'] . '/mig_image.php';
-    } else {
-        $templateFile = $mig_config['templatedir'] . '/image.html';
-    }
+    $templateFile = $mig_config['templatedir'] . '/image.html';
 
     // newcurrdir is currdir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
@@ -755,11 +618,7 @@ if ($mig_config['pagetype'] == 'folder') {
     $youAreHere = buildYouAreHere($currDir, $mig_config['omitimagename']);
 
     // Which template to use
-    if ($usePortal) {           // portal is in use
-        $templateFile = $mig_config['templatedir'] . '/mig_large.php';
-    } else {
-        $templateFile = $mig_config['templatedir'] . '/large.html';
-    }
+    $templateFile = $mig_config['templatedir'] . '/large.html';
 
     // newcurrdir is currdir without the leading "./"
     $newCurrDir = getNewCurrDir($currDir);
@@ -769,42 +628,6 @@ if ($mig_config['pagetype'] == 'folder') {
                   $currDir, $newCurrDir, $prevLink, $nextLink, $currPos,
                   $description, $youAreHere, $distURL, $pathConvertFlag, $pathConvertRegex,
                   $pathConvertTarget, '', '', '', '');
-}
-
-// Finish up for content management systems
-
-if ($phpNukeCompatible) {
-    print '</tbody></table></center></td></tr></tbody></table>';
-    include('footer.php');
-
-} elseif ($phpWebThingsCompatible) {
-    if (function_exists('theme_draw_center_box_close')) {
-        theme_draw_center_box_close();
-    } elseif (function_exists('theme_draw_box_close')) {
-        theme_draw_box_close();
-    } else {
-        print 'Unable to find relevant drawing function';
-        exit;
-    }
-    //if($modules['news']) draw_news(true);
-    //draw_news(true);
-    draw_footer();
-
-} elseif ($mig_xoopsCompatible) {
-    if ($mig_config['pagetype'] == 'image') {
-        $xoopsOption['show_rblock'] = $mig_xoopsRBlockForImage;
-    } else {
-        $xoopsOption['show_rblock'] = $mig_xoopsRBlockForFolder;
-    }
-    include(XOOPS_ROOT_PATH.'/footer.php');
-
-} elseif ($mig_GeeklogCompatible) {
-    if ($mig_config['pagetype'] == 'folder') {
-        echo COM_siteFooter($mig_GeeklogRBlockForFolder);
-    } else {
-        echo COM_siteFooter($mig_GeeklogRBlockForImage);
-    }
-
 }
 
 ?>

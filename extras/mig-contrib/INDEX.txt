@@ -45,10 +45,6 @@ mkthumbs.com                (requires VMS)
     A VMS procedure to make thumbnails.
 
 ===========================================================================
-phpnuke_module.php
-    A mock PHP-Nuke module so you can put Mig into the modules menu.
-
-===========================================================================
 grabexif-0.1.tar.gz         (requires C compiler)
     Grabexif generates exif.inf files for use by mig (mig.sf.net),
     from the html files found on the Casio QV-7000SX (and others?).

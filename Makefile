@@ -42,21 +42,16 @@ dist: index.php
 	cd docs; make; cd ..
 	rm -rf $(SPOOLDIR) $(ARCHIVE)
 	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
-	cd $(SPOOLDIR); mkdir -m 0755 -p images templates/portals \
-		docs/text docs/html utilities/jhead \
-		xoops/language/english
+	cd $(SPOOLDIR); mkdir -m 0755 -p images templates \
+		docs/text docs/html utilities/jhead
 	mv index.php $(SPOOLDIR)
 	cp config.php $(SPOOLDIR)/config.php.default
 	cp utilities/mkGallery.pl $(SPOOLDIR)/utilities
 	cd $(SPOOLDIR)/utilities; tar xfz ../../utilities/jhead.tar.gz; cd ..
 	cp images/*.png $(SPOOLDIR)/images
 	cp templates/*.[hc]* $(SPOOLDIR)/templates
-	cp templates/*.php $(SPOOLDIR)/templates/portals
 	cp docs/html/*.html $(SPOOLDIR)/docs/html
 	cp docs/text/*.txt $(SPOOLDIR)/docs/text
-	cp xoops/mig_logo.jpg xoops/xoops_version.php $(SPOOLDIR)/xoops
-	cp xoops/modinfo.php $(SPOOLDIR)/xoops/language/english
-	touch $(SPOOLDIR)/xoops/language/english/index.html
 	find $(SPOOLDIR) -type d -exec chmod 0755 {} \;
 	find $(SPOOLDIR) -type f -exec chmod 0644 {} \;
 	chmod 0755 $(SPOOLDIR)/utilities/mkGallery.pl

@@ -110,14 +110,6 @@ markup.
 
 =back
 
-If you are using PHP-Nuke, PostNuke, phpWebThings, PHPWebSite, XOOPS or
-Geeklog these three files will not exist.  This is called
-E<quot>PortalE<quot> mode.  In their place you'll find F<mig_folder.php>
-and F<mig_image.php> which are the same basically as F<folder.html> and
-F<image.html> respectively.  In Portal mode the CSS file is not used (Portal
-systems usually have their own CSS definitions).  See the F<portal>
-document for more about how to properly install things in Portal mode.
-
 =head2 Defined Tags
 
 The following is a glossary of recognized Mig template tags, and what they

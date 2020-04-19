@@ -230,8 +230,7 @@ $useRealRandThumbs = TRUE;
 //          %%largeHrefEnd%%
 //          %%largeLinkBorder%%
 //
-//      Also, copy large.html (or for PHP-Nuke etc, use mig_large.php)
-//      to your templates folder.
+//      Also, copy large.html to your templates folder.
 //
 // Defaults to FALSE.
 //
@@ -841,111 +840,6 @@ $mig_language = "en";
 // Example:
 //     $jumpMap["example"] = "currDir=./Mig_Example_Gallery";
 //
-
-
-// -----------------------------------------------------------------
-// CONTENT MANAGEMENT SYSTEMS (Portals)
-//
-// Compatible with:
-//
-//      PHP-Nuke                http://phpnuke.org/
-//      PostNuke                http://postnuke.com/
-//      phpWebSite              http://phpwebsite.appstate.edu/
-//      phpWebThings            http://phpdbform.com/
-//      Xoops                   http://xoops.org/
-//      Geeklog                 http://geeklog.sourceforge.net/
-//
-// -----------------------------------------------------------------
-//
-// $phpNukeCompatible
-//      Set to TRUE if you're using PHP-Nuke, PostNuke or phpWebSite.
-// $phpWebThingsCompatible
-//      Set to TRUE if you're using phpWebThings.
-// $mig_xoopsCompatible
-//      Set to TRUE if you're using XOOPS.
-// $mig_GeeklogCompatible
-//      Set to TRUE if you're using Geeklog.
-//
-//      Obviously you only want to set ONE of these to TRUE.
-//
-// All of them default to FALSE.
-//
-// Example:
-//      $phpNukeCompatible = FALSE;
-//      $phpWebThingsCompatible = FALSE;
-//      $mig_xoopsCompatible = FALSE;
-//      $mig_GeeklogCompatible = FALSE;
-//
-
-$phpNukeCompatible = FALSE;
-$phpWebThingsCompatible = FALSE;
-$mig_xoopsCompatible = FALSE;
-$mig_GeeklogCompatible = FALSE;
-
-//
-// $phpNukeRoot
-//      Set to the root directory of your PHP-Nuke, PostNuke or
-//      phpWebSite system.  Ignored if $phpNukeCompatible is set
-//      to FALSE.  This should be the folder where your Nuke site
-//      is installed.  Do not include a trailing slash.
-// $phpWebThingsRoot
-//      Same thing, only for phpWebThings.  Ignored if
-//      $phpWebThingsCompatible is FALSE.
-// $mig_xoopsRoot
-//      Same thing, only for XOOPS.  Ignored if $mig_xoopsCompatible is
-//      FALSE.
-// $mig_GeeklogRoot
-//      Same thing, only for Geeklog.  Ignored if $mig_GeeklogCompatible
-//      is FALSE.
-//
-// $phpNukeRoot, $phpWebThingsRoot and $mig_GeeklogRoot default to "".
-//
-// $mig_xoopsRoot defaults to "../..".
-//
-// Examples:
-//      $phpNukeRoot = "/www/mysite.com/nuke";
-//      $phpWebThingsRoot = "/www/mysite.com/webthings";
-//      $mig_xoopsRoot = "/www/mysite.com/xoops";
-//      $mig_GeeklogRoot = "/www/mysite.com/geeklog";
-//
-
-$phpNukeRoot = "";
-$phpWebThingsRoot = "";
-$mig_xoopsRoot = "../..";
-$mig_GeeklogRoot = "";
-
-//
-// $mig_xoopsRBlockForImage
-// $mig_xoopsRBlockForFolder
-//      Flags to show or hide the right-hand side blocks in image and
-//      folder modes (in XOOPS)
-//
-// They default to 0 and 1, show right block for folders, hide for images.
-//
-// Examples:
-//      $mig_xoopsRBlockForImage = 0;
-//      $mig_xoopsRBlockForFolder = 1;
-//
-
-$mig_xoopsRBlockForImage = 0;
-$mig_xoopsRBlockForFolder = 1;
-
-//
-// $mig_GeeklogRBlockForImage
-// $mig_GeeklogRBlockForFolder
-//      Flags to show or hide the right-hand side blocks in image and
-//      folder modes (in Geeklog)
-//
-// They default to 0 and 1, show right block for folders, hide for images.
-//
-// Examples:
-//      $mig_GeeklogRBlockForImage = 0;
-//      $mig_GeeklogRBlockForFolder = 1;
-//
-
-$mig_GeeklogRBlockForImage = 0;
-$mig_GeeklogRBlockForFolder = 1;
-
 
 // -----------------------------------------------------------------
 //                        PASSWORD PROTECTION

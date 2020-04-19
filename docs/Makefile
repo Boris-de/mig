@@ -11,7 +11,7 @@ html_dir = html
 text_dir = text
 
 pods=	changelog.pod credits.pod install.pod license.pod \
-	passwords.pod jump.pod apache.pod portals.pod \
+	passwords.pod jump.pod apache.pod \
 	utilities.pod mig_cf.pod templates.pod
 
 html = $(addsuffix .html, $(basename $(pods)))

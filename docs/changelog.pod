@@ -6,6 +6,12 @@
 
 =head2 Version tbd
 
+=head3 Important changes
+
+Support for embedding into portals was removed. This feature hasn't been tested in over 15 years, some of the portals
+seemed to discontinued. If you are using mig in one of the portals that still get updated, please let me know and we can
+try to work something out.
+
 =head3 Bug-fixes
 
 Fixed errors in EXIF handling
