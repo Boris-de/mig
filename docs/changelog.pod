@@ -4,6 +4,36 @@
 
 =head2 MIG Change Log
 
+=head2 Version tbd
+
+=head3 Bug-fixes
+
+Fixed errors in EXIF handling
+
+Fixed edge-cases in buildNextPrevLinks()
+
+=head3 Other changes
+
+Added lots of unit tests and fixed many warnings (undefined variables, etc.)
+Use docker/podman to run unit tests on all supported PHP versions (and some older versions as well)
+
+Use foreach instead of deprecated while (... each()) constructs
+
+Get rid of relying on internal array pointers
+
+=head2 Version 1.5.5 (Sat, 07 Oct 2017)
+
+=head3 Bugs-fixes
+
+Fixed detection of end of blocks in mig.cf files
+
+=head3 Other changes
+
+Switched all Sourceforge-URLs to the new site
+
+added docker target to Makefile to allow tests with different PHP versions
+
+Release signed with old and new gpg key
 
 =head2 Version 1.5.4 (Tue, 29 Dec 2015)
 
