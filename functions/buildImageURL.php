@@ -113,11 +113,15 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     // Figure out the size in bytes for display
     $imageFileSize = filesize($localFilename);
 
+    $imageWidth = 0;
+    $imageHeight = 0;
     if ($type == 'image') {
         // Figure out the size in pixels for display
         $imageProps = @GetImageSize($localFilename);
-        $imageWidth = $imageProps[0];
-        $imageHeight = $imageProps[1];
+        if ($imageProps) {
+            $imageWidth = $imageProps[0];
+            $imageHeight = $imageProps[1];
+        }
     }
 
     if ($imageFileSize > 1048576) {
@@ -133,7 +137,9 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     $thumbHTML = '';
     if (file_exists($thumbFile) && $type == 'image') {
         $thumbProps = @GetImageSize($thumbFile);
-        $thumbHTML = $thumbProps[3];
+        if ($thumbProps) {
+            $thumbHTML = $thumbProps[3];
+        }
     }
 
     // If not an image, just print a URL to the object
@@ -261,9 +267,10 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
             //       %s = FileSize
             //       %i = ImageSize
 
+            $imageSize = $imageWidth > 0 ? $imageWidth.'x'.$imageHeight : '';
             $fileinfotable = array ( 'n' => $fname . '.' . $ext,
                                      's' => $imageFileSize,
-                                     'i' => $imageWidth.'x'.$imageHeight);
+                                     'i' => $imageSize);
 
              $newstr=replaceString($mig_config['fileinfoformatstring'][$type],$fileinfotable);
 

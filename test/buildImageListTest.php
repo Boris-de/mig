@@ -4,6 +4,9 @@ require_once 'AbstractFileBasedTestCase.class.php';
 
 final class BuildImageListTest extends AbstractFileBasedTest
 {
+    const SIMPLE_PNG_1X1_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==';
+    const SIMPLE_PNG_1X2_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAQAAAAziH6sAAAACXBIWXMAAA5NAAAOnAHe9pxXAAAADElEQVQIHWMAgv//AQMDAf9tZCPeAAAAAElFTkSuQmCC';
+
     protected function setupMigFake()
     {
         global $mig_config;
@@ -38,7 +41,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $mig_config['music_icon'] = 'audio_icon.png';
         $mig_config['markerlabel'] = '';
         $mig_config['usethumbsubdir'] = TRUE;
-        $mig_config['image_extensions'] = array('jpg', 'jpeg');
+        $mig_config['image_extensions'] = array('jpg', 'jpeg', 'png');
         $mig_config['video_extensions'] = array('mp4', 'avi');
         $mig_config['audio_extensions'] = array('mp3', 'm4a');
         $mig_config['imageFilenameRegexpr'] = '=^[^<>/]*$=';
@@ -205,6 +208,21 @@ final class BuildImageListTest extends AbstractFileBasedTest
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test3.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />1024.0KB test3.jpg</td>
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test4.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />1.0MB test4.jpg</td>
    </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testImageSize()
+    {
+        $this->mkdir($this->album_dir.'/thumbs');
+        $this->set_mig_config('fileinfoformatstring', array('image' => '%i %n', 'audio' => '%n', 'video' => '%n'));
+        $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X2_BASE64));
+        $this->touchWithContent($this->album_dir.'/thumbs/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.png\"><img src=\"/albums/./thumbs/test1.png\" alt=\"\" class=\"imagethumb\" width=\"1\" height=\"1\" /></a><br />1x2 test1.png</td>
+  </tr>
   </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
     }
 
