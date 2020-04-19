@@ -92,6 +92,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
             $albumURLroot		= $mig_config['albumurlroot'];
             $baseURL			= $mig_config['baseurl'];
             $image			    = isset($mig_config['image']) ? $mig_config['image'] : NULL;
+            $imageSize          = '';
             $largeSubdir		= $mig_config['largesubdir'];
             $pageTitle			= $mig_config['pagetitle'];
             $httpContentType            = $mig_config['httpContentType'];
@@ -114,8 +115,12 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                       @GetImageSize($mig_config['albumdir']."/$currDir/"
                                  . $mig_config['largesubdir']
                                  . '/'.$image);
+                } else {
+                    $imageProps = FALSE;
                 }
-                $imageSize = $imageProps[3];
+                if ($imageProps) {
+                    $imageSize = $imageProps[3];
+                }
             } elseif ($filetype) { // known and !image -> display icon with link
                 $largeHrefStart =
                        "<a href=\"$albumURLroot/$newCurrDir/$encodedImageURL\">";
@@ -130,20 +135,38 @@ function printTemplate ( $templateFile, $version, $maintAddr,
             }
 
             // List of valid tags
-            $replacement_list = array (
-                'baseURL', 'maintAddr', 'version', 'folderList',
-                'imageList', 'backLink', 'currDir', 'newCurrDir',
-                'image', 'albumURLroot', 'pageTitle', 'nextLink',
-                'prevLink', 'currPos', 'description', 'youAreHere',
-                'distURL', 'encodedImageURL', 'imageSize', 'newLang',
-                'largeSubdir', 'largeLink', 'largeHrefStart',
-                'largeHrefEnd', 'largeLinkBorder', 'httpContentType'
-            );
+            $replacement_map = [
+                'baseURL' => $baseURL,
+                'maintAddr' => $maintAddr,
+                'version' => $version,
+                'folderList' => $folderList,
+                'imageList' => $imageList,
+                'backLink' => $backLink,
+                'currDir' => $currDir,
+                'newCurrDir' => $newCurrDir,
+                'image' => $image,
+                'albumURLroot' => $albumURLroot,
+                'pageTitle' => $pageTitle,
+                'nextLink' => $nextLink,
+                'prevLink' => $prevLink,
+                'currPos' => $currPos,
+                'description' => $description,
+                'youAreHere' => $youAreHere,
+                'distURL' => $distURL,
+                'encodedImageURL' => $encodedImageURL,
+                'imageSize' => $imageSize,
+                'newLang' => $newLang,
+                'largeSubdir' => $largeSubdir,
+                'largeLink' => $largeLink,
+                'largeHrefStart' => $largeHrefStart,
+                'largeHrefEnd' => $largeHrefEnd,
+                'largeLinkBorder' => $largeLinkBorder,
+                'httpContentType' => $httpContentType,
+            ];
 
             // Do substitution for various variables
-            foreach ($replacement_list as $key => $val) {
-                $value = isset($$val) ? $$val : '';
-                $line = str_replace("%%$val%%", $value, $line);
+            foreach ($replacement_map as $key => $value) {
+                $line = str_replace("%%$key%%", $value, $line);
             }
 
             print $line;                // Print resulting line
