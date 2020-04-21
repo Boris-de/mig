@@ -56,10 +56,11 @@ if (file_exists($mig_config['basedir'].'/mig/config.php')) {
     $configFile = $mig_config['basedir'].'/config.php';
 }
 
+$pathConvert = new ConvertIncludePath($pathConvertFlag, $pathConvertRegex, $pathConvertTarget);
+
 // Include config file, making sure to modify the include path if appropriate.
 if ($configFile) {
-    include(convertIncludePath($pathConvertFlag, $configFile,
-                               $pathConvertRegex, $pathConvertTarget));
+    include($pathConvert->convertIncludePath($configFile));
 }
 
 //for old compatibility: remove in mig 2.0:
@@ -112,6 +113,15 @@ $mig_config['showTotalImagesString']            = $showTotalImagesString;
 $mig_config['image_extensions']                 = $image_extensions;
 $mig_config['video_extensions']                 = $video_extensions;
 $mig_config['audio_extensions']                 = $audio_extensions;
+$mig_config['maintAddr']                        = $maintAddr;
+$mig_config['maxFolderColumns']                 = $maxFolderColumns;
+$mig_config['maxThumbColumns']                  = $maxThumbColumns;
+$mig_config['maxThumbRows']                     = $maxThumbRows;
+$mig_config['version']                          = $version;
+$mig_config['distURL']                          = $distURL;
+$mig_config['exifFormatString']                 = $exifFormatString;
+$mig_config['largeLinkFromMedium']              = $largeLinkFromMedium;
+$mig_config['largeLinkUseBorders']              = $largeLinkUseBorders;
 
 function getVariable($name, $arr1, $arr2, $default = NULL) {
     $result = $default;
@@ -357,249 +367,6 @@ if (! $mig_config['foldersorttype']) {
     $mig_config['foldersorttype'] = $mig_config['sorttype'];
 }
 
-// Fetch mig.cf information
-list($presort_dir, $presort_img, $desc, $short_desc, $bulletin,
-     $ficons, $folderTemplate, $folderFolderCols,
-     $folderThumbCols, $folderThumbRows, $folderMaintAddr)
-  = parseMigCf($mig_config['albumdir']."/$currDir");
-
-// Set per-folder $maintAddr if one was defined
-if ($folderMaintAddr) {
-    $maintAddr = $folderMaintAddr;
-}
-
-// strip URL encoding here too
-$mig_config['image'] = rawurldecode($mig_config['image']);
-
-// if pageType is "folder") generate a folder view
-
-if ($mig_config['pagetype'] == 'folder') {
-
-    // Determine which template to use
-    if ($folderTemplate) {
-        $templateFile = $folderTemplate;
-    } else {
-        $templateFile = $mig_config['templatedir'] . '/folder.html';
-    }
-
-    // Determine columns and rows to use
-    if ($folderFolderCols) {
-        $maxFolderColumns = $folderFolderCols;
-    }
-
-    if ($folderThumbCols) {
-        $maxThumbColumns = $folderThumbCols;
-    }
-
-    // Generate some HTML to pass to the template printer
-
-    // list of available folders
-    $folderList = buildDirList($currDir, $maxFolderColumns, $presort_dir, $ficons);
-    // list of available images
-    $imageList = buildImageList($currDir, $maxThumbColumns, $maxThumbRows,
-                                $presort_img, $desc, $short_desc);
-
-    // Only frame the lists in table code when appropriate
-
-    // Set style of table, either with text or thumbnails
-    if ($mig_config['randomfolderthumbs']) {
-        $folderTableClass = 'folderthumbs';
-    } else {
-        $folderTableClass = 'foldertext';
-    }
-
-    // no folders or images - print the "no contents" line
-    if ($folderList == 'NULL' && $imageList == 'NULL') {
-        $folderList = $mig_config['lang']['no_contents'];
-        $tablesummary = 'Folders Frame';
-        $folderList = buildTable($folderList, $folderTableClass,
-                                 $tablesummary);
-        $imageList = '';
-
-    // images, no folders.  Frame the imagelist in a table
-    } elseif ($folderList == 'NULL' && $imageList != 'NULL') {
-        $folderList = '';
-        /*$tablesummary = 'Images Frame';
-        $tableclass = 'image';
-        $imageList = buildTable($imageList, $tableclass, $tablesummary);*/
-
-    // folders but no images.  Frame the folderlist in a table
-    } elseif ($imageList == 'NULL' && $folderList != 'NULL') {
-        $imageList = '';
-        $tablesummary = 'Folders Frame';
-        $folderList = buildTable($folderList, $folderTableClass,
-                                 $tablesummary);
-
-    // We have folders and we have images, so frame both in tables.
-    } else {
-        $tablesummary = 'Folders Frame';
-        $folderList = buildTable($folderList, $folderTableClass,
-                                 $tablesummary);
-        /*$tablesummary = 'Images Frame';
-        $tableclass = 'image';
-        $imageList = buildTable($imageList, $tableclass, $tablesummary);*/
-    }
-
-    // We have a bulletin
-    if ($bulletin != '') {
-        $tablesummary = 'Bulletin Frame" width="60%';  //<--- kludge for now
-        $tableclass = 'desc';
-        $bulletin = '<center>' . $bulletin . '</center>';
-        $bulletin = buildTable($bulletin, $tableclass, $tablesummary);
-    }
-
-    // build the "back" link
-    $backLink = buildBackLink($currDir, 'back');
-
-    // build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir);
-
-    // newcurrdir is currdir without the leading "./"
-    $newCurrDir = getNewCurrDir($currDir);
-
-    // parse the template file and print to stdout
-    printTemplate($templateFile, $version, $maintAddr,
-                  $folderList, $imageList, $backLink, '',
-                  $newCurrDir, '', '', '', $bulletin,
-                  $youAreHere, $distURL, $pathConvertFlag,
-                  $pathConvertRegex, $pathConvertTarget, '', '', '', '');
-
-
-// If pageType is "image", show an image
-
-} elseif ($mig_config['pagetype'] == 'image') {
-
-    // Trick back link into going to the right place by adding
-    // a bogus directory at the end
-    $backLink = buildBackLink("$currDir/blah", 'up');
-
-    // Get the "next image" and "previous image" links, and the current
-    // position (#x of y)
-    $Links = array ();
-    $Links = buildNextPrevLinks($currDir, $presort_img);
-    list($nextLink, $prevLink, $currPos) = $Links;
-
-    // Get image description
-    if ($mig_config['commentfileperimage']) {
-        list($x, $description) = getImageDescFromFile($image, $currDir);
-        // If getImageDescFromFile() returned false, get the normal
-        // comment if there is one.
-        if (! $description) {
-            list($x, $description) = getImageDescription($image, $desc, $short_desc);
-        }
-    } else {
-        list($x, $description) = getImageDescription($image, $desc, $short_desc);
-    }
-
-    $exifDescription = getExifDescription($currDir, $exifFormatString);
-
-    // If there's a description but no exifDescription, just make the
-    // exifDescription the description
-    if ($exifDescription && ! $description) {
-        $description = $exifDescription;
-        unset($exifDescription);
-    }
-
-    // If both descriptions are non-NULL, separate them with an <HR>
-    if ($description && $exifDescription) {
-        $description .= '<hr>';
-        $description .= $exifDescription;
-    }
-
-    // Build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir);
-
-    // Which template to use.
-    $templateFile = $mig_config['templatedir'] . '/image.html';
-
-    // newcurrdir is currdir without the leading "./"
-    $newCurrDir = getNewCurrDir($currDir);
-
-    $largeLink = '';
-    $largeHrefStart = '';
-    $largeHrefEnd = '';
-    $largeLinkBorder = '';
-    if ($mig_config['uselargeimages'] &&
-            file_exists($mig_config['albumdir']."/$currDir/"
-                      . $mig_config['largesubdir']
-                      . '/'.$mig_config['image']))
-    {
-        $largeLink = buildLargeLink($currDir);
-
-        // Only build this link if we plan to use it
-        if ($largeLinkFromMedium) {
-            $largeHrefStart = buildLargeHrefStart($currDir);
-            $largeHrefEnd = '</a>';
-        }
-
-        // Use a border?
-        if (! $largeLinkUseBorders) {
-            $largeLinkBorder = ' border="0"';
-        }
-    }
-
-    // Send it all to the template printer to dump to stdout
-    printTemplate($templateFile, $version, $maintAddr, '', '', $backLink,
-                  $currDir, $newCurrDir, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $pathConvertFlag, $pathConvertRegex,
-                  $pathConvertTarget, $largeLink, $largeHrefStart, $largeHrefEnd,
-                  $largeLinkBorder);
-
-// If the pageType is "large", show a large image
-
-} elseif ($mig_config['pagetype'] == 'large') {
-
-    // Trick the back link into going to the right place by adding
-    // a bogus directory at the end
-    $backLink = buildBackLink("$currDir/blah", 'up');
-
-    // Get the "next image" and "previous image" links, and the current
-    // position (#x of y)
-    $Links = array ();
-    $Links = buildNextPrevLinks($currDir, $presort_img);
-    list($nextLink, $prevLink, $currPos) = $Links;
-
-    // Get image description
-    if ($mig_config['commentfileperimage']) {
-        list($x, $description) = getImageDescFromFile($currDir, $image);
-        // If getImageDescFromFile() returned false, get the normal
-        // comment if there is one.
-        if (! $description) {
-            list($x, $description) = getImageDescription($image, $desc,$short_desc);
-        }
-    } else {
-        list($x, $description) = getImageDescription($image, $desc,$short_desc);
-    }
-
-    $exifDescription = getExifDescription($currDir,$exifFormatString);
-
-    // If there's a description but no exifDescription, just make the
-    // exifDescription the description
-    if ($exifDescription && ! $description) {
-        $description = $exifDescription;
-        unset($exifDescription);
-    }
-
-    // If both descriptions are non-NULL, separate them with an <HR>
-    if ($description && $exifDescription) {
-        $description .= '<hr />';
-        $description .= $exifDescription;
-    }
-
-    // Build the "you are here" line
-    $youAreHere = buildYouAreHere($currDir);
-
-    // Which template to use
-    $templateFile = $mig_config['templatedir'] . '/large.html';
-
-    // newcurrdir is currdir without the leading "./"
-    $newCurrDir = getNewCurrDir($currDir);
-
-    // Send it all to the template printer to dump to stdout
-    printTemplate($templateFile, $version, $maintAddr, '', '', $backLink,
-                  $currDir, $newCurrDir, $prevLink, $nextLink, $currPos,
-                  $description, $youAreHere, $distURL, $pathConvertFlag, $pathConvertRegex,
-                  $pathConvertTarget, '', '', '', '');
-}
+printPage($currDir, $pathConvert, $image);
 
 ?>

@@ -9,7 +9,7 @@ final class PrintTemplateTest extends AbstractFileBasedTest
 
     protected function setupMigFake()
     {
-        include_once 'convertIncludePath.php';
+        include_once 'ConvertIncludePath.class.php';
         include_once 'printTemplate.php';
         global $mig_config, $REQUEST_URI, $_SERVER, $HTTP_SERVER_VARS;
         $HTTP_SERVER_VARS = array();
@@ -36,6 +36,11 @@ final class PrintTemplateTest extends AbstractFileBasedTest
         $mig_config['music_icon'] = 'audio_icon.png';
         $mig_config['image'] = NULL;
         $mig_config['pagetype'] = NULL;
+        $mig_config['version'] = '1.0.0';
+        $mig_config['distURL'] = 'distURL';
+        $mig_config['maxFolderColumns'] = 1;
+        $mig_config['maxThumbColumns'] = 1;
+        $mig_config['maintAddr'] = 1;
     }
 
     public function test()
@@ -70,10 +75,10 @@ final class PrintTemplateTest extends AbstractFileBasedTest
 %%largeLinkBorder%%
 ");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -146,10 +151,10 @@ largeLinkBorder
 %%largeLinkBorder%%
 ");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -211,10 +216,10 @@ largeLinkBorder
 %%largeLinkBorder%%
 ");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -259,10 +264,10 @@ largeLinkBorder
 %%largeLinkBorder%%
 ");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -305,10 +310,10 @@ largeLinkBorder
 %%largeLinkBorder%%
 ");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -334,10 +339,10 @@ largeLinkBorder
         $this->touchWithContent($template, "foo\n#include \"include.inc\";\nbar\n");
         $this->touchWithContent($this->mig_dir . '/include.inc', "included content\n");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -350,10 +355,10 @@ largeLinkBorder
         $template = $this->mig_dir . '/template.html';
         $this->touchWithContent($template, "\n#include \"/path.inc\";\n");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -369,10 +374,10 @@ largeLinkBorder
         $template = $this->mig_dir . '/template.html';
         $this->touchWithContent($template, "\n#include \"path.inc\";\n");
         ob_start();
-        printTemplate($template, '1.0.0', 'test@example.com', 'folder list', 'image list',
+        printTemplate($template, 'test@example.com', 'folder list', 'image list',
             'back link', '.', 'newCurrDir', 'prevLink', 'nextLink',
-            'currPos', 'description', 'youAreHere', 'distURL', FALSE,
-            'pathConvertRegex', 'pathConvertTarget', 'largeLink',
+            'currPos', 'description', 'youAreHere',
+            $this->NO_PATH_CONVERT, 'largeLink',
             'largeHrefStart', 'largeHrefEnd', 'largeLinkBorder');
         $output = ob_get_contents();
         ob_end_clean();
@@ -390,7 +395,7 @@ largeLinkBorder
         $template = $this->mig_dir . '/template.html';
         $this->touchWithContent($template, "%%newLang%%\n");
         ob_start();
-        printTemplate($template, '', '', '', '', '', '.', '', '', '', '', '', '', '', FALSE, '', '', '', '', '', '');
+        printTemplate($template, '', '', '', '', '.', '', '', '', '', '', '', new ConvertIncludePath(FALSE, '', ''), '', '', '', '');
         $output = ob_get_contents();
         ob_end_clean();
 
@@ -404,7 +409,7 @@ largeLinkBorder
         $template = $this->mig_dir . '/template.html';
         $this->touchWithContent($template, "%%newLang%%\n");
         ob_start();
-        printTemplate($template, '', '', '', '', '', '.', '', '', '', '', '', '', '', FALSE, '', '', '', '', '', '');
+        printTemplate($template, '', '', '', '', '.', '', '', '', '', '', '', new ConvertIncludePath(FALSE, '', ''), '', '', '', '');
         $output = ob_get_contents();
         ob_end_clean();
 

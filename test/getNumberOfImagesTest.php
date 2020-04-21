@@ -20,6 +20,10 @@ final class GetNumberOfImagesTest extends AbstractFileBasedTest
         $mig_config['image_extensions'] = array('jpg', 'jpeg');
         $mig_config['video_extensions'] = array('mp4', 'avi');
         $mig_config['audio_extensions'] = array('mp3', 'm4a');
+        $mig_config['maxFolderColumns'] = 2;
+        $mig_config['maxThumbColumns'] = 2;
+        $mig_config['maintAddr'] = 'default@example.com';
+        $mig_config['templatedir'] = 'templates';
     }
 
     public function test()

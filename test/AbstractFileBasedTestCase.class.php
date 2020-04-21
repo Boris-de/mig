@@ -2,13 +2,18 @@
 
 use PHPUnit\Framework\TestCase;
 
+include_once 'ConvertIncludePath.class.php';
+
 abstract class AbstractFileBasedTest extends TestCase
 {
+    protected $NO_PATH_CONVERT;
     protected $mig_dir;
     protected $album_dir;
 
     public function setUp() : void
     {
+        $this->NO_PATH_CONVERT = new ConvertIncludePath(FALSE, '', '');
+
         $tempfile = tempnam(sys_get_temp_dir(), 'mig_phpunit_');
         $this->assertTrue($tempfile !== FALSE);
         unlink($tempfile);

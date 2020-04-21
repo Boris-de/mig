@@ -161,7 +161,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
 
     public function testNoImages()
     {
-        $this->assertEquals('NULL', buildImageList('.', 4, 1, array(), array(), array()));
+        $this->assertEquals('', buildImageList('.', 4, 1, array(), array(), array()));
     }
 
     public function testVideo()

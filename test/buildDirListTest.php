@@ -35,6 +35,10 @@ final class BuildDirListTest extends AbstractFileBasedTest
         $mig_config['image_extensions'] = array('jpg', 'jpeg');
         $mig_config['video_extensions'] = array('mp4', 'avi');
         $mig_config['audio_extensions'] = array('mp3', 'm4a');
+        $mig_config['maxFolderColumns'] = 2;
+        $mig_config['maxThumbColumns'] = 2;
+        $mig_config['maintAddr'] = 'default@example.com';
+        $mig_config['templatedir'] = 'templates';
     }
 
     public function test()
@@ -131,7 +135,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
 
     public function testNoSubDirs()
     {
-        $this->assertStringContainsString("NULL", buildDirList('.', 1, array(), array()));
+        $this->assertEquals("", buildDirList('.', 1, array(), array()));
     }
 
     public function testViewFolderCount()

@@ -257,7 +257,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 
     // If there aren't any subfolders to look at, then just say so.
     if ($directoryList == '' || preg_match('#<tbody>$#', $directoryList)) {
-        return 'NULL';
+        return '';
     } elseif (!preg_match('#</tr>$#i', $directoryList)) {
         // Stick a </tr> on the end if it isn't there already, and close
         // the table.

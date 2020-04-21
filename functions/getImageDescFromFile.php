@@ -14,6 +14,7 @@ function getImageDescFromFile ( $currDir, $image )
     $short_flag = $mig_config['commentfileshortcomments'];
 
     $descFileName = $mig_config['albumdir'] . "/$currDir/$fname.txt";
+
     if (file_exists($descFileName)) {
 
         $file = fopen($descFileName, 'r');

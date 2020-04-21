@@ -24,9 +24,14 @@ Fixed errors in EXIF handling
 
 Fixed edge-cases in buildNextPrevLinks()
 
+Fixed "commentfileperimage" not working for normal images (it worked on the "large" image page).
+
 =head3 Other changes
 
-Added lots of unit tests and fixed many warnings (undefined variables, etc.)
+Added lots of unit tests and fixed many warnings (undefined variables, etc.). Not the most elaborate kind of tests,
+but they have good coverage and make it really easy to test with different PHP versions and make sure most features work.
+Given that there probably won't be many big refactorings in Mig, it's not too bad to have them coupled this closely ;-)
+
 Use docker/podman to run unit tests on all supported PHP versions (and some older versions as well)
 
 Use foreach instead of deprecated while (... each()) constructs

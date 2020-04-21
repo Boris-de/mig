@@ -15,6 +15,10 @@ final class GetNumberOfDirsTest extends AbstractFileBasedTest
         $mig_config['usethumbsubdir'] = FALSE;
         $mig_config['thumbsubdir'] = NULL;
         $mig_config['largesubdir'] = NULL;
+        $mig_config['maxFolderColumns'] = 2;
+        $mig_config['maxThumbColumns'] = 2;
+        $mig_config['maintAddr'] = 'default@example.com';
+        $mig_config['templatedir'] = 'templates';
     }
 
     public function test()

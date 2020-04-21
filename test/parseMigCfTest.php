@@ -4,6 +4,9 @@ require_once 'AbstractFileBasedTestCase.class.php';
 
 final class ParseMigCfTest extends AbstractFileBasedTest
 {
+    const DEFAULT_MAX_FOLDER_COLUMNS = 10;
+    const DEFAULT_MAX_THUMB_COLUMNS = 11;
+
     protected function setupMigFake()
     {
         include_once 'parseMigCf.php';
@@ -15,12 +18,16 @@ final class ParseMigCfTest extends AbstractFileBasedTest
         $mig_config['usethumbsubdir'] = FALSE;
         $mig_config['uselargeimages'] = FALSE;
         $mig_config['thumbsubdir'] = 'thumbs';
+        $mig_config['maxFolderColumns'] = self::DEFAULT_MAX_FOLDER_COLUMNS;
+        $mig_config['maxThumbColumns'] = self::DEFAULT_MAX_THUMB_COLUMNS;
+        $mig_config['maintAddr'] = 'default@example.com';
+        $mig_config['templatedir'] = 'default-templatedir';
     }
 
     public function testMissingFile()
     {
         global $mig_config;
-        list($presort_dir, $presort_img, $desc, $short_desc, $bulletin, $ficons, $template, $fcols, $tcols, $trows, $maintaddr) = parseMigCf($this->album_dir);
+        list($presort_dir, $presort_img, $desc, $short_desc, $bulletin, $ficons, $template, $fcols, $tcols, $maintaddr) = parseMigCf($this->album_dir);
         $this->assertEquals(array(), $mig_config['hidden']);
         $this->assertEquals(array(), $mig_config['usethumbfile']);
         $this->assertEquals(NULL, $mig_config['pagetitle']);
@@ -30,11 +37,10 @@ final class ParseMigCfTest extends AbstractFileBasedTest
         $this->assertEquals(array(), $short_desc);
         $this->assertEquals(NULL, $bulletin);
         $this->assertEquals(array(), $ficons);
-        $this->assertEquals(NULL, $template);
-        $this->assertEquals(NULL, $fcols);
-        $this->assertEquals(NULL, $tcols);
-        $this->assertEquals(NULL, $trows);
-        $this->assertEquals(NULL, $maintaddr);
+        $this->assertEquals('default-templatedir/folder.html', $template);
+        $this->assertEquals(self::DEFAULT_MAX_FOLDER_COLUMNS, $fcols);
+        $this->assertEquals(self::DEFAULT_MAX_THUMB_COLUMNS, $tcols);
+        $this->assertEquals('default@example.com', $maintaddr);
     }
 
     public function testEmptyFile()
@@ -42,7 +48,7 @@ final class ParseMigCfTest extends AbstractFileBasedTest
         global $mig_config;
         $this->touchWithContent($this->album_dir . '/mig.cf', '');
 
-        list($presort_dir, $presort_img, $desc, $short_desc, $bulletin, $ficons, $template, $fcols, $tcols, $trows, $maintaddr) = parseMigCf($this->album_dir);
+        list($presort_dir, $presort_img, $desc, $short_desc, $bulletin, $ficons, $template, $fcols, $tcols, $maintaddr) = parseMigCf($this->album_dir);
         $this->assertEquals(array(), $mig_config['hidden']);
         $this->assertEquals(array(), $mig_config['usethumbfile']);
         $this->assertEquals(NULL, $mig_config['pagetitle']);
@@ -52,11 +58,10 @@ final class ParseMigCfTest extends AbstractFileBasedTest
         $this->assertEquals(array(), $short_desc);
         $this->assertEquals(NULL, $bulletin);
         $this->assertEquals(array(), $ficons);
-        $this->assertEquals(NULL, $template);
-        $this->assertEquals(NULL, $fcols);
-        $this->assertEquals(NULL, $tcols);
-        $this->assertEquals(NULL, $trows);
-        $this->assertEquals(NULL, $maintaddr);
+        $this->assertEquals('default-templatedir/folder.html', $template);
+        $this->assertEquals(self::DEFAULT_MAX_FOLDER_COLUMNS, $fcols);
+        $this->assertEquals(self::DEFAULT_MAX_THUMB_COLUMNS, $tcols);
+        $this->assertEquals('default@example.com', $maintaddr);
     }
 
     public function testParse()
@@ -78,15 +83,14 @@ final class ParseMigCfTest extends AbstractFileBasedTest
             "pagetitle Page Title\n" .
             "maintaddr test@example.com\n" .
             "maxfoldercolumns 1\n" .
-            "maxthumbcolumns 2\n" .
-            "maxthumbrows 3\n");
+            "maxthumbcolumns 2\n");
 
         $this->mkdir($this->album_dir . '/dir1');
         $this->mkdir($this->album_dir . '/dir2');
         touch($this->album_dir . '/file1.jpg');
         touch($this->album_dir . '/file2.jpg');
 
-        list($presort_dir, $presort_img, $desc, $short_desc, $bulletin, $ficons, $template, $fcols, $tcols, $trows, $maintaddr) = parseMigCf($this->album_dir);
+        list($presort_dir, $presort_img, $desc, $short_desc, $bulletin, $ficons, $template, $fcols, $tcols, $maintaddr) = parseMigCf($this->album_dir);
         $this->assertEquals(array('foo' => TRUE, 'bar' => TRUE), $mig_config['hidden']);
         $this->assertEquals(array('file1.jpg' => 'file1.thumb.jpg', 'file2.jpg' => 'file2.thumb.jpg'), $mig_config['usethumbfile']);
         $this->assertEquals('Page Title', $mig_config['pagetitle']);
@@ -99,7 +103,6 @@ final class ParseMigCfTest extends AbstractFileBasedTest
         $this->assertEquals('ftemplate', $template);
         $this->assertEquals(1, $fcols);
         $this->assertEquals(2, $tcols);
-        $this->assertEquals(3, $trows);
         $this->assertEquals("test@example.com", $maintaddr);
     }
 }

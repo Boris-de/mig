@@ -2,12 +2,11 @@
 
 // printTemplate() - Prints HTML page from a template file.
 
-function printTemplate ( $templateFile, $version, $maintAddr,
+function printTemplate ( $templateFile, $maintAddr,
                          $folderList, $imageList, $backLink,
                          $currDir, $newCurrDir, $prevLink,
                          $nextLink, $currPos, $description, $youAreHere,
-                         $distURL, $pathConvertFlag, $pathConvertRegex,
-                         $pathConvertTarget, $largeLink, $largeHrefStart,
+                         $pathConvert, $largeLink, $largeHrefStart,
                          $largeHrefEnd, $largeLinkBorder )
 {
     global $mig_config;
@@ -72,9 +71,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                         $tmplDir = preg_replace('#^.*/#', '', $templatedir);
                         virtual("$tmplDir/$incl_file");
                     } else {
-                        include( convertIncludePath($pathConvertFlag,
-                                            $templatedir ."/$incl_file",
-                                            $pathConvertRegex, $pathConvertTarget));
+                        include($pathConvert->convertIncludePath($templatedir ."/$incl_file"));
                     }
 
                 } else {
@@ -138,7 +135,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
             $replacement_map = [
                 'baseURL' => $baseURL,
                 'maintAddr' => $maintAddr,
-                'version' => $version,
+                'version' => $mig_config['version'],
                 'folderList' => $folderList,
                 'imageList' => $imageList,
                 'backLink' => $backLink,
@@ -152,7 +149,7 @@ function printTemplate ( $templateFile, $version, $maintAddr,
                 'currPos' => $currPos,
                 'description' => $description,
                 'youAreHere' => $youAreHere,
-                'distURL' => $distURL,
+                'distURL' => $mig_config['distURL'],
                 'encodedImageURL' => $encodedImageURL,
                 'imageSize' => $imageSize,
                 'newLang' => $newLang,

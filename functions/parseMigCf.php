@@ -22,11 +22,10 @@ function parseMigCf ( $directory )
     $desc           = array ();
     $ficons         = array ();
     $bulletin       = NULL;
-    $template       = NULL;
-    $fcols          = NULL;
-    $tcols          = NULL;
-    $trows          = NULL;
-    $maintaddr      = NULL;
+    $template       = $mig_config['templatedir'] . '/folder.html';
+    $fcols          = $mig_config['maxFolderColumns'];
+    $tcols          = $mig_config['maxThumbColumns'];
+    $maintaddr      = $mig_config['maintAddr'];
     
     $mig_config['usethumbfile'] = array ();
 
@@ -155,12 +154,6 @@ function parseMigCf ( $directory )
                 list($y, $tcols) = explode(' ', $x);
             }
 
-            // Parse MaxThumbRows lines
-            if (stripos($line, 'maxthumbrows ') === 0) {
-                $x = trim($line);
-                list($y, $trows) = explode(' ', $x);
-            }
-
         } // end of main while() loop
 
         fclose($file);
@@ -168,7 +161,7 @@ function parseMigCf ( $directory )
 
     return array ($presort_dir, $presort_img, $desc, $short_desc,
                   $bulletin, $ficons, $template, $fcols,
-                  $tcols, $trows, $maintaddr);
+                  $tcols, $maintaddr);
 
 }   //  -- End of parseMigCf()
 

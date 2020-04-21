@@ -245,7 +245,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
 
     // If there aren't any images to work with, just say so.
     if ($imageList == '') {
-        $imageList = 'NULL';
+        $imageList = '';
     } elseif (!preg_match('#</tr>$#i', $imageList)) {
         // Stick a </tr> on the end if it isn't there already and close
         // the table
