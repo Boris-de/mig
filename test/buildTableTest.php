@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class BuildTableTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class BuildTableTest extends AbstractFileBasedTestCase
 {
     public function test()
     {

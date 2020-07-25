@@ -2,9 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once 'AbstractMigTestCase.class.php';
 include_once 'ConvertIncludePath.class.php';
 
-abstract class AbstractFileBasedTest extends TestCase
+abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
 {
     protected $NO_PATH_CONVERT;
     protected $mig_dir;

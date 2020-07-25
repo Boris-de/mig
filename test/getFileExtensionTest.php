@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class GetFileExtensionTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class GetFileExtensionTest extends AbstractFileBasedTestCase
 {
     public function test()
     {

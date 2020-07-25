@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class BuildLargeLinkTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class BuildLargeLinkTest extends AbstractFileBasedTestCase
 {
     public function setUp(): void
     {

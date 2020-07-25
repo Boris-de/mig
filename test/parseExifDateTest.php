@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class ParseExifDateTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class ParseExifDateTest extends AbstractFileBasedTestCase
 {
     public function setUp() : void
     {

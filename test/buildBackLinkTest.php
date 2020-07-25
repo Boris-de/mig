@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class BuildBackLinkTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class BuildBackLinkTest extends AbstractFileBasedTestCase
 {
     public function setUp() : void
     {

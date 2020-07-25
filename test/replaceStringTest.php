@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class ReplaceStringTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class ReplaceStringTest extends AbstractFileBasedTestCase
 {
     public function test()
     {

@@ -2,7 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-final class FormatExifDataTest extends TestCase
+require_once 'AbstractMigTestCase.class.php';
+
+final class FormatExifDataTest extends AbstractFileBasedTestCase
 {
     public function setUp() : void
     {
