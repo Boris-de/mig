@@ -193,8 +193,12 @@ if (! $currDir) {
     }
 }
 
+function _get_magic_quotes_gpc() {
+    return function_exists('get_magic_quotes_gpc') ? @get_magic_quotes_gpc() : 0;
+}
+
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
-if (get_magic_quotes_gpc() == 1) {
+if (_get_magic_quotes_gpc() == 1) {
     $currDir = stripslashes($currDir);
 }
 
@@ -230,8 +234,8 @@ if (! isset($image)) {
 }
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
-if ((get_magic_quotes_gpc() == 1) && ($image)) {
-        $image = stripslashes($image);
+if (_get_magic_quotes_gpc() == 1 && $image) {
+    $image = stripslashes($image);
 }
 
 // Look at $image from a security angle.
