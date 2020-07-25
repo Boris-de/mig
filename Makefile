@@ -72,25 +72,11 @@ index.php: $(PHP_FILES) main/preamble.php
 	) > index.php
 
 release: clean
-	@if test `hg status -m -a -r -d | wc -l` -gt 0; then \
-		hg status -m -a -r -d; \
-		echo "The working copy has uncommited changes (see above)"; \
-		false; \
-	fi
-	@if hg outgoing -q; then \
-		echo "The working copy has outgoing changes"; \
-		false; \
-	fi
 	@if test -z "${ver}"; then \
 		echo "Please specify a version for dist!"; \
 		false; \
 	fi
-	@if test -z "$(MIG_GPG_KEY)"; then \
-		echo "Please specify a key you want to use to sign this release (MIG_GPG_KEY=...)"; \
-		false; \
-	fi
-	hg tag $(RELEASE_TAG)
-	hg sign --key "$(MIG_GPG_KEY)" $(RELEASE_TAG)
+	git tag $(RELEASE_TAG)
 	make dist
 	make docpublish
 	make mig.sf.net
