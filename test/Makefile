@@ -13,10 +13,10 @@ default:
 	@echo "    make podman-unittests PODMAN_PHP_VERSION=7.0  Run unittests with in a docker container"
 
 unittests:
-	phpunit --include-path ../functions/:../main/:../languages/ .
+	phpunit --globals-backup --include-path ../functions/:../main/:../languages/ .
 
 coverage:
-	phpunit --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .
+	phpunit --globals-backup --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .
 
 podman-unittests:
 	podman build --build-arg PHP_VERSION=$(PODMAN_PHP_VERSION) -t $(PODMAN_NAME_PHPUNIT) .
