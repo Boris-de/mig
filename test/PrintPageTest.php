@@ -10,6 +10,7 @@ final class PrintPageTest extends AbstractFileBasedTest
     {
         include_once 'printPage.php';
         include_once 'printTemplate.php';
+        include_once 'buildNextPrevLinks.php';
         global $mig_config, $REQUEST_URI, $_SERVER, $HTTP_SERVER_VARS;
         $HTTP_SERVER_VARS = array();
         $REQUEST_URI = 'https://example/uri?foo=bar';
