@@ -21,6 +21,9 @@ text_with_dir = $(patsubst %,$(text_dir)/%,$(text))
 # Default is to rebuild doc files
 docs: mkdirs $(html_with_dir) $(text_with_dir)
 
+license.pod: ../COPYING
+	cat license.pod.pre ../COPYING > license.pod
+  
 $(html_dir)/%.html: %.pod
 	$(hcmd) --title="Mig Documentation - $(shell basename $@ .html)" \
 		--infile=$< --outfile=$@

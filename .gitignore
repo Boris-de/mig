@@ -2,6 +2,7 @@
 *.iml
 docs/html/*
 docs/text/*
+docs/license.pod
 bundles
 index.php
 nbproject
