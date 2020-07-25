@@ -10,7 +10,7 @@ case "${PHP_VERSION}" in
     TEMP=$(mktemp -d)
     cp -r "${TEST_DIR}" "${TEMP}"
     TEST_DIR="${TEMP}/${TEST_DIR}"
-    sed -i -e 's# : void##' ${TEST_DIR}/*.php
+    sed -i -e 's#: void##' ${TEST_DIR}/*.php
    ;;
 esac
 
