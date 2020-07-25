@@ -8,15 +8,18 @@ ifneq ($(PODMAN_PHP_VERSION), 'cli')
   USED_PODMAN_PHP_VERSION=$(PODMAN_PHP_VERSION)-cli
 endif
 
+PHPUNIT_VERSION=$(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 1)
+PHPUNIT_PARAMS=$(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
+
 default:
 	@echo "    make unittests                                Run unittests with the default php-cli"
 	@echo "    make podman-unittests PODMAN_PHP_VERSION=7.0  Run unittests with in a docker container"
 
 unittests:
-	phpunit --globals-backup --include-path ../functions/:../main/:../languages/ .
+	phpunit $(PHPUNIT_PARAMS) --include-path ../functions/:../main/:../languages/ .
 
 coverage:
-	phpunit --globals-backup --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .
+	phpunit $(PHPUNIT_PARAMS) --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .
 
 podman-unittests:
 	podman build --build-arg PHP_VERSION=$(PODMAN_PHP_VERSION) -t $(PODMAN_NAME_PHPUNIT) .
