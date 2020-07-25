@@ -1,0 +1,11 @@
+.idea
+*.iml
+docs/html/*
+docs/text/*
+bundles
+index.php
+nbproject
+albums
+test-album
+*-private
+coverage
