@@ -4,7 +4,7 @@
 
 =head2 MIG Change Log
 
-=head2 Version tbd
+=head2 Version 1.6.0
 
 =head3 Important changes
 
@@ -19,6 +19,8 @@ seemed to discontinued. If you are using mig in one of the portals that still ge
 try to work something out.
 
 =head3 Bug-fixes
+
+Fixed error in PHP 8 compatibility (due to removal of the get_magic_quotes_gpc function)
 
 Fixed errors in EXIF handling
 
@@ -37,6 +39,11 @@ Use docker/podman to run unit tests on all supported PHP versions (and some olde
 Use foreach instead of deprecated while (... each()) constructs
 
 Get rid of relying on internal array pointers
+
+Switched to git instead of mercurial. As we are now using git at work as well there was no benefit in staying on the better SCM ;)
+
+Code is now hosted on github (https://github.com/Boris-de/mig) to avoid having to setup a self-hosted git.
+Github actions are used to run the test with several PHP versions as well.
 
 =head2 Version 1.5.5 (Sat, 07 Oct 2017)
 
