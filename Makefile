@@ -42,10 +42,13 @@ default:
 
 mig: dist
 
-dist: index.php
-	cd docs; make; cd ..
+has-version:
+	@if test -z "${ver}"; then echo "Missing version, run make with ver=..." 1>2; false; fi
+
+dist: has-version index.php unittests podman-unittests
+	make -C docs
 	rm -rf $(SPOOLDIR) $(ARCHIVE)
-	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
+	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR) $(SPOOLDIR)/utilities
 	cd $(SPOOLDIR); mkdir -m 0755 -p images templates docs/text docs/html
 	mv index.php $(SPOOLDIR)
 	cp config.php $(SPOOLDIR)/config.php.default
@@ -57,11 +60,11 @@ dist: index.php
 	find $(SPOOLDIR) -type d -exec chmod 0755 {} \;
 	find $(SPOOLDIR) -type f -exec chmod 0644 {} \;
 	chmod 0755 $(SPOOLDIR)/utilities/mkGallery.pl
-	tar cfz $(ARCHIVE) $(SPOOLDIR)
+	tar czf $(ARCHIVE) --owner=0 --group=0 $(SPOOLDIR)
 	rm -rf $(SPOOLDIR)
 	chmod 0644 $(ARCHIVE)
 	@echo " "
-	@echo "=> Mig $(ver) bundle complete <="
+	@echo "=> Mig $(ver) bundle complete: $(ARCHIVE) <="
 
 index.php: $(PHP_FILES) main/preamble.php
 	rm -f index.php
@@ -82,7 +85,7 @@ release: clean
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign --armor $(ARCHIVE)
 
 docpublish:
-	cd docs ; make publish
+	make -C docs publish
 
 mig.sf.net: index.php
 	cp index.php $(MIG_SF_NET_DIR)/gallery/
@@ -119,4 +122,4 @@ podman: index.php test-album
 clean:
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean unittests podman podman-unittests coverage
+.PHONY: test clean unittests podman podman-unittests coverage has-version
