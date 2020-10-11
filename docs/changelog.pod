@@ -18,6 +18,9 @@ Support for embedding into portals was removed. This feature hasn't been tested 
 seemed to discontinued. If you are using mig in one of the portals that still get updated, please let me know and we can
 try to work something out.
 
+The old sources of jhead were removed from the distribution. If you want to use jhead you can easily get a newer version
+of jhead in the distribution of your choice or the latest sourcecode from L<https://www.sentex.ca/~mwandel/jhead/>
+
 =head3 Bug-fixes
 
 Fixed error in PHP 8 compatibility (due to removal of the get_magic_quotes_gpc function)
@@ -91,7 +94,7 @@ The access to the lang array was incorrect for 'total_images' resulting in this 
 
 =head3 Improvements
 
-A feature has been added to optinally restore the old behavior regarding 'total_images'. If you set C<$showTotalImagesString = false> in your config, the total_images text will not be generated, which is effectivly the same behavior that existed between 1.4.0 and 1.5.2.
+A feature has been added to optionally restore the old behavior regarding 'total_images'. If you set C<$showTotalImagesString = false> in your config, the total_images text will not be generated, which is effectivly the same behavior that existed between 1.4.0 and 1.5.2.
 
 =head2 Version 1.5.2 (Sat, 06 Aug 2011)
 

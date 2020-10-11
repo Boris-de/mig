@@ -46,12 +46,10 @@ dist: index.php
 	cd docs; make; cd ..
 	rm -rf $(SPOOLDIR) $(ARCHIVE)
 	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
-	cd $(SPOOLDIR); mkdir -m 0755 -p images templates \
-		docs/text docs/html utilities/jhead
+	cd $(SPOOLDIR); mkdir -m 0755 -p images templates docs/text docs/html
 	mv index.php $(SPOOLDIR)
 	cp config.php $(SPOOLDIR)/config.php.default
 	cp utilities/mkGallery.pl $(SPOOLDIR)/utilities
-	cd $(SPOOLDIR)/utilities; tar xfz ../../utilities/jhead.tar.gz; cd ..
 	cp images/*.png $(SPOOLDIR)/images
 	cp templates/*.[hc]* $(SPOOLDIR)/templates
 	cp docs/html/*.html $(SPOOLDIR)/docs/html
