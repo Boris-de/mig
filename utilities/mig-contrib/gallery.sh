@@ -13,7 +13,7 @@
 # 4-pixel black border around it.
 #
 # It requires mogrify, which is part of the ImageMagick suite.
-# http://www.imagemagick.org/
+# https://www.imagemagick.org/
 #
 # Actually I don't use this anymore, I use Photoshop.  But I used to
 # use this and it didn't work too badly for me when I did.
