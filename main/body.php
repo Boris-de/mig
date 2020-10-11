@@ -307,7 +307,7 @@ if (isset($maxColumns)) {
 // Turn off magic_quotes_runtime (causes trouble with some installations)
 // (This method is deprecated as of 5.3, so only call it if the function exists)
 if (function_exists('set_magic_quotes_runtime')) {
-    /** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection */
+    /** @noinspection PhpDeprecationInspection */
     @set_magic_quotes_runtime(0);
 }
 
