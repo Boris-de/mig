@@ -1,13 +1,13 @@
 /* Default typeface */
 a, b, p, table, small, body, td, ol, ul, menu, blockquote, div {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 pre, tt, input, textarea {
-    font-family: Courier, fixed;
+  font-family: Courier, fixed, monospace;
 }
 
 body {
-    margin: 0px;
+  margin: 0;
 }
 
 /* Link appearance */
@@ -17,40 +17,44 @@ a:hover { color: blue }
 
 /* Folder table (text) */
 td.foldertext {
-    color: #000000;        padding-top: 0px;
-    background: #f0f0f0;   padding-bottom: 1px;
-    font-size: .75em;      padding-left: 3px;
-    text-align: left;      padding-right: 8px;
+  color: #000000;
+  background: #f0f0f0;
+  font-size: .75em;
+  text-align: left;
+  padding: 0 8px 1px 3px;
 }
 
 /* Folder table (thumbnails) */
 td.folderthumbs {
-    color: #000000;        padding-top: 2px;
-    background: #f0f0f0;   padding-bottom: 2px;
-    font-size: .7em;       padding-left: 4px;
-    text-align: center;    padding-right: 8px;
+  color: #000000;
+  background: #f0f0f0;
+  font-size: .7em;
+  text-align: center;
+  padding: 2px 8px 2px 4px;
 }
 
 /* Image table */
 td.image {
-    color: #000000;          padding-top: 2px;
-    background: #f0f0f0;     padding-bottom: 2px;
-    font-size: .8em;         padding-left: 4px;
-    text-align: center;      padding-right: 8px;
+  color: #000000;
+  background: #f0f0f0;
+  font-size: .8em;
+  text-align: center;
+  padding: 2px 8px 2px 4px;
 }
 
 /* Description table */
 td.desc {
-    color: #333333;          padding-top: 4px;
-    background: #f0f0f0;     padding-bottom: 3px;
-    font-size: .9em;         padding-left: 4px;
-    text-align: center;      padding-right: 6px;
+  color: #333333;
+  background: #f0f0f0;
+  font-size: .9em;
+  text-align: center;
+  padding: 4px 6px 3px 4px;
 }
 
 .inactivelink {
-    color: #999999;
+  color: #999999;
 }
 
 img.imagethumb {
-    border: 0;
+  border: 0;
 }
