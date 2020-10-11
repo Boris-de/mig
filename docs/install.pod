@@ -47,8 +47,10 @@ with Apache (and reportedly it works with Microsoft's IIS server).
 Windows users, please see the section labeled
 E<quot>Running Mig Under WindowsE<quot> below.
 
-The F<mkGallery.pl> utility requires L<Perl|http://www.perl.com>.  To
-generate thumbnail images, it also requires L<ImageMagick|http://www.imagemagick.org/>.
+=head3 mkGallery.pl
+
+The F<mkGallery.pl> is a separate utility that requires L<Perl|https://www.perl.com>.  To
+generate thumbnail images, it also requires L<ImageMagick|https://www.imagemagick.org/>.
 Neither are required to use Mig itself.
 
 The F<jhead> utility which is called by F<mkGallery.pl> for EXIF header
@@ -57,7 +59,7 @@ unix-like systems this is as easy as going into the F<jhead> directory and
 typing E<quot>makeE<quot> (GNU make is recommended).
 
 Windows users can download the pre-built F<jhead> program from Mathias
-Wandel's site ata L<http://www.sentex.net/~mwandel/jhead/>
+Wandel's site ata L<https://www.sentex.net/~mwandel/jhead/>
 
 See the E<quot>utilitiesE<quot> document for more information about
 F<mkGallery.pl> and F<jhead>.

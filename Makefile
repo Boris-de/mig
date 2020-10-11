@@ -49,18 +49,16 @@ has-version:
 dist: has-version index.php unittests podman-unittests
 	make -C docs
 	rm -rf $(SPOOLDIR) $(ARCHIVE)
-	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR) $(SPOOLDIR)/utilities
+	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
 	cd $(SPOOLDIR); mkdir -m 0755 -p images templates docs/text docs/html
 	mv index.php $(SPOOLDIR)
 	cp config.php $(SPOOLDIR)/config.php.default
-	cp utilities/mkGallery.pl $(SPOOLDIR)/utilities
 	cp images/*.png $(SPOOLDIR)/images
 	cp templates/*.[hc]* $(SPOOLDIR)/templates
 	cp docs/html/*.html $(SPOOLDIR)/docs/html
 	cp docs/text/*.txt $(SPOOLDIR)/docs/text
 	find $(SPOOLDIR) -type d -exec chmod 0755 {} \;
 	find $(SPOOLDIR) -type f -exec chmod 0644 {} \;
-	chmod 0755 $(SPOOLDIR)/utilities/mkGallery.pl
 	tar czf $(ARCHIVE) --owner=0 --group=0 $(SPOOLDIR)
 	rm -rf $(SPOOLDIR)
 	chmod 0644 $(ARCHIVE)

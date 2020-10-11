@@ -2,13 +2,10 @@
 
 =encoding utf8
 
-=head2 Bundled Utilities
+=head2 Contrib Utilities
 
 F<mkGallery.pl> - Create a gallery from images in the current directory.
-
-F<jhead> - Extracts EXIF header information from JPEG files.  (F<jhead> is
-used by F<mkGallery.pl>, so you don't need to use it directly.  However,
-you can if you want to.  It has a lot of nice features).
+This was a bundled utility that was moved to the contrib folder in 2020.
 
 =head2 mkGallery.pl
 
@@ -204,32 +201,14 @@ It's also easy to remember.  Add -e for EXIF parsing (C<-trane>).
 
 Recursive mode works with all of the action modes (C<-c>, C<-e>, C<-t>).
 
-=head2 jhead
+=head3 jhead
 
 F<jhead> was written by Matthias Wandel and can be found at:
 
-    http://www.sentex.net/~mwandel/jhead/index.html
+    https://www.sentex.net/~mwandel/jhead/index.html
 
-It is included here but I take no credit for the code.  Matthias however
-deserves lots of credit for it, as it's incredibly useful!  Feel free to
-drop Matthias a line and let him know his code is appreciated.  His email
-address is available at the URL shown above.
-
-F<jhead> is a C program, and must be compiled before it can be used.  On
-most unix-like systems, that's as easy as going into the F<jhead> directory
-and typing E<quot>makeE<quot>.  GNU make is recommended.  When make is
-finished, there should be a F<jhead> file, which you can copy to some other
-directory for safekeeping.
-
-The makefile for F<jhead> assumes F<gcc> is available.  If that's not
-the case, edit F<Makefile> to point to your compiler.  I've successfully
-built F<jhead> on systems running Linux, FreeBSD, Solaris and Apple OSX.
-
-Windows users should download the pre-built Windows version of F<jhead>
-available at the URL above.
-
-F<jhead> should be placed in the F<utilities> subdirectory of your Mig
-installation.
+It should be available in virtually every distribution these days and
+a windows version can be downloaded from the author's website.
 
 (F<jhead> is not something you need to run directly - it is used by
 F<mkGallery.pl> if you invoke F<mkGallery.pl> with the C<-e> flag.)

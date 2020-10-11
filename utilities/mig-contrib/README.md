@@ -24,15 +24,22 @@ your particular environment.
 
 ## Index
 
-#### gallery.sh 
+#### mkGallery.pl
+  A script that was formally bundled as part of mig. It can be used to create
+  a gallery from images in the current directory.
+  You can check the documentation for [utilities](https://mig.wcht.de/docs/utilities.html)
+  for details.
+  (mkGallery.pl requires perl)
+
+#### gallery.sh
   Automates resizing of image files using ImageMagick (mogrify).
-  (requires a shell)
+  (gallery.sh requires a shell and a shell for mkGallery.pl)
 
 #### migPutCommentInFile.sh
   Inserts comments into JPEG files.
-  (requires a shell)
+  (migPutCommentInFile.sh requires a shell)
 
 #### grabexif-0.1.tar.gz
   Grabexif generates exif.inf files for use by mig (mig.sf.net),
   from the html files found on the Casio QV-7000SX (and others?).
-  (requires C compiler)
+  (Grabexif requires a C compiler)

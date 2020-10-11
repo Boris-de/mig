@@ -6,6 +6,10 @@
 
 =head2 Version 1.6.1 (tbd)
 
+=head3 Important changes
+
+The mkGallery.pl script was moved from the main bundle to the contrib folder.
+
 =head2 Version 1.6.0 (Sun, 10 Oct 2020)
 
 =head3 Important changes
