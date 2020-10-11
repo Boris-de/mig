@@ -12,6 +12,9 @@ case "${PHP_VERSION}" in
     TEST_DIR="${TEMP}/${TEST_DIR}"
     sed -i -e 's#: void##' ${TEST_DIR}/*.php
    ;;
+  7.2.*)
+    PHPUNIT=phpunit8
+   ;;
 esac
 
 exec ${PHPUNIT} --include-path functions/:main/:languages/ ${TEST_DIR}/*Test.php
