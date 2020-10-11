@@ -8,7 +8,7 @@
 # to make sure mf_conv.pl is available as well!
 #
 
-conv="`dirname $0`/mf_conv.pl"
+conv="$(dirname "${0}")/mf_conv.pl"
 
 echo "Converting Mig metafiles..."
 echo " "

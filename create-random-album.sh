@@ -3,21 +3,21 @@
 set -e
 
 die() {
-  echo ${@} 1>&2
+  echo "${@}" 1>&2
   exit 1
 }
 
 create_thumb() {
-  local image="${1}"
-  local thumbs_dir=`dirname "${image}"`/thumbs
-  mkdir -p ${thumbs_dir}
-  convert ${image} -resize 128 ${thumbs_dir}/`basename "${image}"`
+  _image="${1}"
+  _thumbs_dir=$(dirname "${_image}")/thumbs
+  mkdir -p "${_thumbs_dir}"
+  convert "${_image}" -resize 128 "${_thumbs_dir}/$(basename "${_image}")"
 }
 
 random_image() {
-  local mx=320
-  local my=256
-  head -c "$((3*mx*my))" /dev/urandom | convert -depth 8 -size "${mx}x${my}" RGB:- ${1}
+  _mx=320
+  _my=256
+  head -c "$((3*_mx*_my))" /dev/urandom | convert -depth 8 -size "${_mx}x${_my}" RGB:- "${1}"
 }
 
 random_image_with_thumb() {
@@ -60,15 +60,15 @@ hidden_image.jpg
 </hidden>
 EOF
 
-for i in `seq 1 9`; do
+for i in $(seq 1 9); do
   FOLDER_NAME=folder${i}
   mkdir "${FOLDER_NAME}"
-  cd "${FOLDER_NAME}"
+  (
+    cd "${FOLDER_NAME}"
 
-  random_image_with_thumb image_${i}_1.jpg
-  random_image image_${i}_2.jpg
-
-  cd ..
+    random_image_with_thumb "image_${i}_1.jpg"
+    random_image "image_${i}_2.jpg"
+  )
 
   # testcase: use first image's thumbnail for the folder
   echo "UseThumb ${FOLDER_NAME} image_${i}_1.jpg" >> mig.cf

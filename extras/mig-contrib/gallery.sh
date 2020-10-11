@@ -20,5 +20,5 @@
 #
 
 echo "processing $1 ..."
-mogrify -border 8x8 -sample 50%x50% -bordercolor black $1
+mogrify -border 8x8 -sample 50%x50% -bordercolor black "${1}"
 

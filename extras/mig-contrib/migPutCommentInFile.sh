@@ -34,40 +34,40 @@ echo "          Look at the picture and enter new comment at prompt."
 echo "          To finish your comment enter <RETURN> twice."
 echo ""
 
-for filename in $@; do
+for filename in "$@"; do
 
-# Start the view command
-    $viewcommand $filename&
+    # Start the view command
+    $viewcommand "$filename" &
 
-# Get the old comment
-    oldcomment=`rdjpgcom $filename`
+    # Get the old comment
+    oldcomment=$(rdjpgcom "${filename}")
 
-# Ask for the new comment
+    # Ask for the new comment
     echo "$filename"
     echo  "Enter new comment [ $oldcomment ]? "
-    read  comment1
+    read -r comment1
     while test "${comment1}"; do
         sep=""
-        if test "$comment"; then
+        if test "${comment}"; then
             sep='\n'
         fi
         comment="${comment}${sep}${comment1}"
-        read comment1
+        read -r comment1
     done
 
-# Kill the viewer
+    # Kill the viewer
     kill $!
 
-# Echo the new comment back (use the old comment if the new wasn't set)
-    echo -e "new comment:\n"${comment:=$oldcomment}
+    # Echo the new comment back (use the old comment if the new wasn't set)
+    echo -e "new comment:\n${comment:=$oldcomment}"
     echo ""
 
-# Replace the comment in the file
-    wrjpgcom -replace -comment \"$comment\" $filename > $filename"_com"
-#"
+    # Replace the comment in the file
+    TEMP_FILE=$(mktemp)
+    wrjpgcom -replace -comment "\"${comment}\"" "${filename}" > "${TEMP_FILE}"
 
-# Move the newly commented file back
-    mv $filename"_com" $filename
+    # Move the newly commented file back
+    mv "${TEMP_FILE}" "${filename}"
 
 done
 
