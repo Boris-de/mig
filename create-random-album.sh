@@ -33,7 +33,7 @@ cd "${1}"
 random_image_with_thumb image1.jpg
 random_image image2.png
 random_image hidden_image.jpg
-convert image2.png video.mp4
+ffmpeg -hide_banner -loglevel panic -i image2.png video.mp4
 touch audio.mp3
 
 cat > mig.cf << EOF
