@@ -13,9 +13,10 @@ SPOOLDIR= mig-$(ver)
 # Archive name (output file)
 ARCHIVE= $(DISTDIR)/$(SPOOLDIR).tar.gz
 
-RELEASE_TAG=RELEASE_$(shell echo ${ver} | sed "s/\./_/g")
+RELEASE_TAG=v$(ver)
 
 PHP_FILES=main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
+TEMPLATE_FILES=templates/*html templates/*.css
 
 PODMAN_NAME=mig-php-app
 PODMAN_PHP_VERSION=''
@@ -43,7 +44,7 @@ default:
 mig: dist
 
 has-version:
-	@if test -z "${ver}"; then echo "Missing version, run make with ver=..." 1>2; false; fi
+	@if test -z "${ver}"; then echo "Missing version, run make with ver=..."; false; fi
 
 dist: has-version index.php unittests podman-unittests
 	make -C docs
@@ -72,26 +73,29 @@ index.php: $(PHP_FILES) main/preamble.php
 	  cat $(PHP_FILES) \
 	) > index.php
 
-release: clean
-	@if test -z "${ver}"; then \
-		echo "Please specify a version for dist!"; \
-		false; \
-	fi
-	git tag $(RELEASE_TAG)
-	make dist
-	make docpublish
-	make mig.sf.net
+has-release-vars: has-version
+	! test -e $(ARCHIVE) # check if archive already exists
+	test -n "$(MIG_GPG_KEY)" # MIG_GPG_KEY
+	test -n "$(MIG_GPG_EMAIL)" # MIG_GPG_EMAIL
+	test -n "$(MIG_SITE_DIR)" # MIG_SITE_DIR
+
+release: has-release-vars clean
+	make dist ver=$(ver)
+	git -c "user.signingkey=$(MIG_GPG_KEY)" -c "user.email=$(MIG_GPG_EMAIL)" tag -s $(RELEASE_TAG) -m "Tagging $(RELEASE_TAG)"
+	make docpublish MIG_SITE_DIR=$(MIG_SITE_DIR)
+	make mig.sf.net MIG_SITE_DIR=$(MIG_SITE_DIR)
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign $(ARCHIVE)
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign --armor $(ARCHIVE)
+	@echo
+	@echo "Release is finished, see $(ARCHIVE) and $(MIG_SITE_DIR)"
+	@echo "You can run ./release-test.sh $(ARCHIVE) to run final tests"
 
 docpublish:
-	make -C docs publish
+	make -C docs publish MIG_SITE_DIR=$(MIG_SITE_DIR)
 
 mig.sf.net: index.php
-	cp index.php $(MIG_SF_NET_DIR)/gallery/
-	cp templates/*html templates/*.css $(MIG_SF_NET_DIR)/gallery/templates/
-	cd $(MIG_SF_NET_DIR) ; make
-	@echo "URL: http://mig.sf.net/gallery/"
+	cp index.php $(MIG_SITE_DIR)/gallery/
+	cp $(TEMPLATE_FILES) $(MIG_SITE_DIR)/gallery/templates/
 
 test-album: create-random-album.sh
 	rm -rf test-album

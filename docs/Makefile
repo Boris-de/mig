@@ -1,6 +1,4 @@
 #
-# $Id$
-#
 # Makefile for Mig documentation
 #
 
@@ -14,7 +12,7 @@ pods=	changelog.pod credits.pod install.pod license.pod \
 	jump.pod apache.pod utilities.pod mig_cf.pod templates.pod
 
 html = $(addsuffix .html, $(basename $(pods)))
-text =$(addsuffix .txt, $(basename $(pods)))
+text = $(addsuffix .txt, $(basename $(pods)))
 html_with_dir = $(patsubst %,$(html_dir)/%,$(html))
 text_with_dir = $(patsubst %,$(text_dir)/%,$(text))
 
@@ -42,9 +40,5 @@ clean:
 	test ! -d $(html_dir) || rmdir $(html_dir)
 	test ! -d $(text_dir) || rmdir $(text_dir)
 
-$(MIG_SF_NET_DIR)/docs:
-	mkdir -p $(MIG_SF_NET_DIR)/docs
-
-publish: docs | $(MIG_SF_NET_DIR)/docs
-	cp html/*.html $(MIG_SF_NET_DIR)/docs
-	cd $(MIG_SF_NET_DIR) ; make
+publish: docs
+	cp html/*.html $(MIG_SITE_DIR)/docs/
