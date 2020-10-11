@@ -88,7 +88,7 @@ release: has-release-vars clean
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign --armor $(ARCHIVE)
 	@echo
 	@echo "Release is finished, see $(ARCHIVE) and $(MIG_SITE_DIR)"
-	@echo "You can run ./release-test.sh $(ARCHIVE) to run final tests"
+	@echo "You can run ./utilities/release-test.sh $(ARCHIVE) to run final tests"
 
 docpublish:
 	make -C docs publish MIG_SITE_DIR=$(MIG_SITE_DIR)
@@ -97,9 +97,9 @@ mig.sf.net: index.php
 	cp index.php $(MIG_SITE_DIR)/gallery/
 	cp $(TEMPLATE_FILES) $(MIG_SITE_DIR)/gallery/templates/
 
-test-album: create-random-album.sh
+test-album: utilities/create-random-album.sh
 	rm -rf test-album
-	./create-random-album.sh test-album
+	./utilities/create-random-album.sh test-album
 
 unittests:
 	make -C test unittests

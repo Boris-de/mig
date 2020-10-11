@@ -16,7 +16,7 @@ TEMP_DIR=$(mktemp -d)
 tar xf "${ARCHIVE}" -C "${TEMP_DIR}"
 mv "${TEMP_DIR}"/*/* "${TEMP_DIR}"
 
-./create-random-album.sh "${TEMP_DIR}/albums/"
+"$(dirname "${0}")/create-random-album.sh" "${TEMP_DIR}/albums/"
 
 echo "Running server on localhost:${PORT}, use ctrl-c to abort testing"
 
