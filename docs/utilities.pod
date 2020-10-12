@@ -5,7 +5,8 @@
 =head2 Contrib Utilities
 
 F<mkGallery.pl> - Create a gallery from images in the current directory.
-This was a bundled utility that was moved to the contrib folder in 2020.
+This was a bundled utility that was moved to the a separate repository
+that can be found at L<https://github.com/Boris-de/mig-contrib>.
 
 =head2 mkGallery.pl
 

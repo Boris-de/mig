@@ -8,7 +8,9 @@
 
 =head3 Important changes
 
-The mkGallery.pl script was moved from the main bundle to the contrib folder.
+The contrib folder was moved to a separate repository and can now be found at L<https://github.com/Boris-de/mig-contrib>
+
+The mkGallery.pl script was moved from the main bundle to the contrib repo.
 
 =head2 Version 1.6.0 (Sun, 10 Oct 2020)
 
