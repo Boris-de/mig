@@ -36,7 +36,8 @@ default:
 	@echo "    make test-album            Create a random sample album"
 	@echo "    make unittests             Runs unittests with default PHP version"
 	@echo "    make coverage              Runs unittests with default PHP version to generate coverage"
-	@echo "    make podman-unittests      Runs unittests with different PHP versions using podman"
+	@echo "    make podman-unittests      Runs unittests with a current PHP version using podman container"
+	@echo "    make podman-unittests-all  Runs unittests with different PHP versions using podman containers"
 	@echo "    make clean"
 	@echo " "
 	@echo "    make mig.sf.net ver=X      index.php & templates to mig.sf.net"
@@ -108,6 +109,8 @@ coverage:
 podman-unittests:
 	make -C test podman-unittests
 
+podman-unittests-all: podman-unittests-all-versions
+
 podman-unittests-all-versions:
 	make -C test podman-unittests-all-versions
 
@@ -128,4 +131,4 @@ clean:
 	make -C test clean
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean unittests podman podman-unittests podman-unittests-all-versions coverage has-version
+.PHONY: test clean unittests podman podman-unittests podman-unittests-all podman-unittests-all-versions coverage has-version
