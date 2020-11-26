@@ -1,13 +1,13 @@
 PODMAN_NAME_PHPUNIT=mig-phpunit
 
-PODMAN_PHP_VERSION='cli'
+PODMAN_PHP_VERSION='cli-alpine'
 
 PHPUNIT_VERSION=$(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 1)
 PHPUNIT_PARAMS=$(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
 
 default:
-	@echo "    make unittests                                           Run unittests with the default php cli version"
-	@echo "    make podman-unittests PODMAN_PHP_VERSION=7.0-cli         Run unittests with in a container"
+	@echo "    make unittests                                           Run unittests with the default php cli-alpine version"
+	@echo "    make podman-unittests PODMAN_PHP_VERSION=7.0-cli-alpine  Run unittests with in a container"
 
 unittests:
 	phpunit $(PHPUNIT_PARAMS) --include-path ../functions/:../main/:../languages/ .
