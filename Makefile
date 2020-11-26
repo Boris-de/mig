@@ -125,6 +125,7 @@ podman: index.php test-album
 	podman rm $(PODMAN_NAME)
 
 clean:
+	make -C test clean
 	rm -rf docs/html docs/text index.php test-album
 
 .PHONY: test clean unittests podman podman-unittests podman-unittests-all-versions coverage has-version
