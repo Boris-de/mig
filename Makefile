@@ -106,7 +106,10 @@ coverage:
 	make -C test coverage
 
 podman-unittests:
-	make -C test podman-unittests-php-versions
+	make -C test podman-unittests
+
+podman-unittests-all-versions:
+	make -C test podman-unittests-all-versions
 
 podman: index.php test-album
 	podman build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
@@ -124,4 +127,4 @@ podman: index.php test-album
 clean:
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean unittests podman podman-unittests coverage has-version
+.PHONY: test clean unittests podman podman-unittests podman-unittests-all-versions coverage has-version
