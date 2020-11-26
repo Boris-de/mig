@@ -10,3 +10,4 @@ albums
 test-album
 *-private
 coverage
+test/tmp

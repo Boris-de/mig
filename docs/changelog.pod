@@ -12,6 +12,8 @@ The contrib folder was moved to a separate repository and can now be found at L<
 
 The mkGallery.pl script was moved from the main bundle to the contrib repo.
 
+The unused buildRSS function was removed from the source code.
+
 =head2 Version 1.6.0 (Sun, 10 Oct 2020)
 
 =head3 Important changes
