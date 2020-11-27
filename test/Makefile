@@ -35,7 +35,7 @@ podman-unittests: $(PHPUNIT_FILES)
 
 podman-unittests-all-versions:
 	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0-rc; do \
-		make podman-unittests PODMAN_PHP_VERSION=$${version}-$(PODMAN_PHP_VERSION); \
+		make podman-unittests PODMAN_PHP_VERSION=$${version}-$(PODMAN_PHP_VERSION) || exit ${?}; \
 	done
 
 clean:
