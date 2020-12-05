@@ -1,6 +1,6 @@
 ARG PHP_VERSION=''
 
-FROM php:${PHP_VERSION}apache
+FROM docker.io/php:${PHP_VERSION}apache
 
 EXPOSE 80
 
