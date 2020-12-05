@@ -7,7 +7,7 @@ TMP_MARKER=$(TMP_DIR)/.marker
 PHPUNIT_URL=https://phar.phpunit.de
 PHPUNIT_VERSION=$(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 1)
 PHPUNIT_PARAMS=$(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
-PHPUNIT_VERSIONS=5.7.27 8.5.8 9.4.1
+PHPUNIT_VERSIONS=5.7.27 8.5.13 9.5.0
 PHPUNIT_FILES=$(addsuffix .phar, $(addprefix $(TMP_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
 
 default:
