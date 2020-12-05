@@ -12,7 +12,7 @@ PHPUNIT_FILES=$(addsuffix .phar, $(addprefix $(TMP_DIR)/phpunit-, $(PHPUNIT_VERS
 
 default:
 	@echo "    make unittests                                           Run unittests with the default php cli-alpine version"
-	@echo "    make podman-unittests PODMAN_PHP_VERSION=7.0-cli-alpine  Run unittests with in a container"
+	@echo "    make podman-unittests PODMAN_PHP_VERSION=8.0-cli-alpine  Run unittests with in a container"
 
 $(TMP_MARKER):
 	mkdir -p $(TMP_DIR)
@@ -34,7 +34,7 @@ podman-unittests: $(PHPUNIT_FILES)
 	podman run -it --rm -v "$$PWD/..":/usr/src/mig -w /usr/src/mig $(PODMAN_NAME_PHPUNIT)
 
 podman-unittests-all-versions:
-	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0-rc; do \
+	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 rc; do \
 		make podman-unittests PODMAN_PHP_VERSION=$${version}-$(PODMAN_PHP_VERSION) || exit ${?}; \
 	done
 
