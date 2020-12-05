@@ -12,7 +12,7 @@ PHPUNIT_FILES=$(addsuffix .phar, $(addprefix $(TMP_DIR)/phpunit-, $(PHPUNIT_VERS
 
 default:
 	@echo "    make unittests                                           Run unittests with the default php cli-alpine version"
-	@echo "    make podman-unittests PODMAN_PHP_VERSION=8.0-cli-alpine  Run unittests with in a container"
+	@echo "    make podman-unittests PODMAN_PHP_VERSION=8.0-cli-alpine  Run unittests within a container with a specific version"
 
 $(TMP_MARKER):
 	mkdir -p $(TMP_DIR)
@@ -42,4 +42,4 @@ clean:
 	rm -f $(PHPUNIT_FILES) $(TMP_MARKER)
 	rm -rf $(TMP_DIR)
 
-.PHONY: unittests podman-unittests podman-unittests-all-versions coverage clean
+.PHONY: default unittests podman-unittests podman-unittests-all-versions coverage clean
