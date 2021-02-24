@@ -18,9 +18,11 @@ final class PrintPageTest extends AbstractFileBasedTest
         require 'en.php';
         $mig_config['lang'] = $mig_config['lang_lib']['en'];
         $mig_config['basedir'] = $this->mig_dir;
+        $mig_config['charset'] = 'UTF-8';
         $mig_config['templatedir'] = $this->mig_dir;
         $mig_config['hidden'] = array();
         $mig_config['pagetitle'] = 'pagetitle';
+        $mig_config['charset'] = 'UTF-8';
         $mig_config['httpContentType'] = 'text/html';
         $mig_config['usethumbfile'] = array();
         $mig_config['usethumbsubdir'] = FALSE;

@@ -842,6 +842,21 @@ $mig_language = "en";
 //
 
 // -----------------------------------------------------------------
+//                      Charset / Encoding
+// -----------------------------------------------------------------
+//
+// $migCharset
+//     The charset that is used by mig
+//
+// Defaults to UTF-8
+//
+// Note: the charset in $httpContentType was "us-ascii" before the
+// introduction of this setting with Mig 1.6.1
+//
+$migCharset = 'UTF-8';
+
+
+// -----------------------------------------------------------------
 //                         HTTP-Headers
 // -----------------------------------------------------------------
 //
@@ -849,24 +864,24 @@ $mig_language = "en";
 //      This sets the values, that is send as Content-Type
 //      in the HTTP-header
 //
-// Defaults to 'text/html; charset=us-ascii'
+// Defaults to "text/html; charset=$migCharset"
 //
 // Examples:
-//      $httpContentType = 'text/html; charset=utf-8';
+//      $httpContentType = "text/html; charset=$migCharset";
 //
 //      if(strstr($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')) {
-//          $httpContentType = 'application/xhtml+xml; charset=iso-8859-1';
+//          $httpContentType = "application/xhtml+xml; charset=$migCharset";
 //      }
 
-$httpContentType = 'text/html; charset=us-ascii';
+$httpContentType = "text/html; charset=$migCharset";
 
 //  -----------------------------------------------------------------
 //                     FILE- AND DIRNAME REGEXPS
 // -----------------------------------------------------------------
 //
 // These two variables control which file- and directorynames are allowed.
-// Be carful when changing these, special chracters like / or < and > may
-// lead into possible XSS-exploits or exposure of system information
+// Be careful when changing these, special characters like / or < and >
+// may lead into possible XSS-exploits or exposure of system information
 //
 // Examples:
 //       $imageFilenameRegexpr       = '=^[\._-\d\w \']*$=';

@@ -25,6 +25,12 @@ random_image_with_thumb() {
   create_thumb "${1}"
 }
 
+simple_folder() {
+  mkdir "${1}"
+  random_image_with_thumb "${1}/${1}.jpg"
+  echo "UseThumb ${1} ${1}.jpg" >> mig.cf
+}
+
 test -z "${1}" && die "usage: ${0} directory"
 mkdir "${1}" || die "could not create directory"
 
@@ -73,6 +79,10 @@ for i in $(seq 1 9); do
   # testcase: use first image's thumbnail for the folder
   echo "UseThumb ${FOLDER_NAME} image_${i}_1.jpg" >> mig.cf
 done
+
+simple_folder "encoding_Łódź"
+simple_folder "encoding_麻婆豆腐"
+simple_folder "encoding_emoji🤷"
 
 # testcase: change sorting in "folder1"
 cat > folder1/mig.cf <<EOF

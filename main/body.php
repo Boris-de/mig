@@ -120,6 +120,7 @@ $mig_config['usethumbsubdir']                   = $useThumbSubdir;
 $mig_config['viewfoldercount']                  = $viewFolderCount;
 $mig_config['imageFilenameRegexpr']             = $imageFilenameRegexpr;
 $mig_config['currDirNameRegexpr']               = $currDirNameRegexpr;
+$mig_config['charset']                          = $migCharset;
 $mig_config['httpContentType']                  = $httpContentType;
 $mig_config['music_icon']                       = $music_icon;
 $mig_config['movie_icon']                       = $movie_icon;

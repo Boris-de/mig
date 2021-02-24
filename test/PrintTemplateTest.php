@@ -19,6 +19,7 @@ final class PrintTemplateTest extends AbstractFileBasedTest
         $mig_config['templatedir'] = $this->mig_dir;
         $mig_config['hidden'] = array();
         $mig_config['pagetitle'] = 'pagetitle';
+        $mig_config['charset'] = 'UTF-8';
         $mig_config['httpContentType'] = 'text/html';
         $mig_config['usethumbfile'] = array();
         $mig_config['usethumbsubdir'] = FALSE;
@@ -48,6 +49,7 @@ final class PrintTemplateTest extends AbstractFileBasedTest
         $template = $this->mig_dir . '/template.html';
         $this->touchWithContent($template, "
 %%pageTitle%%
+%%charset%%
 %%httpContentType%%
 %%youAreHere%%
 %%folderList%%
@@ -85,6 +87,7 @@ final class PrintTemplateTest extends AbstractFileBasedTest
 
         $this->assertEquals("
 pagetitle
+UTF-8
 text/html
 youAreHere
 folder list
@@ -124,6 +127,7 @@ largeLinkBorder
         $template = $this->mig_dir . '/template.html';
         $this->touchWithContent($template, "
 %%pageTitle%%
+%%charset%%
 %%httpContentType%%
 %%youAreHere%%
 %%folderList%%
@@ -161,6 +165,7 @@ largeLinkBorder
 
         $this->assertEquals("
 pagetitle
+UTF-8
 text/html
 youAreHere
 folder list

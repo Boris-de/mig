@@ -16,6 +16,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         global $mig_config;
         $mig_config = array();
         $mig_config['basedir'] = $this->mig_dir;
+        $mig_config['charset'] = 'UTF-8';
         $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';
         $mig_config['foldersorttype'] = 'default';
         $mig_config['hidden'] = array();

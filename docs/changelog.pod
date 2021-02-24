@@ -6,10 +6,28 @@
 
 =head2 Version 1.6.1 (tbd)
 
-=head3 Important changes
+=head3 Important notes
+
+The default encoding in C<$httpContentType> changed from "us-ascii" to "UTF-8". As ASCII is a subset of UTF-8 this
+should not be a problem for a default setup, but together with the introduction of the C<$migCharset> config option
+it can make a difference if you have used C<$httpContentType> to configure a charset that is neither ASCII nor UTF-8.
+If that's the case you MUST set C<$migCharset> according to your C<$httpContentType> setting. If not, it is still
+advised to double check those settings.
+
+General note: This release adds some new features that may be disabled by default, but are enabled in the default
+C<config.php>. Unless you overwrite your C<config.php> with every release nothing should change for you, but if you
+do, please double-check the new options and set them according to your needs.
+
+=head3 Notable changes
 
 Mig now has support for PHP's open_basedir configuration. It's off by default, but enabled in the default C<config.php>.
 If you want to enable this feature, check the new options in that file.
+
+The encoding in the C<$httpContentType> setting of the default C<config.php> changed from "us-ascii" to "UTF-8". See
+notes above.
+
+There is a new option C<$migCharset> to specify the charset/encoding that should be used by Mig. The default for this
+setting is "UTF-8", see notes above.
 
 The contrib folder was moved to a separate repository and can now be found at L<https://github.com/Boris-de/mig-contrib>
 
