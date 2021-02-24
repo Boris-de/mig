@@ -18,6 +18,8 @@ RELEASE_TAG=v$(ver)
 PHP_FILES=main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
 TEMPLATE_FILES=templates/*html templates/*.css
 
+DEV_SERVER_PORT=8080
+
 PODMAN_NAME=mig-php-app
 PODMAN_PHP_VERSION=''
 
@@ -126,6 +128,11 @@ podman: index.php test-album
 	@read UNUSED
 	podman stop $(PODMAN_NAME)
 	podman rm $(PODMAN_NAME)
+
+dev-server: test-album
+	@test -e albums || ln -s test-album albums
+	@echo -e "Starting dev server at http://localhost:$(DEV_SERVER_PORT)/dev.php\n"
+	php --server localhost:$(DEV_SERVER_PORT) --docroot .
 
 clean:
 	make -C test clean
