@@ -131,6 +131,7 @@ podman: index.php test-album
 
 psalm: index.php
 	psalm $<
+	psalm --taint-analysis $<
 
 dev-server: test-album
 	@test -e albums || ln -s test-album albums

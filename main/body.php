@@ -140,26 +140,24 @@ $mig_config['exifFormatString']                 = $exifFormatString;
 $mig_config['largeLinkFromMedium']              = $largeLinkFromMedium;
 $mig_config['largeLinkUseBorders']              = $largeLinkUseBorders;
 
-function getVariable($name, $arr1, $arr2, $default = NULL) {
-    $result = $default;
-    if (isset($arr1[$name])) {
-        $result = $arr1[$name];
-    } elseif (isset($arr2[$name])) {
-        $result = $arr2[$name];
-    }
-    return $result;
-}
-
 function getHttpGetVariable($name, $default = NULL) {
     global $HTTP_GET_VARS;
-    $get_vars = isset($HTTP_GET_VARS) ? $HTTP_GET_VARS : array();
-    return getVariable($name, $_GET, $get_vars, $default);
+    if (isset($_GET[$name])) {
+        return $_GET[$name];
+    } elseif (isset($HTTP_GET_VARS[$name])) {
+        return $HTTP_GET_VARS[$name];
+    }
+    return $default;
 }
 
 function getHttpServerVariable($name, $default = NULL) {
     global $HTTP_SERVER_VARS;
-    $server_vars = isset($HTTP_SERVER_VARS) ? $HTTP_SERVER_VARS : array();
-    return getVariable($name, $_SERVER, $server_vars, $default);
+    if (isset($_SERVER[$name])) {
+        return $_SERVER[$name];
+    } elseif (isset($HTTP_SERVER_VARS[$name])) {
+        return $HTTP_SERVER_VARS[$name];
+    }
+    return $default;
 }
 
 // Jump has to come before currDir redirect to work
