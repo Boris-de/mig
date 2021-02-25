@@ -38,7 +38,7 @@ final class PrintPageTest extends AbstractFileBasedTest
         $mig_config['nothumb_icon'] = 'nothumb_icon.png';
         $mig_config['movie_icon'] = 'movie_icon.png';
         $mig_config['music_icon'] = 'audio_icon.png';
-        $mig_config['image'] = NULL;
+        $this->set_mig_config_image(NULL);
         $mig_config['pagetype'] = NULL;
         $mig_config['version'] = '1.0.0';
         $mig_config['distURL'] = 'distURL';
@@ -315,7 +315,7 @@ final class PrintPageTest extends AbstractFileBasedTest
     public function testImage()
     {
         $this->set_mig_config('pagetype', 'image');
-        $this->set_mig_config('image', 'test1.png');
+        $this->set_mig_config_image('test1.png');
         $template = $this->mig_dir . '/image.html';
         $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));
         $this->touchWithContent($template, "
@@ -352,7 +352,7 @@ final class PrintPageTest extends AbstractFileBasedTest
     public function testLarge()
     {
         $this->set_mig_config('pagetype', 'large');
-        $this->set_mig_config('image', 'test1.png');
+        $this->set_mig_config_image('test1.png');
         $template = $this->mig_dir . '/large.html';
         $this->mkdir($this->album_dir.'/large');
         $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));
@@ -392,7 +392,7 @@ final class PrintPageTest extends AbstractFileBasedTest
     {
         $this->set_mig_config('pagetype', 'image');
         $this->set_mig_config('commentfileperimage', TRUE);
-        $this->set_mig_config('image', 'test1.png');
+        $this->set_mig_config_image('test1.png');
         $template = $this->mig_dir . '/image.html';
         $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));
         $this->touchWithContent($this->album_dir.'/test1.txt', "comment-file-content");
@@ -415,7 +415,7 @@ comment-file-content
     {
         $this->set_mig_config('pagetype', 'image');
         $this->set_mig_config('commentfileperimage', TRUE);
-        $this->set_mig_config('image', 'test1.png');
+        $this->set_mig_config_image('test1.png');
         $template = $this->mig_dir . '/image.html';
         $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));
         $this->touchWithContent($this->album_dir . '/exif.inf', "File name    : test1.png\nComment      : exif-comment\n
@@ -439,7 +439,7 @@ exif-comment
     {
         $this->set_mig_config('pagetype', 'image');
         $this->set_mig_config('commentfileperimage', TRUE);
-        $this->set_mig_config('image', 'test1.png');
+        $this->set_mig_config_image('test1.png');
         $template = $this->mig_dir . '/image.html';
         $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));
         $this->touchWithContent($this->album_dir.'/test1.txt', "comment-file-content");
@@ -466,7 +466,7 @@ comment-file-content<hr />exif-comment
         $this->set_mig_config('uselargeimages', TRUE);
         $this->set_mig_config('largeLinkFromMedium', TRUE);
         $this->set_mig_config('largeLinkUseBorders', FALSE);
-        $this->set_mig_config('image', 'test1.png');
+        $this->set_mig_config_image('test1.png');
         $template = $this->mig_dir . '/image.html';
         $this->mkdir($this->album_dir.'/large');
         $this->touchWithContent($this->album_dir.'/test1.png', base64_decode(self::SIMPLE_PNG_1X1_BASE64));

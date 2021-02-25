@@ -88,7 +88,8 @@ function printTemplate ( $templateFile, $maintAddr,
 
             $albumURLroot		= $mig_config['albumurlroot'];
             $baseURL			= $mig_config['baseurl'];
-            $image			    = isset($mig_config['image']) ? $mig_config['image'] : NULL;
+            $enc_image			= isset($mig_config['enc_image']) ? $mig_config['enc_image'] : NULL;
+            $unsafe_image			= isset($mig_config['unsafe_image']) ? $mig_config['unsafe_image'] : NULL;
             $imageSize          = '';
             $largeSubdir		= $mig_config['largesubdir'];
             $pageTitle			= $mig_config['pagetitle'];
@@ -96,23 +97,21 @@ function printTemplate ( $templateFile, $maintAddr,
             $httpContentType    = $mig_config['httpContentType'];
 
             // Make sure this is URL encoded
-            $encodedImageURL = migURLencode($image);
+            $encodedImageURL = migURLencode($unsafe_image);
 
-            $filetype=getFileType($image);
+            $filetype=getFileType($unsafe_image);
             // If pagetype is large, add largeSubdir to path.
-            if ($filetype=='image' && $image) {
+            if ($filetype=='image' && $unsafe_image) {
                 // Get image pixel size for <IMG> element
-				if(!is_file($mig_config['albumdir']."/$currDir/".$image)) {
+                $unsafe_abs_image = $mig_config['albumdir'] . "/$currDir/" . $unsafe_image;
+                if(!is_file($unsafe_abs_image)) {
 					die("ERROR: Image file does not exist!");
 				}
                 if ($mig_config['pagetype'] == 'image') {
-                    $imageProps = @GetImageSize($mig_config['albumdir']."/$currDir/"
-                                               .$image);
+                    $imageProps = @GetImageSize($unsafe_abs_image);
                 } elseif ($mig_config['pagetype'] == 'large') {
-                    $imageProps =
-                      @GetImageSize($mig_config['albumdir']."/$currDir/"
-                                 . $mig_config['largesubdir']
-                                 . '/'.$image);
+                    $unsafe_abs_large_image = $mig_config['albumdir'] . "/$currDir/" . $mig_config['largesubdir'] . '/' . $unsafe_image;
+                    $imageProps = @GetImageSize($unsafe_abs_large_image);
                 } else {
                     $imageProps = FALSE;
                 }
@@ -142,7 +141,7 @@ function printTemplate ( $templateFile, $maintAddr,
                 'backLink' => $backLink,
                 'currDir' => $currDir,
                 'newCurrDir' => $newCurrDir,
-                'image' => $image,
+                'image' => $enc_image,
                 'albumURLroot' => $albumURLroot,
                 'pageTitle' => $pageTitle,
                 'nextLink' => $nextLink,

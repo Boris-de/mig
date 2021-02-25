@@ -13,7 +13,8 @@ final class BuildLargeHrefStartTest extends AbstractFileBasedTestCase
         global $mig_config;
         $mig_config = array();
         $mig_config['baseurl'] = '/albums';
-        $mig_config['image'] = 'test.jpg';
+        $mig_config['enc_image'] = 'test.jpg';
+        $mig_config['unsafe_image'] = 'test.jpg';
         $mig_config['mig_dl'] = NULL;
         $mig_config['startfrom'] = NULL;
     }

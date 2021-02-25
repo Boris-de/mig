@@ -2,14 +2,14 @@
 
 // getNumberOfImages() - Counts images in a given folder.
 
-function getNumberOfImages ( $folder )
+function getNumberOfImages ( $unsafe_folder )
 {
     global $mig_config;
     
     $markerLabel = $mig_config['markerlabel'];
     
-    if (is_dir($folder)) {
-        $dir = opendir($folder);    // Open directory handle
+    if (is_dir($unsafe_folder)) {
+        $dir = opendir($unsafe_folder);    // Open directory handle
     } else {
         return 0;
     }
@@ -17,7 +17,7 @@ function getNumberOfImages ( $folder )
     $count = 0;
 
     // Get hidden item list from mig.cf, fills $mig_config['hidden']
-    parseMigCf($folder);
+    parseMigCf($unsafe_folder);
 
     while ($file = readdir($dir)) {
 
@@ -43,8 +43,8 @@ function getNumberOfImages ( $folder )
 
         // We'll look at this one only if it's a file and it matches our list
         // of approved extensions
-        if (is_file("$folder/$file") && getFileType($file)) {
-                ++$count;
+        if (is_file("$unsafe_folder/$file") && getFileType($file)) {
+            ++$count;
         }
     }
 

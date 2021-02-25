@@ -6,7 +6,7 @@ function _isEndOfBlock($line, $needle) {
     return $line === FALSE || stripos($line, $needle) === 0;
 }
 
-function parseMigCf ( $directory )
+function parseMigCf ( $unsafe_folder )
 {
     global $mig_config;
 
@@ -39,8 +39,9 @@ function parseMigCf ( $directory )
         $mig_config['hidden'][$mig_config['largesubdir']] = TRUE;
     }
 
-    if (file_exists("$directory/$cfgfile")) {
-        $file = fopen("$directory/$cfgfile", 'r');
+    $unsafe_cfgfile = "$unsafe_folder/$cfgfile";
+    if (file_exists($unsafe_cfgfile)) {
+        $file = fopen($unsafe_cfgfile, 'r');
 
         while (! feof($file)) {
             $line = fgets($file, 4096);
@@ -61,9 +62,9 @@ function parseMigCf ( $directory )
                 while (!_isEndOfBlock($line, '</sort>')) {
                     $line = trim($line);
 
-                    if (is_file("$directory/$line")) {
+                    if (is_file("$unsafe_folder/$line")) {
                         $presort_img[$line] = TRUE;
-                    } elseif (is_dir("$directory/$line")) {
+                    } elseif (is_dir("$unsafe_folder/$line")) {
                         $presort_dir[$line] = TRUE;
                     }
 

@@ -11,7 +11,7 @@ final class BuildYouAreHereTest extends AbstractFileBasedTest
         $mig_config = array();
         require 'en.php';
         $mig_config['lang'] = $mig_config['lang_lib']['en'];
-        $mig_config['image'] = '';
+        $this->set_mig_config_image('');
         $mig_config['baseurl'] = 'https://example.com/baseurl';
         $mig_config['mig_dl'] = '';
         $mig_config['albumdir'] = $this->album_dir;
@@ -21,7 +21,7 @@ final class BuildYouAreHereTest extends AbstractFileBasedTest
     public function testImage()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.jpg';
+        $this->set_mig_config_image('test.jpg');
         $this->assertEquals('Main&nbsp;&gt;&nbsp;test.jpg', buildYouAreHere('.'));
         $this->assertEquals('<a href="https://example.com/baseurl?currDir=.">Main</a>&nbsp;&gt;&nbsp;<a href="https://example.com/baseurl?currDir=./foo">foo</a>&nbsp;&gt;&nbsp;test.jpg',
             buildYouAreHere('./foo'));
@@ -32,7 +32,7 @@ final class BuildYouAreHereTest extends AbstractFileBasedTest
     public function testImageWithImageNameOmitted()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.jpg';
+        $this->set_mig_config_image('test.jpg');
         $mig_config['omitimagename'] = TRUE;
         $this->assertEquals('Main', buildYouAreHere('.'));
         $this->assertEquals('<a href="https://example.com/baseurl?currDir=.">Main</a>&nbsp;&gt;&nbsp;<a href="https://example.com/baseurl?currDir=./foo">foo</a>',

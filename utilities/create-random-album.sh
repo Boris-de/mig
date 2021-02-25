@@ -83,6 +83,7 @@ done
 simple_folder "encoding_Łódź"
 simple_folder "encoding_麻婆豆腐"
 simple_folder "encoding_emoji🤷"
+simple_folder "encoding&test"
 
 # testcase: change sorting in "folder1"
 cat > folder1/mig.cf <<EOF

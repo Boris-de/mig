@@ -2,12 +2,12 @@
 
 // getNumberOfDirs() - Counts subdirectories in a given folder.
 
-function getNumberOfDirs ( $folder )
+function getNumberOfDirs ( $unsafe_folder )
 {
     global $mig_config;
     
-    if (is_dir($folder)) {
-        $dir = opendir($folder);    // Open directory handle
+    if (is_dir($unsafe_folder)) {
+        $dir = opendir($unsafe_folder);    // Open directory handle
     } else {
         return 0;
     }
@@ -16,10 +16,10 @@ function getNumberOfDirs ( $folder )
 
     while ($file = readdir($dir)) {
         // Get hidden item list from mig.cf, fills $mig_config['hidden']
-        parseMigCf($folder);
+        parseMigCf($unsafe_folder);
 
         // Must be a directory, and can't be . or ..
-        if ($file != '.' && $file != '..' && is_dir("$folder/$file"))
+        if ($file != '.' && $file != '..' && is_dir("$unsafe_folder/$file"))
         {
             // Ignore thumbnail subdirectories if in use
             if ($mig_config['usethumbsubdir'] && $file == $mig_config['thumbsubdir']) {

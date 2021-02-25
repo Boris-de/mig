@@ -54,7 +54,7 @@ function buildBackLink ( $currDir, $type )
         $retval .= '&amp;mig_dl=' . $mig_config['mig_dl'];
     }
     if ($mig_config['pagetype'] == 'large') {
-        $retval .= '&amp;pageType=image&amp;image=' . $mig_config['image'];
+        $retval .= '&amp;pageType=image&amp;image=' . $mig_config['enc_image'];
     }
     $retval .= '">' . $label . '</a>';
 

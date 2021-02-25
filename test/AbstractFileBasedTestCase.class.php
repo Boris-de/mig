@@ -34,6 +34,12 @@ abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
         $mig_config[$key] = $value;
     }
 
+    protected function set_mig_config_image($value) {
+        global $mig_config;
+        $mig_config['enc_image'] = $value !== NULL ? htmlentities($value, ENT_QUOTES) : NULL;
+        $mig_config['unsafe_image'] = $value;
+    }
+
     public function tearDown() : void
     {
         if ($this->mig_dir != '' && is_dir($this->mig_dir . '/albums')) {

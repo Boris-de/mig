@@ -108,22 +108,22 @@ function getExifDescription ( $currDir, $formatString )
 
         fclose($file);
         
-        $image = $mig_config['image'];
+        $unsafe_image = $mig_config['unsafe_image'];
 
-        if (!isset($knownFiles[$image])) {
+        if (!isset($knownFiles[$unsafe_image])) {
             return '';
         }
-        $exifData = array ( 'comment'   => $desc[$image],
-                            'model'     => $model[$image],
-                            'year'      => $year[$image],
-                            'month'     => $month[$image],
-                            'day'       => $day[$image],
-                            'time'      => $time[$image],
-                            'iso'       => $iso[$image],
-                            'foclen'    => $foclen[$image],
-                            'shutter'   => $shutter[$image],
-                            'aperture'  => $aperture[$image],
-                            'flash'     => $flash[$image]        );
+        $exifData = array ( 'comment'   => $desc[$unsafe_image],
+                            'model'     => $model[$unsafe_image],
+                            'year'      => $year[$unsafe_image],
+                            'month'     => $month[$unsafe_image],
+                            'day'       => $day[$unsafe_image],
+                            'time'      => $time[$unsafe_image],
+                            'iso'       => $iso[$unsafe_image],
+                            'foclen'    => $foclen[$unsafe_image],
+                            'shutter'   => $shutter[$unsafe_image],
+                            'aperture'  => $aperture[$unsafe_image],
+                            'flash'     => $flash[$unsafe_image]        );
 
         $retval = formatExifData($formatString, $exifData);
 

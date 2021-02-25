@@ -15,7 +15,8 @@ final class BuildLargeLinkTest extends AbstractFileBasedTestCase
         require 'en.php';
         $mig_config['lang'] = $mig_config['lang_lib']['en'];
         $mig_config['baseurl'] = '/albums';
-        $mig_config['image'] = 'test.jpg';
+        $mig_config['enc_image'] = 'test.jpg';
+        $mig_config['unsafe_image'] = 'test.jpg';
         $mig_config['mig_dl'] = NULL;
         $mig_config['startfrom'] = NULL;
     }

@@ -124,7 +124,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     foreach (array_keys($presorted) as $file) {
 
         // If "this" is the one we're looking for, mark it as such.
-        if ($file === $mig_config['image']) {
+        if ($file === $mig_config['unsafe_image']) {
             $ThisImagePos = $i;
         }
 

@@ -35,7 +35,7 @@ final class PrintTemplateTest extends AbstractFileBasedTest
         $mig_config['nothumb_icon'] = 'nothumb_icon.png';
         $mig_config['movie_icon'] = 'movie_icon.png';
         $mig_config['music_icon'] = 'audio_icon.png';
-        $mig_config['image'] = NULL;
+        $this->set_mig_config_image(NULL);
         $mig_config['pagetype'] = NULL;
         $mig_config['version'] = '1.0.0';
         $mig_config['distURL'] = 'distURL';
@@ -119,7 +119,7 @@ largeLinkBorder
     public function testImage()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.png';
+        $this->set_mig_config_image('test.png');
         $mig_config['pagetype'] = 'image';
 
         $this->touchWithContent($this->album_dir . '/test.png', base64_decode($this->SMALL_PNG_IMAGE));
@@ -197,7 +197,7 @@ largeLinkBorder
     public function testImageLarge()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.png';
+        $this->set_mig_config_image('test.png');
         $mig_config['pagetype'] = 'large';
 
         $this->mkdir($this->album_dir . '/large');
@@ -249,7 +249,7 @@ largeLinkBorder
     public function testVideo()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.mp4';
+        $this->set_mig_config_image('test.mp4');
         $mig_config['pagetype'] = 'image';
 
         touch($this->album_dir . '/test.mp4');
@@ -295,7 +295,8 @@ largeLinkBorder
     public function testAudio()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.mp3';
+        $this->set_mig_config_image('test.mp3');
+        $this->set_mig_config_image('test.mp3');
         $mig_config['pagetype'] = 'image';
 
         touch($this->album_dir . '/test.mp3');

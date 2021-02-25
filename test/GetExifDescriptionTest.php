@@ -14,7 +14,7 @@ final class GetExifDescriptionTest extends AbstractFileBasedTest
         require 'en.php';
         $mig_config['lang'] = $mig_config['lang_lib']['en'];
         $mig_config['albumdir'] = $this->album_dir;
-        $mig_config['image'] = NULL;
+        $this->set_mig_config_image(NULL);
     }
 
     public function testNoExifInfo()
@@ -25,7 +25,7 @@ final class GetExifDescriptionTest extends AbstractFileBasedTest
     public function test()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.jpg';
+        $this->set_mig_config_image('test.jpg');
         $dir = $this->album_dir . '/foo';
         $this->mkdir($dir);
         $this->touchWithContent($dir . '/exif.inf', "File name    : test.jpg\n
@@ -56,7 +56,7 @@ Comment      : foobar\n
     public function testEmptyFile()
     {
         global $mig_config;
-        $mig_config['image'] = 'test.jpg';
+        $this->set_mig_config_image('test.jpg');
         $dir = $this->album_dir . '/foo';
         $this->mkdir($dir);
         $this->touchWithContent($dir . '/exif.inf', "");
@@ -87,11 +87,11 @@ ISO equiv.   : 100\n
 Focal length : 41.0mm\n
 Comment      : comment2\n
 ");
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $this->assertEquals('foobar f2.8 flash&nbsp;used 640 63mm Canon EOS 70D 1/60 2013 Dec 05 06:37PM',
             getExifDescription('.', '%c %a %f %i %l %m %s %Y %M %D %T'));
 
-        $mig_config['image'] = 'test2.jpg';
+        $this->set_mig_config_image('test2.jpg');
         $this->assertEquals('comment2 f2.9  100 41.0mm Test 0.123 s 2000 Jan 01 12:34PM',
             getExifDescription('.', '%c %a %f %i %l %m %s %Y %M %D %T'));
     }
@@ -99,7 +99,7 @@ Comment      : comment2\n
     public function testFileNotInExifData()
     {
         global $mig_config;
-        $mig_config['image'] = 'not_existing.jpg';
+        $this->set_mig_config_image('not_existing.jpg');
         $dir = $this->album_dir . '/foo';
         $this->mkdir($dir);
         $this->touchWithContent($dir . '/exif.inf', "File name    : test.jpg\nComment      : foobar\n

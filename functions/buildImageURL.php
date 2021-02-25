@@ -1,105 +1,96 @@
 <?php
 
+function _addThumbExt($name, $unsafe_ext) {
+    global $mig_config;
+    if ($name) {
+        if ($mig_config['thumbext']) {
+            $name .= $mig_config['thumbext'];
+        } else {
+            $name .= $unsafe_ext;
+        }
+    }
+    return $name;
+}
+
 // buildImageURL() - Create HTML link for a particular image.
 
-function buildImageURL ( $currDir, $filename, $description, $short_desc )
+function buildImageURL ($unsafe_currDir, $unsafe_filename, $description, $short_desc )
 {
     global $mig_config;
 
     // Collect information about this object.
-    $fname  = getFileName($filename);
-    $ext    = getFileExtension($filename);
-    $type   = getFileType($filename);
-
-    // newCurrDir is currDir without leading "./"
-    $newCurrDir = getNewCurrDir($currDir);
-
-    // URL-encode currDir, keeping an old copy too
-    $oldCurrDir = $currDir;
-    $currDir = migURLencode($currDir);
+    $unsafe_fname  = getFileName($unsafe_filename);
+    $unsafe_ext    = getFileExtension($unsafe_filename);
+    $type       = getFileType($unsafe_filename);
 
     // URL-encoded the filename
-    $newFname = rawurlencode($fname);
+    $enc_fname = rawurlencode($unsafe_fname);
+    $enc_ext   = rawurlencode($unsafe_ext);
 
-    // Filename of the thumb
-    $thumbFile = '';
+    // URL-encode currDir, keeping an old copy too
+    $enc_oldCurrDir = rawurlencode($unsafe_currDir);
+    $enc_currDir = migURLencode($unsafe_currDir);
 
+    // local Filename of the thumb
+    $local_thumbFile = '';
     if ($type == 'image') {
+        $local_dir = $mig_config['albumdir'] . "/$unsafe_currDir/";
         if ($mig_config['usethumbsubdir']) {
-            $thumbFile = $mig_config['albumdir'] . "/$oldCurrDir/"
-                       . $mig_config['thumbsubdir'] . "/$fname.";
-
+            $local_thumbFile = $local_dir . $mig_config['thumbsubdir'] . "/$unsafe_fname.";
         } elseif ($mig_config['markertype'] == 'prefix') {
-            $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/"
-                        . $mig_config['markerlabel'] . "_$fname.";
-
+            $local_thumbFile = $local_dir . $mig_config['markerlabel'] . "_$unsafe_fname.";
         } elseif ($mig_config['markertype'] == 'suffix') {
-                $thumbFile  = $mig_config['albumdir']."/$oldCurrDir/$fname"
-                            . "_{$mig_config['markerlabel']}.";
+            $local_thumbFile = $local_dir . $unsafe_fname . "_{$mig_config['markerlabel']}.";
         }
 
         // if a thumbnail could be there
-        if($thumbFile) {
-            if ($mig_config['thumbext']) {
-                $thumbFile .= $mig_config['thumbext'];
-            } else {
-                $thumbFile .= $ext;
-            }
-        }
+        $local_thumbFile = _addThumbExt($local_thumbFile, $unsafe_ext);
     }
 
     // Only show a thumbnail if one exists.  Otherwise use a default
     // "generic" thumbnail image.
 
-    $thumbImage = '';
-    if (file_exists($thumbFile) && $type == 'image') {
+    $enc_thumbImage = '';
+    if (file_exists($local_thumbFile) && $type == 'image') {
+        $unsafe_thumbImage = '';
+        $unsafe_path = $mig_config['albumurlroot'] . "/$unsafe_currDir/";
         if ($mig_config['usethumbsubdir']) {
-            $thumbImage  = $mig_config['albumurlroot'] . "/$currDir/"
-                         . $mig_config['thumbsubdir'] . "/$fname.";
+            $unsafe_thumbImage = $unsafe_path . $mig_config['thumbsubdir'] . "/$unsafe_fname.";
         } elseif ($mig_config['markertype'] == 'prefix') {
-            $thumbImage  = $mig_config['albumurlroot']
-                         . "/$currDir/".$mig_config['markerlabel']
-                         . "_$fname.";
+            $unsafe_thumbImage = $unsafe_path . $mig_config['markerlabel'] . "_$unsafe_fname.";
         } elseif ($mig_config['markertype'] == 'suffix') {
-            $thumbImage  = $mig_config['albumurlroot']
-                         . "/$currDir/${fname}_{$mig_config['markerlabel']}.";
+            $unsafe_thumbImage = $unsafe_path . "${unsafe_fname}_{$mig_config['markerlabel']}.";
         }
 
         // if a thumbnail could be there
-        if ($thumbImage) {
-            if ($mig_config['thumbext']) {
-                $thumbImage .= $mig_config['thumbext'];
-            } else {
-                $thumbImage .= $ext;
-            }
-        }
+        $unsafe_thumbImage = _addThumbExt($unsafe_thumbImage, $unsafe_ext);
 
-        $thumbImage = migURLencode($thumbImage);
+        $enc_thumbImage = migURLencode($unsafe_thumbImage);
 
     } else {
         $newRoot = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
         switch ($type) {
             case 'image':
-                $thumbImage = $newRoot . '/images/' . $mig_config['nothumb_icon'];
+                $enc_thumbImage = $newRoot . '/images/' . $mig_config['nothumb_icon'];
                 break;
             case 'audio':
-                $thumbImage = $newRoot . '/images/' . $mig_config['music_icon'];
+                $enc_thumbImage = $newRoot . '/images/' . $mig_config['music_icon'];
                 break;
             case 'video':
-                $thumbImage = $newRoot . '/images/' . $mig_config['movie_icon'];
+                $enc_thumbImage = $newRoot . '/images/' . $mig_config['movie_icon'];
                 break;
         }
     }
 
     // Get description, if any
     if ($mig_config['commentfileperimage']) {
-        list($alt_desc, $desc) = getImageDescFromFile($currDir, "$fname.$ext");
+        list($alt_desc, $desc) = getImageDescFromFile($enc_currDir, "$unsafe_fname.$unsafe_ext");
         // Get a conventional comment if there isn't one here.
         if (! $alt_desc) {
-            list($alt_desc, $desc) = getImageDescription("$fname.$ext", $description, $short_desc);
+            list($alt_desc, $desc) = getImageDescription("$unsafe_fname.$unsafe_ext", $description, $short_desc);
         }
     } else {
-        list($alt_desc, $desc) = getImageDescription("$fname.$ext", $description, $short_desc);
+        list($alt_desc, $desc) = getImageDescription("$unsafe_fname.$unsafe_ext", $description, $short_desc);
     }
 
     // If there's a full description but no alt, use the full as alt.
@@ -109,7 +100,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     $alt_desc = strip_tags($alt_desc);
 
-    $localFilename = $mig_config['albumdir'] . "/$oldCurrDir/$filename";
+    $localFilename = $mig_config['albumdir'] . "/$unsafe_currDir/$unsafe_filename";
 
     // Figure out the size in bytes for display
     $imageFileSize = filesize($localFilename);
@@ -136,8 +127,8 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
 
     // Figure out thumbnail geometry
     $thumbHTML = '';
-    if (file_exists($thumbFile) && $type == 'image') {
-        $thumbProps = @GetImageSize($thumbFile);
+    if (file_exists($local_thumbFile) && $type == 'image') {
+        $thumbProps = @GetImageSize($local_thumbFile);
         if ($thumbProps) {
             $thumbHTML = $thumbProps[3];
         }
@@ -152,19 +143,20 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
             $url .= ' title="' . $alt_desc . '"';
         }
 
-        $url .= ' href="' . $mig_config['albumurlroot'] . '/' . $currDir . '/'
-              . $fname . '.' . $ext . '">'
-              . '<img src="' . $thumbImage . '" /></a>';
+        $url .= ' href="' . $mig_config['albumurlroot'] . '/' . $enc_currDir . '/'
+              . $enc_fname . '.' . $enc_ext . '">'
+              . '<img src="' . $enc_thumbImage . '" /></a>';
 
 
-        $fileinfotable = array ( 'n' => $filename,
-                                     's' => $imageFileSize
-                                    // 'i' => $imageWidth.'x'.$imageHeight
-                                     );
         // If $fileInfoFormatString is set, show the file info
         if ($mig_config['fileinfoformatstring']) {
             $url .= '<br />';
 
+            $fileinfotable = array(
+                'n' => migHtmlSpecialChars($unsafe_filename),
+                's' => $imageFileSize
+                // 'i' => $imageWidth.'x'.$imageHeight
+            );
             $newstr=replaceString($mig_config['fileinfoformatstring'][$type],$fileinfotable);
 
             if (!$mig_config['nothumbs']) {
@@ -204,8 +196,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         }
 
         $url .= $mig_config['baseurl'] . '?currDir='
-             . $currDir . '&amp;pageType=image&amp;image=' . $newFname
-             . '.' . $ext;
+             . $enc_currDir . '&amp;pageType=image&amp;image=' . $enc_fname . '.' . $enc_ext;
 
         if ($mig_config['startfrom']) {
             $url .= '&amp;startFrom=' . $mig_config['startfrom'];
@@ -222,7 +213,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
             if ($mig_config['imagepoptype'] == 'reuse') {
                 $url .= 'mig_window_11190874';
             } else {
-                $url .= 'mig_window_' . time() . '_' . $newFname;
+                $url .= 'mig_window_' . time() . '_' . $enc_fname;
             }
 
             $url .= "','width=$popup_width,height=$popup_height,"
@@ -248,9 +239,9 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         // If $noThumbs is true, just print the image filename rather
         // than the <IMG> tag pointing to a thumbnail.
         if ($mig_config['nothumbs']) {
-            $url .= "$newFname.$ext";
+            $url .= "$enc_fname.$enc_ext";
         } else {
-            $url .= '<img src="' . $thumbImage . '"';
+            $url .= '<img src="' . $enc_thumbImage . '"';
                 // Only print the ALT tag if it's wanted.
                 if (! $mig_config['suppressalttags']) {
                     $url .= ' alt="' . $alt_desc . '"';
@@ -264,15 +255,15 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         // If $fileInfoFormatString is set, show the image info
         if ($mig_config['fileinfoformatstring']) {
             $url .= '<br />';
-           //replace variables of the fileinfoformatstring
+            //replace variables of the fileinfoformatstring
             //       %n = Filename
             //       %s = FileSize
             //       %i = ImageSize
-
-            $imageSize = $imageWidth > 0 ? $imageWidth.'x'.$imageHeight : '';
-            $fileinfotable = array ( 'n' => $fname . '.' . $ext,
-                                     's' => $imageFileSize,
-                                     'i' => $imageSize);
+            $fileinfotable = array(
+                'n' => migHtmlSpecialChars($unsafe_fname . '.' . $unsafe_ext),
+                's' => $imageFileSize,
+                'i' => $imageWidth > 0 ? $imageWidth . 'x' . $imageHeight : ''
+            );
 
              $newstr=replaceString($mig_config['fileinfoformatstring'][$type],$fileinfotable);
 

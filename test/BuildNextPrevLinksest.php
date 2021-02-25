@@ -21,7 +21,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
         $mig_config['largesubdir'] = NULL;
         $mig_config['prevformatstring'] = '%l';
         $mig_config['nextformatstring'] = '%l';
-        $mig_config['image'] = NULL;
+        $mig_config['enc_image'] = NULL;
         $mig_config['pagetype'] = 'image';
         $mig_config['markertype'] = 'suffix';
         $mig_config['markerlabel'] = NULL;
@@ -37,7 +37,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function test()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         touch($this->album_dir . '/test1.jpg');
         touch($this->album_dir . '/test2.jpg');
         $this->assertEquals(array(
@@ -46,7 +46,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
                 2 => '#1&nbsp;of&nbsp;2'
             ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = 'test2.jpg';
+        $this->set_mig_config_image('test2.jpg');
         $this->assertEquals(array(
                 0 => '<span class="inactivelink">next&nbsp;image</span>',
                 1 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=test1.jpg">previous&nbsp;image</a>',
@@ -57,7 +57,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testStartFrom()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['startfrom'] = 1;
         touch($this->album_dir . '/test1.jpg');
         touch($this->album_dir . '/test2.jpg');
@@ -71,7 +71,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testLanguage()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['mig_dl'] = 'de';
         touch($this->album_dir . '/test1.jpg');
         touch($this->album_dir . '/test2.jpg');
@@ -85,7 +85,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testSortByDateAscend()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['sorttype'] = 'bydate-ascend';
         touch($this->album_dir . '/test1.jpg', 3);
         touch($this->album_dir . '/test2.jpg', 2);
@@ -99,7 +99,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testSortByDateDescend()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['sorttype'] = 'bydate-descend';
         touch($this->album_dir . '/test1.jpg', 3);
         touch($this->album_dir . '/test2.jpg', 2);
@@ -113,7 +113,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testWithHiddenFiles()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['hidden'] = array('test2.jpg' => TRUE);
         touch($this->album_dir . '/test1.jpg');
         touch($this->album_dir . '/test2.jpg');
@@ -124,14 +124,14 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
                 2 => '#1&nbsp;of&nbsp;2'
             ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = 'test3.jpg';
+        $this->set_mig_config_image('test3.jpg');
         $this->assertEquals(array(
                 0 => '<span class="inactivelink">next&nbsp;image</span>',
                 1 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=test1.jpg">previous&nbsp;image</a>',
                 2 => '#2&nbsp;of&nbsp;2'
             ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = 'test2.jpg';
+        $this->set_mig_config_image('test2.jpg');
         $mig_config['hidden'] = array('test3.jpg' => TRUE);
         $this->assertEquals(array(
                 0 => '<span class="inactivelink">next&nbsp;image</span>',
@@ -143,7 +143,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testWithSuffixThumbs()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['markertype'] = 'suffix';
         $mig_config['markerlabel'] = 'thumb';
         touch($this->album_dir . '/test1.jpg');
@@ -155,7 +155,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
                 2 => '#1&nbsp;of&nbsp;2'
             ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = 'test2.jpg';
+        $this->set_mig_config_image('test2.jpg');
         $this->assertEquals(array(
                 0 => '<span class="inactivelink">next&nbsp;image</span>',
                 1 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=test1.jpg">previous&nbsp;image</a>',
@@ -166,7 +166,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testWithPrefixThumbs()
     {
         global $mig_config;
-        $mig_config['image'] = 'test1.jpg';
+        $this->set_mig_config_image('test1.jpg');
         $mig_config['markertype'] = 'prefix';
         $mig_config['markerlabel'] = 'thumb';
         touch($this->album_dir . '/test1.jpg');
@@ -178,7 +178,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
                 2 => '#1&nbsp;of&nbsp;2'
             ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = 'test2.jpg';
+        $this->set_mig_config_image('test2.jpg');
         $this->assertEquals(array(
                 0 => '<span class="inactivelink">next&nbsp;image</span>',
                 1 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=test1.jpg">previous&nbsp;image</a>',
@@ -189,7 +189,7 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
     public function testWithInvalidFileNames()
     {
         global $mig_config;
-        $mig_config['image'] = '2-test.jpg';
+        $this->set_mig_config_image('2-test.jpg');
         $mig_config['imageFilenameRegexpr'] = '=^.*-test\.jpg$=';
         touch($this->album_dir . '/1-invalid.jpg');
         touch($this->album_dir . '/2-test.jpg');
@@ -204,14 +204,14 @@ final class BuildNextPrevLinksest extends AbstractFileBasedTest
             2 => '#2&nbsp;of&nbsp;7' // FIXME invalid files should not be counted here
         ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = '4-test.jpg';
+        $this->set_mig_config_image('4-test.jpg');
         $this->assertEquals(array(
             0 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=6-test.jpg">next&nbsp;image</a>',
             1 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=2-test.jpg">previous&nbsp;image</a>',
             2 => '#4&nbsp;of&nbsp;7'
         ), buildNextPrevLinks(".", array()));
 
-        $mig_config['image'] = '6-test.jpg';
+        $this->set_mig_config_image('6-test.jpg');
         $this->assertEquals(array(
             0 => '<span class="inactivelink">next&nbsp;image</span>',
             1 => '<a href="https://example.com/baseurl?pageType=image&amp;currDir=.&amp;image=4-test.jpg">previous&nbsp;image</a>',

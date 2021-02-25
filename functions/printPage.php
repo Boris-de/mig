@@ -10,7 +10,7 @@ function printPage($currDir, $pathConvert, $image)
         = parseMigCf($mig_config['albumdir'] . "/$currDir");
 
     // strip URL encoding here too
-    $mig_config['image'] = rawurldecode($mig_config['image']);
+    $mig_config['enc_image'] = rawurldecode($mig_config['enc_image']);
 
     // if pageType is "folder") generate a folder view
     if ($mig_config['pagetype'] == 'folder') {
@@ -89,8 +89,7 @@ function printPage($currDir, $pathConvert, $image)
         $largeLinkBorder = '';
         if ($mig_config['uselargeimages'] &&
             file_exists($mig_config['albumdir'] . "/$currDir/"
-                . $mig_config['largesubdir']
-                . '/' . $mig_config['image'])) {
+                        . $mig_config['largesubdir'] . '/' . $mig_config['unsafe_image'])) {
             $largeLink = buildLargeLink($currDir);
 
             // Only build this link if we plan to use it

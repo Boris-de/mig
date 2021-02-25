@@ -71,7 +71,7 @@ final class BuildBackLinkTest extends AbstractFileBasedTestCase
 
     public function testTreeUpLarge()
     {
-        $this->set_mig_config('image', 'image.jpg');
+        $this->set_mig_config('enc_image', 'image.jpg');
         $this->set_mig_config('pagetype', 'large');
         $this->set_mig_config('homelink', 'https://example.com/home');
         $this->assertEquals('<a href="https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=image.jpg">back&nbsp;to&nbsp;web-sized&nbsp;view</a>',

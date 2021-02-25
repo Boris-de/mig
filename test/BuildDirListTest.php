@@ -180,4 +180,49 @@ final class BuildDirListTest extends AbstractFileBasedTest
    </tr>
   </tbody></table>", buildDirList('.', 1, array(), array()));
     }
+
+    public function testUnicodeFolders()
+    {
+        $this->mkdir($this->album_dir.'/麻婆豆腐');
+        $this->mkdir($this->album_dir.'/Łódź');
+
+        $this->assertEquals("
+   <table summary=\"Folder Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+     <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./%C5%81%C3%B3d%C5%BA\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"Łódź\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./%C5%81%C3%B3d%C5%BA\">Łódź</a></td>
+   </tr>
+   <tr>
+     <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./%E9%BA%BB%E5%A9%86%E8%B1%86%E8%85%90\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"麻婆豆腐\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./%E9%BA%BB%E5%A9%86%E8%B1%86%E8%85%90\">麻婆豆腐</a></td>
+   </tr>
+  </tbody></table>", buildDirList('.', 1, array(), array()));
+    }
+
+    /**
+     * Does not work on windows because of the special chars in image name
+     * @requires OSFAMILY Linux
+     */
+    public function testSpecialCharFolders()
+    {
+        $this->mkdir($this->album_dir.'/aaa bbb_ccc');
+        $this->mkdir($this->album_dir.'/test<>&');
+        $this->mkdir($this->album_dir.'/test<>&/subtest<>&');
+        $this->set_mig_config('currDirNameRegexpr', '#.*#');
+
+        $this->assertEquals("
+   <table summary=\"Folder Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+     <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./aaa%20bbb_ccc\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"aaa bbb ccc\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./aaa%20bbb_ccc\">aaa&nbsp;bbb&nbsp;ccc</a></td>
+   </tr>
+   <tr>
+     <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test%3C%3E%26\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test&lt;&gt;&amp;\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test%3C%3E%26\">test&lt;&gt;&amp;</a></td>
+   </tr>
+  </tbody></table>", buildDirList('.', 1, array(), array()));
+
+        $this->assertEquals("
+   <table summary=\"Folder Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+     <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test%3C%3E%26/subtest%3C%3E%26\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"subtest&lt;&gt;&amp;\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test%3C%3E%26/subtest%3C%3E%26\">subtest&lt;&gt;&amp;</a></td>
+   </tr>
+  </tbody></table>", buildDirList('./test<>&', 1, array(), array()));
+    }
 }

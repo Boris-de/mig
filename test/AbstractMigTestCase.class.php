@@ -2,6 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once 'migHtmlSpecialChars.php';
+
 abstract class AbstractFileBasedTestCase extends TestCase {
     static function assertStringContainsString($needle, $haystack, $message = ''): void
     {

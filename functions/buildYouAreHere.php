@@ -24,7 +24,7 @@ function buildYouAreHere ( $currDir )
         // Get a URL-encoded copy of $workingCopy
         $encodedCopy = migURLencode($workingCopy);
 
-        if ($mig_config['image'] == '' && $workingCopy == $currDir) {
+        if ($mig_config['enc_image'] == '' && $workingCopy == $currDir) {
             $url = '&nbsp;&gt;&nbsp;' . $label;
         } else {
             $url = '&nbsp;&gt;&nbsp;<a href="' . $mig_config['baseurl'] . '?currDir='
@@ -62,8 +62,8 @@ function buildYouAreHere ( $currDir )
 
     // If there's an image, tack it onto the end of the hereString
     // unless we have $omitImageName set to TRUE
-    if ($mig_config['image'] != '' && ! $mig_config['omitimagename']) {
-        $hereString .= '&nbsp;&gt;&nbsp;' . $mig_config['image'];
+    if ($mig_config['enc_image'] != '' && ! $mig_config['omitimagename']) {
+        $hereString .= '&nbsp;&gt;&nbsp;' . $mig_config['enc_image'];
     }
 
     return $hereString;

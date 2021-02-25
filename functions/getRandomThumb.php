@@ -2,7 +2,7 @@
 
 // getRandomThumb() - Find a random thumbnail to show instead of the folder icon.
 
-function getRandomThumb ( $file, $folder, $currDir )
+function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
 {
     global $mig_config;
     
@@ -13,14 +13,14 @@ function getRandomThumb ( $file, $folder, $currDir )
 
     $randThumbList = array ();          // initialize
     if ($mig_config['usethumbsubdir']) {
-        $myThumbDir = $folder . '/' . $mig_config['thumbsubdir'];
+        $unsafe_thumb_dir = $unsafe_folder . '/' . $mig_config['thumbsubdir'];
 
         // Does the thumb subdir exist?  Why would it not?  It would not
         // if we're in a folder that contains only other folders, for
         // example.  Or it might just not exist because no one made thumbs,
         // in which case we can't show any thumbs anyway.
-        if (is_dir($myThumbDir)) {
-            $readSample = opendir($myThumbDir);
+        if (is_dir($unsafe_thumb_dir)) {
+            $readSample = opendir($unsafe_thumb_dir);
 
             // Read each item in the directory...
             while ($sample = readdir($readSample)) {
@@ -35,7 +35,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                     // And use the first valid match found
                     if (getFileType($sample)) {
                         $mySample = $mig_config['albumurlroot'] . '/'
-                                  . migURLencode($currDir)
+                                  . migURLencode($unsafe_currDir)
                                   . '/' . migURLencode($file)
                                   . '/' .$mig_config['thumbsubdir']
                                   . '/' . $sample;
@@ -52,7 +52,7 @@ function getRandomThumb ( $file, $folder, $currDir )
             }
             closedir($readSample);
 
-        } elseif (is_dir($folder)) {
+        } elseif (is_dir($unsafe_folder)) {
 
             // No thumb subdir exists, although $useThumbSubdir
             // is set TRUE.  We're either in a folder which has no
@@ -64,12 +64,11 @@ function getRandomThumb ( $file, $folder, $currDir )
             // This should be able to drill down as far as necessary
             // until a valid thumb is found.
 
-            $dirlist = opendir($folder);
+            $dirlist = opendir($unsafe_folder);
             $subfList = array ();
 
             while ($item = readdir($dirlist)) {
-                if (is_dir("$folder/$item") && $item != '.'
-                            && $item != '..')
+                if (is_dir("$unsafe_folder/$item") && $item != '.' && $item != '..')
                 {
 
                     // Ignore hidden items
@@ -89,7 +88,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                     if ($mig_config['userealrandthumbs']) {
                         $subfList[] = $item;
                     } else {
-                        $mySample = getRandomThumb($file.'/'.$item, $folder.'/'.$item, $currDir);
+                        $mySample = getRandomThumb($file.'/'.$item, $unsafe_folder.'/'.$item, $unsafe_currDir);
 
                         if ($mySample) {
                             return $mySample;
@@ -102,7 +101,7 @@ function getRandomThumb ( $file, $folder, $currDir )
             if (!empty($subfList)) {
                 $randval = rand(0,(sizeof($subfList)-1)); // get random folder
                 $mySample = getRandomThumb($file.'/'.$subfList[$randval],
-                                    $folder.'/'.$subfList[$randval], $currDir);
+                                 $unsafe_folder.'/'.$subfList[$randval], $unsafe_currDir);
 
                 return $mySample;
             }
@@ -113,13 +112,13 @@ function getRandomThumb ( $file, $folder, $currDir )
 
     } else {
 
-        if (!is_dir($folder)) {
+        if (!is_dir($unsafe_folder)) {
             // If it's not a directory, just bail out now.
             return FALSE;
         }
 
         // Open $folder as a directory handle
-        $readSample = opendir($folder);
+        $readSample = opendir($unsafe_folder);
 
         // Iterate through all files in this folder...
         while ($sample = readdir($readSample)) {
@@ -148,8 +147,7 @@ function getRandomThumb ( $file, $folder, $currDir )
             }
 
             if ($mySample) {
-                $mySample = $mig_config['albumurlroot'] . '/' . $currDir . '/' . $file
-                          . '/' . $mySample;
+                $mySample = $mig_config['albumurlroot'] . '/' . $unsafe_currDir . '/' . $file . '/' . $mySample;
 
                 // If "real rand" is in effect, add to the list for
                 // later random selection.  Otherwise just return
@@ -161,11 +159,10 @@ function getRandomThumb ( $file, $folder, $currDir )
                 }
 
             } else {
-                $dirlist = opendir($folder);
+                $dirlist = opendir($unsafe_folder);
                 $subfList = array ();
                 while ($item = readdir($dirlist)) {
-                    if (is_dir("$folder/$item") && $item != '.'
-                               && $item != '..')
+                    if (is_dir("$unsafe_folder/$item") && $item != '.' && $item != '..')
                     {
 
                         // Ignore hidden items
@@ -181,8 +178,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                         if ($mig_config['userealrandthumbs']) {
                             $subfList[] = $item;
                         } else {
-                            $mySample = getRandomThumb($file.'/'.$item, $folder.'/'.$item,
-                                            $currDir);
+                            $mySample = getRandomThumb($file.'/'.$item, $unsafe_folder.'/'.$item, $unsafe_currDir);
 
                             if ($mySample) {
                                 return $mySample;
@@ -195,7 +191,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                 if (isset($subfList[0])) {
                     $randval = rand(0,(sizeof($subfList)-1)); // get random folder
                     $mySample = getRandomThumb($file.'/'.$subfList[$randval],
-                                        $folder.'/'.$subfList[$randval], $currDir);
+                                        $unsafe_folder.'/'.$subfList[$randval], $unsafe_currDir);
 
                     if ($mySample) {
                         return $mySample;

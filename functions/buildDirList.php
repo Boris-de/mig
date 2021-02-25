@@ -2,15 +2,15 @@
 
 // buildDirList() - Build list of directories for display.
 
-function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
+function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
 {
     global $mig_config;
 
-    $oldCurrDir = $currDir;         // Stash this to build full path
+    $old_unsafe_CurrDir = $unsafe_currDir;         // Stash this to build full path
 
     // Create a URL-encoded version of $currDir
-    $enc_currdir = $currDir;
-    $currDir = htmlentities(rawurldecode($enc_currdir));
+    $unsafe_currDir = rawurldecode($unsafe_currDir);
+    $enc_currDir = migHtmlSpecialChars($unsafe_currDir);
 
     $directories = array ();                    // prototypes
     $counts = array ();
@@ -18,20 +18,20 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     $samples = array ();
     $filedates = array ();
 
-    $x = $mig_config['albumdir'].'/'.$currDir;
-    if (is_dir($x)) {
+    $unsafe_abs_currDir = $mig_config['albumdir'].'/'.$unsafe_currDir;
+    if (is_dir($unsafe_abs_currDir)) {
         // Open directory handle
-        $dir = opendir($x);
+        $dir = opendir($unsafe_abs_currDir);
     } else {
-        print "ERROR: no such currDir '$currDir'<br>";
+        print "ERROR: no such currDir '$enc_currDir'<br>";
         exit;
     }
 
     while ($file = readdir($dir)) {
 
         // Only pay attention to directories
-        $x = $mig_config['albumdir'].'/'.$currDir.'/'.$file;
-        if (! is_dir($x)) {
+        $unsafe_abs_childDir = $unsafe_abs_currDir.'/'.$file;
+        if (!is_dir($unsafe_abs_childDir)) {
             continue;
         }
 
@@ -61,8 +61,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
 
         // And stash a timestamp
         if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
-            $timestamp = filemtime($mig_config['albumdir'].'/'.$currDir
-                                   .'/'.$file);
+            $timestamp = filemtime($unsafe_abs_childDir);
             $filedates["$timestamp-$file"] = $file;
         }
     }
@@ -106,17 +105,17 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
     // Iterate through all folders now that we have our final list.
     foreach ($presorted as $file => $junk) {
 
-        $folder = $mig_config['albumdir'].'/'.$currDir.'/'.$file;
+        $unsafe_folder = $mig_config['albumdir'].'/'.$unsafe_currDir.'/'.$file;
 
         // Calculate how many images in the folder if desired
         if ($mig_config['viewfoldercount']) {
-            $counts[$file] = getNumberOfImages($folder);
-            $countdir[$file] = getNumberOfDirs($folder);
+            $counts[$file] = getNumberOfImages($unsafe_folder);
+            $countdir[$file] = getNumberOfDirs($unsafe_folder);
         }
 
         // Handle random folder thumbnails if desired
         if ($mig_config['randomfolderthumbs']) {
-            $samples[$file] = getRandomThumb($file, $folder, $currDir);
+            $samples[$file] = getRandomThumb($file, $unsafe_folder, $unsafe_currDir);
         }
     }
 
@@ -134,11 +133,11 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         }
 
         // Surmise the full path to work with
-        $newCurrDir = $oldCurrDir . '/' . $file;
+        $unsafe_newCurrDir = $old_unsafe_CurrDir . '/' . $file;
 
         // URL-encode the directory name in case it contains spaces
         // or other weirdness.
-        $enc_file = migURLencode($newCurrDir);
+        $enc_file = migURLencode($unsafe_newCurrDir);
 
         // Build the link itself for re-use below
         $linkURL = '<a href="'
@@ -160,7 +159,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
                 $nbspfile = substr($nbspfile,0,$mig_config['foldernamelength']-1)
                           . '(..)';
         }
-        $nbspfile = str_replace(' ', '&nbsp;', $nbspfile);
+        $nbspfile = str_replace(' ', '&nbsp;', migHtmlSpecialChars($nbspfile));
         $nbspfile = str_replace('_', '&nbsp;', $nbspfile);
 
         if ($mig_config['randomfolderthumbs']) {
@@ -189,8 +188,8 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
                 $fext = getFileExtension($mig_config['usethumbfile'][$file]);
             }
 
-            $directoryList .= $mig_config['albumurlroot'] . '/' . $currDir
-                            . '/' . $file . '/';
+            $directoryList .= $mig_config['albumurlroot'] . '/' . $enc_currDir
+                            . '/' . migHtmlSpecialChars($file) . '/';
             if ($mig_config['usethumbsubdir']) {
                 $directoryList .= $mig_config['thumbsubdir'] . '/'
                                 . $fname . '.' . $fext;
@@ -226,7 +225,7 @@ function buildDirList ( $currDir, $maxColumns, $presorted, $ficons )
         }
 
         // Display _ as space
-        $altlabel = str_replace('_', ' ', $file);
+        $altlabel = str_replace('_', ' ', migHtmlSpecialChars($file));
 
         // Output the rest of the link, label, etc.
         $directoryList .= '" '

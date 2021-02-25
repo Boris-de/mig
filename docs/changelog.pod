@@ -38,6 +38,12 @@ The unused buildRSS function was removed from the source code.
 You can now use $albumRoot in the config to use a name different from "albums" for the folder where your pictures are,
 the default will of course still be "/albums".
 
+=head3 Bugfixes
+
+This release fixes a bug with folders and filenames that have special characters which have their own entity in HTML.
+Previously those did not work because the encoded foldername or filename was used to read the data (thanks to Witold
+for the report)
+
 =head2 Version 1.6.0 (Sun, 10 Oct 2020)
 
 =head3 Important changes

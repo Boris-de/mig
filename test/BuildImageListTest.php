@@ -23,6 +23,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         require 'en.php';
         $mig_config['lang'] = $mig_config['lang_lib']['en'];
         $mig_config['basedir'] = $this->mig_dir;
+        $mig_config['charset'] = 'UTF-8';
         $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';
         $mig_config['foldersorttype'] = 'default';
         $mig_config['hidden'] = array();
@@ -322,6 +323,39 @@ final class BuildImageListTest extends AbstractFileBasedTest
    <tr>
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg\">test1.jpg</a><br /></td>
   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    public function testUnicodeImages()
+    {
+        touch($this->album_dir.'/麻婆豆腐.jpg');
+        touch($this->album_dir.'/Łódź.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=%C5%81%C3%B3d%C5%BA.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />Łódź.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=%E9%BA%BB%E5%A9%86%E8%B1%86%E8%85%90.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />麻婆豆腐.jpg</td>
+   </tr>
+  </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
+    }
+
+    /**
+     * Does not work on windows because of the special chars in image name
+     * @requires OSFAMILY Linux
+     */
+    public function testSpecialCharImages()
+    {
+        $this->set_mig_config('imageFilenameRegexpr', '=.*=');
+        touch($this->album_dir.'/aaa bbb_ccc.jpg');
+        touch($this->album_dir.'/test<>&.jpg');
+
+        $this->assertEquals("
+  <table summary=\"Image Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=aaa%20bbb_ccc.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />aaa bbb_ccc.jpg</td>
+    <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test%3C%3E%26.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test&lt;&gt;&amp;.jpg</td>
+   </tr>
   </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
     }
 

@@ -240,32 +240,31 @@ if ( $currDir != './' && preg_match('#/$#', $currDir) ) {
 $currDir = rawurldecode($currDir);
 
 // Get image, if there is one.
-if (! isset($image)) {
-    $image = getHttpGetVariable('image');
+if (!isset($unsafe_image)) {
+    $unsafe_image = getHttpGetVariable('image');
 }
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
-if (_get_magic_quotes_gpc() == 1 && $image) {
-    $image = stripslashes($image);
+if (_get_magic_quotes_gpc() == 1 && $unsafe_image) {
+    $unsafe_image = stripslashes($unsafe_image);
 }
 
 // Look at $image from a security angle.
 // Don't let folks go outside the album directory base
 // Don't let folks define ANY directory here
-if (strstr($image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $image)) {
+if (strstr($unsafe_image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $unsafe_image)) {
     print 'ERROR: $image is invalid.  Exiting.';
     exit;
 }
 
-$mig_config['image'] = htmlentities($image);
+$mig_config['unsafe_image'] = $unsafe_image;
+$mig_config['enc_image'] = migHtmlSpecialChars($unsafe_image);
 
 // check if the image exists...
-
-if (($mig_config['image'])AND(!file_exists($mig_config['albumdir']."/$currDir/".$mig_config['image']))){
-    echo "ERROR: ".$currDir."/".$mig_config['image']." is invalid.  Exiting.";
+if (($mig_config['enc_image'])AND(!file_exists($mig_config['albumdir']."/$currDir/".$unsafe_image))){
+    echo "ERROR: ".$currDir."/".$mig_config['enc_image']." is invalid.  Exiting.";
     exit;
 }
-
 
 
 
@@ -383,6 +382,6 @@ if (! $mig_config['foldersorttype']) {
     $mig_config['foldersorttype'] = $mig_config['sorttype'];
 }
 
-printPage($currDir, $pathConvert, $image);
+printPage($currDir, $pathConvert, $unsafe_image);
 
 ?>
