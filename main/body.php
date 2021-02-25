@@ -59,8 +59,23 @@ if (file_exists($mig_config['basedir'].'/mig/config.php')) {
 $pathConvert = new ConvertIncludePath($pathConvertFlag, $pathConvertRegex, $pathConvertTarget);
 
 // Include config file, making sure to modify the include path if appropriate.
-if ($configFile) {
-    include($pathConvert->convertIncludePath($configFile));
+if (isset($configFile)) {
+    $configFile = $pathConvert->convertIncludePath($configFile);
+    include($configFile);
+}
+
+// Note: If you change the directory here also make sure to change $albumURLroot
+$mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums live
+
+// apply open_basedir restrictions (if enabled)
+if ($migOpenBasedir === TRUE) {
+    $openBasedirs = $migOpenBasedirExtraDirs;
+    if (isset($configFile)) {
+        array_push($openBasedirs, $configFile);
+    }
+    array_push($openBasedirs, $mig_config['albumdir']);
+    array_push($openBasedirs, $mig_config['basedir'] . '/templates');
+    ini_set('open_basedir', implode(PATH_SEPARATOR, $openBasedirs));
 }
 
 //for old compatibility: remove in mig 2.0:
@@ -175,12 +190,6 @@ if (isset($PATH_INFO) && isset($jumpMap[$PATH_INFO]) && $SERVER_NAME) {
          . "?$jumpMap[$PATH_INFO]");
     exit;
 }
-
-//moved this some lines up... need it for checking if the image-file exists. wmk
-
-$mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums live
-// If you change the directory here also make sure to change $albumURLroot
-
 
 
 // Get currDir.  If there isn't one, default to "."

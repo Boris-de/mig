@@ -78,5 +78,7 @@ $audio_extensions           = array(
         'aac',             // Advanced Audio Coding
         'mpc', 'mp+',      // Musepack
     );
+$migOpenBasedir = TRUE;
+$migOpenBasedirExtraDirs = array();
 
 ?>

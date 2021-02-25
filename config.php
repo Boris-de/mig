@@ -916,6 +916,24 @@ $currDirNameRegexpr         = '=^([^<>]|\.\.)*$=';
 // $video_extensions           = array();
 // $audio_extensions           = array();
 
+// -----------------------------------------------------------------
+//                         OPEN BASE DIR
+// -----------------------------------------------------------------
+//
+// This option will reset PHP's open_basedir setting to the basedir
+// of mig itself at the earliest possible time.
+//
+// Note: this defaults to "false" when unset, but this default config
+// sets it to true as a safe default. Usually you should not need to
+// disable this unless you have a special filesystem setup, in which
+// you should prefer to specify additional directories with the
+// option $migOpenBasedirExtraDirs (which is an array of paths)
+//
+// Example:
+//     $migOpenBasedir = TRUE;
+//     $migOpenBasedirExtraDirs = array('/path/to/special/dir', '/path/to/other/dir');
+$migOpenBasedir = TRUE;
+//$migOpenBasedirExtraDirs = array();
 
 //  -----------------------------------------------------------------
 //                         ERROR REPORTING

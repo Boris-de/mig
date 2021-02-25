@@ -8,6 +8,9 @@
 
 =head3 Important changes
 
+Mig now has support for PHP's open_basedir configuration. It's off by default, but enabled in the default C<config.php>.
+If you want to enable this feature, check the new options in that file.
+
 The contrib folder was moved to a separate repository and can now be found at L<https://github.com/Boris-de/mig-contrib>
 
 The mkGallery.pl script was moved from the main bundle to the contrib repo.
