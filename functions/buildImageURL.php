@@ -51,17 +51,18 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
     // Only show a thumbnail if one exists.  Otherwise use a default
     // "generic" thumbnail image.
 
+    $thumbImage = '';
     if (file_exists($thumbFile) && $type == 'image') {
         if ($mig_config['usethumbsubdir']) {
             $thumbImage  = $mig_config['albumurlroot'] . "/$currDir/"
                          . $mig_config['thumbsubdir'] . "/$fname.";
         } elseif ($mig_config['markertype'] == 'prefix') {
-                $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/".$mig_config['markerlabel']
-                             . "_$fname.";
+            $thumbImage  = $mig_config['albumurlroot']
+                         . "/$currDir/".$mig_config['markerlabel']
+                         . "_$fname.";
         } elseif ($mig_config['markertype'] == 'suffix') {
-                $thumbImage  = $mig_config['albumurlroot']
-                             . "/$currDir/${fname}_{$mig_config['markerlabel']}.";
+            $thumbImage  = $mig_config['albumurlroot']
+                         . "/$currDir/${fname}_{$mig_config['markerlabel']}.";
         }
 
         // if a thumbnail could be there
@@ -215,6 +216,7 @@ function buildImageURL ( $currDir, $filename, $description, $short_desc )
         }
 
         if ($mig_config['imagepopup']) {
+            assert(isset($popup_width) && isset($popup_height));
             $url .= "','";
 
             if ($mig_config['imagepoptype'] == 'reuse') {

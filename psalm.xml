@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="https://getpsalm.org/schema/config"
+       xsi:schemaLocation="https://getpsalm.org/schema/config https://psalm.dev/schema/config">
+  <projectFiles>
+    <file name="index.php"/>
+  </projectFiles>
+  <issueHandlers>
+    <MissingParamType errorLevel="suppress"/>
+    <MissingReturnType errorLevel="suppress"/>
+    <MissingPropertyType errorLevel="suppress"/>
+    <UnresolvableInclude errorLevel="suppress"/>
+    <PossiblyUndefinedGlobalVariable>
+      <errorLevel type="suppress">
+        <referencedVariable name="$mig_config"/>
+      </errorLevel>
+    </PossiblyUndefinedGlobalVariable>
+  </issueHandlers>
+</psalm>

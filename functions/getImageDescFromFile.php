@@ -23,7 +23,7 @@ function getImageDescFromFile ( $currDir, $image )
         // This double-check exists so that files ending without
         // a proper newline character are not truncated.
         // This says "while (not EOF) and ($line is not empty)"...
-        $short_desc = FALSE;
+        $short_desc = '';
         while ( $line || ! feof($file)) {
             $line = trim($line);
 

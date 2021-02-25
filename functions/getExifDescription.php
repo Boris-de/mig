@@ -43,7 +43,8 @@ function getExifDescription ( $currDir, $formatString )
                 $shutter[$fname] = '';
                 $aperture[$fname] = '';
                 $flash[$fname] = '';
-
+            } elseif ($fname === NULL) {
+                continue; // no need to parse a line that we cannot store without a filename
             } elseif (strpos($line, 'Comment      : ') === 0) {
                 $comment = str_replace('Comment      : ', '', $line);
                 $comment = chop($comment);
@@ -109,7 +110,7 @@ function getExifDescription ( $currDir, $formatString )
         
         $image = $mig_config['image'];
 
-        if (empty($knownFiles[$image])) {
+        if (!isset($knownFiles[$image])) {
             return '';
         }
         $exifData = array ( 'comment'   => $desc[$image],

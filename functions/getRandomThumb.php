@@ -99,9 +99,8 @@ function getRandomThumb ( $file, $folder, $currDir )
             }
             closedir($dirlist);
 
-            if ($subfList[0]) {
-                srand((double)microtime()*1000000); // get random folder
-                $randval = rand(0,(sizeof($subfList)-1));
+            if (!empty($subfList)) {
+                $randval = rand(0,(sizeof($subfList)-1)); // get random folder
                 $mySample = getRandomThumb($file.'/'.$subfList[$randval],
                                     $folder.'/'.$subfList[$randval], $currDir);
 
@@ -194,8 +193,7 @@ function getRandomThumb ( $file, $folder, $currDir )
                 closedir($dirlist);
 
                 if (isset($subfList[0])) {
-                    srand((double)microtime()*1000000);     // get random folder
-                    $randval = rand(0,(sizeof($subfList)-1));
+                    $randval = rand(0,(sizeof($subfList)-1)); // get random folder
                     $mySample = getRandomThumb($file.'/'.$subfList[$randval],
                                         $folder.'/'.$subfList[$randval], $currDir);
 
@@ -210,8 +208,7 @@ function getRandomThumb ( $file, $folder, $currDir )
     }
 
     if ($randThumbList) {
-        srand((double)microtime()*1000000);   // choose random thumb
-        $randval = rand(0,(sizeof($randThumbList)-1));
+        $randval = rand(0,(sizeof($randThumbList)-1)); // choose random thumb
         return $randThumbList[$randval];
     } else {
         return FALSE;

@@ -150,11 +150,11 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
         if ($mig_config['showTotalImagesString']) {
             $phrase = $mig_config['lang']['total_images'];
             // %t is total images in folder
-            $phrase = str_replace('%t', $thumbsInFolder, $phrase);
+            $phrase = str_replace('%t', strval($thumbsInFolder), $phrase);
             // %s is start image
-            $phrase = str_replace('%s', $start_img, $phrase);
+            $phrase = str_replace('%s', strval($start_img), $phrase);
             // %e is end image
-            $phrase = str_replace('%e', $end_img, $phrase);
+            $phrase = str_replace('%e', strval($end_img), $phrase);
         } else {
             $phrase = '';
         }

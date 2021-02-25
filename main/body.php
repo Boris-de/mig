@@ -68,6 +68,7 @@ if (isset($configFile)) {
 $mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums live
 
 // apply open_basedir restrictions (if enabled)
+/** @psalm-suppress TypeDoesNotContainType */
 if ($migOpenBasedir === TRUE) {
     $openBasedirs = $migOpenBasedirExtraDirs;
     if (isset($configFile)) {
@@ -79,6 +80,7 @@ if ($migOpenBasedir === TRUE) {
 }
 
 //for old compatibility: remove in mig 2.0:
+/** @psalm-suppress TypeDoesNotContainType */
 if ($suppressImageInfo == TRUE) {
     $fileInfoFormatString['image'] = "%n";
     $fileInfoFormatString['audio'] = "%n";
@@ -149,11 +151,13 @@ function getVariable($name, $arr1, $arr2, $default = NULL) {
 }
 
 function getHttpGetVariable($name, $default = NULL) {
+    global $HTTP_GET_VARS;
     $get_vars = isset($HTTP_GET_VARS) ? $HTTP_GET_VARS : array();
     return getVariable($name, $_GET, $get_vars, $default);
 }
 
 function getHttpServerVariable($name, $default = NULL) {
+    global $HTTP_SERVER_VARS;
     $server_vars = isset($HTTP_SERVER_VARS) ? $HTTP_SERVER_VARS : array();
     return getVariable($name, $_SERVER, $server_vars, $default);
 }
@@ -317,7 +321,7 @@ if (isset($maxColumns)) {
 // (This method is deprecated as of 5.3, so only call it if the function exists)
 if (function_exists('set_magic_quotes_runtime')) {
     /** @noinspection PhpDeprecationInspection */
-    @set_magic_quotes_runtime(0);
+    @set_magic_quotes_runtime(false);
 }
 
 
@@ -344,9 +348,7 @@ while ($workCopy) {
 }
 
 // send Content-Type
-if($httpContentType) {
-    header('Content-Type: '.$httpContentType);
-}
+header('Content-Type: '.$httpContentType);
 
 // Where templates live
 $mig_config['templatedir'] = $mig_config['basedir'] . '/templates';
@@ -365,18 +367,21 @@ $mig_config['albumurlroot'] = $baseHref . '/albums';
 // Well, GIGO... set default to sane if someone screws up their
 // config file
 
+/** @psalm-suppress RedundantCondition,TypeDoesNotContainType */
 if ($markerType != 'prefix' && $markerType != 'suffix' ) {
     $markerType = 'suffix';
 }
 $mig_config['markertype'] = $markerType;
 
+/** @psalm-suppress TypeDoesNotContainType */
 if (! $markerLabel) {
     $markerLabel = 'th';
 }
 $mig_config['markerlabel'] = $markerLabel;
 
-// Override folder sort if one's not present
+/** @psalm-suppress TypeDoesNotContainType */
 if (! $mig_config['foldersorttype']) {
+    // Override folder sort if not present
     $mig_config['foldersorttype'] = $mig_config['sorttype'];
 }
 

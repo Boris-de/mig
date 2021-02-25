@@ -48,7 +48,8 @@ function buildNextPrevLinks ( $currDir, $presorted )
     }
 
     // Gather all files into an array
-    $fileList = array ();
+    $fileList  = array();
+    $filedates = array();
     while ($file = readdir($dir)) {
 
         $markerLabel = $mig_config['markerlabel'];
@@ -162,6 +163,8 @@ function buildNextPrevLinks ( $currDir, $presorted )
         $prev = 'NA';
     } elseif (isset($fList[$tempThisImagePos-1])) {
         $prev = migURLencode($fList[$tempThisImagePos-1]);
+    } else {
+        $prev = 'NA';
     }
 
     // URL-encode currDir

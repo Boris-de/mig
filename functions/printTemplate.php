@@ -163,6 +163,7 @@ function printTemplate ( $templateFile, $maintAddr,
 
             // Do substitution for various variables
             foreach ($replacement_map as $key => $value) {
+                $value = $value !== NULL ? $value : '';
                 $line = str_replace("%%$key%%", $value, $line);
             }
 

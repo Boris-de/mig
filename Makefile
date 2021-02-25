@@ -129,6 +129,9 @@ podman: index.php test-album
 	podman stop $(PODMAN_NAME)
 	podman rm $(PODMAN_NAME)
 
+psalm: index.php
+	psalm $<
+
 dev-server: test-album
 	@test -e albums || ln -s test-album albums
 	@echo -e "Starting dev server at http://localhost:$(DEV_SERVER_PORT)/dev.php\n"
