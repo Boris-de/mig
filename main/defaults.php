@@ -3,10 +3,14 @@
 // Defaults - these values can be over-ridden using config.php
 //
 
+$homeLabel                  = "Unset home label";
+$homeLink                   = "http://mig.wcht.de/unsetHomeLink";
+$thumbExt                   = "";
 $commentFilePerImage        = FALSE;
 $commentFileShortComments   = FALSE;
 $distURL                    = 'https://mig.wcht.de/';
 $exifFormatString           = '|%c|';
+$fileInfoFormatString       = array();
 $fileInfoFormatString['image'] = "%n<br>(%i, %s)";
 $fileInfoFormatString['audio'] = "%n<br>(%s)";
 $fileInfoFormatString['video'] = "%n<br>(%s)";

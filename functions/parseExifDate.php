@@ -63,7 +63,7 @@ function parseExifDate ( $stamp )
             case '22':
             case '23':
                 $tmp = $hour - 12;
-                if (strlen($tmp) == 1) {
+                if ($tmp < 10) {
                     $tmp = '0' . $tmp;
                 }
                 $time = $tmp . ':' . $minute . $mig_config['lang']['pm'];
