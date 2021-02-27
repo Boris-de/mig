@@ -1,5 +1,50 @@
 <?php
 
+function _findThumb($file, $unsafe_folder, $unsafe_currDir)
+{
+    global $mig_config;
+
+    $dirlist = opendir($unsafe_folder);
+    $subfList = array();
+
+    $mySample = NULL;
+    while ($item = readdir($dirlist)) {
+        if ($item == '.' || $item == '..') {
+            continue; // skip self and parent
+        }
+
+        if (is_dir("$unsafe_folder/$item")) {
+
+            // Ignore hidden items
+            if ($mig_config['hidden'][$item]) {
+                continue;
+            }
+
+            // Ignore dot directories if appropriate
+            if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $item)) {
+                continue;
+            }
+
+            // If using "real rand" create a list of folders and pick a random folder, then recurse into it.
+            // Otherwise just use the first folder found, and recurse into that.
+            if ($mig_config) {
+                $subfList[] = $item;
+            } else {
+                $mySample = getRandomThumb($file . '/' . $item, $unsafe_folder . '/' . $item, $unsafe_currDir);
+                break;
+            }
+        }
+    }
+    closedir($dirlist);
+
+    if (!$mySample && !empty($subfList)) {
+        $randval = rand(0, (sizeof($subfList) - 1)); // get random folder
+        $mySample = getRandomThumb($file . '/' . $subfList[$randval],
+            $unsafe_folder . '/' . $subfList[$randval], $unsafe_currDir);
+    }
+    return $mySample;
+}
+
 // getRandomThumb() - Find a random thumbnail to show instead of the folder icon.
 
 function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
@@ -63,51 +108,7 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
             //
             // This should be able to drill down as far as necessary
             // until a valid thumb is found.
-
-            $dirlist = opendir($unsafe_folder);
-            $subfList = array ();
-
-            while ($item = readdir($dirlist)) {
-                if ($item == '.' || $item == '..') {
-                    continue; // skip self and parent
-                }
-
-                if (is_dir("$unsafe_folder/$item")) {
-
-                    // Ignore hidden items
-                    if ($mig_config['hidden'][$item]) {
-                        continue;
-                    }
-
-                    // Ignore dot directories if appropriate
-                    if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $item)) {
-                        continue;
-                    }
-
-                    // If using "real rand" create a list of folders
-                    // and pick a random folder, then recurse into it.
-                    // Otherwise just use the first folder found,
-                    // and recurse into that.
-                    if ($mig_config['userealrandthumbs']) {
-                        $subfList[] = $item;
-                    } else {
-                        $mySample = getRandomThumb($file.'/'.$item, $unsafe_folder.'/'.$item, $unsafe_currDir);
-
-                        if ($mySample) {
-                            return $mySample;
-                        }
-                    }
-                }
-            }
-            closedir($dirlist);
-
-            if (!empty($subfList)) {
-                $randval = rand(0,(sizeof($subfList)-1)); // get random folder
-                $mySample = getRandomThumb($file.'/'.$subfList[$randval],
-                                 $unsafe_folder.'/'.$subfList[$randval], $unsafe_currDir);
-
-                return $mySample;
-            }
+            return _findThumb($file, $unsafe_folder, $unsafe_currDir);
         }
 
     // SECTION TWO...
@@ -165,46 +166,9 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
                 }
 
             } else {
-                $dirlist = opendir($unsafe_folder);
-                $subfList = array ();
-                while ($item = readdir($dirlist)) {
-                    if ($item == '.' || $item == '..') {
-                        continue; // skip self and parent
-                    }
-
-                    if (is_dir("$unsafe_folder/$item")) {
-
-                        // Ignore hidden items
-                        if ($mig_config['hidden'][$item]) {
-                            continue;
-                        }
-
-                        // Ignore dot directories if appropriate
-                        if ($mig_config['ignoredotdirectories'] && preg_match('#^\.#', $item)) {
-                            continue;
-                        }
-
-                        if ($mig_config['userealrandthumbs']) {
-                            $subfList[] = $item;
-                        } else {
-                            $mySample = getRandomThumb($file.'/'.$item, $unsafe_folder.'/'.$item, $unsafe_currDir);
-
-                            if ($mySample) {
-                                return $mySample;
-                            }
-                        }
-                    }
-                }
-                closedir($dirlist);
-
-                if (isset($subfList[0])) {
-                    $randval = rand(0,(sizeof($subfList)-1)); // get random folder
-                    $mySample = getRandomThumb($file.'/'.$subfList[$randval],
-                                        $unsafe_folder.'/'.$subfList[$randval], $unsafe_currDir);
-
-                    if ($mySample) {
-                        return $mySample;
-                    }
+                $mySample = _findThumb($file, $unsafe_folder, $unsafe_currDir);
+                if ($mySample) {
+                    return $mySample;
                 }
             }
         }
