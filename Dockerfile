@@ -10,7 +10,7 @@ ENV WWW_DATA=$WWW_DATA
 COPY templates $WWW_DATA/templates/
 COPY images $WWW_DATA/images/
 COPY test-album $WWW_DATA/albums/
-COPY index.php config.php $WWW_DATA
+COPY bundles/index.php config.php $WWW_DATA
 
 RUN /bin/sh -c 'set -e; \
 chown -R www-data ${WWW_DATA}; \

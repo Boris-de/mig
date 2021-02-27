@@ -1,11 +1,11 @@
 #
-# $Id$
-#
 # Makefile to build Mig distributions
 #
 
 # Where to keep distributions (directory)
 DISTDIR= bundles/mig
+
+INDEX_PHP=bundles/index.php
 
 # Temporary directory to build a Mig install in (this gets tarred up)
 SPOOLDIR= mig-$(ver)
@@ -34,28 +34,30 @@ endif
 default:
 	@echo "    make dist ver=X            Builds distribution bundle (in $(DISTDIR))"
 	@echo "    make release ver=X         Builds distribution bundle (in $(DISTDIR)), tags and signs it"
-	@echo "    make index.php ver=X       Builds just index.php"
-	@echo "    make docpublish            Publishes docs to mig.sf.net"
+	@echo "    make $(INDEX_PHP)     Builds just index.php"
+	@echo "    make docpublish            Publishes docs to MIG_SITE_DIR"
+	@echo "    make mig-site              Update mig in MIG_SITE_DIR"
 	@echo "    make test-album            Create a random sample album"
 	@echo "    make unittests             Runs unittests with default PHP version"
 	@echo "    make coverage              Runs unittests with default PHP version to generate coverage"
 	@echo "    make podman-unittests      Runs unittests with a current PHP version using podman container"
 	@echo "    make podman-unittests-all  Runs unittests with different PHP versions using podman containers"
 	@echo "    make clean"
-	@echo " "
-	@echo "    make mig.sf.net ver=X      index.php & templates to mig.sf.net"
 
 mig: dist
+
+bundles:
+	mkdir -p $@
 
 has-version:
 	@if test -z "${ver}"; then echo "Missing version, run make with ver=..."; false; fi
 
-dist: has-version index.php unittests podman-unittests
+dist: has-version $(INDEX_PHP) unittests podman-unittests
 	make -C docs
 	rm -rf $(SPOOLDIR) $(ARCHIVE)
 	mkdir -m 0755 -p $(DISTDIR) $(SPOOLDIR)
 	cd $(SPOOLDIR); mkdir -m 0755 -p images templates docs/text docs/html
-	mv index.php $(SPOOLDIR)
+	mv $(INDEX_PHP) $(SPOOLDIR)
 	cp config.php $(SPOOLDIR)/config.php.default
 	cp images/*.png $(SPOOLDIR)/images
 	cp templates/*.[hc]* $(SPOOLDIR)/templates
@@ -69,11 +71,12 @@ dist: has-version index.php unittests podman-unittests
 	@echo " "
 	@echo "=> Mig $(ver) bundle complete: $(ARCHIVE) <="
 
-index.php: $(PHP_FILES) main/preamble.php
-	rm -f index.php
+$(INDEX_PHP): $(PHP_FILES) main/preamble.php bundles
 	( sed "s/VeRsIoN/$(ver)/" main/preamble.php ; \
 	  cat $(PHP_FILES) \
-	) > index.php
+	) > $(INDEX_PHP)
+
+index.php: $(INDEX_PHP)
 
 has-release-vars: has-version
 	! test -e $(ARCHIVE) # check if archive already exists
@@ -81,11 +84,11 @@ has-release-vars: has-version
 	test -n "$(MIG_GPG_EMAIL)" # MIG_GPG_EMAIL
 	test -n "$(MIG_SITE_DIR)" # MIG_SITE_DIR
 
-release: has-release-vars clean
+release: has-release-vars clean bundles
 	make dist ver=$(ver)
 	git -c "user.signingkey=$(MIG_GPG_KEY)" -c "user.email=$(MIG_GPG_EMAIL)" tag -s $(RELEASE_TAG) -m "Tagging $(RELEASE_TAG)"
 	make docpublish MIG_SITE_DIR=$(MIG_SITE_DIR)
-	make mig.sf.net MIG_SITE_DIR=$(MIG_SITE_DIR)
+	make mig-site MIG_SITE_DIR=$(MIG_SITE_DIR)
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign $(ARCHIVE)
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign --armor $(ARCHIVE)
 	@echo
@@ -95,8 +98,8 @@ release: has-release-vars clean
 docpublish:
 	make -C docs publish MIG_SITE_DIR=$(MIG_SITE_DIR)
 
-mig.sf.net: index.php
-	cp index.php $(MIG_SITE_DIR)/gallery/
+mig-site: $(INDEX_PHP)
+	cp $(INDEX_PHP) $(MIG_SITE_DIR)/gallery/
 	cp $(TEMPLATE_FILES) $(MIG_SITE_DIR)/gallery/templates/
 
 test-album: utilities/create-random-album.sh
@@ -117,7 +120,7 @@ podman-unittests-all: podman-unittests-all-versions
 podman-unittests-all-versions:
 	make -C test podman-unittests-all-versions
 
-podman: index.php test-album
+podman: $(INDEX_PHP) test-album
 	podman build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
 	podman run --publish=127.0.0.1::80 -d --name $(PODMAN_NAME) $(PODMAN_NAME)
 	@set -e ;\
@@ -130,7 +133,7 @@ podman: index.php test-album
 	podman stop $(PODMAN_NAME)
 	podman rm $(PODMAN_NAME)
 
-psalm: index.php
+psalm: $(INDEX_PHP)
 	psalm $<
 	psalm --taint-analysis $<
 
@@ -143,4 +146,4 @@ clean:
 	make -C test clean
 	rm -rf docs/html docs/text index.php test-album
 
-.PHONY: test clean unittests podman podman-unittests podman-unittests-all podman-unittests-all-versions coverage has-version
+.PHONY: test clean unittests podman podman-unittests podman-unittests-all podman-unittests-all-versions coverage has-version index.php
