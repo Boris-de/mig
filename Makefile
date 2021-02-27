@@ -22,6 +22,7 @@ DEV_SERVER_PORT=8080
 
 PODMAN_NAME=mig-php-app
 PODMAN_PHP_VERSION=''
+PHPUNIT_FILTER=.
 
 USED_PODMAN_PHP_VERSION=$(PODMAN_PHP_VERSION)
 ifneq ($(PODMAN_PHP_VERSION), '')
@@ -103,7 +104,7 @@ test-album: utilities/create-random-album.sh
 	./utilities/create-random-album.sh test-album
 
 unittests:
-	make -C test unittests
+	make -C test unittests PHPUNIT_FILTER=$(PHPUNIT_FILTER)
 
 coverage:
 	make -C test coverage

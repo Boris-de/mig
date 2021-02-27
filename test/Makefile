@@ -9,6 +9,7 @@ PHPUNIT_VERSION=$(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 
 PHPUNIT_PARAMS=$(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
 PHPUNIT_VERSIONS=5.7.27 8.5.13 9.5.0
 PHPUNIT_FILES=$(addsuffix .phar, $(addprefix $(TMP_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
+PHPUNIT_FILTER:=.
 
 default:
 	@echo "    make unittests                                           Run unittests with the default php cli-alpine version"
@@ -23,7 +24,7 @@ $(PHPUNIT_FILES): $(TMP_MARKER)
 	chmod 700 $@
 
 unittests:
-	phpunit $(PHPUNIT_PARAMS) --include-path ../functions/:../main/:../languages/ .
+	phpunit $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path ../functions/:../main/:../languages/ .
 
 coverage:
 	phpunit $(PHPUNIT_PARAMS) --coverage-html coverage --whitelist ../functions/ --include-path ../functions/:../main/:../languages/ .

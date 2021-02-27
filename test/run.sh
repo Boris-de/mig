@@ -21,4 +21,4 @@ PHPUNIT=$(find /usr/local/bin/ -name "phpunit-${PHPUNIT_VERSION}"*)
 test -z "${PHPUNIT}" && { echo "Could not find ${PHPUNIT_VERSION}"; exit 1; }
 test -e "${PHPUNIT}" || { echo "Could not find ${PHPUNIT_VERSION}: ${PHPUNIT}"; exit 1; }
 echo "Using ${PHPUNIT} (for version \"${PHPUNIT_VERSION}\") to run tests"
-exec "${PHPUNIT}" --include-path functions/:main/:languages/ "${TEST_DIR}"/*Test.php
+exec "${PHPUNIT}" --include-path functions/:main/:languages/ "${TEST_DIR}"

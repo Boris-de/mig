@@ -4,7 +4,7 @@
 //
 
 $homeLabel                  = "Unset home label";
-$homeLink                   = "http://mig.wcht.de/unsetHomeLink";
+$homeLink                   = "https://mig.wcht.de/unsetHomeLink";
 $thumbExt                   = "";
 $commentFilePerImage        = FALSE;
 $commentFileShortComments   = FALSE;
