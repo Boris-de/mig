@@ -42,6 +42,10 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
 
     $markerLabel = $mig_config['markerlabel'];
     while ($file = readdir($dir)) {
+        if ($file == '.' || $file == '..') {
+            continue; // skip self and parent
+        }
+
         // Skip over thumbnails
         if (!$mig_config['usethumbsubdir']) {
                          // unless $useThumbSubdir is set,

@@ -15,12 +15,15 @@ function getNumberOfDirs ( $unsafe_folder )
     $count = 0;
 
     while ($file = readdir($dir)) {
+        if ($file == '.' || $file == '..') {
+            continue; // skip self and parent
+        }
+
         // Get hidden item list from mig.cf, fills $mig_config['hidden']
         parseMigCf($unsafe_folder);
 
         // Must be a directory, and can't be . or ..
-        if ($file != '.' && $file != '..' && is_dir("$unsafe_folder/$file"))
-        {
+        if (is_dir("$unsafe_folder/$file")) {
             // Ignore thumbnail subdirectories if in use
             if ($mig_config['usethumbsubdir'] && $file == $mig_config['thumbsubdir']) {
                 continue;

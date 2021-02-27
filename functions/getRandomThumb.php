@@ -24,29 +24,29 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
 
             // Read each item in the directory...
             while ($sample = readdir($readSample)) {
-                // Ignoring . and ..
-                if ($sample != '.' && $sample != '..') {
+                if ($sample == '.' || $sample == '..') {
+                    continue; // skip self and parent
+                }
 
-                    // Ignore hidden items
-                    if ($mig_config['hidden'][$sample]) {
-                        continue;
-                    }
+                // Ignore hidden items
+                if ($mig_config['hidden'][$sample]) {
+                    continue;
+                }
 
-                    // And use the first valid match found
-                    if (getFileType($sample)) {
-                        $mySample = $mig_config['albumurlroot'] . '/'
-                                  . migURLencode($unsafe_currDir)
-                                  . '/' . migURLencode($file)
-                                  . '/' .$mig_config['thumbsubdir']
-                                  . '/' . $sample;
+                // And use the first valid match found
+                if (getFileType($sample)) {
+                    $mySample = $mig_config['albumurlroot'] . '/'
+                              . migURLencode($unsafe_currDir)
+                              . '/' . migURLencode($file)
+                              . '/' .$mig_config['thumbsubdir']
+                              . '/' . $sample;
 
-                        // If "real rand" is in use, add this to the
-                        // list.  Otherwise just return what we found.
-                        if ($mig_config['userealrandthumbs']) {
-                            $randThumbList[] = $mySample;
-                        } else {
-                            return $mySample;
-                        }
+                    // If "real rand" is in use, add this to the
+                    // list.  Otherwise just return what we found.
+                    if ($mig_config['userealrandthumbs']) {
+                        $randThumbList[] = $mySample;
+                    } else {
+                        return $mySample;
                     }
                 }
             }
@@ -68,8 +68,11 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
             $subfList = array ();
 
             while ($item = readdir($dirlist)) {
-                if (is_dir("$unsafe_folder/$item") && $item != '.' && $item != '..')
-                {
+                if ($item == '.' || $item == '..') {
+                    continue; // skip self and parent
+                }
+
+                if (is_dir("$unsafe_folder/$item")) {
 
                     // Ignore hidden items
                     if ($mig_config['hidden'][$item]) {
@@ -122,6 +125,9 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
 
         // Iterate through all files in this folder...
         while ($sample = readdir($readSample)) {
+            if ($sample == '.' || $sample == '..') {
+                continue; // skip self and parent
+            }
 
             $mySample = NULL;    // Cleanup from last loop iteration
 
@@ -162,8 +168,11 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
                 $dirlist = opendir($unsafe_folder);
                 $subfList = array ();
                 while ($item = readdir($dirlist)) {
-                    if (is_dir("$unsafe_folder/$item") && $item != '.' && $item != '..')
-                    {
+                    if ($item == '.' || $item == '..') {
+                        continue; // skip self and parent
+                    }
+
+                    if (is_dir("$unsafe_folder/$item")) {
 
                         // Ignore hidden items
                         if ($mig_config['hidden'][$item]) {

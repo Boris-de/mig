@@ -48,6 +48,9 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
     $fileList  = array();
     $filedates = array();
     while ($file = readdir($dir)) {
+        if ($file == '.' || $file == '..') {
+            continue; // skip self and parent
+        }
 
         $markerLabel = $mig_config['markerlabel'];
 

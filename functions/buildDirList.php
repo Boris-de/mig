@@ -28,15 +28,13 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
     }
 
     while ($file = readdir($dir)) {
+        if ($file == '.' || $file == '..') {
+            continue; // skip self and parent
+        }
 
         // Only pay attention to directories
         $unsafe_abs_childDir = $unsafe_abs_currDir.'/'.$file;
         if (!is_dir($unsafe_abs_childDir)) {
-            continue;
-        }
-
-        // Ignore . and ..
-        if ($file == '.' || $file == '..') {
             continue;
         }
 

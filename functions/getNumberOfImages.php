@@ -20,6 +20,9 @@ function getNumberOfImages ( $unsafe_folder )
     parseMigCf($unsafe_folder);
 
     while ($file = readdir($dir)) {
+        if ($file == '.' || $file == '..') {
+            continue; // skip self and parent
+        }
 
         // Skip over thumbnails
         if (!$mig_config['usethumbsubdir']) {
