@@ -42,6 +42,7 @@ abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
 
     public function tearDown() : void
     {
+        mt_srand(); // reset random seed
         if ($this->mig_dir != '' && is_dir($this->mig_dir . '/albums')) {
             $this->remove_recursive($this->mig_dir);
         }

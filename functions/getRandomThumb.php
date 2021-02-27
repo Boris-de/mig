@@ -1,6 +1,15 @@
 <?php
 
-function _findThumb($file, $unsafe_folder, $unsafe_currDir)
+function _getRandomFromArray(&$list, $rand_function, $stable_order)
+{
+    if ($stable_order) {
+        sort($list);
+    }
+    $randval = call_user_func($rand_function, 0, (sizeof($list) - 1));
+    return $list[$randval];
+}
+
+function _findThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order, $rand_function)
 {
     global $mig_config;
 
@@ -16,7 +25,7 @@ function _findThumb($file, $unsafe_folder, $unsafe_currDir)
         if (is_dir("$unsafe_folder/$item")) {
 
             // Ignore hidden items
-            if ($mig_config['hidden'][$item]) {
+            if (isset($mig_config['hidden'][$item])) {
                 continue;
             }
 
@@ -27,10 +36,10 @@ function _findThumb($file, $unsafe_folder, $unsafe_currDir)
 
             // If using "real rand" create a list of folders and pick a random folder, then recurse into it.
             // Otherwise just use the first folder found, and recurse into that.
-            if ($mig_config) {
+            if ($mig_config['userealrandthumbs']) {
                 $subfList[] = $item;
             } else {
-                $mySample = getRandomThumb($file . '/' . $item, $unsafe_folder . '/' . $item, $unsafe_currDir);
+                $mySample = getRandomThumb($file . '/' . $item, $unsafe_folder . '/' . $item, $unsafe_currDir, $stable_order, $rand_function);
                 break;
             }
         }
@@ -38,16 +47,17 @@ function _findThumb($file, $unsafe_folder, $unsafe_currDir)
     closedir($dirlist);
 
     if (!$mySample && !empty($subfList)) {
-        $randval = rand(0, (sizeof($subfList) - 1)); // get random folder
-        $mySample = getRandomThumb($file . '/' . $subfList[$randval],
-            $unsafe_folder . '/' . $subfList[$randval], $unsafe_currDir);
+        // get random folder
+        $randomItem = _getRandomFromArray($subfList, $rand_function, $stable_order);
+        $mySample = getRandomThumb($file . '/' . $randomItem,
+            $unsafe_folder . '/' . $randomItem, $unsafe_currDir, $stable_order, $rand_function);
     }
     return $mySample;
 }
 
 // getRandomThumb() - Find a random thumbnail to show instead of the folder icon.
 
-function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
+function getRandomThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order = FALSE, $rand_function='rand')
 {
     global $mig_config;
     
@@ -74,7 +84,7 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
                 }
 
                 // Ignore hidden items
-                if ($mig_config['hidden'][$sample]) {
+                if (isset($mig_config['hidden'][$sample])) {
                     continue;
                 }
 
@@ -108,7 +118,7 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
             //
             // This should be able to drill down as far as necessary
             // until a valid thumb is found.
-            return _findThumb($file, $unsafe_folder, $unsafe_currDir);
+            return _findThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order, $rand_function);
         }
 
     // SECTION TWO...
@@ -166,7 +176,7 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
                 }
 
             } else {
-                $mySample = _findThumb($file, $unsafe_folder, $unsafe_currDir);
+                $mySample = _findThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order, $rand_function);
                 if ($mySample) {
                     return $mySample;
                 }
@@ -177,8 +187,7 @@ function getRandomThumb ( $file, $unsafe_folder, $unsafe_currDir )
     }
 
     if ($randThumbList) {
-        $randval = rand(0,(sizeof($randThumbList)-1)); // choose random thumb
-        return $randThumbList[$randval];
+        return _getRandomFromArray($randThumbList, $rand_function, $stable_order); // choose random thumb
     } else {
         return FALSE;
     }
