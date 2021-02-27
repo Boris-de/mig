@@ -160,6 +160,15 @@ function getHttpServerVariable($name, $default = NULL) {
     return $default;
 }
 
+function migRedirect($path)
+{
+    global $mig_config, $URI_SCHEME, $SERVER_NAME, $SERVER_PORT;
+    $redirectTarget = $SERVER_NAME ? "$URI_SCHEME://$SERVER_NAME:$SERVER_PORT" : '';
+    $relUrl = $mig_config['baseurl'] . $path;
+    header("Location: $redirectTarget$relUrl");
+    return 0;
+}
+
 if (! isset($SERVER_NAME)) {
     $SERVER_NAME = getHttpServerVariable('SERVER_NAME');
 }
@@ -177,28 +186,20 @@ $URI_SCHEME = getHttpServerVariable('HTTPS') === 'on' ? 'https' : 'http';
 // Jump has to come before currDir redirect to work
 $jump = getHttpGetVariable('jump', FALSE);
 // Is this a jump-tag URL?
-if ($jump && isset($jumpMap[$jump]) && $SERVER_NAME) {
-    header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
-         . "?$jumpMap[$jump]");
-    exit;
+if ($jump && isset($jumpMap[$jump])) {
+    exit(migRedirect("?$jumpMap[$jump]"));
 }
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
-if (isset($PATH_INFO) && isset($jumpMap[$PATH_INFO]) && $SERVER_NAME) {
-    header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
-         . "?$jumpMap[$PATH_INFO]");
-    exit;
+if (isset($PATH_INFO) && isset($jumpMap[$PATH_INFO])) {
+    exit(migRedirect("?$jumpMap[$PATH_INFO]"));
 }
 
 
 // Get currDir.  If there isn't one, default to "."
 $unchecked_currDir = getHttpGetVariable('currDir');
 if (!$unchecked_currDir) {
-    if ($SERVER_NAME) {
-        header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT"
-            . $mig_config['baseurl'] . '?currDir=.');
-        exit;
-    }
+    exit(migRedirect('?currDir=.'));
 }
 
 function _get_magic_quotes_gpc() {
