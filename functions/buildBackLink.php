@@ -2,7 +2,7 @@
 
 // buildBackLink() - Create a "back one step" link.
 
-function buildBackLink ( $currDir, $type )
+function buildBackLink ( $unsafe_currDir, $type )
 {
     global $mig_config;
 
@@ -20,7 +20,7 @@ function buildBackLink ( $currDir, $type )
     }
 
     // don't send a link back if we're a the root of the tree
-    if ($currDir == '.') {
+    if ($unsafe_currDir == '.') {
         if (!empty($mig_config['homelink'])) {
 
             if (empty($mig_config['homelabel'])) {
@@ -42,8 +42,8 @@ function buildBackLink ( $currDir, $type )
     }
 
     // Trim off the last directory, so we go "back" one.
-    $junk = preg_replace('#/[^/]+$#', '', $currDir);
-    $newCurrDir = migURLencode($junk);
+    $unsafe_newCurrDir = preg_replace('#/[^/]+$#', '', $unsafe_currDir);
+    $newCurrDir = migURLencode($unsafe_newCurrDir);
 
     $retval = '<a href="'
             . $mig_config['baseurl'] . '?currDir=' . $newCurrDir;

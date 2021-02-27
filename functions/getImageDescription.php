@@ -2,22 +2,18 @@
 
 // getImageDescription() - Fetches an image description from the comment file (mig.cf).
 
-function getImageDescription ( $file, $description, $short_desc )
+function getImageDescription($unsafe_image, $description, $short_desc)
 {
-    $imageDesc = '';
-
     // "Long" description
-    if (isset($description[$file])) {
-        $imageDesc = $description[$file];
-    } else {
-        $imageDesc = NULL;
+    $imageDesc = NULL;
+    if (isset($description[$unsafe_image])) {
+        $imageDesc = $description[$unsafe_image];
     }
 
     // "Short" description
-    if (isset($short_desc[$file])) {
-        $imageShort = $short_desc[$file];
-    } else {
-        $imageShort = NULL;
+    $imageShort = NULL;
+    if (isset($short_desc[$unsafe_image])) {
+        $imageShort = $short_desc[$unsafe_image];
     }
 
     // Return both - let the calling code decide which to use.

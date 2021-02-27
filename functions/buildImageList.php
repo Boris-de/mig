@@ -2,20 +2,20 @@
 
 // buildImageList() - Creates a list of images for display.
 
-function buildImageList ( $currDir, $maxColumns, $maxRows,
+function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
                           $presorted, $description, $short_desc )
 {
     global $mig_config;
 
-    if (is_dir($mig_config['albumdir'].'/'.$currDir)) {
-        $dir = opendir($mig_config['albumdir'].'/'.$currDir);
+    if (is_dir($mig_config['albumdir'].'/'.$unsafe_currDir)) {
+        $dir = opendir($mig_config['albumdir'].'/'.$unsafe_currDir);
     } else {
-        print "ERROR: no such currDir '$currDir'<br>";
+        print "ERROR: no such currDir '" . migHtmlSpecialChars($unsafe_currDir) . "'<br>";
         exit;
     }
 
     // URL-encoded version of currDir
-    $urlCurrDir = migURLencode($currDir);
+    $enc_currDir = migURLencode($unsafe_currDir);
 
     $row = 0;               // Counters for the table formatting
     $col = 0;
@@ -60,10 +60,11 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
 
         // We'll look at this one only if it's a file
         // and it matches our list of approved extensions
-        if (is_file($mig_config['albumdir'].'/'.$currDir.'/'.$file)
-                        && ! isset($presorted[$file]) && getFileType($file)
-                        && preg_match($mig_config['imageFilenameRegexpr'], $file))
-        {
+        $abs_currDir = $mig_config['albumdir'] . '/' . $unsafe_currDir . '/' . $file;
+        if (is_file($abs_currDir)
+            && !isset($presorted[$file]) && getFileType($file)
+            && preg_match($mig_config['imageFilenameRegexpr'], $file)) {
+
             // Increase thumb counter
             ++$thumbsInFolder;
 
@@ -72,8 +73,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
 
             // and stash a timestamp as well if needed
             if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
-                $timestamp = filemtime($mig_config['albumdir']
-                                       . "/$currDir/$file");
+                $timestamp = filemtime($abs_currDir);
                 $filedates["$timestamp-$file"] = $file;
             }
         }
@@ -166,7 +166,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
             $prevPage = $mig_config['startfrom'] - 1;
 
             $pageBlock .= '<a href="' . $mig_config['baseurl']
-                        . '?pageType=folder&amp;currDir=' . $urlCurrDir
+                        . '?pageType=folder&amp;currDir=' . $enc_currDir
                         . '&amp;startFrom=' . $prevPage;
             if ($mig_config['mig_dl']) {
                 $pageBlock .= '&amp;mig_dl=' . $mig_config['mig_dl'];
@@ -183,7 +183,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
             } else {
                 $ib = $i - 1;
                 $pageBlock .= '<a href="' . $mig_config['baseurl']
-                            . '?pageType=folder&amp;currDir=' . $urlCurrDir
+                            . '?pageType=folder&amp;currDir=' . $enc_currDir
                             . '&amp;startFrom=' . $ib;
                 if ($mig_config['mig_dl']) {
                     $pageBlock .= '&amp;mig_dl=' . $mig_config['mig_dl'];
@@ -195,7 +195,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
         if (($mig_config['startfrom'] + 1) < $pages) {
             $nextPage = $mig_config['startfrom'] + 1;
             $pageBlock .= '<a href="' . $mig_config['baseurl']
-                        . '?pageType=folder&amp;currDir=' . $urlCurrDir
+                        . '?pageType=folder&amp;currDir=' . $enc_currDir
                         . '&amp;startFrom=' . $nextPage;
             if ($mig_config['mig_dl']) {
                 $pageBlock .= '&amp;mig_dl=' . $mig_config['mig_dl'];
@@ -224,7 +224,7 @@ function buildImageList ( $currDir, $maxColumns, $maxRows,
                     $imageList .= "\n   <tr>";
                 }
 
-                $img = buildImageURL($currDir, $file, $description, $short_desc);
+                $img = buildImageURL($unsafe_currDir, $file, $description, $short_desc);
                 $imageList .= $img;
 
                 // Keep track of what row and column we are on

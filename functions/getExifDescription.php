@@ -3,7 +3,7 @@
 // getExifDescription() - Fetches a comment if available from the Exif comments file (exif.inf)
 //                        as well as fetching EXIF data.
 
-function getExifDescription ( $currDir, $formatString )
+function getExifDescription ( $unsafe_currDir, $formatString )
 {
     global $mig_config;
     
@@ -20,10 +20,11 @@ function getExifDescription ( $currDir, $formatString )
     $year       = array ();
     $knownFiles = array ();
 
-    if (file_exists($mig_config['albumdir']."/$currDir/exif.inf")) {
+    $localExifFilename = $mig_config['albumdir'] . "/$unsafe_currDir/exif.inf";
+    if (file_exists($localExifFilename)) {
 
         $fname = NULL;
-        $file = fopen($mig_config['albumdir']."/$currDir/exif.inf", 'r');
+        $file = fopen($localExifFilename, 'r');
         $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
 

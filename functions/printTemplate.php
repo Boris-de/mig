@@ -4,7 +4,7 @@
 
 function printTemplate ( $templateFile, $maintAddr,
                          $folderList, $imageList, $backLink,
-                         $currDir, $newCurrDir, $prevLink,
+                         $unsafe_currDir, $newCurrDir, $prevLink,
                          $nextLink, $currPos, $description, $youAreHere,
                          $pathConvert, $largeLink, $largeHrefStart,
                          $largeHrefEnd, $largeLinkBorder )
@@ -103,14 +103,14 @@ function printTemplate ( $templateFile, $maintAddr,
             // If pagetype is large, add largeSubdir to path.
             if ($filetype=='image' && $unsafe_image) {
                 // Get image pixel size for <IMG> element
-                $unsafe_abs_image = $mig_config['albumdir'] . "/$currDir/" . $unsafe_image;
+                $unsafe_abs_image = $mig_config['albumdir'] . "/$unsafe_currDir/" . $unsafe_image;
                 if(!is_file($unsafe_abs_image)) {
 					die("ERROR: Image file does not exist!");
 				}
                 if ($mig_config['pagetype'] == 'image') {
                     $imageProps = @GetImageSize($unsafe_abs_image);
                 } elseif ($mig_config['pagetype'] == 'large') {
-                    $unsafe_abs_large_image = $mig_config['albumdir'] . "/$currDir/" . $mig_config['largesubdir'] . '/' . $unsafe_image;
+                    $unsafe_abs_large_image = $mig_config['albumdir'] . "/$unsafe_currDir/" . $mig_config['largesubdir'] . '/' . $unsafe_image;
                     $imageProps = @GetImageSize($unsafe_abs_large_image);
                 } else {
                     $imageProps = FALSE;
@@ -139,7 +139,7 @@ function printTemplate ( $templateFile, $maintAddr,
                 'folderList' => $folderList,
                 'imageList' => $imageList,
                 'backLink' => $backLink,
-                'currDir' => $currDir,
+                'currDir' => migHtmlSpecialChars($unsafe_currDir),
                 'newCurrDir' => $newCurrDir,
                 'image' => $enc_image,
                 'albumURLroot' => $albumURLroot,

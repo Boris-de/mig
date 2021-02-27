@@ -8,7 +8,7 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
 
     $old_unsafe_CurrDir = $unsafe_currDir;         // Stash this to build full path
 
-    // Create a URL-encoded version of $currDir
+    // Create a URL-encoded version of $unsafe_currDir
     $unsafe_currDir = rawurldecode($unsafe_currDir);
     $enc_currDir = migHtmlSpecialChars($unsafe_currDir);
 

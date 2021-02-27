@@ -160,11 +160,6 @@ function getHttpServerVariable($name, $default = NULL) {
     return $default;
 }
 
-// Jump has to come before currDir redirect to work
-if (! isset($jump) || ! $jump) {
-    $jump = getHttpGetVariable('jump', FALSE);
-}
-
 if (! isset($SERVER_NAME)) {
     $SERVER_NAME = getHttpServerVariable('SERVER_NAME');
 }
@@ -179,6 +174,8 @@ if (! isset($PATH_INFO)) {
 
 $URI_SCHEME = getHttpServerVariable('HTTPS') === 'on' ? 'https' : 'http';
 
+// Jump has to come before currDir redirect to work
+$jump = getHttpGetVariable('jump', FALSE);
 // Is this a jump-tag URL?
 if ($jump && isset($jumpMap[$jump]) && $SERVER_NAME) {
     header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" . $mig_config['baseurl']
@@ -195,11 +192,11 @@ if (isset($PATH_INFO) && isset($jumpMap[$PATH_INFO]) && $SERVER_NAME) {
 
 
 // Get currDir.  If there isn't one, default to "."
-$currDir = getHttpGetVariable('currDir');
-if (! $currDir) {
+$unchecked_currDir = getHttpGetVariable('currDir');
+if (!$unchecked_currDir) {
     if ($SERVER_NAME) {
-        header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT" 
-             . $mig_config['baseurl'] . '?currDir=.');
+        header("Location: $URI_SCHEME://$SERVER_NAME:$SERVER_PORT"
+            . $mig_config['baseurl'] . '?currDir=.');
         exit;
     }
 }
@@ -210,12 +207,12 @@ function _get_magic_quotes_gpc() {
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
 if (_get_magic_quotes_gpc() == 1) {
-    $currDir = stripslashes($currDir);
+    $unchecked_currDir = stripslashes($unchecked_currDir);
 }
 
 // Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
-if (strstr($currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $currDir)) {
+if (strstr($unchecked_currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $unchecked_currDir)) {
     print 'SECURITY VIOLATION - ABANDON SHIP';
     exit;
 }
@@ -225,85 +222,78 @@ if (strstr($currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $cu
 //     must begin with "./" and dot or slash can't follow that
 //     for at least two positions.
 //
-if ( $currDir != '.' && ! preg_match('#^./[^/][^/]*#', $currDir) ) {
-    print 'ERROR: \$currDir is invalid.  Exiting.';
+if ($unchecked_currDir != '.' && !preg_match('#^./[^/][^/]*#', $unchecked_currDir)) {
+    print 'ERROR: $currDir is invalid. Exiting.';
     exit;
 }
 
 // currDir may not end in / unless it is './' in its entirety
-if ( $currDir != './' && preg_match('#/$#', $currDir) ) {
-    print "ERROR: \$currDir is invalid.  Exiting.";
+if ($unchecked_currDir != './' && preg_match('#/$#', $unchecked_currDir)) {
+    print 'ERROR: $currDir is invalid. Exiting.';
     exit;
 }
 
 // Strip URL encoding
-$currDir = rawurldecode($currDir);
+$unchecked_currDir = rawurldecode($unchecked_currDir);
+$unsafe_currDir = $unchecked_currDir; // upgrade to unsafe ("we checked it, but it's not safe for HTML/XSS purpose")
+unset($unchecked_currDir); // remove unchecked GET parameter entirely
 
 // Get image, if there is one.
-if (!isset($unsafe_image)) {
-    $unsafe_image = getHttpGetVariable('image');
-}
+$unchecked_image = getHttpGetVariable('image');
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
-if (_get_magic_quotes_gpc() == 1 && $unsafe_image) {
-    $unsafe_image = stripslashes($unsafe_image);
+if (_get_magic_quotes_gpc() == 1 && $unchecked_image) {
+    $unchecked_image = stripslashes($unchecked_image);
 }
 
-// Look at $image from a security angle.
+// Look at $unchecked_image from a security angle.
 // Don't let folks go outside the album directory base
 // Don't let folks define ANY directory here
-if (strstr($unsafe_image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $unsafe_image)) {
+if (strstr($unchecked_image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $unchecked_image)) {
     print 'ERROR: $image is invalid.  Exiting.';
     exit;
 }
 
+$unsafe_image = $unchecked_image; // upgrade to unsafe ("we checked it, but it's not safe for HTML/XSS purpose")
+unset($unchecked_image); // remove unchecked GET parameter entirely
 $mig_config['unsafe_image'] = $unsafe_image;
 $mig_config['enc_image'] = migHtmlSpecialChars($unsafe_image);
 
 // check if the image exists...
-if (($mig_config['enc_image'])AND(!file_exists($mig_config['albumdir']."/$currDir/".$unsafe_image))){
-    echo "ERROR: ".$currDir."/".$mig_config['enc_image']." is invalid.  Exiting.";
+if ($mig_config['enc_image'] && !file_exists($mig_config['albumdir']."/$unsafe_currDir/".$unsafe_image)) {
+    echo "ERROR: ".migHtmlSpecialChars($unsafe_currDir)."/".$mig_config['enc_image']." is invalid.  Exiting.";
     exit;
 }
 
 
 
 // Get pageType.  If there isn't one, default to "folder"
-if (! isset($pageType)) {
-    $pageType = getHttpGetVariable('pageType', 'folder');
-}
+$unsafe_pageType = getHttpGetVariable('pageType', 'folder');
 
 // only allow one of the predefined values
 $allowedTypes = array( "image" => 1, "folder" => 1, "large" => 1, "" => 1);
 
-if(!isset($allowedTypes[$pageType])) {
+if(!isset($allowedTypes[$unsafe_pageType])) {
 	echo 'ERROR: $pageType is invalid.  Exiting.';
 	exit;
+} else {
+    $mig_config['pagetype'] = $unsafe_pageType; // pageType is now safe because it's from our allowed list
 }
-
 unset($allowedTypes);
 
-$mig_config['pagetype'] = $pageType;
-
-
-if (! isset($startFrom)) {
-    $startFrom = getHttpGetVariable('startFrom', 0) + 0;
-}
 
 // only allow digits for $startFrom
-$mig_config['startfrom'] = $startFrom;
+$mig_config['startfrom'] = intval(getHttpGetVariable('startFrom', 0));
 
 // use language set specified in URL, if one was.
-if (! isset($mig_dl)) {
-    $mig_dl = getHttpGetVariable('mig_dl');
-}
+$unsafe_mig_dl = getHttpGetVariable('mig_dl', '');
 // Only use it if we find it - otherwise fall back to default language
-if ($mig_dl && $mig_config['lang_lib'][$mig_dl]) {
-    $mig_language = $mig_dl;
+if (isset($mig_config['lang_lib'][$unsafe_mig_dl])) {
+    $mig_language = $unsafe_mig_dl; // if the language was in our lang_lib, it is safe to use
+    $mig_config['mig_dl'] = $mig_language;
 } else {
-    $mig_dl = NULL;        // destroy it so it isn't used in URLs
+    $mig_config['mig_dl'] = '';
 }
-$mig_config['mig_dl'] = $mig_dl;
 
 
 // Grab appropriate language from library
@@ -326,21 +316,21 @@ if (function_exists('set_magic_quotes_runtime')) {
 // Handle any password authentication needs
 //
 
-$workCopy = $currDir;     // temporary copy of currDir
+$unsafe_workCopy = $unsafe_currDir;
 
-while ($workCopy) {
+while ($unsafe_workCopy) {
 
-    if (isset($protect[$workCopy])) {
+    if (isset($protect[$unsafe_workCopy])) {
         die('password protection is not supported anymore');
     }
 
     // if $workCopy is already down to "." just nullify to end loop
-    if ($workCopy == '.') {
-        $workCopy = FALSE;
+    if ($unsafe_workCopy == '.') {
+        $unsafe_workCopy = FALSE;
     } else {
         // parse $workCopy down one directory at a time
         // so we can check back all the way to "."
-        $workCopy = preg_replace('#/[^/]+$#', '', $workCopy);
+        $unsafe_workCopy = preg_replace('#/[^/]+$#', '', $unsafe_workCopy);
     }
 }
 
@@ -382,6 +372,6 @@ if (! $mig_config['foldersorttype']) {
     $mig_config['foldersorttype'] = $mig_config['sorttype'];
 }
 
-printPage($currDir, $pathConvert, $unsafe_image);
+printPage($unsafe_currDir, $pathConvert, $unsafe_image);
 
 ?>

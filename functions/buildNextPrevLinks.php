@@ -9,41 +9,38 @@ function _greyLink($text)
     return '<span class="inactivelink">'.$text.'</span>';
 }
 
-function _prevNextLink($text,$currDir,$imgNr)
+function _prevNextLink($text, $enc_currDir, $imgNr)
 {
     global $mig_config;
 
-        $link = '<a href="' . $mig_config['baseurl']
-               . '?pageType=' . $mig_config['pagetype'] . '&amp;currDir=' . $currDir
-               . '&amp;image=' . $imgNr;
-        if ($mig_config['startfrom']) {
-            $link .= '&amp;startFrom=' . $mig_config['startfrom'];
-        }
-        if ($mig_config['mig_dl']) {
-            $link .= '&amp;mig_dl=' . $mig_config['mig_dl'];
-        }
-        $link .= '">' .$text. '</a>';
+    $link = '<a href="' . $mig_config['baseurl']
+        . '?pageType=' . $mig_config['pagetype'] . '&amp;currDir=' . $enc_currDir
+        . '&amp;image=' . $imgNr;
+    if ($mig_config['startfrom']) {
+        $link .= '&amp;startFrom=' . $mig_config['startfrom'];
+    }
+    if ($mig_config['mig_dl']) {
+        $link .= '&amp;mig_dl=' . $mig_config['mig_dl'];
+    }
+    $link .= '">' . $text . '</a>';
 
     return $link;
 }
 
 // buildNextPrevLinks() - Build links to the "next" and "previous" images.
 
-function buildNextPrevLinks ( $currDir, $presorted )
+function buildNextPrevLinks ( $unsafe_currDir, $presorted )
 {
     global $mig_config;
 
-    // newCurrDir is currDir without the leading "./"
-    $newCurrDir = getNewCurrDir($currDir);
-
-    if (is_dir($mig_config['albumdir']."/$currDir")) {
+    if (is_dir($mig_config['albumdir']."/$unsafe_currDir")) {
         if ($mig_config['pagetype'] == 'large') {
-            $dir = opendir($mig_config['albumdir']."/$currDir/".$mig_config['largesubdir']);
+            $dir = opendir($mig_config['albumdir']."/$unsafe_currDir/".$mig_config['largesubdir']);
         } else {
-            $dir = opendir($mig_config['albumdir']."/$currDir");
+            $dir = opendir($mig_config['albumdir']."/$unsafe_currDir");
         }
     } else {
-        print "ERROR: no such currDir '$currDir'<br>";
+        print "ERROR: no such currDir '" . migHtmlSpecialChars($unsafe_currDir) . "'<br>";
         exit;
     }
 
@@ -55,7 +52,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
         $markerLabel = $mig_config['markerlabel'];
 
         // Ignore thumbnails
-        if ($mig_config['markertype'] == 'prefix' && preg_match("#^$markerLabel\_#", $file)) {
+        if ($mig_config['markertype'] == 'prefix' && preg_match("#^${markerLabel}_#", $file)) {
             continue;
         }
 
@@ -76,11 +73,12 @@ function buildNextPrevLinks ( $currDir, $presorted )
 
         // Make sure this is a file, not a directory.
         // and make sure it isn't presorted
-        if (is_file($mig_config['albumdir']."/$currDir/$file") && ! isset($presorted[$file])) {
+        $localFilename = $mig_config['albumdir'] . "/$unsafe_currDir/$file";
+        if (is_file($localFilename) && ! isset($presorted[$file])) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
             if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
-                $timestamp = filemtime($mig_config['albumdir']."/$currDir/$file");
+                $timestamp = filemtime($localFilename);
                 $filedates["$timestamp-$file"] = $file;
             }
         }
@@ -168,10 +166,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     }
 
     // URL-encode currDir
-    $currDir = migURLencode($currDir);
-
-    // newCurrDir is currDir without the leading "./"
-    $newCurrDir = getNewCurrDir($currDir);
+    $enc_currDir = migURLencode($unsafe_currDir);
 
     //build the links:
 
@@ -189,7 +184,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     if ($prev == 'NA') {
         $pLink = _greyLink($prevtext);
     } else { // else show a real link
-        $pLink = _prevNextLink($prevtext,$currDir,$prev);
+        $pLink = _prevNextLink($prevtext, $enc_currDir, $prev);
     }
 
 
@@ -197,7 +192,7 @@ function buildNextPrevLinks ( $currDir, $presorted )
     if ($next == 'NA') {
         $nLink = _greyLink($nexttext);
     } else { // else show a real link
-        $nLink = _prevNextLink($nexttext,$currDir,$next);
+        $nLink = _prevNextLink($nexttext, $enc_currDir, $next);
     }
 
     // Current position in the list

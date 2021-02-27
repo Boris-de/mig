@@ -2,11 +2,11 @@
 
 // buildLargeLink() - Builds the text used for template keyword "largeLink".
 
-function buildLargeLink( $currDir )
+function buildLargeLink( $unsafe_currDir )
 {
     global $mig_config;
 
-    $newCurrDir = migURLencode($currDir);
+    $newCurrDir = migURLencode($unsafe_currDir);
 
     $retval = '<a href="' . $mig_config['baseurl'] . '?currDir='
             . $newCurrDir . '&amp;pageType=large&amp;image=' . $mig_config['enc_image'];

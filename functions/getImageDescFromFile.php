@@ -3,21 +3,21 @@
 // getImageDescFromFile() - Fetches an image description from a per-image comment file
 //                          (only used if $commentFilePerImage is TRUE).
 
-function getImageDescFromFile ( $currDir, $image )
+function getImageDescFromFile ( $unsafe_currDir, $unsafe_image )
 {
     global $mig_config;
 
     $imageDesc = '';
-    $fname = getFileName($image);
-    $fname = rawurldecode($fname);
+    $unsafe_fname = getFileName($unsafe_image);
+    $unsafe_fname = rawurldecode($unsafe_fname);
 
     $short_flag = $mig_config['commentfileshortcomments'];
 
-    $descFileName = $mig_config['albumdir'] . "/$currDir/$fname.txt";
+    $localDescFileName = $mig_config['albumdir'] . "/$unsafe_currDir/$unsafe_fname.txt";
 
-    if (file_exists($descFileName)) {
+    if (file_exists($localDescFileName)) {
 
-        $file = fopen($descFileName, 'r');
+        $file = fopen($localDescFileName, 'r');
         $line = fgets($file, 4096);         // get first line
 
         // This double-check exists so that files ending without
