@@ -17,6 +17,9 @@ The mkGallery.pl script was moved from the main bundle to the contrib repo.
 
 The unused buildRSS function was removed from the source code.
 
+You can now use $albumRoot in the config to use a name different from "albums" for the folder where your pictures are,
+the default will of course still be "/albums".
+
 =head2 Version 1.6.0 (Sun, 10 Oct 2020)
 
 =head3 Important changes

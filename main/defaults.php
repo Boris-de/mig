@@ -84,5 +84,6 @@ $audio_extensions           = array(
     );
 $migOpenBasedir = FALSE;
 $migOpenBasedirExtraDirs = array();
+$albumRoot = '/albums';
 
 ?>

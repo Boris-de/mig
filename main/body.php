@@ -64,8 +64,7 @@ if (isset($configFile)) {
     include($configFile);
 }
 
-// Note: If you change the directory here also make sure to change $albumURLroot
-$mig_config['albumdir'] = $mig_config['basedir'] . '/albums';   // Where albums live
+$mig_config['albumdir'] = $mig_config['basedir'] . $albumRoot;   // Where albums live
 
 // apply open_basedir restrictions (if enabled)
 /** @psalm-suppress TypeDoesNotContainType */
@@ -358,7 +357,7 @@ $baseHref = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
 $mig_config['imagedir'] = $baseHref . '/images';
 
 // Root where album images are living
-$mig_config['albumurlroot'] = $baseHref . '/albums';
+$mig_config['albumurlroot'] = $baseHref . $albumRoot;
 // NOTE: Sometimes Windows users have to set this manually, like:
 // $mig_config['albumurlroot'] = '/mig/albums';
 
