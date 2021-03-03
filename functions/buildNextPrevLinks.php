@@ -40,8 +40,7 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
             $dir = opendir($mig_config['albumdir']."/$unsafe_currDir");
         }
     } else {
-        print "ERROR: no such currDir '" . migHtmlSpecialChars($unsafe_currDir) . "'<br>";
-        exit;
+        exit("ERROR: no such currDir '" . migHtmlSpecialChars($unsafe_currDir) . "'<br>");
     }
 
     // Gather all files into an array
@@ -134,7 +133,7 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
     }
 
     if (!is_int($ThisImagePos)) {
-        die('ABORT: image not found in $presorted');
+        exit('ABORT: image not found in $presorted');
     }
 
     --$i;                       // Get rid of the last increment...

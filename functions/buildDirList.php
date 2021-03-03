@@ -19,14 +19,11 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
     $filedates = array ();
 
     $unsafe_abs_currDir = $mig_config['albumdir'].'/'.$unsafe_currDir;
-    if (is_dir($unsafe_abs_currDir)) {
-        // Open directory handle
-        $dir = opendir($unsafe_abs_currDir);
-    } else {
-        print "ERROR: no such currDir '$enc_currDir'<br>";
-        exit;
+    if (!is_dir($unsafe_abs_currDir)) {
+        exit("ERROR: no such currDir '$enc_currDir'"); // should already be captured by body.php...
     }
 
+    $dir = opendir($unsafe_abs_currDir);
     while ($file = readdir($dir)) {
         if ($file == '.' || $file == '..') {
             continue; // skip self and parent

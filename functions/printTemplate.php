@@ -37,8 +37,7 @@ function printTemplate ( $templateFile, $maintAddr,
 
     // Panic if the template file doesn't exist.
     if (! file_exists($templateFile)) {
-        print "ERROR: $templateFile does not exist!";
-        exit;
+        exit("ERROR: $templateFile does not exist!");
     }
 
     $file = fopen($templateFile,'r');    // Open template file
@@ -89,7 +88,7 @@ function printTemplate ( $templateFile, $maintAddr,
             $albumURLroot		= $mig_config['albumurlroot'];
             $baseURL			= $mig_config['baseurl'];
             $enc_image			= isset($mig_config['enc_image']) ? $mig_config['enc_image'] : NULL;
-            $unsafe_image			= isset($mig_config['unsafe_image']) ? $mig_config['unsafe_image'] : NULL;
+            $unsafe_image		= isset($mig_config['unsafe_image']) ? $mig_config['unsafe_image'] : NULL;
             $imageSize          = '';
             $largeSubdir		= $mig_config['largesubdir'];
             $pageTitle			= $mig_config['pagetitle'];
@@ -105,7 +104,7 @@ function printTemplate ( $templateFile, $maintAddr,
                 // Get image pixel size for <IMG> element
                 $unsafe_abs_image = $mig_config['albumdir'] . "/$unsafe_currDir/" . $unsafe_image;
                 if(!is_file($unsafe_abs_image)) {
-					die("ERROR: Image file does not exist!");
+                    exit("ERROR: Image file does not exist!");
 				}
                 if ($mig_config['pagetype'] == 'image') {
                     $imageProps = @GetImageSize($unsafe_abs_image);

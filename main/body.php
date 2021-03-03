@@ -16,8 +16,7 @@ if (isset($_SERVER['PHP_SELF'])) {
 } elseif (isset($SCRIPT_NAME)) {
     $mig_config['baseurl'] = $SCRIPT_NAME;
 } else {
-    print 'FATAL ERROR: Could not set baseurl';
-    exit;
+    exit('FATAL ERROR: Could not set baseurl');
 }
 
 // Base directory of installation
@@ -34,8 +33,7 @@ if (isset($_SERVER['PATH_TRANSLATED'])) {
 } elseif (isset($SCRIPT_FILENAME)) {
     $mig_config['basedir'] = $SCRIPT_FILENAME;
 } else {
-    print 'FATAL ERROR: Can not set basedir';
-    exit;
+    exit('FATAL ERROR: Can not set basedir');
 }
 
 // Strip down to just directory name
@@ -189,6 +187,7 @@ $jump = getHttpGetVariable('jump', FALSE);
 if ($jump && isset($jumpMap[$jump])) {
     exit(migRedirect("?$jumpMap[$jump]"));
 }
+unset($jump);
 
 // Jump-tag using PATH_INFO rather than "....?jump=x" URI
 if (isset($PATH_INFO) && isset($jumpMap[$PATH_INFO])) {
@@ -202,8 +201,11 @@ if (!$unchecked_currDir) {
     exit(migRedirect('?currDir=.'));
 }
 
-function _get_magic_quotes_gpc() {
-    return function_exists('get_magic_quotes_gpc') ? @get_magic_quotes_gpc() : 0;
+function is_in_album_dir($relative_path) {
+    global $mig_config;
+    $albumdir_abs = realpath($mig_config['albumdir']);
+    $unchecked_abs_path = "$albumdir_abs/$relative_path";
+    return string_starts_with(realpath($unchecked_abs_path), $albumdir_abs);
 }
 
 // Get rid of \'s if magic_quotes_gpc is turned on (causes problems).
@@ -214,8 +216,7 @@ if (_get_magic_quotes_gpc() == 1) {
 // Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
 if (strstr($unchecked_currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $unchecked_currDir)) {
-    print 'SECURITY VIOLATION - ABANDON SHIP';
-    exit;
+    exit('SECURITY VIOLATION - ABANDON SHIP');
 }
 
 // Try to validate currDir
@@ -224,14 +225,21 @@ if (strstr($unchecked_currDir, '..') || !preg_match($mig_config['currDirNameRege
 //     for at least two positions.
 //
 if ($unchecked_currDir != '.' && !preg_match('#^./[^/][^/]*#', $unchecked_currDir)) {
-    print 'ERROR: $currDir is invalid. Exiting.';
-    exit;
+    exit('ERROR: $currDir is invalid. Exiting.');
 }
 
 // currDir may not end in / unless it is './' in its entirety
 if ($unchecked_currDir != './' && preg_match('#/$#', $unchecked_currDir)) {
-    print 'ERROR: $currDir is invalid. Exiting.';
-    exit;
+    exit('ERROR: $currDir has invalid format. Exiting.');
+}
+
+// double check: currDir must be in album dir (no directory traversal)
+// This is an extra check in case someone sets $currDirNameRegexpr to a value that does not include directory traversal
+// protection AND has open_basedir disable, quickly check if the absolute path of the image is inside the absolute path
+// of our album dir.
+// Note: this also requires the path to exist
+if (!is_in_album_dir("$unchecked_currDir")) {
+    exit("ERROR: Failed to load currDir " . migHtmlSpecialChars($unchecked_currDir));
 }
 
 // Strip URL encoding
@@ -250,9 +258,15 @@ if (_get_magic_quotes_gpc() == 1 && $unchecked_image) {
 // Look at $unchecked_image from a security angle.
 // Don't let folks go outside the album directory base
 // Don't let folks define ANY directory here
-if (strstr($unchecked_image, '..') || !preg_match($mig_config['imageFilenameRegexpr'], $unchecked_image)) {
-    print 'ERROR: $image is invalid.  Exiting.';
-    exit;
+if (strstr($unchecked_image, '/') || strstr($unchecked_image, '\\') // image is never a full path
+    || strstr($unchecked_image, '..') // basic directory traversal check, see below for more
+    || !preg_match($mig_config['imageFilenameRegexpr'], $unchecked_image)) {
+    exit('ERROR: $image is invalid.  Exiting.');
+}
+
+// double check: directory of image must be in album dir, no directory traversal (see comment for currDir above)
+if ($unchecked_image && !is_in_album_dir($unsafe_currDir . '/' . dirname($unchecked_image))) {
+    exit('ERROR: $image is not allowed. Exiting.');
 }
 
 $unsafe_image = $unchecked_image; // upgrade to unsafe ("we checked it, but it's not safe for HTML/XSS purpose")
@@ -261,9 +275,8 @@ $mig_config['unsafe_image'] = $unsafe_image;
 $mig_config['enc_image'] = migHtmlSpecialChars($unsafe_image);
 
 // check if the image exists...
-if ($mig_config['enc_image'] && !file_exists($mig_config['albumdir']."/$unsafe_currDir/".$unsafe_image)) {
-    echo "ERROR: ".migHtmlSpecialChars($unsafe_currDir)."/".$mig_config['enc_image']." is invalid.  Exiting.";
-    exit;
+if ($unsafe_image && !file_exists($mig_config['albumdir']."/$unsafe_currDir/".$unsafe_image)) {
+    exit("ERROR: ".migHtmlSpecialChars($unsafe_currDir)."/".$mig_config['enc_image']." is invalid.  Exiting.");
 }
 
 
@@ -275,10 +288,10 @@ $unsafe_pageType = getHttpGetVariable('pageType', 'folder');
 $allowedTypes = array( "image" => 1, "folder" => 1, "large" => 1, "" => 1);
 
 if(!isset($allowedTypes[$unsafe_pageType])) {
-	echo 'ERROR: $pageType is invalid.  Exiting.';
-	exit;
+    exit('ERROR: $pageType is invalid.  Exiting.');
 } else {
     $mig_config['pagetype'] = $unsafe_pageType; // pageType is now safe because it's from our allowed list
+    unset($unsafe_pageType);
 }
 unset($allowedTypes);
 
@@ -295,6 +308,7 @@ if (isset($mig_config['lang_lib'][$unsafe_mig_dl])) {
 } else {
     $mig_config['mig_dl'] = '';
 }
+unset($unsafe_mig_dl);
 
 
 // Grab appropriate language from library
@@ -322,7 +336,7 @@ $unsafe_workCopy = $unsafe_currDir;
 while ($unsafe_workCopy) {
 
     if (isset($protect[$unsafe_workCopy])) {
-        die('password protection is not supported anymore');
+        exit('password protection is not supported anymore');
     }
 
     // if $workCopy is already down to "." just nullify to end loop

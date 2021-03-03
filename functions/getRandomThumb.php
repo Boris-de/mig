@@ -159,8 +159,7 @@ function getRandomThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order = 
                 }
 
             } else {
-                print 'ERROR: no markerType set in getRandomThumb()';
-                exit;
+                exit('ERROR: no markerType set in getRandomThumb()');
             }
 
             if ($mySample) {

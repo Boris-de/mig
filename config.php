@@ -881,7 +881,11 @@ $httpContentType = "text/html; charset=$migCharset";
 //
 // These two variables control which file- and directorynames are allowed.
 // Be careful when changing these, special characters like / or < and >
-// may lead into possible XSS-exploits or exposure of system information
+// may lead into possible XSS-exploits or exposure of system information.
+//
+// Since Mig 1.6.1 it SHOULD be safe to allow all filenames without causing
+// XSS or directory traversals, but the changes have not been peer reviewed
+// yet. If you want to give the code a review please let me know.
 //
 // Examples:
 //       $imageFilenameRegexpr       = '=^[\._-\d\w \']*$=';
