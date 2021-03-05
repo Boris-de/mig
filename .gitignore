@@ -3,11 +3,9 @@
 docs/html/*
 docs/text/*
 docs/license.pod
-bundles
+build
 index.php
-nbproject
 albums
 test-album
 *-private
-coverage
 test/tmp
