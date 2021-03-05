@@ -45,7 +45,6 @@ final class BuildDirListTest extends AbstractFileBasedTest
     {
         $this->mkdir($this->album_dir.'/test1');
         $this->mkdir($this->album_dir.'/test2');
-        $this->mkdir($this->album_dir.'/<xxx>'); // ignored because of currDirNameRegexpr
         $this->mkdir($this->album_dir.'/test-presorted'); // presorted -> should be first
         $this->mkdir($this->album_dir.'/.test-dot-directory'); // dot-directory -> has to be ignored with ignoredotdirectories
         touch($this->album_dir.'/test.jpg'); // file -> has to be ignored
@@ -62,6 +61,22 @@ final class BuildDirListTest extends AbstractFileBasedTest
      <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test2\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test2\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test2\">test2</a></td>
    </tr>
   </tbody></table>", buildDirList('.', 1, array('test-presorted' => TRUE), array()));
+    }
+
+    /**
+     * @requires OSFAMILY Linux
+     */
+    public function testIgnoreFrom_currDirNameRegexpr()
+    {
+        $this->mkdir($this->album_dir.'/test1');
+        $this->mkdir($this->album_dir.'/<xxx>'); // ignored because of currDirNameRegexpr
+
+        $this->assertEquals("
+   <table summary=\"Folder Links\" border=\"0\" cellspacing=\"0\"><tbody>
+   <tr>
+     <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1\">test1</a></td>
+   </tr>
+  </tbody></table>", buildDirList('.', 1, array(), array()));
     }
 
     public function testColumns()

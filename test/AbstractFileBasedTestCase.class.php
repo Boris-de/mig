@@ -50,10 +50,10 @@ abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
 
         foreach ($fs_nodes as $node) {
             $todo = $node->isDir() ? 'rmdir' : 'unlink';
-            $todo($node->getRealPath());
+            @$todo($node->getRealPath());
         }
 
-        rmdir($dir);
+        @rmdir($dir);
     }
 
     protected function touchWithSize($filename, $size) {

@@ -9,30 +9,49 @@ on:
     branches: [ main ]
 
 jobs:
-  run:
+  versions:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest]
+        operating-system: [ ubuntu-latest ]
         php-versions:
-          - {php: '5.6', phpunit: '5.7.27', prepare_tests_run: 'sed -i -e "s#: void##" test/*.php'}
-          - {php: '7.3', phpunit: 'latest', prepare_tests_run: 'true'}
-          - {php: '7.4', phpunit: 'latest', prepare_tests_run: 'true'}
-          - {php: '8.0', phpunit: 'latest', prepare_tests_run: 'true'}
+          - { php: '5.6', phpunit: '5.7.27', prepare_tests_run: 'sed -i -e "s#: void##" test/*.php' }
+          - { php: '7.3', phpunit: 'latest', prepare_tests_run: 'true' }
+          - { php: '7.4', phpunit: 'latest', prepare_tests_run: 'true' }
+          - { php: '8.0', phpunit: 'latest', prepare_tests_run: 'true' }
     name: PHP ${{ matrix.php-versions.php }} Test on ${{ matrix.operating-system }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions.php }}
-        coverage: xdebug
-        tools: phpunit:${{ matrix.php-versions.phpunit }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions.php }}
+          coverage: xdebug
+          tools: phpunit:${{ matrix.php-versions.phpunit }}
 
-    - name: prepare sources
-      run: ${{ matrix.php-versions.prepare_tests_run }}
+      - name: prepare sources
+        run: ${{ matrix.php-versions.prepare_tests_run }}
 
-    - name: run unittests
-      run: make unittests
+      - name: run unittests
+        run: make unittests
+
+  systems:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-latest, macos-latest, windows-latest ]
+    name: Test on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: latest
+          tools: phpunit
+
+      - name: run unittests
+        run: make unittests
