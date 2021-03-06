@@ -5,9 +5,15 @@ DIST_DIR    = $(BUILD_DIR)/mig
 INDEX_PHP   = $(BUILD_DIR)/index.php
 PHPUNIT_DIR = $(BUILD_DIR)/phpunit
 COVERAGE_DIR= $(BUILD_DIR)/coverage
-SPOOL_DIR   = mig-$(VERSION) # Temporary directory to build a Mig install in (this gets tarred up)
 
-PODMAN = podman # allow to try to run with "docker" command
+ARCHIVE_NAME = mig-$(VERSION)
+# Temporary directory to build a Mig install in (this gets tarred up)
+SPOOL_DIR    = $(BUILD_DIR)/$(ARCHIVE_NAME)
+ARCHIVE      = $(DIST_DIR)/$(ARCHIVE_NAME).tar.gz
+RELEASE_TAG  = v$(VERSION)
+
+# allow to try to run with "docker" command
+PODMAN = podman
 TEST_ALBUM_DIR = test-album
 
 PSALM_MARKER = $(BUILD_DIR)/.psalm
@@ -18,11 +24,6 @@ UNITTESTS_MARKER = $(BUILD_DIR)/.unittests
 TEST_ALBUM_MARKER = $(TEST_ALBUM_DIR)/.marker
 PODMAN_UNITTESTS_MARKER = $(BUILD_DIR)/.podman-unittests
 PODMAN_UNITTESTS_ALL_MARKER = $(BUILD_DIR)/.podman-unittests-all
-
-# Archive name (output file)
-ARCHIVE = $(DIST_DIR)/$(SPOOL_DIR).tar.gz
-
-RELEASE_TAG = v$(VERSION)
 
 PHP_FILES = main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
 TEST_FILES = test/*.php
@@ -78,7 +79,7 @@ docs:
 	make -C docs
 
 mig: dist
-dist: has-version $(INDEX_PHP) unittests podman-unittests docs $(BUILD_DIR_MARKER)
+dist: has-version $(INDEX_PHP) unittests podman-unittests-all-versions docs $(BUILD_DIR_MARKER)
 	rm -rf $(SPOOL_DIR) $(ARCHIVE)
 	mkdir -m 0755 -p $(DIST_DIR) $(SPOOL_DIR)
 	cd $(SPOOL_DIR); mkdir -m 0755 -p images templates docs/text docs/html
@@ -90,7 +91,7 @@ dist: has-version $(INDEX_PHP) unittests podman-unittests docs $(BUILD_DIR_MARKE
 	cp docs/text/*.txt $(SPOOL_DIR)/docs/text
 	find $(SPOOL_DIR) -type d -exec chmod 0755 {} \;
 	find $(SPOOL_DIR) -type f -exec chmod 0644 {} \;
-	tar czf $(ARCHIVE) --owner=0 --group=0 $(SPOOL_DIR)
+	tar czf $(ARCHIVE) --owner=0 --group=0 -C $$(dirname $(SPOOL_DIR)) $$(basename $(SPOOL_DIR))
 	rm -rf $(SPOOL_DIR)
 	chmod 0644 $(ARCHIVE)
 	@echo " "
@@ -199,4 +200,4 @@ $(BUILD_DIR_MARKER):
 	mkdir -p $(BUILD_DIR)
 	@touch $@
 
-.PHONY: default test clean clean-marker unittests podman podman-unittests podman-unittests-all podman-unittests-all-versions coverage has-version index.php coverage dev-server
+.PHONY: default docs test clean clean-marker unittests podman podman-unittests podman-unittests-all podman-unittests-all-versions coverage has-version index.php coverage dev-server
