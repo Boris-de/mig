@@ -4,7 +4,7 @@
 
 =head2 MIG Change Log
 
-=head2 Version 1.6.1 (tbd)
+=head2 Version 1.7.0 (Sat, 06 Mar 2021)
 
 =head3 Important notes
 

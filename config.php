@@ -851,7 +851,7 @@ $mig_language = "en";
 // Defaults to UTF-8
 //
 // Note: the charset in $httpContentType was "us-ascii" before the
-// introduction of this setting with Mig 1.6.1
+// introduction of this setting with Mig 1.7.0
 //
 $migCharset = 'UTF-8';
 
@@ -883,7 +883,7 @@ $httpContentType = "text/html; charset=$migCharset";
 // Be careful when changing these, special characters like / or < and >
 // may lead into possible XSS-exploits or exposure of system information.
 //
-// Since Mig 1.6.1 it SHOULD be safe to allow all filenames without causing
+// Since Mig 1.7.0 it SHOULD be safe to allow all filenames without causing
 // XSS or directory traversals, but the changes have not been peer reviewed
 // yet. If you want to give the code a review please let me know.
 //
