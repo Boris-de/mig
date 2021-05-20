@@ -103,7 +103,7 @@ has-release-vars: has-version
 	test -n "$(MIG_GPG_EMAIL)" # MIG_GPG_EMAIL
 	test -n "$(MIG_SITE_DIR)" # MIG_SITE_DIR
 
-release: has-release-vars clean $(BUILD_DIR_MARKER)
+release: has-release-vars clean podman-unittests-all $(BUILD_DIR_MARKER)
 	make dist VERSION=$(VERSION)
 	git -c "user.signingkey=$(MIG_GPG_KEY)" -c "user.email=$(MIG_GPG_EMAIL)" tag -s $(RELEASE_TAG) -m "Tagging $(RELEASE_TAG)"
 	make docpublish MIG_SITE_DIR=$(MIG_SITE_DIR)
@@ -112,7 +112,7 @@ release: has-release-vars clean $(BUILD_DIR_MARKER)
 	gpg --local-user "$(MIG_GPG_KEY)" --detach-sign --sign --armor $(ARCHIVE)
 	@echo
 	@echo "Release is finished, see $(ARCHIVE) and $(MIG_SITE_DIR)"
-	@echo "You can run ./utilities/release-test.sh $(ARCHIVE) to run final tests"
+	@echo "You can run './utilities/release-test.sh $(ARCHIVE)' to run final tests"
 
 docpublish:
 	make -C docs publish MIG_SITE_DIR=$(MIG_SITE_DIR)
