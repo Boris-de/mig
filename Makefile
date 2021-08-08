@@ -13,7 +13,7 @@ ARCHIVE      = $(DIST_DIR)/$(ARCHIVE_NAME).tar.gz
 RELEASE_TAG  = v$(VERSION)
 
 # allow to try to run with "docker" command
-PODMAN = podman
+PODMAN ?= podman
 TEST_ALBUM_DIR = test-album
 
 PSALM_MARKER = $(BUILD_DIR)/.psalm
@@ -150,7 +150,7 @@ $(PODMAN_UNITTESTS_MARKER)-$(PODMAN_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(PHP_FIL
 	@echo "Running unittests with container '$(PODMAN_PHPUNIT_VERSION)'"
 	rm -rf $(PODMAN_UNITTEST_TMP) && cp -r $(PHPUNIT_DIR) $(PODMAN_UNITTEST_TMP)
 	$(PODMAN) build --build-arg PHP_VERSION=$(PODMAN_PHPUNIT_VERSION) -t $(PODMAN_NAME_PHPUNIT) test
-	$(PODMAN) run -it --rm -v .:/usr/src/mig -w /usr/src/mig $(PODMAN_NAME_PHPUNIT)
+	$(PODMAN) run -it --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(PODMAN_NAME_PHPUNIT)
 	@touch $@
 
 podman-unittests-all: $(PODMAN_UNITTESTS_ALL_MARKER)
