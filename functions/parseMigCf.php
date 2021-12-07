@@ -21,7 +21,7 @@ function parseMigCf ( $unsafe_folder )
     $short_desc     = array ();
     $desc           = array ();
     $ficons         = array ();
-    $bulletin       = NULL;
+    $bulletin       = '';
     $template       = $mig_config['templatedir'] . '/folder.html';
     $fcols          = $mig_config['maxFolderColumns'];
     $tcols          = $mig_config['maxThumbColumns'];

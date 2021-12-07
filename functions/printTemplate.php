@@ -87,8 +87,8 @@ function printTemplate ( $templateFile, $maintAddr,
 
             $albumURLroot		= $mig_config['albumurlroot'];
             $baseURL			= $mig_config['baseurl'];
-            $enc_image			= isset($mig_config['enc_image']) ? $mig_config['enc_image'] : NULL;
-            $unsafe_image		= isset($mig_config['unsafe_image']) ? $mig_config['unsafe_image'] : NULL;
+            $enc_image			= isset($mig_config['enc_image']) ? $mig_config['enc_image'] : '';
+            $unsafe_image		= isset($mig_config['unsafe_image']) ? $mig_config['unsafe_image'] : '';
             $imageSize          = '';
             $largeSubdir		= $mig_config['largesubdir'];
             $pageTitle			= $mig_config['pagetitle'];

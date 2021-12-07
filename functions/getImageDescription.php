@@ -5,13 +5,13 @@
 function getImageDescription($unsafe_image, $description, $short_desc)
 {
     // "Long" description
-    $imageDesc = NULL;
+    $imageDesc = '';
     if (isset($description[$unsafe_image])) {
         $imageDesc = $description[$unsafe_image];
     }
 
     // "Short" description
-    $imageShort = NULL;
+    $imageShort = '';
     if (isset($short_desc[$unsafe_image])) {
         $imageShort = $short_desc[$unsafe_image];
     }

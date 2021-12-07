@@ -138,7 +138,7 @@ $mig_config['exifFormatString']                 = $exifFormatString;
 $mig_config['largeLinkFromMedium']              = $largeLinkFromMedium;
 $mig_config['largeLinkUseBorders']              = $largeLinkUseBorders;
 
-function getHttpGetVariable($name, $default = NULL) {
+function getHttpGetVariable($name, $default = '') {
     global $HTTP_GET_VARS;
     if (isset($_GET[$name])) {
         return $_GET[$name];
@@ -148,7 +148,7 @@ function getHttpGetVariable($name, $default = NULL) {
     return $default;
 }
 
-function getHttpServerVariable($name, $default = NULL) {
+function getHttpServerVariable($name, $default = '') {
     global $HTTP_SERVER_VARS;
     if (isset($_SERVER[$name])) {
         return $_SERVER[$name];
