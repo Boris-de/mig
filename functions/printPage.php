@@ -9,8 +9,9 @@ function printPage($unsafe_currDir, $pathConvert, $unsafe_image)
         $folderIcons, $folderTemplate, $folderCols, $folderThumbCols, $folderMaintAddr)
         = parseMigCf($mig_config['albumdir'] . "/$unsafe_currDir");
 
+    $enc_image = isset($mig_config['enc_image']) ? $mig_config['enc_image'] : '';
     // strip URL encoding here too
-    $mig_config['enc_image'] = rawurldecode($mig_config['enc_image']);
+    $mig_config['enc_image'] = rawurldecode($enc_image);
 
     // if pageType is "folder") generate a folder view
     if ($mig_config['pagetype'] == 'folder') {

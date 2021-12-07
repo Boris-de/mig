@@ -94,7 +94,7 @@ function buildImageURL ($unsafe_currDir, $unsafe_filename, $description, $short_
     }
 
     // If there's a full description but no alt, use the full as alt.
-    if ($desc && ! $alt_desc) {
+    if ($desc && !$alt_desc) {
         $alt_desc = $desc;
     }
 
