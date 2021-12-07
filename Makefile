@@ -45,7 +45,7 @@ endif
 PHPUNIT_URL = https://phar.phpunit.de
 PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 1)
 PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
-PHPUNIT_VERSIONS = 5.7.27 8.5.13 9.5.0
+PHPUNIT_VERSIONS = 5.7.27 8.5.21 9.5.10
 PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
@@ -157,7 +157,7 @@ podman-unittests-all: $(PODMAN_UNITTESTS_ALL_MARKER)
 podman-unittests-all-versions: $(PODMAN_UNITTESTS_ALL_MARKER)
 $(PODMAN_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@set -e ;\
-	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1-rc; do \
+	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 rc; do \
 		make podman-unittests PODMAN_PHPUNIT_VERSION=$${version}-$(PODMAN_PHPUNIT_VERSION); \
 	done
 	@touch $@
