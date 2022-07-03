@@ -45,7 +45,7 @@ endif
 PHPUNIT_URL = https://phar.phpunit.de
 PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 1)
 PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
-PHPUNIT_VERSIONS = 5.7.27 8.5.21 9.5.10
+PHPUNIT_VERSIONS = 5.7.27 8.5.27 9.5.21
 PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
@@ -142,7 +142,7 @@ $(COVERAGE_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 
 $(PHPUNIT_FILES): $(BUILD_DIR_MARKER) $(BUILD_DIR_MARKER)
 	mkdir -p $(PHPUNIT_DIR)
-	curl --silent --show-error --location $(PHPUNIT_URL)/$(shell basename $@) --output $@
+	curl --silent --fail --show-error --location $(PHPUNIT_URL)/$(shell basename $@) --output $@
 	chmod 700 $@
 
 podman-unittests: $(PODMAN_UNITTESTS_MARKER)-$(PODMAN_PHPUNIT_VERSION)
