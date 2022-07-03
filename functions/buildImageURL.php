@@ -59,7 +59,7 @@ function buildImageURL ($unsafe_currDir, $unsafe_filename, $description, $short_
         } elseif ($mig_config['markertype'] == 'prefix') {
             $unsafe_thumbImage = $unsafe_path . $mig_config['markerlabel'] . "_$unsafe_fname.";
         } elseif ($mig_config['markertype'] == 'suffix') {
-            $unsafe_thumbImage = $unsafe_path . "${unsafe_fname}_{$mig_config['markerlabel']}.";
+            $unsafe_thumbImage = $unsafe_path . "{$unsafe_fname}_{$mig_config['markerlabel']}.";
         }
 
         // if a thumbnail could be there

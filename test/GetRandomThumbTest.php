@@ -270,7 +270,7 @@ final class GetRandomThumbTest extends AbstractFileBasedTest
 
     private function createFiles($prefix, $count, $suffix='') {
         for ($i = 1; $i <= $count; ++$i) {
-            touch($this->album_dir . "/${prefix}${i}${suffix}.jpg");
+            touch($this->album_dir . "/{$prefix}{$i}{$suffix}.jpg");
         }
     }
 
@@ -280,7 +280,7 @@ final class GetRandomThumbTest extends AbstractFileBasedTest
             $folder .= "/$dir";
         }
         // PHP 7.1 changed the seed algorithm for mt_rand, even with MT_RAND_PHP and the same seed you get different
-        // results in PHP <7.1 and PHP >=7.1. This lambda is a workaround for that.
+        // results in PHP <7.1 vs PHP >=7.1. This lambda is a workaround for that.
         return getRandomThumb('file', $folder, '.', $stable_order=TRUE, function($min, $max) {
             $counter = $this->counter++;
             $hashed = hexdec(hash('crc32', $counter));

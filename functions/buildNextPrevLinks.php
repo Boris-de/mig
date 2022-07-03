@@ -54,7 +54,7 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
         $markerLabel = $mig_config['markerlabel'];
 
         // Ignore thumbnails
-        if ($mig_config['markertype'] == 'prefix' && preg_match("#^${markerLabel}_#", $file)) {
+        if ($mig_config['markertype'] == 'prefix' && preg_match("#^{$markerLabel}_#", $file)) {
             continue;
         }
 
