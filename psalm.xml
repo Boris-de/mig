@@ -15,5 +15,6 @@
         <referencedVariable name="$mig_config"/>
       </errorLevel>
     </PossiblyUndefinedGlobalVariable>
+    <PossiblyInvalidArrayOffset errorLevel="suppress"/>
   </issueHandlers>
 </psalm>
