@@ -24,6 +24,7 @@ $imagePopMenuBar            = FALSE;
 $imagePopToolBar            = FALSE;
 $imagePopType               = 'reuse';
 $imagePopup                 = FALSE;
+/** @var array<string, string> */
 $jumpMap                    = array();
 $largeLinkFromMedium        = TRUE;
 $largeLinkUseBorders        = FALSE;
