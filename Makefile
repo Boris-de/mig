@@ -153,8 +153,8 @@ $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(P
 	$(DOCKER) run -it --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(CONTAINER_NAME_PHPUNIT)
 	@touch $@
 
-container-unittests-all: CONTAINER_UNITTESTS_ALL_MARKER
-container-unittests-all-versions: CONTAINER_UNITTESTS_ALL_MARKER
+container-unittests-all: $(CONTAINER_UNITTESTS_ALL_MARKER)
+container-unittests-all-versions: $(CONTAINER_UNITTESTS_ALL_MARKER)
 $(CONTAINER_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@set -e ;\
 	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2.0RC7 rc; do \
