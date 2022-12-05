@@ -12,8 +12,8 @@ SPOOL_DIR    = $(BUILD_DIR)/$(ARCHIVE_NAME)
 ARCHIVE      = $(DIST_DIR)/$(ARCHIVE_NAME).tar.gz
 RELEASE_TAG  = v$(VERSION)
 
-# allow to try to run with "docker" command
-PODMAN ?= podman
+# allow to try to run with "podman" command
+DOCKER ?= docker
 TEST_ALBUM_DIR = test-album
 
 PSALM_MARKER = $(BUILD_DIR)/.psalm
@@ -22,8 +22,8 @@ MIG_SITE_MARKER = $(BUILD_DIR)/.site
 BUILD_DIR_MARKER = $(BUILD_DIR)/.marker
 UNITTESTS_MARKER = $(BUILD_DIR)/.unittests
 TEST_ALBUM_MARKER = $(TEST_ALBUM_DIR)/.marker
-PODMAN_UNITTESTS_MARKER = $(BUILD_DIR)/.podman-unittests
-PODMAN_UNITTESTS_ALL_MARKER = $(BUILD_DIR)/.podman-unittests-all
+CONTAINER_UNITTESTS_MARKER = $(BUILD_DIR)/.container-unittests
+CONTAINER_UNITTESTS_ALL_MARKER = $(BUILD_DIR)/.container-unittests-all
 
 PHP_FILES = main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
 TEST_FILES = test/*.php
@@ -31,15 +31,15 @@ TEMPLATE_FILES = templates/*html templates/*.css
 
 DEV_SERVER_PORT=8080
 
-PODMAN_NAME = mig-php-app
-PODMAN_NAME_PHPUNIT = mig-phpunit
-PODMAN_PHPUNIT_VERSION = cli-alpine
-PODMAN_UNITTEST_TMP = test/tmp
+CONTAINER_NAME = mig-php-app
+CONTAINER_NAME_PHPUNIT = mig-phpunit
+CONTAINER_PHPUNIT_VERSION = cli-alpine
+CONTAINER_UNITTEST_TMP = test/tmp
 
-ifeq ($(PODMAN_PHP_VERSION),)
- USED_PODMAN_PHP_VERSION := $(PODMAN_PHP_VERSION)
+ifeq ($(CONTAINER_PHP_VERSION),)
+ USED_CONTAINER_PHP_VERSION := $(CONTAINER_PHP_VERSION)
 else
- USED_PODMAN_PHP_VERSION := $(PODMAN_PHP_VERSION)-
+ USED_CONTAINER_PHP_VERSION := $(CONTAINER_PHP_VERSION)-
 endif
 
 PHPUNIT_URL = https://phar.phpunit.de
@@ -61,8 +61,8 @@ default:
 	@echo "    make test-album            Create a random sample album"
 	@echo "    make unittests             Runs unittests with default PHP version"
 	@echo "    make coverage              Runs unittests with default PHP version to generate coverage"
-	@echo "    make podman-unittests      Runs unittests with a current PHP version using podman container"
-	@echo "    make podman-unittests-all  Runs unittests with different PHP versions using podman containers"
+	@echo "    make container-unittests      Runs unittests with a current PHP version using container"
+	@echo "    make container-unittests-all  Runs unittests with different PHP versions using containers"
 	@echo "    make clean"
 
 index.php: $(INDEX_PHP)
@@ -79,7 +79,7 @@ docs:
 	make -C docs
 
 mig: dist
-dist: has-version $(INDEX_PHP) unittests podman-unittests-all-versions docs $(BUILD_DIR_MARKER)
+dist: has-version $(INDEX_PHP) unittests container-unittests-all-versions docs $(BUILD_DIR_MARKER)
 	rm -rf $(SPOOL_DIR) $(ARCHIVE)
 	mkdir -m 0755 -p $(DIST_DIR) $(SPOOL_DIR)
 	cd $(SPOOL_DIR); mkdir -m 0755 -p images templates docs/text docs/html
@@ -103,7 +103,7 @@ has-release-vars: has-version
 	test -n "$(MIG_GPG_EMAIL)" # MIG_GPG_EMAIL
 	test -n "$(MIG_SITE_DIR)" # MIG_SITE_DIR
 
-release: has-release-vars clean podman-unittests-all $(BUILD_DIR_MARKER)
+release: has-release-vars clean container-unittests-all $(BUILD_DIR_MARKER)
 	make dist VERSION=$(VERSION)
 	git -c "user.signingkey=$(MIG_GPG_KEY)" -c "user.email=$(MIG_GPG_EMAIL)" tag -s $(RELEASE_TAG) -m "Tagging $(RELEASE_TAG)"
 	make docpublish MIG_SITE_DIR=$(MIG_SITE_DIR)
@@ -145,35 +145,35 @@ $(PHPUNIT_FILES): $(BUILD_DIR_MARKER) $(BUILD_DIR_MARKER)
 	curl --silent --fail --show-error --location $(PHPUNIT_URL)/$(shell basename $@) --output $@
 	chmod 700 $@
 
-podman-unittests: $(PODMAN_UNITTESTS_MARKER)-$(PODMAN_PHPUNIT_VERSION)
-$(PODMAN_UNITTESTS_MARKER)-$(PODMAN_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
-	@echo "Running unittests with container '$(PODMAN_PHPUNIT_VERSION)'"
-	rm -rf $(PODMAN_UNITTEST_TMP) && cp -r $(PHPUNIT_DIR) $(PODMAN_UNITTEST_TMP)
-	$(PODMAN) build --build-arg PHP_VERSION=$(PODMAN_PHPUNIT_VERSION) -t $(PODMAN_NAME_PHPUNIT) test
-	$(PODMAN) run -it --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(PODMAN_NAME_PHPUNIT)
+container-unittests: $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION)
+$(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
+	@echo "Running unittests with container '$(CONTAINER_PHPUNIT_VERSION)'"
+	rm -rf $(CONTAINER_UNITTEST_TMP) && cp -r $(PHPUNIT_DIR) $(CONTAINER_UNITTEST_TMP)
+	$(DOCKER) build --build-arg PHP_VERSION=$(CONTAINER_PHPUNIT_VERSION) -t $(CONTAINER_NAME_PHPUNIT) test
+	$(DOCKER) run -it --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(CONTAINER_NAME_PHPUNIT)
 	@touch $@
 
-podman-unittests-all: $(PODMAN_UNITTESTS_ALL_MARKER)
-podman-unittests-all-versions: $(PODMAN_UNITTESTS_ALL_MARKER)
-$(PODMAN_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
+container-unittests-all: CONTAINER_UNITTESTS_ALL_MARKER
+container-unittests-all-versions: CONTAINER_UNITTESTS_ALL_MARKER
+$(CONTAINER_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@set -e ;\
 	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2.0RC7 rc; do \
-		make podman-unittests PODMAN_PHPUNIT_VERSION=$${version}-$(PODMAN_PHPUNIT_VERSION); \
+		make container-unittests CONTAINER_PHPUNIT_VERSION=$${version}-$(CONTAINER_PHPUNIT_VERSION); \
 	done
 	@touch $@
 
-podman: $(INDEX_PHP) $(TEST_ALBUM_DIR)
-	$(PODMAN) build --build-arg PHP_VERSION=$(USED_PODMAN_PHP_VERSION) -t $(PODMAN_NAME) .
-	$(PODMAN) run --publish=127.0.0.1::80 -d --name $(PODMAN_NAME) $(PODMAN_NAME)
+container-webserver: $(INDEX_PHP) $(TEST_ALBUM_DIR)
+	$(DOCKER) build --build-arg PHP_VERSION=$(USED_CONTAINER_PHP_VERSION) -t $(CONTAINER_NAME) .
+	$(DOCKER) run --publish=127.0.0.1::80 -d --name $(CONTAINER_NAME) $(CONTAINER_NAME)
 	@set -e ;\
-	PORT=$$($(PODMAN) port $(PODMAN_NAME) | grep ^80/tcp|cut -d: -f 2) ;\
-	echo -e "\nContainer \"$(PODMAN_NAME)\" is started" ;\
+	PORT=$$($(DOCKER) port $(CONTAINER_NAME) | grep ^80/tcp|cut -d: -f 2) ;\
+	echo -e "\nContainer \"$(CONTAINER_NAME)\" is started" ;\
 	echo -e " find the application at http://localhost:$${PORT}/index.php" ;\
 	echo -e " find the PHP-version at http://localhost:$${PORT}/phpinfo.php" ;\
 	echo -e "Press enter to shut it down"
 	@read UNUSED
-	$(PODMAN) stop $(PODMAN_NAME)
-	$(PODMAN) rm $(PODMAN_NAME)
+	$(DOCKER) stop $(CONTAINER_NAME)
+	$(DOCKER) rm $(CONTAINER_NAME)
 
 psalm: $(PSALM_MARKER)
 $(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER)
@@ -190,15 +190,15 @@ dev-server: albums
 
 clean-marker:
 	rm -f $(PSALM_MARKER) $(COVERAGE_MARKER) $(MIG_SITE_MARKER) $(BUILD_DIR_MARKER) $(UNITTESTS_MARKER) \
-		$(TEST_ALBUM_MARKER) $(PODMAN_UNITTESTS_MARKER) $(PODMAN_UNITTESTS_ALL_MARKER)
+		$(TEST_ALBUM_MARKER) $(CONTAINER_UNITTESTS_MARKER) $(CONTAINER_UNITTESTS_ALL_MARKER)
 
 clean: clean-marker
 	make -C docs clean
 	rm -f $(INDEX_PHP) albums $(PHPUNIT_FILES)
-	rm -rf test-album $(PHPUNIT_DIR) $(BUILD_DIR) $(PODMAN_UNITTEST_TMP)
+	rm -rf test-album $(PHPUNIT_DIR) $(BUILD_DIR) $(CONTAINER_UNITTEST_TMP)
 
 $(BUILD_DIR_MARKER):
 	mkdir -p $(BUILD_DIR)
 	@touch $@
 
-.PHONY: default docs test clean clean-marker unittests podman podman-unittests podman-unittests-all podman-unittests-all-versions coverage has-version index.php coverage dev-server
+.PHONY: default docs test clean clean-marker unittests container-webserver container-unittests container-unittests-all container-unittests-all-versions coverage has-version index.php coverage dev-server

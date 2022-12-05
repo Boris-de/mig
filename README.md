@@ -24,14 +24,14 @@ specify a different port.
 To run the tests you can use `make unittests` which requires phpunit to be
 installed. To generate code coverate you can run `make coverage` which needs
 xdebug.
-With `make podman-unittests` you can run the unittests in a container (run
-make with `PODMAN=docker` as a parameter to use docker) and
-`make podman-unittests-all` runs the unittests in different versions of PHP.
+With `make container-unittests` you can run the unittests in a container (run
+make with `DOCKER=podman` as a parameter to use podman) and
+`make container-unittests-all` runs the unittests in different versions of PHP.
 
 If you have psalm installed you can run the static analysis with `make psalm`.
 
 To build the index.php and run it with different PHP versions you can use
-`make podman PODMAN_PHP_VERSION=7.4` which opens a random local port on a
+`make container CONTAINER_PHP_VERSION=7.4` which opens a random local port on a
 randomly generated album.
 
 
