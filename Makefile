@@ -87,8 +87,8 @@ dist: has-version $(INDEX_PHP) unittests container-unittests-all-versions docs $
 	cp config.php $(SPOOL_DIR)/config.php.default
 	cp images/*.png $(SPOOL_DIR)/images
 	cp templates/*.[hc]* $(SPOOL_DIR)/templates
-	cp docs/html/*.html $(SPOOL_DIR)/docs/html
-	cp docs/text/*.txt $(SPOOL_DIR)/docs/text
+	cp $(BUILD_DIR)/docs/html/*.html $(SPOOL_DIR)/docs/html
+	cp $(BUILD_DIR)/docs/text/*.txt $(SPOOL_DIR)/docs/text
 	find $(SPOOL_DIR) -type d -exec chmod 0755 {} \;
 	find $(SPOOL_DIR) -type f -exec chmod 0644 {} \;
 	tar czf $(ARCHIVE) --owner=0 --group=0 -C $$(dirname $(SPOOL_DIR)) $$(basename $(SPOOL_DIR))
