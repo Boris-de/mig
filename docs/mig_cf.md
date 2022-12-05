@@ -1,12 +1,8 @@
-=pod
+## General
 
-=encoding utf8
+This document aims to explain how `mig.cf` works and what it is.
 
-=head2 General
-
-This document aims to explain how F<mig.cf> works and what it is.
-
-Each folder under the F<album> subdirectory can optionally have a F<mig.cf>
+Each folder under the `album` subdirectory can optionally have a `mig.cf`
 file in it.  This file contains things like image comments, a list of
 hidden items (if any) and so on.
 
@@ -14,7 +10,7 @@ The format is borrowed from the config file format of Apache, and is sort
 of similar to HTML.  Hopefully this means that it will be simple for most
 people to figure out and use.
 
-An example F<mig.cf> might look like this:
+An example `mig.cf` might look like this:
 
     # Beginning of example mig.cf
     #
@@ -34,34 +30,34 @@ An example F<mig.cf> might look like this:
     #
     # End of example mig.cf
 
-An element is opened by a tag (such as E<lt>BulletinE<gt>), and closed by
+An element is opened by a tag (such as <Bulletin>), and closed by
 the associated close-tag (the tag with its name preceded by a slash) such
-as E<lt>/BulletinE<gt>.
+as &lt;/Bulletin>.
 
-An element can have an argument, as in E<lt>Comment
-E<quot>AUT_2406.JPGE<quot>E<gt>.
+An element can have an argument, as in <Comment
+"AUT\_2406.JPG">.
 
 These tags must be at the beginning of a line.  Case in the tag name is not
-important, so E<lt>CommentE<gt> is the same as E<lt>commentE<gt> or
-E<lt>CoMMenTE<gt>.
+important, so <Comment> is the same as &lt;comment> or
+<CoMMenT>.
 
-(If you installed the example gallery, look inside for F<mig.cf> files for
+(If you installed the example gallery, look inside for `mig.cf` files for
 some useful examples.)
 
-=head2 Remarks and blank lines
+## Remarks and blank lines
 
-Any line starting with C<#> is considered a remark and is ignored by Mig.
+Any line starting with `#` is considered a remark and is ignored by Mig.
 Blank lines are also ignored.  Neither are ignored inside an element block
-such as E<lt>commentE<gt>, so it's best if they don't appear inside blocks.
+such as &lt;comment>, so it's best if they don't appear inside blocks.
 
-=head2 Using a Windows text editor
+## Using a Windows text editor
 
-If you are editing F<mig.cf> files using a Windows text editor, you may
+If you are editing `mig.cf` files using a Windows text editor, you may
 want to leave one or more blank lines at the end of the file.  Some Windows
 text editors apparently don't add end-of-line characters to the end of the
 last line in the file, and this confuses Mig.
 
-=head2 Bulletins
+## Bulletins
 
     <Bulletin>
     [some text]
@@ -70,7 +66,7 @@ last line in the file, and this confuses Mig.
 A bulletin is just like a comment, only it's attached to the folder rather
 than a single image.   An example is shown near the top of this document.
 
-=head2 Image Comments
+## Image Comments
 
     <Comment "image_file">
     [some text]
@@ -80,7 +76,7 @@ A comment is attached to an image.  When viewing that image, the comment
 text associated with it will be displayed in a box below the image. An
 example can be found near the top of this file.
 
-The argument to C<Comment> must be enclosed in quotes so Mig can properly
+The argument to `Comment` must be enclosed in quotes so Mig can properly
 recognize files with spaces in their names.
 
 As of 0.90, comments are loaded into the ALT tag of thumbnail images,
@@ -89,11 +85,11 @@ they're also loaded into the TITLE modifier for better cross-browser
 compatibility).
 
 Certain HTML elements don't mix well with ALT and TITLE, and should be
-avoided, notably things like E<lt>A HREFE<gt>.  You can turn ALT/TITLE
-tags off if you wish, by setting C<$suppressAltTags> to C<TRUE> in
-F<config.php>.
+avoided, notably things like &lt;A HREF>.  You can turn ALT/TITLE
+tags off if you wish, by setting `$suppressAltTags` to `TRUE` in
+`config.php`.
 
-=head2 Short Comments
+## Short Comments
 
     <Short "image_file">
     [some text]
@@ -101,98 +97,98 @@ F<config.php>.
 
 Sometimes you want a long comment on the image itself, but a shorter one
 used in the ALT and TITLE tags on the thumbnail page (for hovering over
-links).  You can use the E<lt>ShortE<gt> tag in mig.cf files for that.
-This element works just like E<lt>CommentE<gt> except that it is used only
+links).  You can use the <Short> tag in `mig.cf` files for that.
+This element works just like <Comment> except that it is used only
 in the hover-over tags on thumbnail pages.
 
-If there is a E<lt>CommentE<gt> block but no E<lt>ShortE<gt> block for an
-image, the E<lt>CommentE<gt> block will be used for the hover-over.
+If there is a <Comment> block but no <Short> block for an
+image, the <Comment> block will be used for the hover-over.
 
-=head2 Folder Icons
+## Folder Icons
 
     FolderIcon folder_name icon_file.gif
 
 It is sometimes desirable to use a custom icon for a given folder.
-This can be done using the C<FolderIcon> entity.  Given a folder
-F<Trips/Rome>, and an icon F<colloseum.gif>, the following can be
-defined in F<Trips/mig.cf>:
+This can be done using the `FolderIcon` entity.  Given a folder
+`Trips/Rome`, and an icon `colloseum.gif`, the following can be
+defined in `Trips/mig.cf`:
 
     FolderIcon Rome colloseum.gif
 
-The F<colloseum.gif> file should be placed in Mig's F<images> folder,
+The `colloseum.gif` file should be placed in Mig's `images` folder,
 located in the root directory of your Mig installation.
 
-If you are using C<$randomFolderThumbs>, note that C<FolderIcon> overrides
+If you are using `$randomFolderThumbs`, note that `FolderIcon` overrides
 that setting.
 
 If you want to use a specific thumbnail for a given directory as its
-folder icon, you instead want to look at the C<UseThumb> directive.
+folder icon, you instead want to look at the `UseThumb` directive.
 
-=head2 Thumbnails as Folder Icons
+## Thumbnails as Folder Icons
 
     UseThumb folder_name image_name 
 
 To pick a specific image to use as a thumbnail for your folder, use the
-C<UseThumb> directive.  The thumbnail file associated with that image will
+`UseThumb` directive.  The thumbnail file associated with that image will
 be displayed as the folder's icon.
 
     UseThumb Rome IMG_4935.JPG
 
-In that case, the image F<IMG_4935.JPG>, which should be located in the
-F<Rome> folder, will be used as the folder's icon.
+In that case, the image `IMG_4935.JPG`, which should be located in the
+`Rome` folder, will be used as the folder's icon.
 
-=head2 Per-folder Template
+## Per-folder Template
 
     FolderTemplate /path/to/file.tmpl
     FolderTemplate file.tmpl
 
 It is sometimes desirable to use a custom template for a given folder
 rather than using the site-wide template.  This can be defined with the
-C<FolderTemplate> entity.
+`FolderTemplate` entity.
 
-If the C<FolderTemplate> entity is followed by a filename, the file is
+If the `FolderTemplate` entity is followed by a filename, the file is
 assumed to be in the folder in question.
 
-If the C<FolderTemplate> entity is followed by a full file path, beginning
-with a C</> character, that full path is instead used.
+If the `FolderTemplate` entity is followed by a full file path, beginning
+with a `/` character, that full path is instead used.
 
-=head2 Per-folder Page Title
+## Per-folder Page Title
 
     PageTitle This is my Page Title for this Folder
 
-A folder-specific page title can be defined with the C<PageTitle> entity,
+A folder-specific page title can be defined with the `PageTitle` entity,
 as shown above.  This will override the site-wide page title on a
 folder-by-folder basis.
 
-=head2 Per-folder Maintainer Address
+## Per-folder Maintainer Address
 
     MaintAddr joe@mama.com
 
 A folder-specific maintainer email address can be specified using the
-C<MaintAddr> entity.  This will override the site-wide value C<$maintAddr>.
+`MaintAddr` entity.  This will override the site-wide value `$maintAddr`.
 
 This is handy in the case where different folders site are really
 owned by different people.
 
-=head2 Per-folder Column Settings
+## Per-folder Column Settings
 
     MaxFolderColumns 2
     MaxThumbColumns 4
 
-C<MaxFolderColumns> overrides the site-wide value C<$maxFolderColumns> in a
+`MaxFolderColumns` overrides the site-wide value `$maxFolderColumns` in a
 given folder.
 
-C<MaxThumbColumns> overrides the site-wide value C<$maxThumbColumns> in a
+`MaxThumbColumns` overrides the site-wide value `$maxThumbColumns` in a
 given folder.
 
-=head2 Hidden Items
+## Hidden Items
 
     <Hidden>
     [item]
     [item]
     </Hidden>
 
-C<Hidden> elements are lists of items which are invisible to the browser.
+`Hidden` elements are lists of items which are invisible to the browser.
 This is useful for things that should not be publicly viewable, or for
 album directories that exist but are not yet complete.  Each line between
 the start and end tags is either a file or a directory (Mig can sort out
@@ -203,12 +199,12 @@ which is which on its own).
     England
     </Hidden>
 
-C<Hidden> is not considered a security feature.  It's not difficult for
+`Hidden` is not considered a security feature.  It's not difficult for
 someone to get around this if they know the name of the folder or image
 being hidden.  This is security through obscurity (which is only one step
 above no security).
 
-=head2 Sort Order
+## Sort Order
 
     <Sort>
     [item]
@@ -230,8 +226,8 @@ Note that the first five are directories, and the other eight are files.
 This will display by default as a list of folders, then a list of images,
 each list in alphabetical (ASCII) order.
 
-Let's say that F<Home> should move to the top of the list and F<Cigars> to
-just above F<Reception>.
+Let's say that `Home` should move to the top of the list and `Cigars` to
+just above `Reception`.
 
     <Sort>
     Home
@@ -265,16 +261,13 @@ list would be:
     AUT_3714.JPG
     AUT_3715.JPG
 
-If everything goes into one E<lt>sortE<gt> block, Mig can figure it out
+If everything goes into one &lt;sort> block, Mig can figure it out
 (which are files, which are directories).  This is arguably sloppy from the
 point of view of a human though.  It's easier to define multiple sort
 blocks in those situations; one for files, one for directories.  Mig can
 detect and use multiple sort blocks.
 
-=head2 Security
+## Security
 
-See the F<apache> document if you are running Apache and would like to
-prevent people from browsing your F<mig.cf> and/or F<exif.inf> files.
-
-=cut
-
+See the `apache` document if you are running Apache and would like to
+prevent people from browsing your `mig.cf` and/or `exif.inf` files.

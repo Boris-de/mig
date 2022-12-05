@@ -2,33 +2,32 @@
 # Makefile for Mig documentation
 #
 
-hcmd=	pod2html --noindex
-tcmd=	pod2text
+pandoc_cmd = docker run --rm --volume "$$(pwd):/data" --user "$$(id -u):$$(id -g)" pandoc/minimal
 
 html_dir = html
 text_dir = text
 
-pods=	changelog.pod credits.pod install.pod license.pod \
-	jump.pod apache.pod utilities.pod mig_cf.pod templates.pod
+markdown = changelog.md credits.md install.md license.md jump.md apache.md utilities.md mig_cf.md templates.md
+template = templates/pandoc.template.html
 
-html = $(addsuffix .html, $(basename $(pods)))
-text = $(addsuffix .txt, $(basename $(pods)))
+html = $(addsuffix .html, $(basename $(markdown)))
+text = $(addsuffix .txt, $(basename $(markdown)))
 html_with_dir = $(patsubst %,$(html_dir)/%,$(html))
 text_with_dir = $(patsubst %,$(text_dir)/%,$(text))
 
 # Default is to rebuild doc files
 docs: mkdirs $(html_with_dir) $(text_with_dir)
 
-license.pod: ../COPYING
-	cat license.pod.pre ../COPYING > license.pod
+license.md: license.md.pre ../COPYING
+	cat license.md.pre ../COPYING > $@
   
-$(html_dir)/%.html: %.pod
-	$(hcmd) --title="Mig Documentation - $(shell basename $@ .html)" \
-		--infile=$< --outfile=$@
-	rm -f pod2htm*
+$(html_dir)/%.html: %.md $(template)
+	$(pandoc_cmd) -f markdown -t html --template="$(template)" \
+			--title-prefix="Mig Documentation" -M title="$(shell basename $@ .html)" -M lang=en \
+			$< > $@
 
-$(text_dir)/%.txt: %.pod
-	$(tcmd) $< $@
+$(text_dir)/%.txt: %.md
+	$(pandoc_cmd) -f markdown -t plain $< > $@
 
 $(html_dir) $(text_dir):
 	mkdir -p $@

@@ -2,7 +2,7 @@
 *.iml
 docs/html/*
 docs/text/*
-docs/license.pod
+docs/license.md
 build
 index.php
 albums
