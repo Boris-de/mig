@@ -277,7 +277,7 @@ telling me how much you like Mig.  Postcards can be sent to:
 
     (If you want to use shorter comments for thumbnail hover-overs and leave
     your longer comments only on the image page itself, see the `mig_cf`
-    document and read about <Short> tags).
+    document and read about &lt;Short> tags).
 
 3. EXIF data
 

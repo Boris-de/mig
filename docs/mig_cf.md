@@ -30,16 +30,16 @@ An example `mig.cf` might look like this:
     #
     # End of example mig.cf
 
-An element is opened by a tag (such as <Bulletin>), and closed by
+An element is opened by a tag (such as &lt;Bulletin>), and closed by
 the associated close-tag (the tag with its name preceded by a slash) such
 as &lt;/Bulletin>.
 
-An element can have an argument, as in <Comment
+An element can have an argument, as in &lt;Comment
 "AUT\_2406.JPG">.
 
 These tags must be at the beginning of a line.  Case in the tag name is not
-important, so <Comment> is the same as &lt;comment> or
-<CoMMenT>.
+important, so &ltComment> is the same as &lt;comment> or
+&ltCoMMenT>.
 
 (If you installed the example gallery, look inside for `mig.cf` files for
 some useful examples.)
@@ -97,12 +97,12 @@ tags off if you wish, by setting `$suppressAltTags` to `TRUE` in
 
 Sometimes you want a long comment on the image itself, but a shorter one
 used in the ALT and TITLE tags on the thumbnail page (for hovering over
-links).  You can use the <Short> tag in `mig.cf` files for that.
-This element works just like <Comment> except that it is used only
+links).  You can use the &lt;Short> tag in `mig.cf` files for that.
+This element works just like &lt;Comment> except that it is used only
 in the hover-over tags on thumbnail pages.
 
-If there is a <Comment> block but no <Short> block for an
-image, the <Comment> block will be used for the hover-over.
+If there is a &lt;Comment> block but no &lt;Short> block for an
+image, the &lt;Comment> block will be used for the hover-over.
 
 ## Folder Icons
 
