@@ -17,7 +17,7 @@ case "${PHP_VERSION}" in
    ;;
 esac
 
-PHPUNIT=$(find /usr/local/bin/ -name "phpunit-${PHPUNIT_VERSION}"*)
+PHPUNIT=$(find /usr/local/bin/ -name "phpunit-${PHPUNIT_VERSION}"* | sort | tail -n 1)
 test -z "${PHPUNIT}" && { echo "Could not find ${PHPUNIT_VERSION}"; exit 1; }
 test -e "${PHPUNIT}" || { echo "Could not find ${PHPUNIT_VERSION}: ${PHPUNIT}"; exit 1; }
 echo "Using ${PHPUNIT} (for version \"${PHPUNIT_VERSION}\") to run tests"
