@@ -23,7 +23,7 @@ license.md: license.md.pre ../COPYING
   
 $(html_dir)/%.html: %.md $(template)
 	$(pandoc_cmd) -f markdown -t html --template="$(template)" \
-			--title-prefix="Mig Documentation" -M title="$(shell basename $@ .html)" -M lang=en \
+			--title-prefix="Mig Documentation" -M title="$(shell head -n 1 $<|sed -e 's#^Mig - ##')" -M lang=en \
 			$< > $@
 
 $(text_dir)/%.txt: %.md

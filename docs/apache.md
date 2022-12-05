@@ -1,4 +1,5 @@
-## Mig and the Apache Server
+Mig and the Apache Server
+=========================
 
 ## Security Considerations
 

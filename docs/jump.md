@@ -1,3 +1,6 @@
+Mig - Jump Tags
+===============
+
 ## What Are Jump Tags and How Do They Work?
 
 What is a jump tag?  Well, many people (including the author) didn't like

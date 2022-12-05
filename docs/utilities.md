@@ -1,4 +1,7 @@
-## Contrib Utilities
+Mig - Utilities
+===============
+
+## Contributed Utilities
 
 `mkGallery.pl` - Create a gallery from images in the current directory.
 This was a bundled utility that was moved to a separate repository

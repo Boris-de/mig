@@ -1,4 +1,5 @@
-## Credits
+Mig - Credits
+=============
 
 This is where I thank people who have contributed things to Mig.  I hope I
 haven't left anyone out, but if I have, please let me know.  This list

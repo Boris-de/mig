@@ -1,3 +1,6 @@
+Mig - mig config files
+======================
+
 ## General
 
 This document aims to explain how `mig.cf` works and what it is.

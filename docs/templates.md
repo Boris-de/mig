@@ -1,4 +1,5 @@
-## Templates
+Mig - Templates
+===============
 
 Page layout is handled using template files wherever possible.
 

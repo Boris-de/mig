@@ -1,4 +1,9 @@
+Mig - Installation Instructions
+=============================
+
 ## Mig - A general purpose photo gallery
+
+## Copyright
 
 Copyright (c) 2000-2005, Daniel M. Lowe<br>
 Copyright (c) 2005-2021, Boris Wachtmeister

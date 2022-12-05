@@ -1,4 +1,5 @@
-## MIG Change Log
+Mig - Changelog
+===============
 
 ## Version 1.7.0 (Sat, 06 Mar 2021)
 
