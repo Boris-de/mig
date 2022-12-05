@@ -20,11 +20,11 @@ PSALM_MARKER = $(BUILD_DIR)/.psalm
 COVERAGE_MARKER = $(BUILD_DIR)/coverage/.marker
 MIG_SITE_MARKER = $(BUILD_DIR)/.site
 BUILD_DIR_MARKER = $(BUILD_DIR)/.marker
-UNITTESTS_MARKER = $(BUILD_DIR)/.unittests
+UNITTESTS_MARKER = $(BUILD_DIR)/.marker-unittests
 PHPUNIT_DIR_MARKER = $(PHPUNIT_DIR)/.marker
 TEST_ALBUM_MARKER = $(TEST_ALBUM_DIR)/.marker
-CONTAINER_UNITTESTS_MARKER = $(BUILD_DIR)/.container-unittests
-CONTAINER_UNITTESTS_ALL_MARKER = $(BUILD_DIR)/.container-unittests-all
+CONTAINER_UNITTESTS_MARKER = $(BUILD_DIR)/.marker-container-unittests
+CONTAINER_UNITTESTS_ALL_MARKER = $(BUILD_DIR)/.marker-container-unittests-all
 
 PHP_FILES = main/pathConvert.php main/defaults.php functions/*.php languages/*.php main/body.php
 TEST_FILES = test/*.php
