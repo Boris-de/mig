@@ -157,7 +157,7 @@ podman-unittests-all: $(PODMAN_UNITTESTS_ALL_MARKER)
 podman-unittests-all-versions: $(PODMAN_UNITTESTS_ALL_MARKER)
 $(PODMAN_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@set -e ;\
-	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2.0alpha2 rc; do \
+	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2.0RC7 rc; do \
 		make podman-unittests PODMAN_PHPUNIT_VERSION=$${version}-$(PODMAN_PHPUNIT_VERSION); \
 	done
 	@touch $@
