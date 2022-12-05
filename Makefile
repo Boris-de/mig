@@ -150,7 +150,7 @@ $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(P
 	@echo "Running unittests with container '$(CONTAINER_PHPUNIT_VERSION)'"
 	rm -rf $(CONTAINER_UNITTEST_TMP) && cp -r $(PHPUNIT_DIR) $(CONTAINER_UNITTEST_TMP)
 	$(DOCKER) build --build-arg PHP_VERSION=$(CONTAINER_PHPUNIT_VERSION) -t $(CONTAINER_NAME_PHPUNIT) test
-	$(DOCKER) run -it --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(CONTAINER_NAME_PHPUNIT)
+	$(DOCKER) run --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(CONTAINER_NAME_PHPUNIT)
 	@touch $@
 
 container-unittests-all: $(CONTAINER_UNITTESTS_ALL_MARKER)
