@@ -2,7 +2,7 @@
 # Makefile for Mig documentation
 #
 
-pandoc_cmd = docker run --rm --volume "$$(pwd):/data" --user "$$(id -u):$$(id -g)" pandoc/minimal
+pandoc_cmd = docker run --rm --volume "$${PWD}:/data" --user "$$(id -u):$$(id -g)" --network none pandoc/minimal
 
 html_dir = html
 text_dir = text
