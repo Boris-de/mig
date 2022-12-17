@@ -6,7 +6,7 @@ Mig - Installation Instructions
 ## Copyright
 
 Copyright (c) 2000-2005, Daniel M. Lowe<br>
-Copyright (c) 2005-2021, Boris Wachtmeister
+Copyright (c) 2005-2022, Boris Wachtmeister
 
 All rights reserved.
 
