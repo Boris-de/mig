@@ -13,6 +13,7 @@ COPY test-album $WWW_DATA/albums/
 COPY build/index.php config.php $WWW_DATA
 
 RUN /bin/sh -c 'set -e; \
+sed -i -e "s#^[/ ]*\$error_reporting.*#\$error_reporting = E_ALL & ~E_NOTICE;#" ${WWW_DATA}/config.php; \
 chown -R www-data ${WWW_DATA}; \
 echo "<?php phpinfo(); ?>" > ${WWW_DATA}/phpinfo.php \
 '
