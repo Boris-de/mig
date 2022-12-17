@@ -1,6 +1,17 @@
 Mig - Changelog
 ===============
 
+## Version 1.7.1 (Sat, 17 Dec 2022)
+
+### Notable changes
+
+Updated syntax and method calls that are deprecated in PHP 8.2.
+
+### Other changes
+
+Documentation is was converted from perl's Plain Old Documentation format files to markdown format.
+For this the documentation build now needs either docker or a "pandoc" executable on $PATH.
+
 ## Version 1.7.0 (Sat, 06 Mar 2021)
 
 ### Important notes
