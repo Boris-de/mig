@@ -4,7 +4,7 @@
 
 pandoc_cmd = docker run --rm --volume "$${PWD}:/data" --user "$$(id -u):$$(id -g)" --network none pandoc/minimal
 
-build_dir = ../build
+build_dir = ../build/docs
 html_dir = $(build_dir)/html
 text_dir = $(build_dir)/text
 
