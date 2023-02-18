@@ -104,7 +104,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         $this->mkdir($this->album_dir.'/test1');
         $this->mkdir($this->album_dir.'/test2');
 
-        $this->assertStringContainsString("
+        $this->migAssertStringContainsString("
      <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1\">test1</a></td>
      <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test2\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test2\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test2\">test2</a></td>",
             buildDirList('.', 2, array(), array()));
@@ -116,7 +116,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         $this->mkdir($this->album_dir.'/test1');
         $this->mkdir($this->album_dir.'/test2');
 
-        $this->assertStringContainsString("
+        $this->migAssertStringContainsString("
      <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test2\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test2\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test2\">test2</a></td>
      <td valign=\"middle\" class=\"foldertext\" align=\"left\"><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1\">test1</a></td>",
             buildDirList('.', 2, array(), array()));
@@ -128,7 +128,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         $this->mkdir($this->album_dir.'/test1');
         $this->mkdir($this->album_dir.'/test-hidden');
 
-        $this->assertStringNotContainsString('test-hidden', buildDirList('.', 2, array(), array()));
+        $this->migAssertStringNotContainsString('test-hidden', buildDirList('.', 2, array(), array()));
     }
 
     public function testMigDl()
@@ -136,7 +136,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         $this->set_mig_config('mig_dl', 'nl');
         $this->mkdir($this->album_dir.'/test1');
 
-        $this->assertStringContainsString("<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\">test1</a>",
+        $this->migAssertStringContainsString("<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\"><img src=\"imagedir/folder.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\">test1</a>",
             buildDirList('.', 2, array(), array()));
     }
 
@@ -145,7 +145,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
         $this->set_mig_config('mig_dl', 'nl');
         $this->mkdir($this->album_dir.'/test1');
 
-        $this->assertStringContainsString("<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\"><img src=\"imagedir/special_icon.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\">test1</a>",
+        $this->migAssertStringContainsString("<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\"><img src=\"imagedir/special_icon.png\" border=\"0\" alt=\"test1\"/></a>&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=./test1&amp;mig_dl=nl\">test1</a>",
             buildDirList('.', 2, array(), array('test1' => 'special_icon.png')));
     }
 

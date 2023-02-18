@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 require_once 'migHtmlSpecialChars.php';
 
 abstract class AbstractFileBasedTestCase extends TestCase {
-    static function assertStringContainsString($needle, $haystack, $message = ''): void
+    static function migAssertStringContainsString($needle, $haystack, $message = ''): void
     {
         if (method_exists('TestCase', 'assertStringContainsString')) {
             TestCase::assertStringContainsString($needle, $haystack, $message);
@@ -14,7 +14,7 @@ abstract class AbstractFileBasedTestCase extends TestCase {
         }
     }
 
-    static function assertStringNotContainsString($needle, $haystack, $message = ''): void
+    static function migAssertStringNotContainsString($needle, $haystack, $message = ''): void
     {
         if (method_exists('TestCase', 'assertStringNotContainsString')) {
             TestCase::assertStringNotContainsString($needle, $haystack, $message);

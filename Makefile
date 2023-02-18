@@ -5,6 +5,7 @@ DIST_DIR    = $(BUILD_DIR)/mig
 INDEX_PHP   = $(BUILD_DIR)/index.php
 PHPUNIT_DIR = $(BUILD_DIR)/phpunit
 COVERAGE_DIR= $(BUILD_DIR)/coverage
+PHPUNIT_CACHE_DIR = $(BUILD_DIR)/phpunit-cache
 
 ARCHIVE_NAME = mig-$(VERSION)
 # Temporary directory to build a Mig install in (this gets tarred up)
@@ -44,9 +45,10 @@ else
 endif
 
 PHPUNIT_URL = https://phar.phpunit.de
-PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -c 1)
-PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
-PHPUNIT_VERSIONS = 5.7.27 8.5.31 9.5.26
+PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -d '.' -f 1)
+PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup'; \
+						test $(PHPUNIT_VERSION) -ge 10 && echo '--cache-directory $(PHPUNIT_CACHE_DIR)')
+PHPUNIT_VERSIONS = 5.7.27 8.5.32 10.0.7
 PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
