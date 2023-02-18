@@ -46,7 +46,7 @@ endif
 PHPUNIT_URL = https://phar.phpunit.de
 PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -d '.' -f 1)
 PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup')
-PHPUNIT_VERSIONS = 5.7.27 8.5.31 9.5.26
+PHPUNIT_VERSIONS = 5.7.27 8.5.32 9.6.3
 PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
