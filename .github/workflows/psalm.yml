@@ -20,6 +20,12 @@ jobs:
       - name: create bundle
         run: make index.php
 
+      - name: Archive installer
+        uses: actions/upload-artifact@v3
+        with:
+          name: index.php
+          path: ./build/index.php
+
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
 
