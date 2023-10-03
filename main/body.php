@@ -69,10 +69,10 @@ $mig_config['albumdir'] = $mig_config['basedir'] . $albumRoot;   // Where albums
 if ($migOpenBasedir === TRUE) {
     $openBasedirs = $migOpenBasedirExtraDirs;
     if (isset($configFile)) {
-        array_push($openBasedirs, $configFile);
+        $openBasedirs[] = $configFile;
     }
-    array_push($openBasedirs, $mig_config['albumdir']);
-    array_push($openBasedirs, $mig_config['basedir'] . '/templates');
+    $openBasedirs[] = $mig_config['albumdir'];
+    $openBasedirs[] = $mig_config['basedir'] . '/templates';
     ini_set('open_basedir', implode(PATH_SEPARATOR, $openBasedirs));
 }
 

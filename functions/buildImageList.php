@@ -73,7 +73,7 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
             $imagefiles[$file] = TRUE;
 
             // and stash a timestamp as well if needed
-            if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
+            if (preg_match('#bydate#', $mig_config['sorttype'])) {
                 $timestamp = filemtime($abs_currDir);
                 $filedates["$timestamp-$file"] = $file;
             }
@@ -91,8 +91,8 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
     }
 
     // Join the two sorted lists together into a single list
-    if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
-        foreach (array_values($filedates) as $file) {
+    if (preg_match('#bydate#', $mig_config['sorttype'])) {
+        foreach ($filedates as $file) {
             $presorted[$file] = TRUE;
         }
 

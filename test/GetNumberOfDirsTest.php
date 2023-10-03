@@ -25,19 +25,19 @@ final class GetNumberOfDirsTest extends AbstractFileBasedTest
     {
         $dir = $this->album_dir . '/test';
 
-        $this->assertEquals(0, getNumberOfDirs("$dir/non-existing-folder", NULL));
+        $this->assertEquals(0, getNumberOfDirs("$dir/non-existing-folder"));
 
         $this->mkdir($dir);
-        $this->assertEquals(0, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(0, getNumberOfDirs($dir));
 
         touch("$dir/test.jpg");
-        $this->assertEquals(0, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(0, getNumberOfDirs($dir));
 
         $this->mkdir("$dir/dir1");
-        $this->assertEquals(1, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(1, getNumberOfDirs($dir));
 
         $this->mkdir("$dir/dir2");
-        $this->assertEquals(2, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(2, getNumberOfDirs($dir));
     }
 
     public function testHidden()
@@ -48,7 +48,7 @@ final class GetNumberOfDirsTest extends AbstractFileBasedTest
         $this->mkdir("$dir/dir1");
         $this->mkdir("$dir/dir2");
         $this->touchWithContent("$dir/mig.cf", "<hidden>\ndir1\n</hidden>");
-        $this->assertEquals(1, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(1, getNumberOfDirs($dir));
     }
 
     public function testHiddenThumbDir()
@@ -61,7 +61,7 @@ final class GetNumberOfDirsTest extends AbstractFileBasedTest
         $this->mkdir("$dir/dir1");
         $this->mkdir("$dir/dir2");
         $this->mkdir("$dir/thumbs");
-        $this->assertEquals(2, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(2, getNumberOfDirs($dir));
     }
 
     public function testHiddenLargeDir()
@@ -74,6 +74,6 @@ final class GetNumberOfDirsTest extends AbstractFileBasedTest
         $this->mkdir("$dir/dir1");
         $this->mkdir("$dir/dir2");
         $this->mkdir("$dir/large");
-        $this->assertEquals(2, getNumberOfDirs($dir, NULL));
+        $this->assertEquals(2, getNumberOfDirs($dir));
     }
 }

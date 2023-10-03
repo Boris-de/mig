@@ -79,7 +79,7 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
         if (is_file($localFilename) && ! isset($presorted[$file])) {
             $fileList[$file] = TRUE;
             // Store a date, too, if needed
-            if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
+            if (preg_match('#bydate#', $mig_config['sorttype'])) {
                 $timestamp = filemtime($localFilename);
                 $filedates["$timestamp-$file"] = $file;
             }
@@ -97,11 +97,11 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
     }
 
     // Generated final sorted list
-    if (preg_match('#bydate.*#', $mig_config['sorttype'])) {
+    if (preg_match('#bydate#', $mig_config['sorttype'])) {
         // since $filedates is sorted by date, and date is
         // the key, the key is pointless to put in the list now.
         // so we store the value, not the key, in $presorted
-        foreach (array_values($filedates) as $file) {
+        foreach ($filedates as $file) {
             $presorted[$file] = TRUE;
         }
 

@@ -55,7 +55,7 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
         $directories[$file] = TRUE;
 
         // And stash a timestamp
-        if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
+        if (preg_match('#bydate#', $mig_config['foldersorttype'])) {
             $timestamp = filemtime($unsafe_abs_childDir);
             $filedates["$timestamp-$file"] = $file;
         }
@@ -81,8 +81,8 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
     }
 
     // Join the two sorted lists together into a single list
-    if (preg_match('#bydate.*#', $mig_config['foldersorttype'])) {
-        foreach (array_values($filedates) as $file) {
+    if (preg_match('#bydate#', $mig_config['foldersorttype'])) {
+        foreach ($filedates as $file) {
             $presorted[$file] = TRUE;
         }
 

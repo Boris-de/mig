@@ -126,9 +126,7 @@ function getExifDescription ( $unsafe_currDir, $formatString )
                             'aperture'  => $aperture[$unsafe_image],
                             'flash'     => $flash[$unsafe_image]        );
 
-        $retval = formatExifData($formatString, $exifData);
-
-        return $retval;
+        return formatExifData($formatString, $exifData);
 
     } else {
         return '';

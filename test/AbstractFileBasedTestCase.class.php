@@ -51,7 +51,7 @@ abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
     public function remove_recursive($dir)
     {
         $fs_nodes = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+            new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS),
             RecursiveIteratorIterator::CHILD_FIRST
         );
 
