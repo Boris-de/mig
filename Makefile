@@ -133,6 +133,8 @@ $(TEST_ALBUM_MARKER): utilities/create-random-album.sh
 	./utilities/create-random-album.sh $(TEST_ALBUM_DIR)
 	@touch $(TEST_ALBUM_MARKER)
 
+test: unittests container-unittests-all
+
 unittests: $(UNITTESTS_MARKER)
 $(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	phpunit $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" test
