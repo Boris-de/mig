@@ -26,16 +26,12 @@ jobs:
           name: index.php
           path: ./build/index.php
 
-      - name: Psalm
-        uses: docker://vimeo/psalm-github-actions
+      - uses: php-actions/composer@v6
 
-      - name: Psalm Security Analysis
-        uses: docker://vimeo/psalm-github-actions
-        with:
-          security_analysis: true
-          report_file: results.sarif
+      - name: Psalm
+        run: touch build/.composer-psalm && make psalm
 
       - name: Upload Security Analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: results.sarif
+          sarif_file: build/psam-github-results.sarif

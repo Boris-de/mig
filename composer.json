@@ -1,0 +1,8 @@
+{
+  "name": "wcht.de/mig",
+  "description": "Mig is a photo album / image gallery management system",
+  "license": "BSD-3-Clause",
+  "require-dev": {
+    "vimeo/psalm": "^5.15"
+  }
+}

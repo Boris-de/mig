@@ -9,3 +9,4 @@ albums
 test-album
 *-private
 test/tmp
+vendor

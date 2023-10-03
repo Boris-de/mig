@@ -18,6 +18,7 @@ DOCKER ?= docker
 TEST_ALBUM_DIR = test-album
 
 PSALM_MARKER = $(BUILD_DIR)/.psalm
+COMPOSER_PSALM_MARKER = $(BUILD_DIR)/.composer-psalm
 COVERAGE_MARKER = $(BUILD_DIR)/coverage/.marker
 MIG_SITE_MARKER = $(BUILD_DIR)/.site
 BUILD_DIR_MARKER = $(BUILD_DIR)/.marker
@@ -178,10 +179,14 @@ container-webserver: $(INDEX_PHP) $(TEST_ALBUM_DIR)
 	$(DOCKER) stop $(CONTAINER_NAME)
 	$(DOCKER) rm $(CONTAINER_NAME)
 
+$(COMPOSER_PSALM_MARKER):
+	composer install
+	@touch $(COMPOSER_PSALM_MARKER)
+
 psalm: $(PSALM_MARKER)
-$(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER)
-	psalm $<
-	psalm --taint-analysis $<
+$(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER) $(COMPOSER_PSALM_MARKER)
+	composer exec psalm $<
+	composer exec psalm -- --taint-analysis --report=$(BUILD_DIR)/psam-github-results.sarif --output-format=github $<
 	@touch $(PSALM_MARKER)
 
 albums: $(TEST_ALBUM_MARKER)
@@ -193,13 +198,14 @@ dev-server: albums
 
 clean-marker:
 	rm -f $(PSALM_MARKER) $(COVERAGE_MARKER) $(MIG_SITE_MARKER) $(BUILD_DIR_MARKER) $(UNITTESTS_MARKER) \
-		$(TEST_ALBUM_MARKER) $(CONTAINER_UNITTESTS_MARKER) $(CONTAINER_UNITTESTS_ALL_MARKER) $(PHPUNIT_DIR_MARKER)
+		$(TEST_ALBUM_MARKER) $(CONTAINER_UNITTESTS_MARKER) $(CONTAINER_UNITTESTS_ALL_MARKER) $(PHPUNIT_DIR_MARKER) \
+		$(COMPOSER_PSALM_MARKER)
 
 clean: clean-marker
 	make -C docs clean
 	$(DOCKER) image rm $(CONTAINER_NAME) $(CONTAINER_NAME_PHPUNIT) 1>/dev/null 2>&1 || true
 	rm -f $(INDEX_PHP) albums $(PHPUNIT_FILES)
-	rm -rf test-album $(PHPUNIT_DIR) $(BUILD_DIR) $(CONTAINER_UNITTEST_TMP)
+	rm -rf test-album $(PHPUNIT_DIR) $(BUILD_DIR) $(CONTAINER_UNITTEST_TMP) vendor
 
 $(BUILD_DIR_MARKER):
 	mkdir -p $(BUILD_DIR)
