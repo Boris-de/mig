@@ -596,21 +596,6 @@ $imagePopLocationBar = FALSE;
 
 
 //
-// $imagePopMenuBar
-//      If TRUE, a menu bar will be visible in pop-up windows.
-//      Note that this has no real effect on a Mac, since Macs
-//      use shared menubars.
-//
-// Defaults to FALSE.
-//
-// Example:
-//      $imagePopMenuBar = FALSE;
-//
-
-$imagePopMenuBar = FALSE;
-
-
-//
 // $imagePopToolBar
 //      If TRUE, a toolbar will be visible in pop-up windows.
 //      This is sometimes called the navigation bar (where the back,

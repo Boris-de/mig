@@ -168,10 +168,12 @@ function migRedirect($path)
 }
 
 if (! isset($SERVER_NAME)) {
+    /** @psalm-suppress UnusedVariable */
     $SERVER_NAME = getHttpServerVariable('SERVER_NAME');
 }
 
 if (! isset($SERVER_PORT)) {
+    /** @psalm-suppress UnusedVariable */
     $SERVER_PORT = getHttpServerVariable('SERVER_PORT', '80');
 }
 
@@ -179,6 +181,7 @@ if (! isset($PATH_INFO)) {
     $PATH_INFO = getHttpServerVariable('PATH_INFO');
 }
 
+/** @psalm-suppress UnusedVariable */
 $URI_SCHEME = getHttpServerVariable('HTTPS') === 'on' ? 'https' : 'http';
 
 // Jump has to come before currDir redirect to work
@@ -323,7 +326,7 @@ if (isset($maxColumns)) {
 // (This method is deprecated as of 5.3, so only call it if the function exists)
 if (function_exists('set_magic_quotes_runtime')) {
     /** @noinspection PhpDeprecationInspection */
-    @set_magic_quotes_runtime(false);
+    assert(@set_magic_quotes_runtime(false) == TRUE);
 }
 
 

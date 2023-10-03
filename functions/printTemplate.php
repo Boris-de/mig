@@ -68,7 +68,8 @@ function printTemplate ( $templateFile, $maintAddr,
                         // virtual() doesn't like absolute paths,
                         // apparently, so just pass it a relative one.
                         $tmplDir = preg_replace('#^.*/#', '', $templatedir);
-                        virtual("$tmplDir/$incl_file");
+                        /** @psalm-suppress PossiblyInvalidCast */
+                        assert(virtual("$tmplDir/$incl_file") == TRUE);
                     } else {
                         include($pathConvert->convertIncludePath($templatedir ."/$incl_file"));
                     }

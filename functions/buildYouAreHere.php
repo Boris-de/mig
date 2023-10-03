@@ -18,8 +18,8 @@ function buildYouAreHere ( $unsafe_currDir )
         $label = preg_replace('#^.*/#', '', $unsafe_workingCopy);
 
         // Render underscores as spaces and turn spaces into &nbsp;
-        $label = str_replace('_', '&nbsp;', $label);
-        $label = str_replace(' ', '&nbsp;', $label);
+        /** @psalm-suppress PossiblyInvalidArgument */
+        $label = strtr($label, array('_' => '&nbsp;', ' ' => '&nbsp;'));
 
         // Get a URL-encoded copy of $unsafe_workingCopy
         $encodedCopy = migURLencode($unsafe_workingCopy);

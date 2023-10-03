@@ -33,14 +33,7 @@ function formatExifData ( $formatString, $exifData )
     $matches = explode('|', $formatString);
 
     $newstr = '';
-    foreach ($matches as $key => $val) {
-    
-        // $changeflag is used to tell us if we should bother
-        // printing this block at all.  If none of the format
-        // characters in this block can be expanded, we never set
-        // $changeflag to TRUE.  If it's not TRUE at the end of this
-        // while(), the block is just dumped.
-        $changeflag = FALSE;
+    foreach ($matches as $val) {
 
         // Keep on going until every %X atom has been examined and
         // expanded.

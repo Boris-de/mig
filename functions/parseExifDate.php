@@ -28,7 +28,7 @@ function parseExifDate ( $stamp )
     // Parse time
     $explodedTime = explode(':', $time);
     if (count($explodedTime) == 3) {
-        list($hour, $minute, $second) = $explodedTime;
+        list($hour, $minute, $_second) = $explodedTime;
 
         // Translate into 12-hour time
         switch ($hour) {

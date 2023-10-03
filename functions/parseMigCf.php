@@ -114,21 +114,21 @@ function parseMigCf ( $unsafe_folder )
             // Parse FolderIcon lines
             if (stripos($line, 'foldericon ') === 0) {
                 $x = trim($line);
-                list($y, $folder, $icon) = explode(' ', $x);
+                list($_, $folder, $icon) = explode(' ', $x);
                 $ficons[$folder] = $icon;
             }
 
             // Parse UseThumb lines
             if (stripos($line, 'usethumb ') === 0) {
                 $x = trim($line);
-                list($y, $folder, $thumbnail) = explode(' ', $x);
+                list($_, $folder, $thumbnail) = explode(' ', $x);
                 $mig_config['usethumbfile'][$folder] = $thumbnail;
             }
 
             // Parse FolderTemplate lines
             if (stripos($line, 'foldertemplate ') === 0) {
                 $x = trim($line);
-                list($y, $template) = explode(' ', $x);
+                list($_, $template) = explode(' ', $x);
             }
 
             // Parse PageTitle lines
@@ -146,13 +146,13 @@ function parseMigCf ( $unsafe_folder )
             // Parse MaxFolderColumns lines
             if (stripos($line, 'maxfoldercolumns ') === 0) {
                 $x = trim($line);
-                list($y, $fcols) = explode(' ', $x);
+                list($_, $fcols) = explode(' ', $x);
             }
 
             // Parse MaxThumbColumns lines
             if (stripos($line, 'maxthumbcolumns ') === 0) {
                 $x = trim($line);
-                list($y, $tcols) = explode(' ', $x);
+                list($_, $tcols) = explode(' ', $x);
             }
 
         } // end of main while() loop

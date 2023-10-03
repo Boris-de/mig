@@ -27,6 +27,8 @@ final class BuildYouAreHereTest extends AbstractFileBasedTest
             buildYouAreHere('./foo'));
         $this->assertEquals('<a href="https://example.com/baseurl?currDir=.">Main</a>&nbsp;&gt;&nbsp;<a href="https://example.com/baseurl?currDir=./foo">foo</a>&nbsp;&gt;&nbsp;<a href="https://example.com/baseurl?currDir=./foo/bar">bar</a>&nbsp;&gt;&nbsp;test.jpg',
             buildYouAreHere('./foo/bar'));
+        $this->assertEquals('<a href="https://example.com/baseurl?currDir=.">Main</a>&nbsp;&gt;&nbsp;<a href="https://example.com/baseurl?currDir=./foo_bar">foo&nbsp;bar</a>&nbsp;&gt;&nbsp;test.jpg',
+            buildYouAreHere('./foo_bar'));
     }
 
     public function testImageWithImageNameOmitted()

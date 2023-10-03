@@ -144,14 +144,14 @@ function printPage($unsafe_currDir, $pathConvert, $unsafe_image)
 function _getImageDescription($mig_config, $unsafe_currDir, $unsafe_image, $desc, $short_desc)
 {
     if ($mig_config['commentfileperimage']) {
-        list($x, $description) = getImageDescFromFile($unsafe_currDir, $unsafe_image);
+        list($_short, $description) = getImageDescFromFile($unsafe_currDir, $unsafe_image);
         // If getImageDescFromFile() returned false, get the normal
         // comment if there is one.
         if (!$description) {
-            list($x, $description) = getImageDescription($unsafe_image, $desc, $short_desc);
+            list($_short, $description) = getImageDescription($unsafe_image, $desc, $short_desc);
         }
     } else {
-        list($x, $description) = getImageDescription($unsafe_image, $desc, $short_desc);
+        list($_short, $description) = getImageDescription($unsafe_image, $desc, $short_desc);
     }
 
     if (!$description) {

@@ -27,8 +27,7 @@ function buildImageURL ($unsafe_currDir, $unsafe_filename, $description, $short_
     $enc_fname = rawurlencode($unsafe_fname);
     $enc_ext   = rawurlencode($unsafe_ext);
 
-    // URL-encode currDir, keeping an old copy too
-    $enc_oldCurrDir = rawurlencode($unsafe_currDir);
+    // URL-encode currDir
     $enc_currDir = migURLencode($unsafe_currDir);
 
     // local Filename of the thumb
@@ -69,15 +68,17 @@ function buildImageURL ($unsafe_currDir, $unsafe_filename, $description, $short_
 
     } else {
         $newRoot = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
+        /** @psalm-suppress PossiblyInvalidOperand */
+        $imageDir = $newRoot . '/images/';
         switch ($type) {
             case 'image':
-                $enc_thumbImage = $newRoot . '/images/' . $mig_config['nothumb_icon'];
+                $enc_thumbImage = $imageDir . $mig_config['nothumb_icon'];
                 break;
             case 'audio':
-                $enc_thumbImage = $newRoot . '/images/' . $mig_config['music_icon'];
+                $enc_thumbImage = $imageDir . $mig_config['music_icon'];
                 break;
             case 'video':
-                $enc_thumbImage = $newRoot . '/images/' . $mig_config['movie_icon'];
+                $enc_thumbImage = $imageDir . $mig_config['movie_icon'];
                 break;
         }
     }

@@ -11,7 +11,7 @@ function replaceString($val, $formattable){
      
         // Keep on going until every %X atom has been examined and
         // expanded.
-     
+        /** @psalm-suppress PossiblyInvalidArgument */
         while (preg_match('#%([a-zA-Z])#', $val , $lettermatch)) {
   
             // which letter matched?

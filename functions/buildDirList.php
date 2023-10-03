@@ -93,12 +93,12 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
     }
 
     // Make sure hidden items aren't displayed
-    foreach ($mig_config['hidden'] as $file => $junk) {
+    foreach (array_keys($mig_config['hidden']) as $file) {
         unset ($presorted[$file]);
     }
 
     // Iterate through all folders now that we have our final list.
-    foreach ($presorted as $file => $junk) {
+    foreach (array_keys($presorted) as $file) {
 
         $unsafe_folder = $mig_config['albumdir'].'/'.$unsafe_currDir.'/'.$file;
 
@@ -115,12 +115,11 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
     }
 
     // Track columns
-    $row = 0;
     $col = 0;
     --$maxColumns;  // Tricks $maxColumns into working since it
                     // really starts at 0, not 1
 
-    foreach ($presorted as $file => $junk) {
+    foreach (array_keys($presorted) as $file) {
 
         // Start a new row if appropriate
         if ($col == 0) {
@@ -154,8 +153,7 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
                 $nbspfile = substr($nbspfile,0,$mig_config['foldernamelength']-1)
                           . '(..)';
         }
-        $nbspfile = str_replace(' ', '&nbsp;', migHtmlSpecialChars($nbspfile));
-        $nbspfile = str_replace('_', '&nbsp;', $nbspfile);
+        $nbspfile = strtr(migHtmlSpecialChars($nbspfile), array(' ' => '&nbsp;', '_' => '&nbsp;'));
 
         if ($mig_config['randomfolderthumbs']) {
             $folderTableClass = 'folderthumbs';
@@ -220,7 +218,7 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
         }
 
         // Display _ as space
-        $altlabel = str_replace('_', ' ', migHtmlSpecialChars($file));
+        $altlabel = strtr(migHtmlSpecialChars($file), '_', ' ');
 
         // Output the rest of the link, label, etc.
         $directoryList .= '" '
@@ -242,7 +240,6 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
         // Keep track of what row/column we're on
         if ($col == $maxColumns) {
             $directoryList .= "\n   </tr>";
-            ++$row;
             $col = 0;
         } else {
             ++$col;

@@ -34,9 +34,7 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
 
     // Count presorted images for pagination purposes
     if ($presorted) {
-        foreach ($presorted as $x => $y) {
-            ++$thumbsInFolder;
-        }
+        $thumbsInFolder += sizeof($presorted);
     }
 
     $markerLabel = $mig_config['markerlabel'];
@@ -105,7 +103,7 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
     }
 
     // Make sure hidden items don't show up
-    foreach ($mig_config['hidden'] as $file => $junk) {
+    foreach (array_keys($mig_config['hidden']) as $file) {
         unset ($presorted[$file]);
     }
 
@@ -152,12 +150,14 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
         // Fetch template phrase to work with.
         if ($mig_config['showTotalImagesString']) {
             $phrase = $mig_config['lang']['total_images'];
-            // %t is total images in folder
-            $phrase = str_replace('%t', strval($thumbsInFolder), $phrase);
-            // %s is start image
-            $phrase = str_replace('%s', strval($start_img), $phrase);
-            // %e is end image
-            $phrase = str_replace('%e', strval($end_img), $phrase);
+            $phrase = strtr($phrase, array(
+                // %t is total images in folder
+                '%t' => strval($thumbsInFolder),
+                // %s is start image
+                '%s' => strval($start_img),
+                // %e is end image
+                '%e' => strval($end_img),
+            ));
         } else {
             $phrase = '';
         }
@@ -213,7 +213,7 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
 
     $thumbCounter = -1;
 
-    foreach ($presorted as $file => $junk) {
+    foreach (array_keys($presorted) as $file) {
 
         ++$thumbCounter;
 
