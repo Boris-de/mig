@@ -5,9 +5,15 @@ updates:
     schedule:
       interval: "monthly"
       day: "saturday"
+    groups:
+      all-actions:
+        patterns: [ "*" ]
 
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
       interval: "monthly"
       day: "saturday"
+    groups:
+      all-composer:
+        patterns: [ "*" ]
