@@ -21,7 +21,7 @@ jobs:
         run: make index.php
 
       - name: Archive installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: index.php
           path: ./build/index.php
@@ -32,6 +32,6 @@ jobs:
         run: touch build/.composer-psalm && make psalm
 
       - name: Upload Security Analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: build/psam-github-results.sarif
