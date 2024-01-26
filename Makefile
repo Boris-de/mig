@@ -54,6 +54,9 @@ PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNI
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
 PHPUNIT_INCLUDE_PATH = functions$(PHP_PATH_SEPARATOR)main$(PHP_PATH_SEPARATOR)languages
+ifeq ($(OS),Windows_NT)
+	PHPUNIT_PARAMETER := --no-configuration
+endif
 
 
 default:
@@ -137,13 +140,13 @@ test: unittests container-unittests-all
 
 unittests: $(UNITTESTS_MARKER)
 $(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
-	phpunit $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" test
+	phpunit $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
 
 coverage: $(COVERAGE_MARKER)
 $(COVERAGE_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	XDEBUG_MODE=coverage phpunit $(PHPUNIT_PARAMS) --coverage-html $(COVERAGE_DIR) --whitelist functions \
-		--filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" test
+		--filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
 
 $(PHPUNIT_FILES): $(BUILD_DIR_MARKER) $(PHPUNIT_DIR_MARKER)

@@ -10,3 +10,4 @@ test-album
 *-private
 test/tmp
 vendor
+.phpunit.result.cache
