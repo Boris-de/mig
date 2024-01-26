@@ -3,9 +3,18 @@ Mig - Changelog
 
 ## Version 1.7.2 (tbd)
 
+### Notable changes
+
+Fixed endless loop when reading from an exif.inf file that starts with an empty line.
+This bug was introduced in Version 1.7.0.
+A special thanks to Roland Dieterich &lt;dieterich at mpipz.mpg.de> for reporting and fixing this bug!
+
 ### Other changes
 
 Fixed warnings reported by psalm and phpstorm and replaced outdated constructs.
+
+### Acknowledgements
+
 
 ## Version 1.7.1 (Sat, 17 Dec 2022)
 

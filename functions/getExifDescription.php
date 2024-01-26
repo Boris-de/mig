@@ -6,7 +6,7 @@
 function getExifDescription ( $unsafe_currDir, $formatString )
 {
     global $mig_config;
-    
+
     $aperture   = array ();
     $day        = array ();
     $desc       = array ();
@@ -22,12 +22,10 @@ function getExifDescription ( $unsafe_currDir, $formatString )
 
     $localExifFilename = $mig_config['albumdir'] . "/$unsafe_currDir/exif.inf";
     if (file_exists($localExifFilename)) {
-
         $fname = NULL;
         $file = fopen($localExifFilename, 'r');
-        $line = fgets($file, 4096);     // get first line
         while (!feof($file)) {
-
+            $line = fgets($file, 4096);
             if (strpos($line, 'File name    : ') === 0) {
                 $fname = str_replace('File name    : ', '', $line);
                 $fname = chop($fname);
@@ -103,12 +101,10 @@ function getExifDescription ( $unsafe_currDir, $formatString )
                 $day[$fname]      = $y;
                 $time[$fname]     = $z;
             }
-
-            $line = fgets($file, 4096);
         }
 
         fclose($file);
-        
+
         $unsafe_image = $mig_config['unsafe_image'];
 
         if (!isset($knownFiles[$unsafe_image])) {

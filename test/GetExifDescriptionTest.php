@@ -24,7 +24,6 @@ final class GetExifDescriptionTest extends AbstractFileBasedTest
 
     public function test()
     {
-        global $mig_config;
         $this->set_mig_config_image('test.jpg');
         $dir = $this->album_dir . '/foo';
         $this->mkdir($dir);
@@ -55,7 +54,6 @@ Comment      : foobar\n
 
     public function testEmptyFile()
     {
-        global $mig_config;
         $this->set_mig_config_image('test.jpg');
         $dir = $this->album_dir . '/foo';
         $this->mkdir($dir);
@@ -64,9 +62,27 @@ Comment      : foobar\n
             getExifDescription('./foo', '%c %a %f %i %l %m %s %Y %M %D %T'));
     }
 
+    public function testOnlyNewline()
+    {
+        $this->set_mig_config_image('test.jpg');
+        $dir = $this->album_dir . '/foo';
+        $this->mkdir($dir);
+        $this->touchWithContent($dir . '/exif.inf', "\n");
+        $this->assertEquals('',
+            getExifDescription('./foo', '%c %a %f %i %l %m %s %Y %M %D %T'));
+    }
+
+    public function testContentAfterEmptyLine()
+    {
+        $this->set_mig_config_image('test.jpg');
+        $dir = $this->album_dir . '/foo';
+        $this->mkdir($dir);
+        $this->touchWithContent($dir . '/exif.inf', "\nFile name    : test.jpg\nCamera model : Canon EOS 70D");
+        $this->assertEquals('Canon EOS 70D', getExifDescription('./foo', '%m'));
+    }
+
     public function testMultipleFiles()
     {
-        global $mig_config;
         $this->touchWithContent($this->album_dir . '/exif.inf', "File name    : test1.jpg\n
 Camera model : Canon EOS 70D\n
 Date/Time    : 2013:12:05 18:37:14\n
@@ -98,7 +114,6 @@ Comment      : comment2\n
 
     public function testFileNotInExifData()
     {
-        global $mig_config;
         $this->set_mig_config_image('not_existing.jpg');
         $dir = $this->album_dir . '/foo';
         $this->mkdir($dir);
