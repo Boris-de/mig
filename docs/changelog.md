@@ -13,9 +13,6 @@ A special thanks to Roland Dieterich &lt;dieterich at mpipz.mpg.de> for reportin
 
 Fixed warnings reported by psalm and phpstorm and replaced outdated constructs.
 
-### Acknowledgements
-
-
 ## Version 1.7.1 (Sat, 17 Dec 2022)
 
 ### Notable changes
