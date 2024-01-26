@@ -1,7 +1,7 @@
 Mig - Changelog
 ===============
 
-## Version 1.7.2 (tbd)
+## Version 1.7.2 (Fri, 26 Jan 2024)
 
 ### Notable changes
 
