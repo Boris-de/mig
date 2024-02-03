@@ -218,7 +218,7 @@ if (_get_magic_quotes_gpc() == 1) {
 
 // Look at currDir from a security angle.  Don't let folks go outside
 // the album directory base
-if (strstr($unchecked_currDir, '..') || !preg_match($mig_config['currDirNameRegexpr'], $unchecked_currDir)) {
+if (strstr($unchecked_currDir, '..') !== FALSE || !preg_match($mig_config['currDirNameRegexpr'], $unchecked_currDir)) {
     exit('SECURITY VIOLATION - ABANDON SHIP');
 }
 
@@ -261,8 +261,10 @@ if (_get_magic_quotes_gpc() == 1 && $unchecked_image) {
 // Look at $unchecked_image from a security angle.
 // Don't let folks go outside the album directory base
 // Don't let folks define ANY directory here
-if (strstr($unchecked_image, '/') || strstr($unchecked_image, '\\') // image is never a full path
-    || strstr($unchecked_image, '..') // basic directory traversal check, see below for more
+if (!is_string($unchecked_image)
+    || strstr($unchecked_image, '/') !== FALSE
+    || strstr($unchecked_image, '\\') !== FALSE // image is never a full path
+    || strstr($unchecked_image, '..') !== FALSE // basic directory traversal check, see below for more
     || !preg_match($mig_config['imageFilenameRegexpr'], $unchecked_image)) {
     exit('ERROR: $image is invalid.  Exiting.');
 }

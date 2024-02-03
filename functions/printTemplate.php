@@ -23,7 +23,7 @@ function printTemplate ( $templateFile, $maintAddr,
     } elseif (isset($REQUEST_URI)) {
         $newLang = $REQUEST_URI;
     }
-    if ($newLang and strpos($newLang, 'mig_dl=') !== FALSE) {
+    if ($newLang !== '' and strpos($newLang, 'mig_dl=') !== FALSE) {
         $newLang = preg_replace('#[?&]mig_dl=[^?&]*#', '', $newLang);
     }
     $newLang .= '&mig_dl';
@@ -51,7 +51,7 @@ function printTemplate ( $templateFile, $maintAddr,
             $line = trim($line);
             $line = str_replace('#include "', '', $line);
             $line = str_replace('";', '', $line);
-            if (strstr($line, '/')) {
+            if (strstr($line, '/') !== FALSE) {
                 $line = '<!-- ERROR: #include directive failed.'
                       . ' Path included a "/" character, indicating'
                       . ' an absolute or relative path.  All included'
@@ -101,7 +101,7 @@ function printTemplate ( $templateFile, $maintAddr,
 
             $filetype=getFileType($unsafe_image);
             // If pagetype is large, add largeSubdir to path.
-            if ($filetype=='image' && $unsafe_image) {
+            if ($filetype=='image' && $unsafe_image !== '') {
                 // Get image pixel size for <IMG> element
                 $unsafe_abs_image = $mig_config['albumdir'] . "/$unsafe_currDir/" . $unsafe_image;
                 if(!is_file($unsafe_abs_image)) {

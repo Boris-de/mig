@@ -16,7 +16,7 @@ function _findThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order, $rand
     $dirlist = opendir($unsafe_folder);
     $subfList = array();
 
-    $mySample = NULL;
+    $mySample = FALSE;
     while ($item = readdir($dirlist)) {
         if ($item == '.' || $item == '..') {
             continue; // skip self and parent
@@ -46,7 +46,7 @@ function _findThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order, $rand
     }
     closedir($dirlist);
 
-    if (!$mySample && !empty($subfList)) {
+    if ($mySample === FALSE && !empty($subfList)) {
         // get random folder
         $randomItem = _getRandomFromArray($subfList, $rand_function, $stable_order);
         $mySample = getRandomThumb($file . '/' . $randomItem,

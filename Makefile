@@ -189,7 +189,7 @@ $(COMPOSER_PSALM_MARKER):
 	@touch $(COMPOSER_PSALM_MARKER)
 
 psalm: $(PSALM_MARKER)
-$(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER) $(COMPOSER_PSALM_MARKER)
+$(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER) $(COMPOSER_PSALM_MARKER) psalm.xml
 	composer exec psalm $<
 	composer exec psalm -- --taint-analysis --report=$(BUILD_DIR)/psam-github-results.sarif --output-format=github $<
 	@touch $(PSALM_MARKER)

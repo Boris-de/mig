@@ -24,7 +24,7 @@ function getImageDescFromFile ( $unsafe_currDir, $unsafe_image )
         // a proper newline character are not truncated.
         // This says "while (not EOF) and ($line is not empty)"...
         $short_desc = '';
-        while ( $line || ! feof($file)) {
+        while ($line !== FALSE || ! feof($file)) {
             $line = trim($line);
 
             // If the "short comments" flag is set, and there is
