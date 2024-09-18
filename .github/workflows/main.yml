@@ -35,6 +35,8 @@ jobs:
           php-version: ${{ matrix.php-versions.php }}
           coverage: xdebug
           tools: phpunit:${{ matrix.php-versions.phpunit }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: prepare sources
         run: ${{ matrix.php-versions.prepare_tests_run }}
