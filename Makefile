@@ -166,7 +166,7 @@ container-unittests-all: $(CONTAINER_UNITTESTS_ALL_MARKER)
 container-unittests-all-versions: $(CONTAINER_UNITTESTS_ALL_MARKER)
 $(CONTAINER_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@set -e ;\
-	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3; do \
+	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4-rc; do \
 		make container-unittests CONTAINER_PHPUNIT_VERSION=$${version}-$(CONTAINER_PHPUNIT_VERSION); \
 	done
 	@touch $@

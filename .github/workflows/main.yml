@@ -24,6 +24,7 @@ jobs:
           - { php: '8.1', phpunit: '10',     prepare_tests_run: 'true' }
           - { php: '8.2', phpunit: '10',     prepare_tests_run: 'true' }
           - { php: '8.3', phpunit: '10',     prepare_tests_run: 'true' }
+          - { php: '8.4', phpunit: '10',     prepare_tests_run: 'true' }
     name: PHP ${{ matrix.php-versions.php }} Test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
