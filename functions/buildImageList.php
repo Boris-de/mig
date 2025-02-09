@@ -9,6 +9,9 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
 
     if (is_dir($mig_config['albumdir'].'/'.$unsafe_currDir)) {
         $dir = opendir($mig_config['albumdir'].'/'.$unsafe_currDir);
+        if ($dir === FALSE) {
+            exit("ERROR: failed to open album");
+        }
     } else {
         exit("ERROR: no such currDir '" . migHtmlSpecialChars($unsafe_currDir) . "'<br>");
     }

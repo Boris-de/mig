@@ -24,6 +24,9 @@ function buildDirList ( $unsafe_currDir, $maxColumns, $presorted, $ficons )
     }
 
     $dir = opendir($unsafe_abs_currDir);
+    if ($dir === FALSE) {
+        exit("ERROR: failed to open album");
+    }
     while ($file = readdir($dir)) {
         if ($file == '.' || $file == '..') {
             continue; // skip self and parent

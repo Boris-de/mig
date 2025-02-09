@@ -105,4 +105,19 @@ final class ParseMigCfTest extends AbstractFileBasedTest
         $this->assertEquals(2, $tcols);
         $this->assertEquals("test@example.com", $maintaddr);
     }
+
+    public function testParseIncompleteBlock()
+    {
+        global $mig_config;
+        $this->touchWithContent($this->album_dir . '/mig.cf',
+            "<hidden>\nfoo\nbar\n");
+
+        $this->mkdir($this->album_dir . '/dir1');
+        $this->mkdir($this->album_dir . '/dir2');
+        touch($this->album_dir . '/file1.jpg');
+        touch($this->album_dir . '/file2.jpg');
+
+        parseMigCf($this->album_dir);
+        $this->assertEquals(array('foo' => TRUE, 'bar' => TRUE), $mig_config['hidden']);
+    }
 }

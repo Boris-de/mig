@@ -3,6 +3,10 @@
 // getExifDescription() - Fetches a comment if available from the Exif comments file (exif.inf)
 //                        as well as fetching EXIF data.
 
+function _exif_default_string($str) {
+    return $str !== null && $str !== FALSE ? $str : '';
+}
+
 function getExifDescription ( $unsafe_currDir, $formatString )
 {
     global $mig_config;
@@ -24,8 +28,14 @@ function getExifDescription ( $unsafe_currDir, $formatString )
     if (file_exists($localExifFilename)) {
         $fname = NULL;
         $file = fopen($localExifFilename, 'r');
+        if ($file === FALSE) {
+            return '';
+        }
         while (!feof($file)) {
             $line = fgets($file, 4096);
+            if ($line === FALSE) {
+                continue;
+            }
             if (strpos($line, 'File name    : ') === 0) {
                 $fname = str_replace('File name    : ', '', $line);
                 $fname = chop($fname);
@@ -58,26 +68,26 @@ function getExifDescription ( $unsafe_currDir, $formatString )
             // the colon, sometimes not.  Try to work either way.
             } elseif (preg_match('#^Exposure time: ?#', $line)) {
                 $x = preg_replace('#^Exposure time: ?#', '', $line);
-                if (preg_match('#\(#', $x)) {
-                    $x = preg_replace('#^.*\(#', '', $x);
-                    $x = preg_replace('#\).*$#', '', $x);
+                if ($x != null && preg_match('#\(#', $x)) {
+                    $x = _exif_default_string(preg_replace('#^.*\(#', '', $x));
+                    $x = _exif_default_string(preg_replace('#\).*$#', '', $x));
                 }
-                $x = chop($x);
+                $x = chop(_exif_default_string($x));
                 $shutter[$fname] = $x;
 
             } elseif (strpos($line, 'Aperture     : ') === 0) {
                 $x = str_replace('Aperture     : ', '', $line);
                 // make it fN.N instead of f/N.N
-                $x = preg_replace('#/#', '', $x);
+                $x = _exif_default_string(preg_replace('#/#', '', $x));
                 $x = chop($x);
                 $aperture[$fname] = $x;
 
             } elseif (strpos($line, 'Focal length : ') === 0) {
                 $x = chop(str_replace('Focal length : ', '', $line));
                 if (stripos($x, '35mm equiv') !== FALSE) {
-                    $x = preg_replace('#^.*alent: #', '', $x);
+                    $x = _exif_default_string(preg_replace('#^.*alent: #', '', $x));
                     $x = chop($x);
-                    $x = preg_replace('#\)$#', '', $x);
+                    $x = _exif_default_string(preg_replace('#\)$#', '', $x));
                 }
                 $foclen[$fname] = $x;
 

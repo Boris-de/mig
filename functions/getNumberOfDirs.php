@@ -8,6 +8,9 @@ function getNumberOfDirs ( $unsafe_folder )
     
     if (is_dir($unsafe_folder)) {
         $dir = opendir($unsafe_folder);    // Open directory handle
+        if ($dir === FALSE) {
+            exit("ERROR: failed to open album");
+        }
     } else {
         return 0;
     }

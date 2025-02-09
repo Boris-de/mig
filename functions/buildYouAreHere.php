@@ -12,7 +12,7 @@ function buildYouAreHere ( $unsafe_currDir )
     $unsafe_workingCopy = $unsafe_currDir;
 
     // Loop until we get down to just the "."
-    while ($unsafe_workingCopy != '.') {
+    while ($unsafe_workingCopy !== null && $unsafe_workingCopy != '.') {
 
         // $label is the "last" thing in the path. Strip up to that
         $label = preg_replace('#^.*/#', '', $unsafe_workingCopy);

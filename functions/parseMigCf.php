@@ -2,8 +2,25 @@
 
 // parseMigCf() - Parse a mig.cf file.
 
-function _isEndOfBlock($line, $needle) {
-    return $line === FALSE || stripos($line, $needle) === 0;
+function _readTextTillEndOfBlock($file, $needle) {
+    $lines = _readLinesTillEndOfBlock($file, $needle);
+    $result = '';
+    foreach ($lines as $line) {
+        $result .= "$line ";
+    }
+    return $result;
+}
+
+function _readLinesTillEndOfBlock($file, $needle, $trim = TRUE) {
+    $lines = array();
+    do {
+        $line = fgets($file, 4096);
+        if ($line === FALSE || stripos($line, $needle) !== FALSE) {
+            break;
+        }
+        $lines[] = $trim? trim($line) : $line;
+    } while (!feof($file));
+    return $lines;
 }
 
 function parseMigCf ( $unsafe_folder )
@@ -43,42 +60,36 @@ function parseMigCf ( $unsafe_folder )
     if (file_exists($unsafe_cfgfile)) {
         $file = fopen($unsafe_cfgfile, 'r');
 
-        while (! feof($file)) {
+        while ($file && ! feof($file)) {
             $line = fgets($file, 4096);
+            if ($line === FALSE) {
+                break;
+            }
 
             // Parse <hidden> blocks
             if (stripos($line, '<hidden>') === 0) {
-                $line = fgets($file, 4096);
-                while (!_isEndOfBlock($line, '</hidden>')) {
-                    $line = trim($line);
+                $lines = _readLinesTillEndOfBlock($file, '</hidden>');
+                foreach ($lines as $line) {
                     $mig_config['hidden'][$line] = TRUE;
-                    $line = fgets($file, 4096);
                 }
             }
 
             // Parse <sort> structure
             if (stripos($line, '<sort>') === 0) {
-                $line = fgets($file, 4096);
-                while (!_isEndOfBlock($line, '</sort>')) {
-                    $line = trim($line);
-
+                $lines = _readLinesTillEndOfBlock($file, '</sort>');
+                foreach ($lines as $line) {
                     if (is_file("$unsafe_folder/$line")) {
                         $presort_img[$line] = TRUE;
                     } elseif (is_dir("$unsafe_folder/$line")) {
                         $presort_dir[$line] = TRUE;
                     }
-
-                    $line = fgets($file, 4096);
                 }
             }
 
             // Parse <bulletin> structure
             if (stripos($line, '<bulletin>') === 0) {
-                $line = fgets($file, 4096);
-                while (!_isEndOfBlock($line, '</bulletin>')) {
-                    $bulletin .= $line;
-                    $line = fgets($file, 4096);
-                }
+                $lines = _readLinesTillEndOfBlock($file, '</bulletin>', FALSE);
+                $bulletin = implode('', $lines);
             }
 
             // Parse <comment> structure
@@ -86,14 +97,10 @@ function parseMigCf ( $unsafe_folder )
                 $commfilename = trim($line);
                 $commfilename = str_replace('">', '', $commfilename);
                 $commfilename = preg_replace('#^<comment "#i','',$commfilename);
-                $line = fgets($file, 4096);
-                $mycomment = '';
-                while (!_isEndOfBlock($line, '</comment')) {
-                    $line = trim($line);
-                    $mycomment .= "$line ";
-                    $line = fgets($file, 4096);
+                $text = _readTextTillEndOfBlock($file, '</comment>');
+                if ($commfilename != NULL) {
+                    $desc[$commfilename] = $text;
                 }
-                $desc[$commfilename] = $mycomment;
             }
 
             // Parse <short> structure
@@ -101,14 +108,10 @@ function parseMigCf ( $unsafe_folder )
                 $shortfilename = trim($line);
                 $shortfilename = str_replace('">', '', $shortfilename);
                 $shortfilename = preg_replace('#^<short "#i','',$shortfilename);
-                $line = fgets($file, 4096);
-                $myshort = '';
-                while (!_isEndOfBlock($line, '</short')) {
-                    $line = trim($line);
-                    $myshort .= "$line ";
-                    $line = fgets($file, 4096);
+                $text = _readTextTillEndOfBlock($file, '</short>');
+                if ($shortfilename != NULL) {
+                    $short_desc[$shortfilename] = $text;
                 }
-                $short_desc[$shortfilename] = $myshort;
             }
 
             // Parse FolderIcon lines
@@ -157,7 +160,9 @@ function parseMigCf ( $unsafe_folder )
 
         } // end of main while() loop
 
-        fclose($file);
+        if ($file) {
+            fclose($file);
+        }
     }
 
     return array ($presort_dir, $presort_img, $desc, $short_desc,

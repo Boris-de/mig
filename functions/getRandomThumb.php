@@ -14,6 +14,10 @@ function _findThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order, $rand
     global $mig_config;
 
     $dirlist = opendir($unsafe_folder);
+    if ($dirlist === FALSE) {
+        return FALSE;
+    }
+
     $subfList = array();
 
     $mySample = FALSE;
@@ -76,6 +80,9 @@ function getRandomThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order = 
         // in which case we can't show any thumbs anyway.
         if (is_dir($unsafe_thumb_dir)) {
             $readSample = opendir($unsafe_thumb_dir);
+            if ($readSample === FALSE) {
+                return FALSE;
+            }
 
             // Read each item in the directory...
             while ($sample = readdir($readSample)) {
@@ -133,6 +140,9 @@ function getRandomThumb($file, $unsafe_folder, $unsafe_currDir, $stable_order = 
 
         // Open $folder as a directory handle
         $readSample = opendir($unsafe_folder);
+        if ($readSample === FALSE) {
+            return FALSE;
+        }
 
         // Iterate through all files in this folder...
         while ($sample = readdir($readSample)) {

@@ -18,6 +18,9 @@ function getImageDescFromFile ( $unsafe_currDir, $unsafe_image )
     if (file_exists($localDescFileName)) {
 
         $file = fopen($localDescFileName, 'r');
+        if ($file === FALSE) {
+            return FALSE;
+        }
         $line = fgets($file, 4096);         // get first line
 
         // This double-check exists so that files ending without
@@ -25,7 +28,7 @@ function getImageDescFromFile ( $unsafe_currDir, $unsafe_image )
         // This says "while (not EOF) and ($line is not empty)"...
         $short_desc = '';
         while ($line !== FALSE || ! feof($file)) {
-            $line = trim($line);
+            $line = $line !== FALSE ? trim($line) : '';
 
             // If the "short comments" flag is set, and there is
             // not yet a short description, set one.  This means this

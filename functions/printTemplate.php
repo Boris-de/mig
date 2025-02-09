@@ -41,9 +41,12 @@ function printTemplate ( $templateFile, $maintAddr,
     }
 
     $file = fopen($templateFile,'r');    // Open template file
+    if ($file === FALSE) {
+        die("ERROR: template cannot be opened!");
+    }
     $line = fgets($file, 4096);                         // Get first line
 
-    while (! feof($file)) {             // Loop until EOF
+    while ($line !== FALSE && !feof($file)) {             // Loop until EOF
 
         // Look for include directives and process them
         if (strpos($line, '#include') === 0) {

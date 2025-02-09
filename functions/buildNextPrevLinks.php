@@ -39,6 +39,9 @@ function buildNextPrevLinks ( $unsafe_currDir, $presorted )
         } else {
             $dir = opendir($mig_config['albumdir']."/$unsafe_currDir");
         }
+        if ($dir === FALSE) {
+            exit("ERROR: failed to open album");
+        }
     } else {
         exit("ERROR: no such currDir '" . migHtmlSpecialChars($unsafe_currDir) . "'<br>");
     }
