@@ -66,7 +66,7 @@ function parseExifDate ( $stamp )
                 if ($tmp < 10) {
                     $tmp = '0' . $tmp;
                 }
-                $time = $tmp . ':' . $minute . $mig_config['lang']['pm'];
+                $time = strval($tmp) . ':' . $minute . $mig_config['lang']['pm'];
                 break;
         }
     }

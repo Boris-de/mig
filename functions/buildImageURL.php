@@ -118,9 +118,9 @@ function buildImageURL ($unsafe_currDir, $unsafe_filename, $description, $short_
     }
 
     if ($imageFileSize > 1048576) {
-       $imageFileSize = sprintf('%01.1f', $imageFileSize / 1024 / 1024) . 'MB';
+       $imageFileSize = sprintf('%01.1f', ((float) $imageFileSize) / 1024.0 / 1024.0) . 'MB';
     } elseif ($imageFileSize > 1024) {
-        $imageFileSize = sprintf('%01.1f', $imageFileSize / 1024) . 'KB';
+        $imageFileSize = sprintf('%01.1f', ((float) $imageFileSize) / 1024.0) . 'KB';
     } else {
        $imageFileSize = $imageFileSize . $mig_config['lang']['bytes'];
     }

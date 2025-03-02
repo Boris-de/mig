@@ -121,7 +121,7 @@ function buildImageList ( $unsafe_currDir, $maxColumns, $maxRows,
     $max_row = $maxRows + 1;
     $firstThumb = $mig_config['startfrom'] * $max_col * $max_row;
     // This rounds off any fractional part
-    $pages = ceil($thumbsInFolder / ($max_col * $max_row));
+    $pages = (int) ceil($thumbsInFolder / ($max_col * $max_row));
 
     // show last page if $startfrom to big
     if ($thumbsInFolder<$firstThumb) {
