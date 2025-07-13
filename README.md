@@ -53,7 +53,7 @@ make clean release VERSION=... MIG_GPG_KEY="..." MIG_GPG_EMAIL="..." MIG_SITE_DI
 
 ## Git tags
 
-Most of the tags are converted from the original CVS, but somewhere missing
+Most of the tags are converted from the original CVS, but some were missing
 and added later (v1.2.7, v1.2.7p1, v1.2.8, v1.2.9r, v1.3.0) based the commit
 messages and a comparison of the content of the release tarballs. For 1.2.9 a
 slight difference between the commit and the tar exists, hence the "r"-suffix
