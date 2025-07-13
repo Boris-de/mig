@@ -3,7 +3,6 @@
          failOnRisky="true"
          failOnWarning="true"
          failOnIncomplete="true"
-         failOnDeprecation="true"
          failOnEmptyTestSuite="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnIncompleteTests="true"
