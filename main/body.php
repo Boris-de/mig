@@ -362,6 +362,7 @@ $mig_config['templatedir'] = $mig_config['basedir'] . '/templates';
 
 // baseURL with the scriptname torn off the end
 $baseHref = preg_replace('#/[^/]+$#', '', $mig_config['baseurl']);
+assert(is_string($baseHref));
 
 // Location of image library (for instance, where icons are kept)
 $mig_config['imagedir'] = $baseHref . '/images';
