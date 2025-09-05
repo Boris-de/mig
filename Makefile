@@ -49,7 +49,9 @@ PHPUNIT_URL = https://phar.phpunit.de
 PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -d '.' -f 1)
 PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup'; \
 						test $(PHPUNIT_VERSION) -ge 10 && echo '--cache-directory $(PHPUNIT_CACHE_DIR)')
-PHPUNIT_VERSIONS = 5.7.27 8.5.32 10.5.52
+PHPUNIT_VERSION_MAIN = 10.5.52
+PHPUNIT_VERSIONS = 5.7.27 8.5.32 $(PHPUNIT_VERSION_MAIN)
+PHPUNIT_MAIN_PHAR = $(PHPUNIT_DIR)/phpunit-$(PHPUNIT_VERSION_MAIN).phar
 PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
@@ -139,8 +141,8 @@ $(TEST_ALBUM_MARKER): utilities/create-random-album.sh
 test: unittests container-unittests-all
 
 unittests: $(UNITTESTS_MARKER)
-$(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
-	phpunit $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
+$(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER) $(PHPUNIT_MAIN_PHAR)
+	$(PHPUNIT_MAIN_PHAR) $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
 
 coverage: $(COVERAGE_MARKER)

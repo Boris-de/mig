@@ -44,7 +44,7 @@ jobs:
         run: ${{ matrix.php-versions.prepare_tests_run }}
 
       - name: run unittests
-        run: make unittests
+        run: touch phpunit && make unittests PHPUNIT_MAIN_PHAR=phpunit
 
   systems:
     runs-on: ${{ matrix.operating-system }}
@@ -63,4 +63,4 @@ jobs:
           tools: phpunit:10
 
       - name: run unittests
-        run: make unittests
+        run: touch phpunit && make unittests PHPUNIT_MAIN_PHAR=phpunit
