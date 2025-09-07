@@ -13,8 +13,8 @@ SPOOL_DIR    = $(BUILD_DIR)/$(ARCHIVE_NAME)
 ARCHIVE      = $(DIST_DIR)/$(ARCHIVE_NAME).tar.gz
 RELEASE_TAG  = v$(VERSION)
 
-# allow to try to run with "podman" command
-DOCKER ?= docker
+# try to guess if podman or docker should be use (and allow override of variable)
+DOCKER ?= $(shell which podman || which docker)
 TEST_ALBUM_DIR = test-album
 
 PSALM_MARKER = $(BUILD_DIR)/.psalm
