@@ -1,12 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-require_once 'AbstractMigTestCase.class.php';
+require_once 'migHtmlSpecialChars.php';
 
-final class ParseExifDateTest extends AbstractFileBasedTestCase
+final class ParseExifDateTest extends TestCase
 {
-    public function setUp() : void
+    public function set_up()
     {
         global $mig_config;
         $mig_config = array();

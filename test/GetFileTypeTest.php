@@ -1,15 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-require_once 'AbstractMigTestCase.class.php';
-
-final class GetFileTypeTest extends AbstractFileBasedTestCase
+final class GetFileTypeTest extends TestCase
 {
-    /**
-     * @before
-     */
-    public function setupMigFake()
+    public function set_up()
     {
         include_once 'getFileExtension.php';
         include_once 'getFileType.php';

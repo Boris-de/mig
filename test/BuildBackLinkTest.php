@@ -1,12 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-require_once 'AbstractMigTestCase.class.php';
-
-final class BuildBackLinkTest extends AbstractFileBasedTestCase
+final class BuildBackLinkTest extends TestCase
 {
-    public function setUp() : void
+    public function set_up()
     {
         global $mig_config;
         $mig_config = array();

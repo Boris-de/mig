@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractFileBasedTestCase.class.php';
+require_once 'migHtmlSpecialChars.php';
 
 final class GetRandomThumbTest extends AbstractFileBasedTest
 {
@@ -87,8 +87,8 @@ final class GetRandomThumbTest extends AbstractFileBasedTest
         // repeat a couple of times to see that we really skip those
         for ($i = 0; $i < 20; ++$i) {
             $thumb = $this->getRandomThumb();
-            $this->migAssertStringNotContainsString("dotdir", $thumb);
-            $this->migAssertStringNotContainsString("dir1", $thumb);
+            $this->assertStringNotContainsString("dotdir", $thumb);
+            $this->assertStringNotContainsString("dir1", $thumb);
         }
     }
 
@@ -163,9 +163,9 @@ final class GetRandomThumbTest extends AbstractFileBasedTest
         // repeat a couple of times to see that we really skip those
         for ($i = 0; $i < 20; ++$i) {
             $thumb = $this->getRandomThumb();
-            $this->migAssertStringNotContainsString("dotdir", $thumb);
-            $this->migAssertStringNotContainsString("dir1", $thumb);
-            $this->migAssertStringNotContainsString("test1.jpg", $thumb);
+            $this->assertStringNotContainsString("dotdir", $thumb);
+            $this->assertStringNotContainsString("dir1", $thumb);
+            $this->assertStringNotContainsString("test1.jpg", $thumb);
         }
     }
 

@@ -3,6 +3,7 @@
   "description": "Mig is a photo album / image gallery management system",
   "license": "BSD-3-Clause",
   "require-dev": {
+    "yoast/phpunit-polyfills": "^4.0",
     "vimeo/psalm": "^6.1"
   }
 }

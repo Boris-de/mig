@@ -3,7 +3,6 @@ VERSION     = dev
 BUILD_DIR   = build
 DIST_DIR    = $(BUILD_DIR)/mig
 INDEX_PHP   = $(BUILD_DIR)/index.php
-PHPUNIT_DIR = $(BUILD_DIR)/phpunit
 COVERAGE_DIR= $(BUILD_DIR)/coverage
 PHPUNIT_CACHE_DIR = $(BUILD_DIR)/phpunit-cache
 
@@ -18,12 +17,11 @@ DOCKER ?= $(shell which podman || which docker)
 TEST_ALBUM_DIR = test-album
 
 PSALM_MARKER = $(BUILD_DIR)/.psalm
-COMPOSER_PSALM_MARKER = $(BUILD_DIR)/.composer-psalm
+COMPOSER_INSTALL_MARKER = $(BUILD_DIR)/.composer-install
 COVERAGE_MARKER = $(BUILD_DIR)/coverage/.marker
 MIG_SITE_MARKER = $(BUILD_DIR)/.site
 BUILD_DIR_MARKER = $(BUILD_DIR)/.marker
 UNITTESTS_MARKER = $(BUILD_DIR)/.marker-unittests
-PHPUNIT_DIR_MARKER = $(PHPUNIT_DIR)/.marker
 TEST_ALBUM_MARKER = $(TEST_ALBUM_DIR)/.marker
 CONTAINER_UNITTESTS_MARKER = $(BUILD_DIR)/.marker-container-unittests
 CONTAINER_UNITTESTS_ALL_MARKER = $(BUILD_DIR)/.marker-container-unittests-all
@@ -45,14 +43,7 @@ else
  USED_CONTAINER_PHP_VERSION := $(CONTAINER_PHP_VERSION)-
 endif
 
-PHPUNIT_URL = https://phar.phpunit.de
-PHPUNIT_VERSION = $(shell phpunit --version|grep '^PHPUnit'|cut -d' ' -f 2|cut -d '.' -f 1)
-PHPUNIT_PARAMS = $(shell test $(PHPUNIT_VERSION) -ne 5 && echo '--globals-backup'; \
-						test $(PHPUNIT_VERSION) -ge 10 && echo '--cache-directory $(PHPUNIT_CACHE_DIR)')
-PHPUNIT_VERSION_MAIN = 10.5.52
-PHPUNIT_VERSIONS = 5.7.27 8.5.32 $(PHPUNIT_VERSION_MAIN)
-PHPUNIT_MAIN_PHAR = $(PHPUNIT_DIR)/phpunit-$(PHPUNIT_VERSION_MAIN).phar
-PHPUNIT_FILES = $(addsuffix .phar, $(addprefix $(PHPUNIT_DIR)/phpunit-, $(PHPUNIT_VERSIONS) ))
+PHPUNIT_PARAMS = --globals-backup --cache-directory $(PHPUNIT_CACHE_DIR)
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
 PHPUNIT_INCLUDE_PATH = functions$(PHP_PATH_SEPARATOR)main$(PHP_PATH_SEPARATOR)languages
@@ -141,24 +132,20 @@ $(TEST_ALBUM_MARKER): utilities/create-random-album.sh
 test: unittests container-unittests-all
 
 unittests: $(UNITTESTS_MARKER)
-$(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER) $(PHPUNIT_MAIN_PHAR)
-	$(PHPUNIT_MAIN_PHAR) $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
+$(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER) $(COMPOSER_INSTALL_MARKER)
+	composer exec phpunit -- $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
 
 coverage: $(COVERAGE_MARKER)
 $(COVERAGE_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
-	XDEBUG_MODE=coverage phpunit $(PHPUNIT_PARAMS) --coverage-html $(COVERAGE_DIR) --whitelist functions \
+	XDEBUG_MODE=coverage composer exec -- phpunit $(PHPUNIT_PARAMS) --coverage-html $(COVERAGE_DIR) --whitelist functions \
 		--filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
-
-$(PHPUNIT_FILES): $(BUILD_DIR_MARKER) $(PHPUNIT_DIR_MARKER)
-	curl --silent --fail --show-error --location $(PHPUNIT_URL)/$(shell basename $@) --output $@
-	chmod 700 $@
 
 container-unittests: $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION)
 $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@echo "Running unittests with container '$(CONTAINER_PHPUNIT_VERSION)'"
-	rm -rf $(CONTAINER_UNITTEST_TMP) && cp -r $(PHPUNIT_DIR) $(CONTAINER_UNITTEST_TMP)
+	rm -rf $(CONTAINER_UNITTEST_TMP)
 	$(DOCKER) build --build-arg PHP_VERSION=$(CONTAINER_PHPUNIT_VERSION) -t $(CONTAINER_NAME_PHPUNIT) test
 	$(DOCKER) run --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(CONTAINER_NAME_PHPUNIT)
 	$(DOCKER) image rm $(CONTAINER_NAME_PHPUNIT) 1>/dev/null 2>&1 || true
@@ -186,12 +173,13 @@ container-webserver: $(INDEX_PHP) $(TEST_ALBUM_DIR)
 	$(DOCKER) stop $(CONTAINER_NAME)
 	$(DOCKER) rm $(CONTAINER_NAME)
 
-$(COMPOSER_PSALM_MARKER):
+composer-install: $(COMPOSER_INSTALL_MARKER)
+$(COMPOSER_INSTALL_MARKER):
 	composer install
-	@touch $(COMPOSER_PSALM_MARKER)
+	@touch $(COMPOSER_INSTALL_MARKER)
 
 psalm: $(PSALM_MARKER)
-$(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER) $(COMPOSER_PSALM_MARKER) psalm.xml
+$(PSALM_MARKER): $(INDEX_PHP) $(BUILD_DIR_MARKER) $(COMPOSER_INSTALL_MARKER) psalm.xml
 	composer exec psalm $<
 	composer exec psalm -- --taint-analysis --report=$(BUILD_DIR)/psam-github-results.sarif --output-format=github $<
 	@touch $(PSALM_MARKER)
@@ -205,21 +193,17 @@ dev-server: albums
 
 clean-marker:
 	rm -f $(PSALM_MARKER) $(COVERAGE_MARKER) $(MIG_SITE_MARKER) $(BUILD_DIR_MARKER) $(UNITTESTS_MARKER) \
-		$(TEST_ALBUM_MARKER) $(CONTAINER_UNITTESTS_MARKER) $(CONTAINER_UNITTESTS_ALL_MARKER) $(PHPUNIT_DIR_MARKER) \
-		$(COMPOSER_PSALM_MARKER)
+		$(TEST_ALBUM_MARKER) $(CONTAINER_UNITTESTS_MARKER) $(CONTAINER_UNITTESTS_ALL_MARKER) \
+		$(COMPOSER_INSTALL_MARKER)
 
 clean: clean-marker
 	make -C docs clean
 	$(DOCKER) image rm $(CONTAINER_NAME) $(CONTAINER_NAME_PHPUNIT) 1>/dev/null 2>&1 || true
 	rm -f $(INDEX_PHP) albums $(PHPUNIT_FILES)
-	rm -rf test-album $(PHPUNIT_DIR) $(BUILD_DIR) $(CONTAINER_UNITTEST_TMP) vendor
+	rm -rf test-album $(BUILD_DIR) $(CONTAINER_UNITTEST_TMP) vendor
 
 $(BUILD_DIR_MARKER):
 	mkdir -p $(BUILD_DIR)
-	@touch $@
-
-$(PHPUNIT_DIR_MARKER): $(BUILD_DIR_MARKER)
-	mkdir -p $(shell dirname $@)
 	@touch $@
 
 .PHONY: default docs test clean clean-marker unittests container-webserver container-unittests container-unittests-all container-unittests-all-versions coverage has-version index.php coverage dev-server

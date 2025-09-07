@@ -87,7 +87,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/test3.jpg');
 
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test3.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test3.jpg</td>
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>",
             buildImageList('.', 2, 2, array('test3.jpg' => true), array(), array()));
@@ -99,7 +99,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/test3.jpg');
 
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
    <tr>
     <td colspan=\"2\" align=\"center\"><small>Showing&nbsp;images&nbsp;1-2&nbsp;of&nbsp;3&nbsp;total<br /><b>1</b>&nbsp;&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=.&amp;startFrom=1\">2</a>&nbsp;&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=.&amp;startFrom=1\">&raquo;</a></small></td>
    </tr>
@@ -114,7 +114,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
 
         // page 2
         $this->set_mig_config('startfrom', '1');
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
    <tr>
     <td colspan=\"1\" align=\"center\"><small>Showing&nbsp;images&nbsp;2-2&nbsp;of&nbsp;3&nbsp;total<br /><a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=.&amp;startFrom=0\">&laquo;</a>&nbsp;&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=.&amp;startFrom=0\">1</a>&nbsp;&nbsp;<b>2</b>&nbsp;&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=.&amp;startFrom=2\">3</a>&nbsp;&nbsp;<a href=\"https://example.com/baseurl?pageType=folder&amp;currDir=.&amp;startFrom=2\">&raquo;</a></small></td>
    </tr>
@@ -133,7 +133,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/test3.jpg');
 
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test3.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test3.jpg</td>",
             buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
@@ -145,7 +145,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         touch($this->album_dir.'/test2.jpg');
         touch($this->album_dir.'/test3.jpg');
 
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test3.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test3.jpg</td>
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test2.jpg\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a><br />test2.jpg</td>",
             buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
@@ -157,7 +157,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $this->mkdir($this->album_dir.'/test-hidden-dir');
         touch($this->album_dir.'/test-hidden.jpg');
 
-        $this->migAssertStringNotContainsString('test-hidden', buildImageList('.', 4, 1, array(), array(), array()));
+        $this->assertStringNotContainsString('test-hidden', buildImageList('.', 4, 1, array(), array(), array()));
     }
 
     public function testNoImages()
@@ -169,7 +169,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
     {
         touch($this->album_dir.'/test.mp4');
 
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"/albums/./test.mp4\"><img src=\"https://example.com/images/movie_icon.png\" /></a><br />test.mp4</td>",
             buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
     }
@@ -178,7 +178,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
     {
         touch($this->album_dir.'/test.mp3');
 
-        $this->migAssertStringContainsString("
+        $this->assertStringContainsString("
     <td align=\"center\" class=\"image\"><a title=\"\" href=\"/albums/./test.mp3\"><img src=\"https://example.com/images/audio_icon.png\" /></a><br />test.mp3</td>",
             buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
     }
@@ -187,7 +187,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
     {
         touch($this->album_dir.'/test.foo');
 
-        $this->migAssertStringNotContainsString("test.foo",
+        $this->assertStringNotContainsString("test.foo",
             buildImageList('.', 4, 1, array('test-presorted' => TRUE), array(), array()));
     }
 
@@ -362,7 +362,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
     public function testImagePopup()
     {
         $this->setUpPopupTest();
-        $this->migAssertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+        $this->assertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
             buildImageList('.', 2, 2, array(), array(), array()));
     }
 
@@ -372,7 +372,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $this->set_mig_config('imagepopmaxwidth', 10);
         $this->set_mig_config('imagepopmaxheight', 10);
 
-        $this->migAssertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=10,height=10,resizable=yes,scrollbars=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+        $this->assertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=10,height=10,resizable=yes,scrollbars=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
             buildImageList('.', 2, 2, array(), array(), array()));
     }
 
@@ -381,7 +381,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $this->setUpPopupTest();
         $this->set_mig_config('imagepoplocationbar', TRUE);
 
-        $this->migAssertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,location=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+        $this->assertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,location=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
             buildImageList('.', 2, 2, array(), array(), array()));
     }
 
@@ -390,7 +390,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $this->setUpPopupTest();
         $this->set_mig_config('imagepoptoolbar', TRUE);
 
-        $this->migAssertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,toolbar=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+        $this->assertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,toolbar=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
             buildImageList('.', 2, 2, array(), array(), array()));
     }
 
@@ -399,7 +399,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $this->setUpPopupTest();
         $this->set_mig_config('imagepopmenubar', TRUE);
 
-        $this->migAssertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,menubar=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
+        $this->assertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_11190874','width=30,height=150,resizable=yes,scrollbars=1,menubar=1');return false;\"><img src=\"https://example.com/images/nothumb_icon.png\" alt=\"\" class=\"imagethumb\"  /></a>",
             buildImageList('.', 2, 2, array(), array(), array()));
     }
 
@@ -409,11 +409,11 @@ final class BuildImageListTest extends AbstractFileBasedTest
         $this->set_mig_config('imagepoptype', NULL);
 
         $imageList = buildImageList('.', 2, 2, array(), array(), array());
-        $this->migAssertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_", $imageList);
-        $this->migAssertStringNotContainsString("mig_window_11190874", $imageList);
+        $this->assertStringContainsString("<a title=\"\" href=\"#\" onClick=\"window.open('https://example.com/baseurl?currDir=.&amp;pageType=image&amp;image=test1.jpg','mig_window_", $imageList);
+        $this->assertStringNotContainsString("mig_window_11190874", $imageList);
     }
 
-    private function setUpPopupTest() {
+    private function setupPopupTest() {
         $this->set_mig_config('imagepopup', TRUE);
         $this->set_mig_config('imagepopmaxwidth', 640);
         $this->set_mig_config('imagepopmaxheight', 480);

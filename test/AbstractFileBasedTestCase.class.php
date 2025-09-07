@@ -1,17 +1,17 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-require_once 'AbstractMigTestCase.class.php';
+require_once 'migHtmlSpecialChars.php';
 include_once 'ConvertIncludePath.class.php';
 
-abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
+abstract class AbstractFileBasedTest extends TestCase
 {
     protected $NO_PATH_CONVERT;
     protected $mig_dir;
     protected $album_dir;
 
-    public function setUp() : void
+    public function set_up()
     {
         $this->NO_PATH_CONVERT = new ConvertIncludePath(FALSE, '', '');
 
@@ -40,7 +40,7 @@ abstract class AbstractFileBasedTest extends AbstractFileBasedTestCase
         $mig_config['unsafe_image'] = $value;
     }
 
-    public function tearDown() : void
+    public function tear_down()
     {
         mt_srand(); // reset random seed
         if ($this->mig_dir != '' && is_dir($this->mig_dir . '/albums')) {

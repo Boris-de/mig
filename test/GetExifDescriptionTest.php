@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 final class GetExifDescriptionTest extends AbstractFileBasedTest
 {

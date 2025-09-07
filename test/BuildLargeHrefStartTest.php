@@ -1,12 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-require_once 'AbstractMigTestCase.class.php';
+require_once 'migHtmlSpecialChars.php';
 
-final class BuildLargeHrefStartTest extends AbstractFileBasedTestCase
+final class BuildLargeHrefStartTest extends TestCase
 {
-    public function setUp() : void
+    public function set_up()
     {
         include_once 'migURLencode.php';
         include_once 'buildLargeHrefStart.php';

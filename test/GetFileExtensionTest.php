@@ -1,10 +1,10 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-require_once 'AbstractMigTestCase.class.php';
+require_once 'migHtmlSpecialChars.php';
 
-final class GetFileExtensionTest extends AbstractFileBasedTestCase
+final class GetFileExtensionTest extends TestCase
 {
     public function test()
     {

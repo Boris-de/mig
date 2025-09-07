@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractFileBasedTestCase.class.php';
+require_once 'migHtmlSpecialChars.php';
 
 final class BuildYouAreHereTest extends AbstractFileBasedTest
 {
