@@ -2,4 +2,4 @@
 
 TEST_DIR="test"
 
-exec composer exec phpunit -- --include-path functions/:main/:languages/ "${TEST_DIR}"
+exec composer global exec phpunit -- --include-path functions/:main/:languages/ "${TEST_DIR}"

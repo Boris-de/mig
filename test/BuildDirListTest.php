@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\Attributes\RequiresOperatingSystemFamily;
+
 require_once 'AbstractFileBasedTestCase.class.php';
 
 final class BuildDirListTest extends AbstractFileBasedTest
@@ -64,9 +66,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
   </tbody></table>", buildDirList('.', 1, array('test-presorted' => TRUE), array()));
     }
 
-    /**
-     * @requires OSFAMILY Linux
-     */
+    #[RequiresOperatingSystemFamily('Linux')] // files with "<" or ">" in the name are not allowed on windows
     public function testIgnoreFrom_currDirNameRegexpr()
     {
         $this->mkdir($this->album_dir.'/test1');
@@ -197,10 +197,7 @@ final class BuildDirListTest extends AbstractFileBasedTest
   </tbody></table>", buildDirList('.', 1, array(), array()));
     }
 
-    /**
-     * Does not work on windows because of the special chars in image name
-     * @requires OSFAMILY Linux
-     */
+    #[RequiresOperatingSystemFamily('Linux')] // Does not work on windows because of the special chars in image name
     public function testSpecialCharFolders()
     {
         $this->mkdir($this->album_dir.'/aaa bbb_ccc');

@@ -1,5 +1,7 @@
 <?php
 
+use PHPUnit\Framework\Attributes\RequiresOperatingSystemFamily;
+
 require_once 'AbstractFileBasedTestCase.class.php';
 
 final class BuildImageListTest extends AbstractFileBasedTest
@@ -340,10 +342,7 @@ final class BuildImageListTest extends AbstractFileBasedTest
   </tbody></table>", buildImageList('.', 2, 2, array(), array(), array()));
     }
 
-    /**
-     * Does not work on windows because of the special chars in image name
-     * @requires OSFAMILY Linux
-     */
+    #[RequiresOperatingSystemFamily('Linux')] // Does not work on windows because of the special chars in image name
     public function testSpecialCharImages()
     {
         $this->set_mig_config('imageFilenameRegexpr', '=.*=');

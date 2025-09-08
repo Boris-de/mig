@@ -36,15 +36,14 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions.php }}
           coverage: xdebug
-          tools: phpunit:${{ matrix.php-versions.phpunit }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: prepare sources
-        run: "global require --dev yoast/phpunit-polyfills:^${{ matrix.php-versions.phpunit_polyfills }}"
+      - name: install phpunit/phpunit-polyfills
+        run: "make _composer-container-install-polyfills PHPUNIT_POLYFILLS_VERSION=${{ matrix.php-versions.phpunit_polyfills }}"
 
       - name: run unittests
-        run: make unittests PHPUNIT_MAIN_PHAR=phpunit
+        run: make unittests
 
   systems:
     runs-on: ${{ matrix.operating-system }}
@@ -64,4 +63,4 @@ jobs:
       - run: make composer-install
 
       - name: run unittests
-        run: make unittests PHPUNIT_MAIN_PHAR=phpunit
+        run: make unittests

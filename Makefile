@@ -43,7 +43,6 @@ else
  USED_CONTAINER_PHP_VERSION := $(CONTAINER_PHP_VERSION)-
 endif
 
-PHPUNIT_PARAMS = --globals-backup --cache-directory $(PHPUNIT_CACHE_DIR)
 PHPUNIT_FILTER := .
 PHP_PATH_SEPARATOR = $(shell php -r 'echo PATH_SEPARATOR;')
 PHPUNIT_INCLUDE_PATH = functions$(PHP_PATH_SEPARATOR)main$(PHP_PATH_SEPARATOR)languages
@@ -133,17 +132,17 @@ test: unittests container-unittests-all
 
 unittests: $(UNITTESTS_MARKER)
 $(UNITTESTS_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER) $(COMPOSER_INSTALL_MARKER)
-	composer exec phpunit -- $(PHPUNIT_PARAMS) --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
+	composer exec phpunit -- --filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
 
 coverage: $(COVERAGE_MARKER)
 $(COVERAGE_MARKER): $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
-	XDEBUG_MODE=coverage composer exec -- phpunit $(PHPUNIT_PARAMS) --coverage-html $(COVERAGE_DIR) --whitelist functions \
+	XDEBUG_MODE=coverage composer exec -- phpunit --coverage-html $(COVERAGE_DIR) --whitelist functions \
 		--filter $(PHPUNIT_FILTER) --include-path "$(PHPUNIT_INCLUDE_PATH)" $(PHPUNIT_PARAMETER) test
 	@touch $@
 
 container-unittests: $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION)
-$(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
+$(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER) test/Containerfile
 	@echo "Running unittests with container '$(CONTAINER_PHPUNIT_VERSION)'"
 	rm -rf $(CONTAINER_UNITTEST_TMP)
 	$(DOCKER) build --build-arg PHP_VERSION=$(CONTAINER_PHPUNIT_VERSION) -t $(CONTAINER_NAME_PHPUNIT) test
@@ -155,12 +154,12 @@ container-unittests-all: $(CONTAINER_UNITTESTS_ALL_MARKER)
 container-unittests-all-versions: $(CONTAINER_UNITTESTS_ALL_MARKER)
 $(CONTAINER_UNITTESTS_ALL_MARKER): $(PHPUNIT_FILES) $(PHP_FILES) $(TEST_FILES) $(BUILD_DIR_MARKER)
 	@set -e ;\
-	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4 8.5.0alpha1; do \
+	for version in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4 8.5.0beta2; do \
 		make container-unittests CONTAINER_PHPUNIT_VERSION=$${version}-$(CONTAINER_PHPUNIT_VERSION); \
 	done
 	@touch $@
 
-container-webserver: $(INDEX_PHP) $(TEST_ALBUM_DIR)
+container-webserver: $(INDEX_PHP) $(TEST_ALBUM_DIR) Containerfile
 	$(DOCKER) build --build-arg PHP_VERSION=$(USED_CONTAINER_PHP_VERSION) -t $(CONTAINER_NAME) .
 	$(DOCKER) run --publish=127.0.0.1::80 -d --name $(CONTAINER_NAME) $(CONTAINER_NAME)
 	@set -e ;\
@@ -174,8 +173,12 @@ container-webserver: $(INDEX_PHP) $(TEST_ALBUM_DIR)
 	$(DOCKER) rm $(CONTAINER_NAME)
 
 composer-install: $(COMPOSER_INSTALL_MARKER)
-$(COMPOSER_INSTALL_MARKER):
+$(COMPOSER_INSTALL_MARKER): $(BUILD_DIR_MARKER)
 	composer install
+	@touch $(COMPOSER_INSTALL_MARKER)
+
+_composer-container-install-polyfills: $(BUILD_DIR_MARKER)
+	composer global require --dev "yoast/phpunit-polyfills:^$(PHPUNIT_POLYFILLS_VERSION)"
 	@touch $(COMPOSER_INSTALL_MARKER)
 
 psalm: $(PSALM_MARKER)
