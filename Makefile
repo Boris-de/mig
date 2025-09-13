@@ -147,7 +147,7 @@ $(CONTAINER_UNITTESTS_MARKER)-$(CONTAINER_PHPUNIT_VERSION): $(PHPUNIT_FILES) $(P
 	rm -rf $(CONTAINER_UNITTEST_TMP)
 	$(DOCKER) build --build-arg PHP_VERSION=$(CONTAINER_PHPUNIT_VERSION) -t $(CONTAINER_NAME_PHPUNIT) test
 	$(DOCKER) run --rm -v $${PWD}:/usr/src/mig -w /usr/src/mig $(CONTAINER_NAME_PHPUNIT)
-	$(DOCKER) image rm $(CONTAINER_NAME_PHPUNIT) 1>/dev/null 2>&1 || true
+	$(DOCKER) untag $(CONTAINER_NAME_PHPUNIT) 1>/dev/null 2>&1 || true
 	@touch $@
 
 container-unittests-all: $(CONTAINER_UNITTESTS_ALL_MARKER)
@@ -201,7 +201,7 @@ clean-marker:
 
 clean: clean-marker
 	make -C docs clean
-	$(DOCKER) image rm $(CONTAINER_NAME) $(CONTAINER_NAME_PHPUNIT) 1>/dev/null 2>&1 || true
+	$(DOCKER) image rm $(CONTAINER_NAME) 1>/dev/null 2>&1 || true
 	rm -f $(INDEX_PHP) albums $(PHPUNIT_FILES)
 	rm -rf test-album $(BUILD_DIR) $(CONTAINER_UNITTEST_TMP) vendor
 
