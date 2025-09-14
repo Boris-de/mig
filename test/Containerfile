@@ -5,7 +5,7 @@ FROM docker.io/php:${PHP_VERSION}
 # enable pcntl to use "enforceTimeLimit" in phpunit
 RUN docker-php-ext-configure pcntl --enable-pcntl && docker-php-ext-install pcntl
 
-COPY --from=composer:2.2 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer/composer:2.2-bin /composer /usr/local/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN case "${PHP_VERSION}" in 5.*|7.*) PHPUNIT_POLYFILLS_VERSION=2.0;; esac; \
