@@ -2,8 +2,12 @@ ARG PHP_VERSION=''
 
 FROM docker.io/php:${PHP_VERSION}
 
-# enable pcntl to use "enforceTimeLimit" in phpunit
-RUN docker-php-ext-configure pcntl --enable-pcntl && docker-php-ext-install pcntl
+# enable extensions used by phpunit
+RUN apk add --no-cache oniguruma && \
+    apk add --no-cache --virtual .mbstring-build-deps oniguruma-dev && \
+    docker-php-ext-configure pcntl --enable-pcntl && \
+    docker-php-ext-install mbstring pcntl && \
+    apk del .mbstring-build-deps oniguruma-dev
 
 COPY --from=composer/composer:2.2-bin /composer /usr/local/bin/composer
 

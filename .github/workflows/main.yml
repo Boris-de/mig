@@ -26,6 +26,7 @@ jobs:
           - { php: '8.3', phpunit_polyfills: '4.0' }
           - { php: '8.4', phpunit_polyfills: '4.0' }
           - { php: '8.5', phpunit_polyfills: '4.0' }
+          - { php: '8.6', phpunit_polyfills: '4.0' }
     name: PHP ${{ matrix.php-versions.php }} Test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
